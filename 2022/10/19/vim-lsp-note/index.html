@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Vim－LSP 筆記 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="其實我們每天都在用它，只是我們自己不知道。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vim－LSP 筆記">
+<meta property="og:url" content="https://jubeatt.github.io/2022/10/19/vim-lsp-note/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="其實我們每天都在用它，只是我們自己不知道。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/19/vim-lsp-note/lsp.jpeg">
+<meta property="article:published_time" content="2022-10-19T05:07:29.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.714Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/10/19/vim-lsp-note/lsp.jpeg">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#什麼是-LSP？">1&nbsp;&nbsp;<b>什麼是 LSP？</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#推薦網站">2&nbsp;&nbsp;<b>推薦網站</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#實際配置">3&nbsp;&nbsp;<b>實際配置</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#關於-lsp-installer-on-server-ready">3.1&nbsp;&nbsp;關於 lsp_installer.on_server_ready()</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#查看-LSP-連結狀態">3.2&nbsp;&nbsp;查看 LSP 連結狀態</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#我的-LSP-config-快捷鍵配置">3.3&nbsp;&nbsp;我的 LSP config 快捷鍵配置</a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Vim－LSP 筆記
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>10月 19 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Vim/">Vim</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>其實我們每天都在用它，只是我們自己不知道。</p>
+<span id="more"></span>
+
+<h2 id="什麼是-LSP？"><a href="#什麼是-LSP？" class="headerlink" title="什麼是 LSP？"></a>什麼是 LSP？</h2><p>一個協議（Protocal），把程式編輯器分為 Sever 跟 Client 兩個部分：</p>
+<p><img src="lsp.jpeg" alt="lsp"></p>
+<p>就跟網頁開發中的前後端一樣，後端才是那個真正幫你<strong>檢查語法或格式</strong>是否正確的人，而前端則是負責幫處理你眼前<strong>畫面</strong>的那個人。</p>
+<p>Neovim 內建就有包含 client 端的部分，可以讓你用一些 LSP 相關的 API 來顯示語法錯誤、高亮醒目等等的功能。</p>
+<p>至於 server 的部分則需要自己安裝，以前端來說的話會用 <code>npm install -g typescript-language-server</code> 來處理。不過多虧有人寫了 <a href="https://link.zhihu.com/?target=https://github.com/williamboman/nvim-lsp-installer%23available-lsps">nvim-lsp-installer </a>，所以可以省下自己安裝的功夫。</p>
+<h2 id="推薦網站"><a href="#推薦網站" class="headerlink" title="推薦網站"></a>推薦網站</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#sumneko_lua">lsp-server_configurations</a></li>
+</ul>
+<h2 id="實際配置"><a href="#實際配置" class="headerlink" title="實際配置"></a>實際配置</h2><p>1. 安裝必要套件</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use "neovim/nvim-lspconfig"</span><br><span class="line">use "williamboman/nvim-lsp-installer"</span><br></pre></td></tr></tbody></table></figure>
+
+<p>2. 用 lsp-installer 安裝想要的 language server</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:LspInstallInfo</span><br></pre></td></tr></tbody></table></figure>
+
+<p>3. 寫配置檔（setup）</p>
+<p>這邊先說個概念，理論上每一個語言都會有不同的 setup，所以如果你想把檔案結構拆的比較細的話，就會有蠻多檔案的。因此這邊為了方便理解先全部寫成在一個檔案裡：</p>
+<figure class="highlight lua hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">-- lua/user/setup</span></span><br><span class="line"><span class="hljs-comment">-- 引入套件</span></span><br><span class="line"><span class="hljs-keyword">local</span> lsp_installer = <span class="hljs-built_in">require</span> <span class="hljs-string">"nvim-lsp-installer"</span></span><br><span class="line"><span class="hljs-keyword">local</span> lsp_config = <span class="hljs-built_in">require</span> <span class="hljs-string">"lspconfig"</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">-- 這個看起來是用來設定 installer 本身的 config，但其實是必要的一行，不可以拿掉。</span></span><br><span class="line"><span class="hljs-built_in">require</span>(<span class="hljs-string">"nvim-lsp-installer"</span>).setup({</span><br><span class="line">  automatic_installation = <span class="hljs-literal">true</span>, <span class="hljs-comment">-- 自動安裝（需重新重啟 neovim）</span></span><br><span class="line">  ui = {</span><br><span class="line">      icons = {</span><br><span class="line">          server_installed = <span class="hljs-string">"✓"</span>,</span><br><span class="line">          server_pending = <span class="hljs-string">"➜"</span>,</span><br><span class="line">          server_uninstalled = <span class="hljs-string">"✗"</span></span><br><span class="line">      }</span><br><span class="line">  }</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">-- 一定要有這一行 setup 你的 language server 才會啟動</span></span><br><span class="line">lsp_config.sumneko_lua.setup{}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：其實 lspconfig 主要的用途就是讓你可以用比較簡單的方式來處理 code 而已，他本身是沒有任何 language server client 的功能的，詳細可以參考官方的 <a target="_blank" rel="noopener" href="https://github.com/neovim/nvim-lspconfig/wiki#what-is-nvim-lspconfig-does-nvim-lspconfig-provide-a-language-server-client">wiki</a></p>
+<p>最後看到有出現語法檢查的效果就成功了。</p>
+<h3 id="關於-lsp-installer-on-server-ready"><a href="#關於-lsp-installer-on-server-ready" class="headerlink" title="關於 lsp_installer.on_server_ready()"></a>關於 lsp_installer.on_server_ready()</h3><p>在一些舊的設定中你可能會看到這樣的寫法：</p>
+<figure class="highlight lua hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">local</span> status_ok, lsp_installer = <span class="hljs-built_in">pcall</span>(<span class="hljs-built_in">require</span>, <span class="hljs-string">"nvim-lsp-installer"</span>)</span><br><span class="line"><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> status_ok <span class="hljs-keyword">then</span></span><br><span class="line">	<span class="hljs-keyword">return</span></span><br><span class="line"><span class="hljs-keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">-- Register a handler that will be called for all installed servers.</span></span><br><span class="line"><span class="hljs-comment">-- Alternatively, you may also register handlers on specific server instances instead (see example below).</span></span><br><span class="line">lsp_installer.on_server_ready(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(server)</span></span></span><br><span class="line">	<span class="hljs-keyword">local</span> opts = {</span><br><span class="line">		on_attach = <span class="hljs-built_in">require</span>(<span class="hljs-string">"user.lsp.handlers"</span>).on_attach,</span><br><span class="line">		capabilities = <span class="hljs-built_in">require</span>(<span class="hljs-string">"user.lsp.handlers"</span>).capabilities,</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	 <span class="hljs-keyword">if</span> server.name == <span class="hljs-string">"jsonls"</span> <span class="hljs-keyword">then</span></span><br><span class="line">	 	<span class="hljs-keyword">local</span> jsonls_opts = <span class="hljs-built_in">require</span>(<span class="hljs-string">"user.lsp.settings.jsonls"</span>)</span><br><span class="line">	 	opts = vim.tbl_deep_extend(<span class="hljs-string">"force"</span>, jsonls_opts, opts)</span><br><span class="line">	 <span class="hljs-keyword">end</span></span><br><span class="line"></span><br><span class="line">	 <span class="hljs-keyword">if</span> server.name == <span class="hljs-string">"sumneko_lua"</span> <span class="hljs-keyword">then</span></span><br><span class="line">	 	<span class="hljs-keyword">local</span> sumneko_opts = <span class="hljs-built_in">require</span>(<span class="hljs-string">"user.lsp.settings.sumneko_lua"</span>)</span><br><span class="line">	 	opts = vim.tbl_deep_extend(<span class="hljs-string">"force"</span>, sumneko_opts, opts)</span><br><span class="line">	 <span class="hljs-keyword">end</span></span><br><span class="line"></span><br><span class="line">	 <span class="hljs-keyword">if</span> server.name == <span class="hljs-string">"pyright"</span> <span class="hljs-keyword">then</span></span><br><span class="line">	 	<span class="hljs-keyword">local</span> pyright_opts = <span class="hljs-built_in">require</span>(<span class="hljs-string">"user.lsp.settings.pyright"</span>)</span><br><span class="line">	 	opts = vim.tbl_deep_extend(<span class="hljs-string">"force"</span>, pyright_opts, opts)</span><br><span class="line">	 <span class="hljs-keyword">end</span></span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">-- This setup() function is exactly the same as lspconfig's setup function.</span></span><br><span class="line">	<span class="hljs-comment">-- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md</span></span><br><span class="line">	server:setup(opts)</span><br><span class="line"><span class="hljs-keyword">end</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>官方現在已經不建議這樣寫了，可以到這個 <a target="_blank" rel="noopener" href="https://github.com/williamboman/nvim-lsp-installer/discussions/636">issue</a> 中參考詳細內容。</p>
+<p>現在建議的寫法：</p>
+<figure class="highlight lua hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">-- 當作這行不存在（除非你想設置其他 config）</span></span><br><span class="line"><span class="hljs-built_in">require</span>(<span class="hljs-string">"nvim-lsp-installer"</span>).setup {}</span><br><span class="line"><span class="hljs-keyword">local</span> lspconfig = <span class="hljs-built_in">require</span>(<span class="hljs-string">"lspconfig"</span>)</span><br><span class="line"></span><br><span class="line">lspconfig.sumneko_lua.setup {}</span><br><span class="line">lspconfig.tsserver.setup {}</span><br><span class="line"><span class="hljs-comment">-- ... and so on</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="查看-LSP-連結狀態"><a href="#查看-LSP-連結狀態" class="headerlink" title="查看 LSP 連結狀態"></a>查看 LSP 連結狀態</h3><p>當你想寫一些配置的時候你可能會需要知道 client（一個 table）相關的資訊，這時候可以用 <code>:lua print(vim.inspect(vim.lsp.buf_get_clients()))</code> 來查看（這個很有用）。</p>
+<h3 id="我的-LSP-config-快捷鍵配置"><a href="#我的-LSP-config-快捷鍵配置" class="headerlink" title="我的 LSP config 快捷鍵配置"></a>我的 LSP config 快捷鍵配置</h3><figure class="highlight lua hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">local</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">lsp_keymaps</span><span class="hljs-params">(bufnr)</span></span></span><br><span class="line">  <span class="hljs-keyword">local</span> opts = { noremap = <span class="hljs-literal">true</span>, silent = <span class="hljs-literal">true</span>, buffer = bufnr }</span><br><span class="line">  <span class="hljs-comment">-- popup diagnostic</span></span><br><span class="line">  vim.keymap.set(<span class="hljs-string">'n'</span>, <span class="hljs-string">'gl'</span>, vim.diagnostic.open_float, opts)</span><br><span class="line">  <span class="hljs-comment">-- 跳到下一個 diagnostic</span></span><br><span class="line">  vim.keymap.set(<span class="hljs-string">'n'</span>, <span class="hljs-string">'[d'</span>, vim.diagnostic.goto_prev, opts)</span><br><span class="line">  <span class="hljs-comment">-- 跳到前一個 diagnostic</span></span><br><span class="line">  vim.keymap.set(<span class="hljs-string">'n'</span>, <span class="hljs-string">']d'</span>, vim.diagnostic.goto_next, opts)</span><br><span class="line">  <span class="hljs-comment">-- 顯示 diagnostic 列表</span></span><br><span class="line">  vim.keymap.set(<span class="hljs-string">'n'</span>, <span class="hljs-string">'&lt;space&gt;q'</span>, vim.diagnostic.setloclist, opts)</span><br><span class="line">  vim.keymap.set(<span class="hljs-string">'n'</span>, <span class="hljs-string">'gD'</span>, vim.lsp.buf.declaration, opts)</span><br><span class="line">  vim.keymap.set(<span class="hljs-string">'n'</span>, <span class="hljs-string">'gd'</span>, vim.lsp.buf.definition, opts)</span><br><span class="line">  vim.keymap.set(<span class="hljs-string">'n'</span>, <span class="hljs-string">'gr'</span>, vim.lsp.buf.references, opts)</span><br><span class="line">  vim.keymap.set(<span class="hljs-string">'n'</span>, <span class="hljs-string">'gi'</span>, vim.lsp.buf.implementation, opts)</span><br><span class="line">  <span class="hljs-comment">-- 到那個 type 定義的地方</span></span><br><span class="line">  vim.keymap.set(<span class="hljs-string">'n'</span>, <span class="hljs-string">'gt'</span>, vim.lsp.buf.type_definition, opts)</span><br><span class="line">  vim.keymap.set(<span class="hljs-string">'n'</span>, <span class="hljs-string">'D'</span>, vim.lsp.buf.hover, opts)</span><br><span class="line">  vim.keymap.set(<span class="hljs-string">'n'</span>, <span class="hljs-string">'&lt;C-s&gt;'</span>, vim.lsp.buf.signature_help, opts)</span><br><span class="line">  vim.keymap.set(<span class="hljs-string">'n'</span>, <span class="hljs-string">'&lt;F2&gt;'</span>, vim.lsp.buf.<span class="hljs-built_in">rename</span>, opts)</span><br><span class="line">  <span class="hljs-comment">-- 對這個 diagnostic 做事情（例如：disable line）</span></span><br><span class="line">  vim.keymap.set(<span class="hljs-string">'n'</span>, <span class="hljs-string">'&lt;leader&gt;ca'</span>, vim.lsp.buf.code_action, opts)</span><br><span class="line"><span class="hljs-keyword">end</span></span><br></pre></td></tr></tbody></table></figure>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/10/22/neovim-config-note/">Neovim－配置筆記</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/10/16/vim-note/">Vim 筆記</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

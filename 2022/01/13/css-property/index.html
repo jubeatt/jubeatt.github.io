@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>CSS 一些久了可能會忘記的屬性 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="如題，所以開一篇來做彙整，要查的時候比較方便。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS 一些久了可能會忘記的屬性">
+<meta property="og:url" content="https://jubeatt.github.io/2022/01/13/css-property/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="如題，所以開一篇來做彙整，要查的時候比較方便。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/13/css-property/max-content.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/13/css-property/non-max-content.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/13/css-property/overscroll-behavior-auto.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/13/css-property/overscroll-behavior-contain.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/13/css-property/scrollbar-gutter-auto.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/13/css-property/scrollbar-gutter-stable.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/13/css-property/scrollbar-gutter-stable-both-edges.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/13/css-property/scroll-snap-type-mandatory.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/13/css-property/scroll-snap-align-start.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/13/css-property/scroll-snap-align-end.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/13/css-property/scroll-snap-align-center.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/13/css-property/scroll-snap-type-mandatory.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/13/css-property/scroll-snap-type-proximity.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/13/css-property/point-event.gif">
+<meta property="article:published_time" content="2022-01-13T05:21:37.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.334Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/01/13/css-property/max-content.jpg">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#文字相關">1&nbsp;&nbsp;<b>文字相關</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#排版相關">2&nbsp;&nbsp;<b>排版相關</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#其他">3&nbsp;&nbsp;<b>其他</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            CSS 一些久了可能會忘記的屬性
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>1月 13 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/CSS/">CSS</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>如題，所以開一篇來做彙整，要查的時候比較方便。</p>
+<span id="more"></span>
+
+
+
+<h2 id="文字相關"><a href="#文字相關" class="headerlink" title="文字相關"></a>文字相關</h2><p><code>white-space</code> 決定「空白」跟「換行」的樣式。</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">/* 換行跟空格都只顯示為一個空格（預設） */</span></span><br><span class="line">  <span class="hljs-attribute">white-space</span>: normal;</span><br><span class="line">  <span class="hljs-comment">/* 不換行 */</span></span><br><span class="line">  <span class="hljs-attribute">white-space</span>: nowrap;</span><br><span class="line">  <span class="hljs-comment">/* 保留原本在編輯器的格式 */</span></span><br><span class="line">  <span class="hljs-attribute">white-space</span>: pre;</span><br><span class="line">  <span class="hljs-comment">/* 保留換行格式，但空格只會當作一個 */</span></span><br><span class="line">  <span class="hljs-attribute">white-space</span>: pre-line;</span><br><span class="line">  <span class="hljs-comment">/* 跟 pre 一樣，但超出範圍的時候會換行 */</span></span><br><span class="line">  <span class="hljs-attribute">white-space</span>: pre-wrap;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>word-spacing</code> 設定「單字（空格）」之間的間隔：</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">/* 預設值 */</span></span><br><span class="line">  <span class="hljs-attribute">word-spacing</span>: normal;</span><br><span class="line">  <span class="hljs-comment">/* 設定單位 */</span></span><br><span class="line">  <span class="hljs-attribute">word-spacing</span>: <span class="hljs-number">1em</span>;  </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p><code>letter-spacing</code> 設定「每一個字」的間隔：</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">/* 預設值 */</span></span><br><span class="line">  <span class="hljs-attribute">letter-spacing</span>: normal;</span><br><span class="line">  <span class="hljs-attribute">letter-spacing</span>: <span class="hljs-number">1px</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p><code>word-break</code> 設定文字的換行規則。</p>
+<p>詳細介紹可以參考：<a href="https://jubeatt.github.io/2022/01/12/css-text-problem/">CSS 之我的文字太長啦</a></p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">/* 依照空格或換行來斷行（預設） */</span></span><br><span class="line">  <span class="hljs-attribute">word-break</span>: normal;</span><br><span class="line">  <span class="hljs-comment">/* 超出寬度範圍就斷行 */</span></span><br><span class="line">  <span class="hljs-attribute">word-break</span>: break-all;</span><br><span class="line">  <span class="hljs-comment">/* 依照單字來斷行 */</span></span><br><span class="line">  <span class="hljs-attribute">word-break</span>: break-word;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>text-shadow</code> 設定文字的陰影</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.text</span> {</span><br><span class="line">  <span class="hljs-comment">/* offset-x | offest-y | blur-radius | color */</span></span><br><span class="line">  <span class="hljs-attribute">text-shadow</span>: <span class="hljs-number">1px</span> <span class="hljs-number">1px</span> <span class="hljs-number">2px</span> black;</span><br><span class="line">  <span class="hljs-comment">/* 跟 box-shadow 一樣，可以有多層陰影 */</span></span><br><span class="line">  <span class="hljs-attribute">text-shadow</span>: <span class="hljs-number">1px</span> <span class="hljs-number">1px</span> <span class="hljs-number">2px</span> black <span class="hljs-number">2px</span> <span class="hljs-number">2px</span> <span class="hljs-number">2px</span> pink;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="排版相關"><a href="#排版相關" class="headerlink" title="排版相關"></a>排版相關</h2><p><code>box-sizing</code> 設定盒子的計算方式</p>
+<p>詳細介紹可以參考：<a href="https://jubeatt.github.io/2022/01/13/css-box-model/">CSS 盒模型（box-model）</a></p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">/* 寬高代表 content（預設） */</span></span><br><span class="line">  <span class="hljs-attribute">box-sizing</span>: content-box;</span><br><span class="line">  <span class="hljs-comment">/* 寬高代表 content + padding + border */</span></span><br><span class="line">  <span class="hljs-attribute">box-sizing</span>: border-box;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p><code>overflow</code> 設定該怎麼處理溢出內容</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">/* 超出寬度依然會顯示（預設） */</span></span><br><span class="line">  <span class="hljs-attribute">overflow</span>: visible;</span><br><span class="line">  <span class="hljs-comment">/* 超出寬度就隱藏 */</span></span><br><span class="line">  <span class="hljs-attribute">overflow</span>: hidden;</span><br><span class="line">  <span class="hljs-comment">/* 顯示滾軸，不管有沒有超出寬度 */</span></span><br><span class="line">  <span class="hljs-attribute">overflow</span>: scroll;</span><br><span class="line">  <span class="hljs-comment">/* 超出寬度時，顯示滾軸 */</span></span><br><span class="line">  <span class="hljs-attribute">overflow</span>: auto;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>max-content</code> 讓 <code>width</code> 依照內容來調整</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-tag">div</span> {</span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;</span><br><span class="line">  <span class="hljs-attribute">height</span>: <span class="hljs-number">50px</span>;</span><br><span class="line">  <span class="hljs-attribute">padding</span>: <span class="hljs-number">10px</span>;</span><br><span class="line">  <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#000</span>;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-selector-tag">h1</span> {</span><br><span class="line">  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">1em</span>;</span><br><span class="line">  <span class="hljs-attribute">background-color</span>: antiquewhite;</span><br><span class="line">  <span class="hljs-comment">/* 預設寬度是參考 div，但現在變成參考「文字內容」 */</span></span><br><span class="line">  <span class="hljs-attribute">width</span>: max-content;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p><img src="max-content.jpg" alt="max-content"></p>
+<p>傳統用 <code>nowrap</code> 的情況，內容寬度是參考容器：</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-tag">h1</span> {</span><br><span class="line">  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">1em</span>;</span><br><span class="line">  <span class="hljs-attribute">background-color</span>: antiquewhite;</span><br><span class="line">  <span class="hljs-comment">/* 超出的文字不會有額外加上寬度 */</span></span><br><span class="line">  <span class="hljs-attribute">white-space</span>: nowrap;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="non-max-content.jpg" alt="non-max-content"></p>
+<p><code>max(base ,minimum)</code> 用來設定最小寬度，可以想成是語法糖。</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/* 最少 100px，比 100px 大就採用 50% */</span></span><br><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-number">50%</span>;</span><br><span class="line">  <span class="hljs-attribute">min-width</span>: <span class="hljs-number">100px</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>利用 <code>max()</code> 寫成一行：</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/* 最少 100px，比 100px 大就採用 50% */</span></span><br><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-built_in">max</span>(<span class="hljs-number">50%</span>, <span class="hljs-number">100px</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這兩個結果會是一模一樣的。</p>
+<p><code>min(base ,maximum)</code> 用來設定最大寬度，一樣想成是語法糖。</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/* 最多 1280px，比 1280px 小就採用 90% */</span></span><br><span class="line"><span class="hljs-selector-class">.container</span> {</span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-number">90%</span>;</span><br><span class="line">  <span class="hljs-attribute">max-width</span>: <span class="hljs-number">1280px</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>利用 <code>min()</code> 寫成一行：</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/* 最多 1280px，比 1280px 小就採用 90% */</span></span><br><span class="line"><span class="hljs-selector-class">.container</span> {</span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-built_in">min</span>(<span class="hljs-number">90%</span>, <span class="hljs-number">1280px</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p><code>overscroll-behavior</code> 用來阻止滾軸的傳遞行為</p>
+<p>預設是 <code>auto</code>，當子元素滾到邊界時，會傳遞給父元素：</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.modal__inner</span> {</span><br><span class="line">  overscroll-behavior: auto</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p><img src="overscroll-behavior-auto.gif" alt="overscroll-behavior-auto"></p>
+<p>設定成 <code>contain</code> 後就不會傳遞了：</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.modal__inner</span> {</span><br><span class="line">  overscroll-behavior: contain</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p><img src="overscroll-behavior-contain.gif" alt="overscroll-behavior-contain"></p>
+<p><code>scrollbar-gutter</code> 自動預留滾軸空間</p>
+<p>備註：要設定這個屬性的元素 <code>overflow</code> 必須是 visible 以外的值才有效，另外 <code>&lt;body&gt;</code> 沒辦法用。</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.container</span> {</span><br><span class="line">  scrollbar-gutter: auto</span><br><span class="line">  scrollbar-gutter: stable</span><br><span class="line">  scrollbar-gutter: stable both-edges</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>預設是 <code>auto</code>，當滾軸出現的時候容易跑版：</p>
+<p><img src="scrollbar-gutter-auto.gif" alt="scrollbar-gutter-auto"></p>
+<p><code>stable</code> 會在右邊預留空間（自動加上一段 padding）</p>
+<p><img src="scrollbar-gutter-stable.gif" alt="scrollbar-gutter-stable"></p>
+<p><code>stable</code> 會在左右邊都預留空間（自動加上一段 padding）</p>
+<p><img src="scrollbar-gutter-stable-both-edges.gif" alt="scrollbar-gutter-stable-both-edges"></p>
+<p><code>scroll-snap-type</code> 和 <code>scroll-snap-align</code> </p>
+<p>簡單來說想成是一種排版用的盒子（像 Flex 或 Grid）：</p>
+<ul>
+<li><code>scroll-snap-type</code> 用來設定容器</li>
+<li><code>scroll-snap-align</code> 用來設定子元素。</li>
+</ul>
+<p>這個屬性能做出這樣的效果：</p>
+<p><img src="scroll-snap-type-mandatory.gif" alt="scroll-snap-type-mandatory"></p>
+<p>設定方式：</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.container</span> {</span><br><span class="line">  <span class="hljs-comment">/* 比較嚴格 */</span></span><br><span class="line">  scroll-snap-type: x mandatory;</span><br><span class="line">  <span class="hljs-comment">/* 沒那麼嚴格 */</span></span><br><span class="line">  scroll-snap-type: x proximity;</span><br><span class="line">  <span class="hljs-comment">/* 同時設定 x 軸與 y 軸行為 */</span></span><br><span class="line">  scroll-snap-type: both mandatory ;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-selector-class">.item</span> {</span><br><span class="line">  <span class="hljs-comment">/* </span></span><br><span class="line"><span class="hljs-comment">    用來設定中斷點（一定要設才有效果）</span></span><br><span class="line"><span class="hljs-comment">    跟 justify-content 的感覺很類似</span></span><br><span class="line"><span class="hljs-comment">  */</span></span><br><span class="line">  scroll-snap-align: start;</span><br><span class="line">  scroll-snap-align: end;</span><br><span class="line">  scroll-snap-align: center;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>start：</p>
+<p><img src="scroll-snap-align-start.jpg" alt="scroll-snap-align-start"></p>
+<p>end：</p>
+<p><img src="scroll-snap-align-end.jpg" alt="scroll-snap-align-end"></p>
+<p>center：</p>
+<p><img src="scroll-snap-align-center.jpg" alt="scroll-snap-align-center"></p>
+<p>mandatory 與 proximity 的差別參考下圖。</p>
+<p>mandatory：</p>
+<p><img src="scroll-snap-type-mandatory.gif" alt="scroll-snap-type-mandatory"></p>
+<p>proximity：</p>
+<p><img src="scroll-snap-type-proximity.gif" alt="scroll-snap-type-proximity"></p>
+<p><code>pointer-events</code> 設定鼠標事件，可以做出讓上面那層碰不到，只能碰到下面的。</p>
+<p>備註：因為這個屬性會繼承，所以下面的記得要在設定一次。</p>
+<p>以下把 <code>&lt;a&gt;</code> 的鼠標事件停用，所以只有 <code>&lt;span&gt;</code> 上的 <code>:hover</code> 會被觸發： </p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>enable-event<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-tag">a</span> {</span><br><span class="line">  <span class="hljs-comment">/* 停用 a 的鼠標事件 */</span></span><br><span class="line">  <span class="hljs-attribute">pointer-events</span>: none;</span><br><span class="line">  <span class="hljs-attribute">display</span>: inline-block;</span><br><span class="line">  <span class="hljs-attribute">text-decoration</span>: none;</span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;</span><br><span class="line">  <span class="hljs-attribute">height</span>: <span class="hljs-number">100px</span>;</span><br><span class="line">  <span class="hljs-attribute">background-color</span>: <span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0.5</span>);</span><br><span class="line">  <span class="hljs-attribute">text-align</span>: center;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">/* 設定碰到 a 的 hover 效果 */</span></span><br><span class="line"><span class="hljs-selector-tag">a</span><span class="hljs-selector-pseudo">:hover</span> <span class="hljs-selector-tag">span</span> {</span><br><span class="line">  <span class="hljs-attribute">color</span>: red;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-selector-tag">span</span> {</span><br><span class="line">  <span class="hljs-comment">/* 啟用 span 的鼠標事件 */</span></span><br><span class="line">  <span class="hljs-attribute">pointer-events</span>: all;</span><br><span class="line">  <span class="hljs-attribute">line-height</span>: <span class="hljs-number">100px</span>;</span><br><span class="line">  <span class="hljs-attribute">color</span>: white;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">/* 設定碰到 span 的 hover 效果 */</span></span><br><span class="line"><span class="hljs-selector-tag">span</span><span class="hljs-selector-pseudo">:hover</span> {</span><br><span class="line">  <span class="hljs-attribute">color</span>: red;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>Output：</p>
+<p><img src="point-event.gif" alt="point-event"></p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/01/13/css-box-model/">CSS 盒模型（box-model）</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/01/12/mentor-program-day31/">mentor-program-day31</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

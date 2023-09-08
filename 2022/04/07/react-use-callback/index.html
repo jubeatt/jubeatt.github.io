@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>React 的第六個 hook：useCallback - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="也是跟效能有關。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React 的第六個 hook：useCallback">
+<meta property="og:url" content="https://jubeatt.github.io/2022/04/07/react-use-callback/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="也是跟效能有關。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/04/07/react-use-callback/use-callback.gif">
+<meta property="article:published_time" content="2022-04-07T15:46:07.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.618Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/04/07/react-use-callback/use-callback.gif">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡述">1&nbsp;&nbsp;<b>簡述</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#實際應用">2&nbsp;&nbsp;<b>實際應用</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            React 的第六個 hook：useCallback
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>4月 7 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/React/">React</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>也是跟效能有關。</p>
+<span id="more"></span>
+
+<h2 id="簡述"><a href="#簡述" class="headerlink" title="簡述"></a>簡述</h2><blockquote>
+<p>把 function 給記起來，如果 dependencies 沒有變，就不會重新宣告新的 function。</p>
+</blockquote>
+<p><code>useCallback</code> 說白話一點就是上面那樣子，它跟 <code>useEffect</code> 有點像，可以在第二個參數傳入 <code>dependencies</code>，告訴 react 只有在 <code>dependencies</code> 變的時候才幫我宣告新的 function，不然就沿用原本的就好。</p>
+<p>接下來的範例會稍微複雜一點，所以先做段解說：</p>
+<ol>
+<li>宣告兩個 function，一個會用 <code>useCallback</code> 一個不會。</li>
+<li>利用 ref 來把一開始的 function 給記住</li>
+<li>每次 re-render 時就跟一開始的 function 做比對</li>
+</ol>
+<p>另外這邊一樣有用到 <code>memo</code>，所以要記得 <code>memo</code> 的特性是「當 props 改變時才會 re-render」。</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 用來檢查是否相等的 function</span></span><br><span class="line"><span class="hljs-keyword">const</span> checkIsEqual = <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a === b ? <span class="hljs-string">"相等"</span> : <span class="hljs-string">"不相等"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 用 memo 記起來的 Component</span></span><br><span class="line"><span class="hljs-keyword">const</span> Component = memo(<span class="hljs-function"><span class="hljs-params">props</span> =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> counter = useRef(<span class="hljs-number">0</span>);</span><br><span class="line">  <span class="hljs-keyword">const</span> message = props.isUseCallback</span><br><span class="line">    ? <span class="hljs-string">"有用 useCallback"</span></span><br><span class="line">    : <span class="hljs-string">"沒有用 useCallback"</span>;</span><br><span class="line">  counter.current++;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {message} 的 component 已經被 render 了 {counter.current} 次</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">});</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [value, setValue] = useState();</span><br><span class="line">  <span class="hljs-comment">// 只是個用來當作 dependencies 的 state</span></span><br><span class="line">  <span class="hljs-keyword">const</span> [someArg, setSomeArg] = useState(<span class="hljs-string">"argument"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 用 useCallback，並把 dependencies 設為 someArg</span></span><br><span class="line">  <span class="hljs-keyword">const</span> handleSomethingUseCallback = useCallback(<span class="hljs-function">() =&gt;</span> {}, [someArg]);</span><br><span class="line">  <span class="hljs-comment">// 沒有做額外設定</span></span><br><span class="line">  <span class="hljs-keyword">const</span> handleSomething = <span class="hljs-function">() =&gt;</span> {};</span><br><span class="line">  </span><br><span class="line">  <span class="hljs-comment">// 用 ref 把第一次的值記住，只要我們沒有自己去改值，它就不會變</span></span><br><span class="line">  <span class="hljs-keyword">const</span> refHandleSomethingUseCallback = useRef(handleSomethingUseCallback);</span><br><span class="line">  <span class="hljs-keyword">const</span> refHandleSomething = useRef(handleSomething);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 處理 input 的 state</span></span><br><span class="line">  <span class="hljs-keyword">const</span> handleChange = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> setValue(e.target.value);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"app"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{value}</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">{handleChange}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml"></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        有用 useCallback 的比對結果：</span></span><br><span class="line"><span class="hljs-xml">        {checkIsEqual(</span></span><br><span class="line"><span class="hljs-xml">          refHandleSomethingUseCallback.current,</span></span><br><span class="line"><span class="hljs-xml">          handleSomethingUseCallback</span></span><br><span class="line"><span class="hljs-xml">        )}</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml"></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        沒用 useCallback 的比對結果：</span></span><br><span class="line"><span class="hljs-xml">        {checkIsEqual(</span></span><br><span class="line"><span class="hljs-xml">          refHandleSomething.current, </span></span><br><span class="line"><span class="hljs-xml">          handleSomething</span></span><br><span class="line"><span class="hljs-xml">        )}</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml"></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Component</span> </span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">isUseCallback</span>=<span class="hljs-string">{false}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">handleSomething</span>=<span class="hljs-string">{handleSomething}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Component</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">isUseCallback</span>=<span class="hljs-string">{true}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">handleSomethingUseCallback</span>=<span class="hljs-string">{handleSomethingUseCallback}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="use-callback.gif" alt="use-callback"></p>
+<p>它的流程是這樣：</p>
+<ol>
+<li>輸入文字，改變 <code>value</code> 的 state，觸發 re-render</li>
+<li>沒有用 <code>useCallback</code> 的 function 會被重新宣告，所以 Compnonent 會被 re-render（因為 props 改變）</li>
+<li>接著拿 <code>useRef</code> 存的值跟這次的 function 比對，得到 false</li>
+</ol>
+<p>而有用 <code>useCallback</code> 的 function 因為 dependencies 沒有變（<code>someArg</code>），所以不會被重新宣告，也不會 re-render。而比對的部分也會是 true，因為 function 的值沒有改變。</p>
+<p><code>useCallback</code> 的用法就是這樣，不過最後要特別強調一件事情：</p>
+<blockquote>
+<p>關於 useCallback 的 dependencies，一定要記得把 function 中有用到的依賴變數 or function 放進去，不然有可能會出現靈異現象（沒有重新宣告，所以拿不到最新的 state）</p>
+</blockquote>
+<h2 id="實際應用"><a href="#實際應用" class="headerlink" title="實際應用"></a>實際應用</h2><p>接著用一個實際案例來示範 <code>useCallback</code> 會用在什麼樣的地方。</p>
+<p>一個最常見的例子是「串接 API」，最基本的 pattern 會長這樣：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  fetch(...)</span><br><span class="line">    .then(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> res.json())</span><br><span class="line">    .then(<span class="hljs-function"><span class="hljs-params">json</span> =&gt;</span> setList(json))</span><br><span class="line">}, [])</span><br></pre></td></tr></tbody></table></figure>
+
+<p>不過如果想用 <code>async</code> / <code>await</code> 的話就比較麻煩了，因為 useEffect 本身不可以直接用這個語法。第一種方式是直接宣告在裡面，像這樣：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> getList = <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">    <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> fetch(...)</span><br><span class="line">    <span class="hljs-keyword">const</span> json = <span class="hljs-keyword">await</span> res.json()</span><br><span class="line">    setList(json)</span><br><span class="line">  }</span><br><span class="line">  getList()</span><br><span class="line">}, [])</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣子做沒什麼問題，唯一的缺點是可讀性不佳，所以我們通常會希望能宣告在外面，像這樣：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> getList = <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">    <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> fetch(...)</span><br><span class="line">    <span class="hljs-keyword">const</span> json = <span class="hljs-keyword">await</span> res.json()</span><br><span class="line">    setList(json)</span><br><span class="line">  }</span><br><span class="line">  </span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    getList()</span><br><span class="line">  }, [])</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>做到這邊以後，你就會發現 ESLint 很熱情地告訴你：</p>
+<blockquote>
+<p>哈囉，你確定不要把 getList 這東西放到 dependencies 裡嗎？</p>
+</blockquote>
+<p>沒有想太多的你就乖乖照做了，結果就陷入「無窮迴圈」了 XD</p>
+<p>這邊我不解釋太多，但主要的原因是因為「Reference」。</p>
+<p>簡單來說就是每一次 re-render 時都會重新宣告 getList 這個 function，而每一次的 function 都會是不一樣的 function。</p>
+<p>如果你不太懂的話，試著想想看這個例子大概就明白了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> a = <span class="hljs-function">() =&gt;</span> {}</span><br><span class="line"><span class="hljs-keyword">const</span> b = <span class="hljs-function">() =&gt;</span> {}</span><br><span class="line"><span class="hljs-built_in">console</span>.log(a === b) <span class="hljs-comment">// ???</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+<p>所以這時候就輪到 <code>useCallback</code> 出場了，我們可以改寫成這樣子：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> getList = useCallback(<span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">    <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> fetch(...)</span><br><span class="line">    <span class="hljs-keyword">const</span> json = <span class="hljs-keyword">await</span> res.json()</span><br><span class="line">    setList(json)</span><br><span class="line">  }, [])</span><br><span class="line">  </span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    getList()</span><br><span class="line">  }, [getList])</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：這邊的 getList 因為沒有用到其他相關的 variable 或 state，所以 dependencies 是空的，也就是說不會被重新宣告。但如果你在實作時有這個需求，請務必記得加上去，避免出現非預期的結果。</p>
+<p>useCallback 在這邊的任務就是「檢查 dependencies 有沒有變？」，如果沒有，就會回傳 cache 住的 function（就是原本的那個啦），反之則重新宣告一個新的 function。</p>
+<p>既然現在 function 不會被重新宣告，那麼就可以把它填入 <code>useEffect</code> 的 dependencies 中，不會再進入無限迴圈囉！</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/04/07/react-use-memo/">React 的第七個 hook：useMemo</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/04/07/react-memo/">React 的第五個 hook：memo</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

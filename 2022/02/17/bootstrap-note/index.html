@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Bootstrap 隨筆記 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="邊學邊紀錄。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bootstrap 隨筆記">
+<meta property="og:url" content="https://jubeatt.github.io/2022/02/17/bootstrap-note/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="邊學邊紀錄。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/02/17/bootstrap-note/container.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/02/17/bootstrap-note/colors.jpg">
+<meta property="article:published_time" content="2022-02-17T08:39:29.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.237Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/02/17/bootstrap-note/container.jpg">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#其他">1&nbsp;&nbsp;<b>其他</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#container">2&nbsp;&nbsp;<b>container</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#width-height">3&nbsp;&nbsp;<b>width / height</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#width">3.1&nbsp;&nbsp;width</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#height">3.2&nbsp;&nbsp;height</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#border">4&nbsp;&nbsp;<b>border</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#方向">4.1&nbsp;&nbsp;方向</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#寬度">4.2&nbsp;&nbsp;寬度</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#圓角">4.3&nbsp;&nbsp;圓角</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#圓角尺寸">4.4&nbsp;&nbsp;圓角尺寸</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#display">5&nbsp;&nbsp;<b>display</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Text">6&nbsp;&nbsp;<b>Text</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#對齊">6.1&nbsp;&nbsp;對齊</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#粗細">6.2&nbsp;&nbsp;粗細</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#大小寫">6.3&nbsp;&nbsp;大小寫</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#文字大小">6.4&nbsp;&nbsp;文字大小</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#顏色">6.5&nbsp;&nbsp;顏色</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Flex">7&nbsp;&nbsp;<b>Flex</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#方向-1">7.1&nbsp;&nbsp;方向</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#主軸">7.2&nbsp;&nbsp;主軸</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#次軸">7.3&nbsp;&nbsp;次軸</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#子次軸">7.4&nbsp;&nbsp;子次軸</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#收縮-展開">7.5&nbsp;&nbsp;收縮 / 展開</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#換行">7.6&nbsp;&nbsp;換行</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#順序">7.7&nbsp;&nbsp;順序</a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Bootstrap 隨筆記
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>2月 17 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Bootstrap/">Bootstrap</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>邊學邊紀錄。</p>
+<span id="more"></span>
+
+
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>有自動設定 <code>border-box</code></li>
+<li><code>&lt;img&gt;</code> 自帶 <code>vertical-align: middle</code></li>
+</ul>
+<h2 id="container"><a href="#container" class="headerlink" title="container"></a>container</h2><p>分成 <code>container</code> 跟 <code>container-fluid</code>，前者是根據下圖在不同分界點設定 max-width：</p>
+<p><img src="container.jpg" alt="container"></p>
+<p>後者就是永遠 100% 寬度。</p>
+<p>如果不想設 fluid 但又想針對某些裝置做滿版，可以加上尾綴字：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container-sm"</span>&gt;</span>576px 以下 100%<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container-md"</span>&gt;</span>768px 以下 100%<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container-lg"</span>&gt;</span>992px 以下 100%<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container-xl"</span>&gt;</span>1200px 以下 100%<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container-xxl"</span>&gt;</span>1400px 以下 100%<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<h2 id="width-height"><a href="#width-height" class="headerlink" title="width / height"></a>width / height</h2><h5 id="width"><a href="#width" class="headerlink" title="width"></a>width</h5><ul>
+<li><code>w-25</code></li>
+<li><code>w-50</code></li>
+<li><code>w-75</code></li>
+<li><code>w-100</code></li>
+<li><code>w-auto</code></li>
+<li><code>mw-100</code></li>
+</ul>
+<h5 id="height"><a href="#height" class="headerlink" title="height"></a>height</h5><ul>
+<li><code>h-25</code></li>
+<li><code>h-50</code></li>
+<li><code>h-75</code></li>
+<li><code>h-100</code></li>
+<li><code>h-auto</code></li>
+<li><code>mh-100</code></li>
+<li><code>min-vh-100</code></li>
+<li><code>vh-100</code></li>
+</ul>
+<h2 id="border"><a href="#border" class="headerlink" title="border"></a>border</h2><h5 id="方向"><a href="#方向" class="headerlink" title="方向"></a>方向</h5><p><code>border</code><br><code>border-top</code><br><code>border-end</code><br><code>border-bottom</code><br><code>border-start</code></p>
+<h5 id="寬度"><a href="#寬度" class="headerlink" title="寬度"></a>寬度</h5><p><code>border border-1</code><br><code>border border-2</code><br><code>border border-3</code><br><code>border border-4</code><br><code>border border-5</code></p>
+<h5 id="圓角"><a href="#圓角" class="headerlink" title="圓角"></a>圓角</h5><p><code>rounded</code><br><code>rounded-top</code><br><code>rounded-end</code><br><code>rounded-bottom</code><br><code>rounded-start</code><br><code>rounded-circle</code><br><code>rounded-pill</code></p>
+<h5 id="圓角尺寸"><a href="#圓角尺寸" class="headerlink" title="圓角尺寸"></a>圓角尺寸</h5><p><code>rounded-0</code><br><code>rounded-1</code><br><code>rounded-2</code><br><code>rounded-3</code></p>
+<h2 id="display"><a href="#display" class="headerlink" title="display"></a>display</h2><ul>
+<li><code>d-flex</code></li>
+<li><code>d-inline-flex</code></li>
+<li><code>d-inline</code></li>
+<li><code>d-inline-block</code></li>
+<li><code>d-block</code></li>
+<li><code>d-grid</code></li>
+</ul>
+<h2 id="Text"><a href="#Text" class="headerlink" title="Text"></a>Text</h2><h5 id="對齊"><a href="#對齊" class="headerlink" title="對齊"></a>對齊</h5><ul>
+<li><code>text-start</code></li>
+<li><code>text-center</code></li>
+<li><code>text-end</code></li>
+</ul>
+<h5 id="粗細"><a href="#粗細" class="headerlink" title="粗細"></a>粗細</h5><p><code>fw-bold</code><br><code>fw-bolder</code><br><code>fw-normal</code><br><code>fw-light</code><br><code>fw-lighter</code><br><code>fst-italic</code><br><code>fst-normal</code></p>
+<h5 id="大小寫"><a href="#大小寫" class="headerlink" title="大小寫"></a>大小寫</h5><ul>
+<li><code>text-lowercase</code></li>
+<li><code>text-uppercase</code></li>
+<li><code>text-capitalize</code></li>
+</ul>
+<h5 id="文字大小"><a href="#文字大小" class="headerlink" title="文字大小"></a>文字大小</h5><ul>
+<li><code>fs-1</code></li>
+<li><code>fs-2</code></li>
+<li><code>fs-3</code></li>
+<li><code>fs-4</code></li>
+<li><code>fs-5</code></li>
+<li><code>fs-6</code></li>
+</ul>
+<h5 id="顏色"><a href="#顏色" class="headerlink" title="顏色"></a>顏色</h5><p><img src="colors.jpg" alt="colors"></p>
+<ul>
+<li><code>text-primary</code></li>
+<li><code>text-secondary</code></li>
+<li><code>text-success</code></li>
+<li><code>text-danger</code></li>
+<li><code>text-warning</code></li>
+<li><code>text-info</code></li>
+<li><code>text-light</code></li>
+<li><code>text-dark</code></li>
+<li><code>text-body</code></li>
+<li><code>text-muted</code></li>
+<li><code>text-white</code></li>
+<li><code>text-black-50</code></li>
+<li><code>text-white-50</code></li>
+</ul>
+<h2 id="Flex"><a href="#Flex" class="headerlink" title="Flex"></a>Flex</h2><h5 id="方向-1"><a href="#方向-1" class="headerlink" title="方向"></a>方向</h5><ul>
+<li><code>flex-row</code></li>
+<li><code>flex-row-reverse</code></li>
+<li><code>flex-column</code></li>
+<li><code>flex-column-reverse</code></li>
+</ul>
+<h5 id="主軸"><a href="#主軸" class="headerlink" title="主軸"></a>主軸</h5><ul>
+<li><code>justify-content-start</code></li>
+<li><code>justify-content-end</code></li>
+<li><code>justify-content-center</code></li>
+<li><code>justify-content-between</code></li>
+<li><code>justify-content-around</code></li>
+<li><code>justify-content-evenly</code></li>
+</ul>
+<h5 id="次軸"><a href="#次軸" class="headerlink" title="次軸"></a>次軸</h5><ul>
+<li><code>align-items-start</code></li>
+<li><code>align-items-end</code></li>
+<li><code>align-items-center</code></li>
+<li><code>align-items-baseline</code></li>
+<li><code>align-items-stretch</code></li>
+</ul>
+<h5 id="子次軸"><a href="#子次軸" class="headerlink" title="子次軸"></a>子次軸</h5><ul>
+<li><code>align-self-start</code></li>
+<li><code>align-self-end</code></li>
+<li><code>align-self-center</code></li>
+<li><code>align-self-baseline</code></li>
+<li><code>align-self-stretch</code></li>
+</ul>
+<h5 id="收縮-展開"><a href="#收縮-展開" class="headerlink" title="收縮 / 展開"></a>收縮 / 展開</h5><ul>
+<li><code>flex-grow-1</code></li>
+<li><code>flex-shrink-1</code></li>
+</ul>
+<h5 id="換行"><a href="#換行" class="headerlink" title="換行"></a>換行</h5><ul>
+<li><code>flex-nowrap</code></li>
+<li><code>flex-wrap</code></li>
+</ul>
+<h5 id="順序"><a href="#順序" class="headerlink" title="順序"></a>順序</h5><ul>
+<li><code>order-0</code></li>
+<li><code>order-1</code></li>
+<li><code>order-2</code></li>
+<li><code>order-3</code></li>
+<li><code>order-4</code></li>
+<li><code>order-5</code></li>
+</ul>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/02/18/mentor-program-day66/">mentor-program-day66</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/02/17/mentor-program-day65/">mentor-program-day65</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>React 之在戰圈圈叉叉，來加上時光機的功能吧！ - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="為了釐清思路，費了一番功夫呀。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React 之在戰圈圈叉叉，來加上時光機的功能吧！">
+<meta property="og:url" content="https://jubeatt.github.io/2022/04/16/react-tic-tac-toe-add-time-machine/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="為了釐清思路，費了一番功夫呀。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/04/16/react-tic-tac-toe-add-time-machine/history.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/04/16/react-tic-tac-toe-add-time-machine/step.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/04/16/react-tic-tac-toe-add-time-machine/implement-01.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/04/16/react-tic-tac-toe-add-time-machine/implement-02.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/04/16/react-tic-tac-toe-add-time-machine/jump.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/04/16/react-tic-tac-toe-add-time-machine/finish-01.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/04/16/react-tic-tac-toe-add-time-machine/time-travel.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/04/16/react-tic-tac-toe-add-time-machine/bug.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/04/16/react-tic-tac-toe-add-time-machine/finish-02.gif">
+<meta property="article:published_time" content="2022-04-16T07:23:11.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.606Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/04/16/react-tic-tac-toe-add-time-machine/history.jpg">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡述">1&nbsp;&nbsp;<b>簡述</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#思考新的資料結構">2&nbsp;&nbsp;<b>思考新的資料結構</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#把狀態轉移到更上層">3&nbsp;&nbsp;<b>把狀態轉移到更上層</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#更新資料結構">4&nbsp;&nbsp;<b>更新資料結構</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#顯示歷史紀錄">5&nbsp;&nbsp;<b>顯示歷史紀錄</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#實作跳躍功能">6&nbsp;&nbsp;<b>實作跳躍功能</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#作法一">6.1&nbsp;&nbsp;作法一</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#作法二">6.2&nbsp;&nbsp;作法二</a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            React 之在戰圈圈叉叉，來加上時光機的功能吧！
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>4月 16 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/React/">React</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>為了釐清思路，費了一番功夫呀。</p>
+<span id="more"></span>
+
+<h2 id="簡述"><a href="#簡述" class="headerlink" title="簡述"></a>簡述</h2><p>繼上一篇 <a href="https://jubeatt.github.io/2022/04/15/react-tic-tac-toe-basic/">想用 React 做出五子棋嗎？先從圈圈叉叉開始吧</a> 以後，我們成功做出基本的圈圈叉叉了。</p>
+<p>這一次我們來試著幫它加上更厲害的功能吧，就是標題提到的時光機～</p>
+<p>這個功能雖然看起來蠻簡單的，但背後還蠻多細節要考慮的，所以這篇的難度相對來說會比原本的更難一些，不過還是先祝你一切順利，加油吧！</p>
+<h2 id="思考新的資料結構"><a href="#思考新的資料結構" class="headerlink" title="思考新的資料結構"></a>思考新的資料結構</h2><p>為了把每一次的棋盤狀態都保留下來，所以得先改變一開始的資料結構，原本是長這樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> squares = [</span><br><span class="line">  <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>,</span><br><span class="line">  <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>,</span><br><span class="line">  <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>,</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>要改成這樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">history = [</span><br><span class="line">  <span class="hljs-comment">// 第一次</span></span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">squares</span>: [</span><br><span class="line">      <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>,</span><br><span class="line">      <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>,</span><br><span class="line">      <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>,</span><br><span class="line">    ]</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-comment">// 第二次</span></span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">squares</span>: [</span><br><span class="line">      <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>,</span><br><span class="line">      <span class="hljs-literal">null</span>, <span class="hljs-string">'X'</span>, <span class="hljs-literal">null</span>,</span><br><span class="line">      <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>,</span><br><span class="line">    ]</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-comment">// ...</span></span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>一個「陣列包物件」，「物件裡面又包陣列」的結構。</p>
+<h2 id="把狀態轉移到更上層"><a href="#把狀態轉移到更上層" class="headerlink" title="把狀態轉移到更上層"></a>把狀態轉移到更上層</h2><p>不過在那之前，先讓我們把 <code>&lt;Board /&gt;</code> 的 state 轉移到最上層的 <code>&lt;Game /&gt;</code>，讓它來管理整個遊戲的 state，修改完以後應該要這樣：</p>
+<p><code>&lt;Board /&gt;</code> 的部分：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 接收傳進來的 squares 跟 handleUpdateSquares</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Board</span>(<span class="hljs-params">{ squares, handleUpdateSquares }</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> renderSquare = <span class="hljs-function">(<span class="hljs-params">i</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">return</span> (</span><br><span class="line">      <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Square</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">value</span>=<span class="hljs-string">{squares[i]}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">handleUpdateSquares</span>=<span class="hljs-string">{()</span> =&gt;</span> handleUpdateSquares(i)}</span></span><br><span class="line"><span class="hljs-xml">      /&gt;</span></span><br><span class="line">    );</span><br><span class="line">  };</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"board-row"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        {renderSquare(0)}</span></span><br><span class="line"><span class="hljs-xml">        {renderSquare(1)}</span></span><br><span class="line"><span class="hljs-xml">        {renderSquare(2)}</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"board-row"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        {renderSquare(3)}</span></span><br><span class="line"><span class="hljs-xml">        {renderSquare(4)}</span></span><br><span class="line"><span class="hljs-xml">        {renderSquare(5)}</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"board-row"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        {renderSquare(6)}</span></span><br><span class="line"><span class="hljs-xml">        {renderSquare(7)}</span></span><br><span class="line"><span class="hljs-xml">        {renderSquare(8)}</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>&lt;Game /&gt;</code> 的部分：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Game</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 移來上層的 state 跟其他東西</span></span><br><span class="line">  <span class="hljs-keyword">const</span> [squares, setSquares] = useState(<span class="hljs-built_in">Array</span>(<span class="hljs-number">9</span>).fill(<span class="hljs-literal">null</span>));</span><br><span class="line">  <span class="hljs-keyword">const</span> [xIsNext, setXIsNext] = useState(<span class="hljs-literal">true</span>);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">let</span> status;</span><br><span class="line">  <span class="hljs-keyword">const</span> winner = calculateWinner(squares);</span><br><span class="line">  <span class="hljs-keyword">if</span> (!winner &amp;&amp; !squares.includes(<span class="hljs-literal">null</span>)) {</span><br><span class="line">    status = <span class="hljs-string">"draw!"</span>;</span><br><span class="line">  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (winner) {</span><br><span class="line">    status = <span class="hljs-string">`Winner is <span class="hljs-subst">${winner}</span>`</span>;</span><br><span class="line">  } <span class="hljs-keyword">else</span> {</span><br><span class="line">    status = <span class="hljs-string">`Next player is <span class="hljs-subst">${xIsNext ? <span class="hljs-string">"X"</span> : <span class="hljs-string">"O"</span>}</span>`</span>;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> handleUpdateSquares = <span class="hljs-function">(<span class="hljs-params">i</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 已經有贏家 or 已經點過</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (calculateWinner(squares) || squares[i]) <span class="hljs-keyword">return</span>;</span><br><span class="line">    <span class="hljs-comment">// 更新 state</span></span><br><span class="line">    <span class="hljs-keyword">const</span> copySquares = squares.slice();</span><br><span class="line">    copySquares[i] = xIsNext ? <span class="hljs-string">"X"</span> : <span class="hljs-string">"O"</span>;</span><br><span class="line">    setSquares(copySquares);</span><br><span class="line">    setXIsNext(!xIsNext);</span><br><span class="line">  };</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"game"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"game-board"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        // 傳進去給 <span class="hljs-tag">&lt;<span class="hljs-name">Borad</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Board</span> <span class="hljs-attr">squares</span>=<span class="hljs-string">{squares}</span> <span class="hljs-attr">handleUpdateSquares</span>=<span class="hljs-string">{handleUpdateSquares}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"game-info"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        // staus 也移到最上層</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>{status}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">ol</span>&gt;</span>{/* TODO */}<span class="hljs-tag">&lt;/<span class="hljs-name">ol</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>做到這邊以後，遊戲要一樣能正常運行，不會壞掉，壞掉的話代表你有地方做錯了，再多檢查幾次吧！</p>
+<h2 id="更新資料結構"><a href="#更新資料結構" class="headerlink" title="更新資料結構"></a>更新資料結構</h2><p>接著就可以根據最開始設計的資料結構來做調整了，首先來調整 <code>&lt;Game /&gt;</code> 的部分。</p>
+<p>這邊要做的事情其實跟第一個版本是一模一樣的，只是因為資料結構變複雜了，所以可能要多想一下才看得懂在幹嘛，建議就多看註解多想幾遍吧：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Game</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">/* 1. 改變資料結構 */</span></span><br><span class="line">  <span class="hljs-keyword">const</span> [history, setHistory] = useState([{ <span class="hljs-attr">squares</span>: <span class="hljs-built_in">Array</span>(<span class="hljs-number">9</span>).fill(<span class="hljs-literal">null</span>) }]);</span><br><span class="line">  <span class="hljs-keyword">const</span> [xIsNext, setXIsNext] = useState(<span class="hljs-literal">true</span>);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">/* 2. 每次 re-render 時要判斷輸贏的部分 */</span></span><br><span class="line">  <span class="hljs-keyword">let</span> status;</span><br><span class="line">  <span class="hljs-comment">// 拿到最後一筆棋盤狀態的 object</span></span><br><span class="line">  <span class="hljs-keyword">const</span> latest = history[history.length - <span class="hljs-number">1</span>];</span><br><span class="line">  <span class="hljs-comment">// 根據棋盤的狀態計算輸贏</span></span><br><span class="line">  <span class="hljs-keyword">const</span> winner = calculateWinner(latest.squares);</span><br><span class="line">  <span class="hljs-comment">// 根據狀態顯示不同訊息</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (!winner &amp;&amp; !latest.squares.includes(<span class="hljs-literal">null</span>)) {</span><br><span class="line">    status = <span class="hljs-string">"draw!"</span>;</span><br><span class="line">  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (winner) {</span><br><span class="line">    status = <span class="hljs-string">`Winner is <span class="hljs-subst">${winner}</span>`</span>;</span><br><span class="line">  } <span class="hljs-keyword">else</span> {</span><br><span class="line">    status = <span class="hljs-string">`Next player is <span class="hljs-subst">${xIsNext ? <span class="hljs-string">"X"</span> : <span class="hljs-string">"O"</span>}</span>`</span>;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">/* 3. event handler 的部分 */</span></span><br><span class="line">  <span class="hljs-keyword">const</span> handleUpdateSquares = <span class="hljs-function">(<span class="hljs-params">i</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 拿到最後一筆棋盤狀態的 object</span></span><br><span class="line">    <span class="hljs-keyword">const</span> latest = history[history.length - <span class="hljs-number">1</span>];</span><br><span class="line">    <span class="hljs-comment">// 已經有贏家 or 已經點過</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (calculateWinner(latest.squares) || latest.squares[i]) <span class="hljs-keyword">return</span>;</span><br><span class="line">    <span class="hljs-comment">// 複製原本的棋盤狀態</span></span><br><span class="line">    <span class="hljs-keyword">const</span> newSquares = latest.squares.slice();</span><br><span class="line">    <span class="hljs-comment">// 把改變的地方更新值</span></span><br><span class="line">    newSquares[i] = xIsNext ? <span class="hljs-string">"X"</span> : <span class="hljs-string">"O"</span>;</span><br><span class="line">    <span class="hljs-comment">// 更新 state</span></span><br><span class="line">    setHistory([...history, { <span class="hljs-attr">squares</span>: newSquares }]);</span><br><span class="line">    setXIsNext(!xIsNext);</span><br><span class="line">  };</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"game"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"game-board"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Board</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          // 把最新的棋盤狀態傳進去</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">squares</span>=<span class="hljs-string">{latest.squares}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          // <span class="hljs-attr">event</span> <span class="hljs-attr">handler</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">handleUpdateSquares</span>=<span class="hljs-string">{handleUpdateSquares}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"game-info"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>{status}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">ol</span>&gt;</span>{/* TODO */}<span class="hljs-tag">&lt;/<span class="hljs-name">ol</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p>做到這邊以後，遊戲一樣能正常運作，同時也把每一步的紀錄留下了：</p>
+<p><img src="history.jpg" alt="history"></p>
+<h2 id="顯示歷史紀錄"><a href="#顯示歷史紀錄" class="headerlink" title="顯示歷史紀錄"></a>顯示歷史紀錄</h2><p>既然已經有對應的 state，就可以利用它來把歷史紀錄顯示到畫面上。</p>
+<p>先建立一個用來顯示按鈕的 Component：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ListItem</span>(<span class="hljs-params">{ step }</span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 記得要對還沒下半步棋之前的訊息做調整</span></span><br><span class="line">  <span class="hljs-keyword">const</span> content = step === <span class="hljs-number">0</span> ? <span class="hljs-string">`Go to start`</span> : <span class="hljs-string">`Go to <span class="hljs-subst">${step}</span>`</span>;</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>{content}<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊會接收一個 <code>step</code>，表示這是回到第 N 個步驟的按鈕，至於 <code>&lt;Game /&gt;</code> 的部分也要做對應的處理：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Game</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [history, setHistory] = useState([{ <span class="hljs-attr">squares</span>: <span class="hljs-built_in">Array</span>(<span class="hljs-number">9</span>).fill(<span class="hljs-literal">null</span>) }]);</span><br><span class="line">  <span class="hljs-keyword">const</span> [xIsNext, setXIsNext] = useState(<span class="hljs-literal">true</span>);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"game"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"game-board"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Board</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">squares</span>=<span class="hljs-string">{latest.squares}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">handleUpdateSquares</span>=<span class="hljs-string">{handleUpdateSquares}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"game-info"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>{status}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        // 遍歷 history 來渲染 N 個按鈕</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          {history.map((item, step) =&gt; (</span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">ListItem</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{step}</span> <span class="hljs-attr">step</span>=<span class="hljs-string">{step}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          ))}</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>做到這邊後，結果會像這樣：</p>
+<p><img src="step.gif" alt="step"></p>
+<h2 id="實作跳躍功能"><a href="#實作跳躍功能" class="headerlink" title="實作跳躍功能"></a>實作跳躍功能</h2><p>畫面 OK 以後，就可以來處理點下按鈕後跳躍的功能。</p>
+<p>這邊有兩種做法，一種是<strong>跳躍後直接拋棄後面的紀錄</strong>，一種是<strong>跳躍後又走下一步時才拋棄紀錄</strong>，聽不太懂的話參考下面的兩張圖：</p>
+<p><img src="implement-01.gif" alt="implement-01"></p>
+<p><img src="implement-02.gif" alt="implement-02"></p>
+<p>第一種比較簡單，第二種是官方教學的作法。這邊我覺得先理解第一種要怎麼做以後，再來學第二種會比較好懂一點，所以會先講第一種的作法。</p>
+<h3 id="作法一"><a href="#作法一" class="headerlink" title="作法一"></a>作法一</h3><p>首先來做跳躍的函式：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> handleJumTo = <span class="hljs-function">(<span class="hljs-params">step</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> newHistory = history.slice(<span class="hljs-number">0</span>, step + <span class="hljs-number">1</span>);</span><br><span class="line">  setHistory(newHistory);</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+
+<p>只要根據傳入的 <code>step</code> 去更新 <code>history</code> 就行了，不過要注意一下 slice 的用法。假如我要回到一開始（<code>step=0</code>），那 <code>slice(0, 0)</code> 只會留下空陣列，所以才要 <code>step + 1</code>。</p>
+<p>接著把這個函式傳入 <code>&lt;ListItem /&gt;</code>：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Game</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// ...</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> handleJumTo = <span class="hljs-function">(<span class="hljs-params">step</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// slice(0 ,1) =&gt; 留下一個</span></span><br><span class="line">    <span class="hljs-comment">// slice(0, 2) =&gt; 留下兩個</span></span><br><span class="line">    <span class="hljs-keyword">const</span> newHistory = history.slice(<span class="hljs-number">0</span>, step + <span class="hljs-number">1</span>);</span><br><span class="line">    setHistory(newHistory);</span><br><span class="line">  };</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"game"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"game-board"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Board</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">squares</span>=<span class="hljs-string">{latest.squares}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">handleUpdateSquares</span>=<span class="hljs-string">{handleUpdateSquares}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"game-info"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>{status}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          {history.map((item, step) =&gt; (</span></span><br><span class="line"><span class="hljs-xml">            // 傳進去</span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">ListItem</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{step}</span> <span class="hljs-attr">step</span>=<span class="hljs-string">{step}</span> <span class="hljs-attr">handleJumTo</span>=<span class="hljs-string">{handleJumTo}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          ))}</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>最後在 <code>&lt;ListItem /&gt;</code>  接收：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ListItem</span>(<span class="hljs-params">{ step, handleJumTo }</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> content = step === <span class="hljs-number">0</span> ? <span class="hljs-string">`Go to start`</span> : <span class="hljs-string">`Go to <span class="hljs-subst">${step}</span>`</span>;</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> handleJumTo(step)}&gt;{content}<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>注意因為要傳入參數，所以 onClick 的 handler 得在包一層 function，如果 arrow function 看不太懂的話，寫成這樣應該會好懂一些：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ListItem</span>(<span class="hljs-params">{ step, handleJumTo }</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> content = step === <span class="hljs-number">0</span> ? <span class="hljs-string">`Go to start`</span> : <span class="hljs-string">`Go to <span class="hljs-subst">${step}</span>`</span>;</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{fuunction</span> () {</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">handleJumTo</span>(<span class="hljs-attr">step</span>) </span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      }}&gt;</span>{content}<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：如果你是寫 class component 的話請務必用<strong>箭頭函式</strong>，不然會有 this 值跑掉的問題。</p>
+<p>做到這邊，跳躍功能就完成了。</p>
+<p><img src="jump.gif" alt="jump"></p>
+<p>確實 OK 了，不過有個地方沒做好，就是目前 player 的狀態應該也要跟著改變才對，現在不管回到第幾步都是輪到 X，所以在跳躍時應該順便做對應的處理：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> handleJumTo = <span class="hljs-function">(<span class="hljs-params">step</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> newHistory = history.slice(<span class="hljs-number">0</span>, step + <span class="hljs-number">1</span>);</span><br><span class="line">  setHistory(newHistory);</span><br><span class="line">  <span class="hljs-comment">// 更新 player 狀態</span></span><br><span class="line">  setXIsNext(step % <span class="hljs-number">2</span> === <span class="hljs-number">0</span>);</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+
+<p>X 會出現在第「奇數」步，所以當 <code>step</code> 是偶數時要把 <code>XIsNext</code> 設為 true，反之 false。</p>
+<p><img src="finish-01.gif" alt="finish-01"></p>
+<p>做到這邊，整個跳躍的功能就完成了。</p>
+<p>順道一提，如果你覺得最後一個按鈕有點多餘的話，可以在渲染 <code>&lt;ListItem /&gt;</code> 的時候多做一道處理：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  <span class="hljs-comment">// 先 slice 掉最後一筆再 map</span></span><br><span class="line">  {history.slice(<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>).map(<span class="hljs-function">(<span class="hljs-params">item, step</span>) =&gt;</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">ListItem</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{step}</span> <span class="hljs-attr">step</span>=<span class="hljs-string">{step}</span> <span class="hljs-attr">handleJumTo</span>=<span class="hljs-string">{handleJumTo}</span> /&gt;</span></span></span><br><span class="line">  ))}</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p>第一種做法就到這邊結束，這邊附上<a target="_blank" rel="noopener" href="https://codesandbox.io/s/guan-fang-jiao-xue-hook-tiao-yue-ban-ben-yi-kjrd5k?file=/src/App.js">原始碼</a>，有興趣可以參考看看。</p>
+<h3 id="作法二"><a href="#作法二" class="headerlink" title="作法二"></a>作法二</h3><p>接下來要介紹第二種作法。</p>
+<p>首先，為了不在跳躍時直接清掉歷史紀錄，我們得先新增一個 state，用來記錄目前處於哪一步：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Game</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [history, setHistory] = useState([{ <span class="hljs-attr">squares</span>: <span class="hljs-built_in">Array</span>(<span class="hljs-number">9</span>).fill(<span class="hljs-literal">null</span>) }]);</span><br><span class="line">  <span class="hljs-keyword">const</span> [xIsNext, setXIsNext] = useState(<span class="hljs-literal">true</span>);</span><br><span class="line">  <span class="hljs-comment">// 新增目前步數的 state</span></span><br><span class="line">  <span class="hljs-keyword">const</span> [stepNumber, setStepNumber] = useState(<span class="hljs-number">0</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="hljs-comment">// ...</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p>這邊會希望根據這個 state 來顯示目前的棋盤，所以得修改幾個地方：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Game</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [history, setHistory] = useState([{ <span class="hljs-attr">squares</span>: <span class="hljs-built_in">Array</span>(<span class="hljs-number">9</span>).fill(<span class="hljs-literal">null</span>) }]);</span><br><span class="line">  <span class="hljs-keyword">const</span> [xIsNext, setXIsNext] = useState(<span class="hljs-literal">true</span>);</span><br><span class="line">  <span class="hljs-keyword">const</span> [stepNumber, setStepNumber] = useState(<span class="hljs-number">0</span>);</span><br><span class="line">  <span class="hljs-comment">/* 1. 修改 latest 的值 */</span></span><br><span class="line">  <span class="hljs-comment">// 原本是 const latest = history[history.length - 1];</span></span><br><span class="line">  <span class="hljs-keyword">const</span> latest = history[stepNumber];</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> winner = calculateWinner(latest.squares);</span><br><span class="line">  <span class="hljs-keyword">let</span> status;</span><br><span class="line">  <span class="hljs-keyword">if</span> (!winner &amp;&amp; !latest.squares.includes(<span class="hljs-literal">null</span>)) {</span><br><span class="line">    status = <span class="hljs-string">"draw!"</span>;</span><br><span class="line">  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (winner) {</span><br><span class="line">    status = <span class="hljs-string">`Winner is <span class="hljs-subst">${winner}</span>`</span>;</span><br><span class="line">  } <span class="hljs-keyword">else</span> {</span><br><span class="line">    status = <span class="hljs-string">`Next player is <span class="hljs-subst">${xIsNext ? <span class="hljs-string">"X"</span> : <span class="hljs-string">"O"</span>}</span>`</span>;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> handleJumTo = <span class="hljs-function">(<span class="hljs-params">step</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">/* 2. 點下跳躍按鈕時更新 stepNumber  */</span></span><br><span class="line">    setStepNumber(step);</span><br><span class="line">    setXIsNext(step % <span class="hljs-number">2</span> === <span class="hljs-number">0</span>);</span><br><span class="line">  };</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> handleUpdateSquares = <span class="hljs-function">(<span class="hljs-params">i</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">const</span> latest = history[history.length - <span class="hljs-number">1</span>];</span><br><span class="line">    <span class="hljs-keyword">if</span> (calculateWinner(latest.squares) || latest.squares[i]) <span class="hljs-keyword">return</span>;</span><br><span class="line">    <span class="hljs-keyword">const</span> newSquares = latest.squares.slice();</span><br><span class="line">    newSquares[i] = xIsNext ? <span class="hljs-string">"X"</span> : <span class="hljs-string">"O"</span>;</span><br><span class="line">    setHistory([...history, { <span class="hljs-attr">squares</span>: newSquares }]);</span><br><span class="line">    setXIsNext(!xIsNext);</span><br><span class="line">    <span class="hljs-comment">/* 3. 更新下棋後的 stepNumber  */</span></span><br><span class="line">    setStepNumber(history.length);</span><br><span class="line">  };</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"game"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"game-board"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Board</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">squares</span>=<span class="hljs-string">{latest.squares}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">handleUpdateSquares</span>=<span class="hljs-string">{handleUpdateSquares}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"game-info"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>{status}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          {history.map((item, step) =&gt; (</span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">ListItem</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{step}</span> <span class="hljs-attr">step</span>=<span class="hljs-string">{step}</span> <span class="hljs-attr">handleJumTo</span>=<span class="hljs-string">{handleJumTo}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          ))}</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>做到這邊後，應該就有這樣的效果：</p>
+<p><img src="time-travel.gif" alt="time-travel"></p>
+<p>看起來好像完成了？但很抱歉，並沒有，還有一個地方得調整才行。</p>
+<p>剛剛只有示範跳躍的流程是否正常運作，<strong>並沒有接著繼續下棋</strong>。可是如果在跳躍完以後又繼續下棋的話，會怎麼樣呢？</p>
+<p>先提示一下，主要的問題出在下面這段 code。這邊我卡蠻久的，建議大家可以先自己想想看再滑下去看答案。</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> handleUpdateSquares = <span class="hljs-function">(<span class="hljs-params">i</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> latest = history[history.length - <span class="hljs-number">1</span>];</span><br><span class="line">  <span class="hljs-keyword">if</span> (calculateWinner(latest.squares) || latest.squares[i]) <span class="hljs-keyword">return</span>;</span><br><span class="line">  <span class="hljs-keyword">const</span> newSquares = latest.squares.slice();</span><br><span class="line">  newSquares[i] = xIsNext ? <span class="hljs-string">"X"</span> : <span class="hljs-string">"O"</span>;</span><br><span class="line">  setHistory([...history, { <span class="hljs-attr">squares</span>: newSquares }]);</span><br><span class="line">  setXIsNext(!xIsNext);</span><br><span class="line">  setStepNumber(history.length);</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊的問題有兩個：</p>
+<ol>
+<li>沒有根據<strong>目前在第幾步</strong>來清除不要的歷史紀錄，而是一直沿用上一次的歷史紀錄</li>
+<li>來自第一個問題，因為<strong>沒有清掉紀錄</strong>，所以 <code>stepNumber</code> 的值也會是錯的</li>
+</ol>
+<p>這樣講可能有點抽象，所以我舉個例子吧。</p>
+<p>假設我下了六步棋，接著我跳回第一步，再下第二步棋，那根據上面的 code 會這樣執行：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> handleUpdateSquares = <span class="hljs-function">(<span class="hljs-params">i</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// 先取出上次的最後一筆歷史紀錄（也就是第六步的紀錄）</span></span><br><span class="line">  <span class="hljs-keyword">const</span> latest = history[history.length - <span class="hljs-number">1</span>];</span><br><span class="line">  <span class="hljs-comment">// 判斷是不是已經分出勝負 &amp;&amp; 格子是不是被下過了，</span></span><br><span class="line">  <span class="hljs-comment">// 有的話就不再往下執行</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (calculateWinner(latest.squares) || latest.squares[i]) <span class="hljs-keyword">return</span>;</span><br><span class="line">  <span class="hljs-comment">// 複製一份上次的棋盤狀態（也就是第六步的紀錄）</span></span><br><span class="line">  <span class="hljs-keyword">const</span> newSquares = latest.squares.slice();</span><br><span class="line">  <span class="hljs-comment">// 把要改的地方更新為 O 或 X </span></span><br><span class="line">  newSquares[i] = xIsNext ? <span class="hljs-string">"X"</span> : <span class="hljs-string">"O"</span>;</span><br><span class="line">  <span class="hljs-comment">// copy 原本的 history，並插入剛剛新產生的棋盤狀態（這邊等於是產生第七筆的紀錄）</span></span><br><span class="line">  setHistory([...history, { <span class="hljs-attr">squares</span>: newSquares }]);</span><br><span class="line">  <span class="hljs-comment">// 更新 player</span></span><br><span class="line">  setXIsNext(!xIsNext);</span><br><span class="line">  <span class="hljs-comment">// 把步驟數更新為新的 history 的長度（第七步）</span></span><br><span class="line">  setStepNumber(history.length);</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+
+<p>注意到問題了嗎？我們原本預期的結果應該要是「把第一步以後的歷史紀錄都清掉，並把步驟數設為第二步」，出來的結果卻是歷史紀錄依然遞增成七筆，而且步驟數也遞增為七。</p>
+<p>所以這時候就會產生這種很詭異的結果：</p>
+<p><img src="bug.gif" alt="bug"></p>
+<p>簡單來說就是<strong>畫面跟 state 不同步</strong>的問題。雖然畫面上的棋盤看起來是空的，但在 state 裡面它已經被點過了，所以才會怎麼點都沒用，只有在我點了 state 裡沒被下過的地方才可以（最後的右下角）。</p>
+<p>所以來修正一下這個 bug 吧：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> handleUpdateSquares = <span class="hljs-function">(<span class="hljs-params">i</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// 根據目前的步驟數，取出上一次的歷史紀錄</span></span><br><span class="line">  <span class="hljs-keyword">const</span> latest = history[stepNumber];</span><br><span class="line">  <span class="hljs-comment">// 已經有贏家 or 已經點過</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (calculateWinner(latest.squares) || latest.squares[i]) <span class="hljs-keyword">return</span>;</span><br><span class="line">  <span class="hljs-comment">// 複製原本的棋盤狀態</span></span><br><span class="line">  <span class="hljs-keyword">const</span> newSquares = latest.squares.slice();</span><br><span class="line">  <span class="hljs-comment">// 把改變的地方更新值</span></span><br><span class="line">  newSquares[i] = xIsNext ? <span class="hljs-string">"X"</span> : <span class="hljs-string">"O"</span>;</span><br><span class="line">  <span class="hljs-comment">// 根據目前的步驟數，保留真正需要的歷史紀錄</span></span><br><span class="line">  <span class="hljs-keyword">const</span> newHistory = history.slice(<span class="hljs-number">0</span>, stepNumber + <span class="hljs-number">1</span>);</span><br><span class="line">  <span class="hljs-comment">// 更新 history</span></span><br><span class="line">  setHistory([...newHistory, { <span class="hljs-attr">squares</span>: newSquares }]);</span><br><span class="line">  <span class="hljs-comment">// 更新 player</span></span><br><span class="line">  setXIsNext(!xIsNext);</span><br><span class="line">  <span class="hljs-comment">// 更新改完紀錄以後的步驟數</span></span><br><span class="line">  setStepNumber(newHistory.length);</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+
+<p>做到這邊，恭喜你真的完成時光旅行的功能了。</p>
+<p><img src="finish-02.gif" alt="finish-02"></p>
+<p>這個圈圈叉叉就到這邊結束了，如果以上你都有弄懂的話就太好囉！</p>
+<p>最後一樣附上<a target="_blank" rel="noopener" href="https://codesandbox.io/s/guan-fang-jiao-xue-hook-tiao-yue-ban-ben-er-v1431k?file=/src/App.js">原始碼</a>，有興趣都歡迎參考看看。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/04/16/react-use-font-awesome/">在 React 使用 fontawesome 的方法</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/04/16/mentor-program-day122/">mentor-program-day122</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

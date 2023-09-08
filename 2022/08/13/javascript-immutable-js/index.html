@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>JavaScript－Immutable.JS - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="有機會的話想導入看看。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript－Immutable.JS">
+<meta property="og:url" content="https://jubeatt.github.io/2022/08/13/javascript-immutable-js/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="有機會的話想導入看看。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-08-13T09:27:55.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.530Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡述">1&nbsp;&nbsp;<b>簡述</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#List">2&nbsp;&nbsp;<b>List</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#建立方式">2.1&nbsp;&nbsp;建立方式</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#toArray">2.2&nbsp;&nbsp;toArray</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#toJS">2.3&nbsp;&nbsp;toJS</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#isList">2.4&nbsp;&nbsp;isList</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#of">2.5&nbsp;&nbsp;of</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#size">2.6&nbsp;&nbsp;size</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#set">2.7&nbsp;&nbsp;set</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#delete">2.8&nbsp;&nbsp;delete</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#insert">2.9&nbsp;&nbsp;insert</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#push-amp-pop">2.10&nbsp;&nbsp;push &amp;amp; pop</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#shift-amp-unshift">2.11&nbsp;&nbsp;shift &amp;amp; unshift</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#merge">2.12&nbsp;&nbsp;merge</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#sortBy">2.13&nbsp;&nbsp;sortBy</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Map">3&nbsp;&nbsp;<b>Map</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#建立方式-1">3.1&nbsp;&nbsp;建立方式</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#set-1">3.2&nbsp;&nbsp;set</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#setIn">3.3&nbsp;&nbsp;setIn</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#delete-1">3.4&nbsp;&nbsp;delete</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#deleteAll">3.5&nbsp;&nbsp;deleteAll</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#merge-1">3.6&nbsp;&nbsp;merge</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#mergeWith">3.7&nbsp;&nbsp;mergeWith</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#map">3.8&nbsp;&nbsp;map</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#reverse">3.9&nbsp;&nbsp;reverse</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#sort">3.10&nbsp;&nbsp;sort</a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            JavaScript－Immutable.JS
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>8月 13 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>有機會的話想導入看看。</p>
+<span id="more"></span>
+
+<h2 id="簡述"><a href="#簡述" class="headerlink" title="簡述"></a>簡述</h2><p>Immutable（不可變）在開發中是一個很重要的概念，它有幾個優點：</p>
+<ul>
+<li>可預測性</li>
+<li>可追朔性</li>
+<li>減少 Side Effect</li>
+</ul>
+<p>在 JavaScript 裡「Array」和「Object」都是 mutable（可變）的資料型態，這時候如果沒有用「Immutable 的觀念」來操作的話就會引發一些不可預測的行為。</p>
+<p>舉例來說，假設我有一個 Array，我想取出最後一筆的值，這時候就會出現「原本的 Array 也被改掉了」的情況發生，像這樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> array = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]</span><br><span class="line"><span class="hljs-keyword">const</span> lastOne = array.pop()</span><br><span class="line"><span class="hljs-built_in">console</span>.log(lastOne) <span class="hljs-comment">// 5</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(array) <span class="hljs-comment">// [ 1, 2, 3, 4 ]</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>我確實拿到了最後一個值 <code>5</code>，但注意<strong>原本的 array 也被改掉了。</strong></p>
+<p>為了不改變原本的 <code>array</code>，我們可以用「拷貝」的方式來做，像這樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> array = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]</span><br><span class="line"><span class="hljs-keyword">const</span> lastOne = [...array].pop()</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(lastOne) <span class="hljs-comment">// 5</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(array) <span class="hljs-comment">// [1, 2, 3, 4, 5]</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊是用「淺拷貝」來做複製，當資料型態更複雜時你可能會需要用「深拷貝」來處理。只是順便提一下，不是這篇要提的重點。</p>
+<p>總之這種作法就是「Immutable」的觀念，我每一次都是「產生一個全新的物件」，而不是直接去改「原本的 Reference」，所以原本的 <code>array</code> 永遠不會被動到。</p>
+<p>不過這就引發了另外一個問題：</p>
+<blockquote>
+<p>如果我只是想改某個地方，卻又要先把原始資料整筆複製一份的話，豈不是有點浪效能？</p>
+</blockquote>
+<p>所以這篇就來介紹 <a target="_blank" rel="noopener" href="https://immutable-js.com/">Immutable.js</a>，一個由臉書開源出來的套件。</p>
+<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><h3 id="建立方式"><a href="#建立方式" class="headerlink" title="建立方式"></a>建立方式</h3><p>這個基本上就是 JS 中的 Array，建立方式也很簡單：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> list = List([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])</span><br><span class="line"><span class="hljs-built_in">console</span>.log(list) <span class="hljs-comment">// List [ 1, 2, 3, 4, 5 ]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(list.toJS()) <span class="hljs-comment">// [ 1, 2, 3, 4, 5 ]</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="toArray"><a href="#toArray" class="headerlink" title="toArray"></a>toArray</h3><p>其中一個轉成 JS 的方法，但要注意是「淺拷貝」：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 淺拷貝</span></span><br><span class="line"><span class="hljs-keyword">const</span> list = List([[<span class="hljs-number">1</span>], <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])</span><br><span class="line"><span class="hljs-keyword">const</span> toArray1 = list.toArray()</span><br><span class="line"><span class="hljs-keyword">const</span> toArray2 = list.toArray()</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(toArray1) <span class="hljs-comment">// [ [ 1 ], 2, 3, 4, 5 ]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(toArray2) <span class="hljs-comment">// [ [ 1 ], 2, 3, 4, 5 ]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(toArray1 === toArray2) <span class="hljs-comment">// false</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(toArray1[<span class="hljs-number">0</span>] === toArray2[<span class="hljs-number">0</span>]) <span class="hljs-comment">// true</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="toJS"><a href="#toJS" class="headerlink" title="toJS"></a>toJS</h3><p>轉成 JS 的方法，這個才是「深拷貝」：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 深拷貝</span></span><br><span class="line"><span class="hljs-keyword">const</span> list = List([[<span class="hljs-number">1</span>], <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])</span><br><span class="line"><span class="hljs-keyword">const</span> toArray1 = list.toJS()</span><br><span class="line"><span class="hljs-keyword">const</span> toArray2 = list.toJS()</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(toArray1) <span class="hljs-comment">// [ [ 1 ], 2, 3, 4, 5 ]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(toArray2) <span class="hljs-comment">// [ [ 1 ], 2, 3, 4, 5 ]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(toArray1 === toArray2) <span class="hljs-comment">// false</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(toArray1[<span class="hljs-number">0</span>] === toArray2[<span class="hljs-number">0</span>]) <span class="hljs-comment">// false</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="isList"><a href="#isList" class="headerlink" title="isList"></a>isList</h3><p>檢查值是不是 List 這個型態：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> array = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]</span><br><span class="line"><span class="hljs-keyword">const</span> list = List([[<span class="hljs-number">1</span>], <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(List.isList(array)) <span class="hljs-comment">// false</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(List.isList(list)) <span class="hljs-comment">// true</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="of"><a href="#of" class="headerlink" title="of"></a>of</h3><p>如果要透過 List 來建立新的 List 的話，要注意<strong>值只能是 Array</strong>，不可以是別的值：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 正確的作法</span></span><br><span class="line"><span class="hljs-keyword">const</span> list1 = List([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])</span><br><span class="line"><span class="hljs-comment">// 錯誤的作法（TypeError）</span></span><br><span class="line"><span class="hljs-keyword">const</span> list2 = List(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果要傳非 Array 的值的話要改用 <code>of</code> 來建立：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> list1 = List.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> list2 = List.of({ <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>, <span class="hljs-attr">age</span>: <span class="hljs-number">20</span> })</span><br><span class="line"><span class="hljs-keyword">const</span> list3 = List.of(<span class="hljs-literal">false</span>, <span class="hljs-literal">true</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(list1.toArray()) <span class="hljs-comment">// [ 1, 2, 3 ]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(list2.toArray()) <span class="hljs-comment">// [ { name: 'PeaNu', age: 20 } ]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(list3.toArray()) <span class="hljs-comment">// [ false, true ]</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="size"><a href="#size" class="headerlink" title="size"></a>size</h3><p>用來查看長度（length）的屬性：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> list = List([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])</span><br><span class="line"><span class="hljs-built_in">console</span>.log(list.size) <span class="hljs-comment">// 3</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><p>用來設定陣列值的方法：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> list = List([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> list2 = list.set(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(list2.toArray()) <span class="hljs-comment">// [ 1, 2, 3, 4 ]</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> list3 = list.set(<span class="hljs-number">0</span>, <span class="hljs-number">100</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(list3.toArray()) <span class="hljs-comment">// [ 100, 2, 3 ]</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> list4 = list.set(<span class="hljs-number">5</span>, <span class="hljs-number">10</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(list4.toArray()) <span class="hljs-comment">// [ 1, 2, 3, undefined, undefined, 10 ]</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> list5 = list.set(-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(list5.toArray()) <span class="hljs-comment">// [1, 2, 0]</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h3><p>刪除陣列值，可以想成是 Imuutable 的 <code>splice(0, index)</code>：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> list = List([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])</span><br><span class="line"><span class="hljs-keyword">const</span> list1 = list.delete(<span class="hljs-number">0</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(list1.toArray()) <span class="hljs-comment">// [ 2, 3, 4, 5]</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> list2 = list.delete(<span class="hljs-number">3</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(list2.toArray()) <span class="hljs-comment">// [1, 2, 3, 5]</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> list3 = list.delete(-<span class="hljs-number">1</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(list3.toArray()) <span class="hljs-comment">// [1, 2, 3, 4]</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="insert"><a href="#insert" class="headerlink" title="insert"></a>insert</h3><p>在指定的 index 中插值：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> list = List([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])</span><br><span class="line"><span class="hljs-keyword">const</span> list2 = list.insert(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(list2.toArray()) <span class="hljs-comment">// [ 0, 1, 2, 3, 4, 5 ]</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> list3 = list.insert(<span class="hljs-number">2</span>, <span class="hljs-string">'Hi'</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(list3.toArray()) <span class="hljs-comment">// [ 1, 2, 'Hi', 3, 4, 5 ]</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="push-amp-pop"><a href="#push-amp-pop" class="headerlink" title="push &amp; pop"></a>push &amp; pop</h3><p>熟悉的 push 與 pop，不過是 Immutable 版：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> list = List([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])</span><br><span class="line"><span class="hljs-keyword">const</span> list2 = list.push(<span class="hljs-number">6</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(list.toArray()) <span class="hljs-comment">// [ 1, 2, 3, 4, 5 ]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(list2.toArray()) <span class="hljs-comment">// [ 1, 2, 3, 4, 5, 6 ]</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> list = List([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])</span><br><span class="line"><span class="hljs-keyword">const</span> list2 = list.pop()</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(list.toArray()) <span class="hljs-comment">// [ 1, 2, 3, 4, 5 ]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(list2.toArray()) <span class="hljs-comment">// [ 1, 2, 3, 4 ]</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="shift-amp-unshift"><a href="#shift-amp-unshift" class="headerlink" title="shift &amp; unshift"></a>shift &amp; unshift</h3><p>熟悉的 shift 與 unshift，不過是 Immutable 版：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> list = List([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])</span><br><span class="line"><span class="hljs-keyword">const</span> list2 = list.unshift(<span class="hljs-number">0</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> list3 = list.shift()</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(list.toArray()) <span class="hljs-comment">// [ 1, 2, 3, 4, 5 ]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(list2.toArray()) <span class="hljs-comment">// [ 0, 1, 2, 3, 4, 5 ]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(list3.toArray()) <span class="hljs-comment">// [ 2, 3, 4, 5 ]</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h3><p>把兩個陣列合併：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> a = List([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])</span><br><span class="line"><span class="hljs-keyword">const</span> b = List([<span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>])</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(a.merge(b).toArray()) <span class="hljs-comment">// [1, 2, 3, 4, 5, 6, 7, 8, 9]</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="sortBy"><a href="#sortBy" class="headerlink" title="sortBy"></a>sortBy</h3><p>想快速用「字典序」來排序的時候還不錯用：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> foods = List([{ <span class="hljs-attr">name</span>: <span class="hljs-string">'Orange'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Grape'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Banana'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Candy'</span> }])</span><br><span class="line"><span class="hljs-keyword">const</span> sortedFoods = foods.sortBy(<span class="hljs-function">(<span class="hljs-params">food</span>) =&gt;</span> food.name)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(sortedFoods.toArray())</span><br></pre></td></tr></tbody></table></figure>
+
+<p>輸出結果：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;[{ <span class="hljs-attr">name</span>: <span class="hljs-string">'Banana'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Candy'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Grape'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Orange'</span> }]</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>簡單來說就是物件，基本上都跟 List 的用法差不多，所以這裡就直接示範了。</p>
+<h3 id="建立方式-1"><a href="#建立方式-1" class="headerlink" title="建立方式"></a>建立方式</h3><p>直接把 Object 傳進去就行了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-built_in">Map</span>({ <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>, <span class="hljs-attr">age</span>: <span class="hljs-number">20</span>, <span class="hljs-attr">gender</span>: <span class="hljs-string">'man'</span> })</span><br><span class="line"><span class="hljs-built_in">console</span>.log(map.toObject()) <span class="hljs-comment">// { name: 'PeaNu', age: 20, gender: 'man' }</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="set-1"><a href="#set-1" class="headerlink" title="set"></a>set</h3><p>設定內容（單層）：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-built_in">Map</span>().set(<span class="hljs-string">'name'</span>, <span class="hljs-string">'PeaNu'</span>).set(<span class="hljs-string">'age'</span>, <span class="hljs-number">20</span>).set(<span class="hljs-string">'gender'</span>, <span class="hljs-string">'man'</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(map.toObject()) <span class="hljs-comment">// { name: 'PeaNu', age: 20, gender: 'man' }</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="setIn"><a href="#setIn" class="headerlink" title="setIn"></a>setIn</h3><p>設定內容（多層）：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> a = <span class="hljs-built_in">Map</span>({</span><br><span class="line">  <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>,</span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-number">20</span>,</span><br><span class="line">  <span class="hljs-attr">gender</span>: <span class="hljs-string">'man'</span>,</span><br><span class="line">  <span class="hljs-attr">relation</span>: {</span><br><span class="line">    <span class="hljs-attr">wife</span>: <span class="hljs-string">'PPB'</span>,</span><br><span class="line">    <span class="hljs-attr">father</span>: <span class="hljs-string">'JOJO'</span>,</span><br><span class="line">    <span class="hljs-attr">friend</span>: <span class="hljs-string">'DIO'</span></span><br><span class="line">  }</span><br><span class="line">})</span><br><span class="line"><span class="hljs-keyword">const</span> newOne = a.setIn([<span class="hljs-string">'relation'</span>, <span class="hljs-string">'father'</span>], <span class="hljs-string">'Caesar'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// {</span></span><br><span class="line"><span class="hljs-comment">//   name: 'PeaNu',</span></span><br><span class="line"><span class="hljs-comment">//   age: 20,</span></span><br><span class="line"><span class="hljs-comment">//   gender: 'man',</span></span><br><span class="line"><span class="hljs-comment">//   relation: {</span></span><br><span class="line"><span class="hljs-comment">//     wife: 'PPB',</span></span><br><span class="line"><span class="hljs-comment">//     father: 'Caesar',</span></span><br><span class="line"><span class="hljs-comment">//     friend: 'DIO'</span></span><br><span class="line"><span class="hljs-comment">//   }</span></span><br><span class="line"><span class="hljs-comment">// }</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(newOne.toObject())</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="delete-1"><a href="#delete-1" class="headerlink" title="delete"></a>delete</h3><p>刪除某個屬性（單個）：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-built_in">Map</span>({</span><br><span class="line">  <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>,</span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-number">20</span>,</span><br><span class="line">  <span class="hljs-attr">gender</span>: <span class="hljs-string">'man'</span></span><br><span class="line">})</span><br><span class="line"><span class="hljs-keyword">const</span> map2 = map.delete(<span class="hljs-string">'name'</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(map.toObject()) <span class="hljs-comment">// { name: 'PeaNu', age: 20, gender: 'man' }</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(map2.toObject()) <span class="hljs-comment">// { gender: 'man', age: 20 }</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="deleteAll"><a href="#deleteAll" class="headerlink" title="deleteAll"></a>deleteAll</h3><p>刪除多個欄位（傳陣列）：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> map = <span class="hljs-built_in">Map</span>({</span><br><span class="line">  <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>,</span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-number">20</span>,</span><br><span class="line">  <span class="hljs-attr">gender</span>: <span class="hljs-string">'man'</span></span><br><span class="line">})</span><br><span class="line"><span class="hljs-keyword">const</span> map2 = map.deleteAll([<span class="hljs-string">'name'</span>, <span class="hljs-string">'age'</span>])</span><br><span class="line"><span class="hljs-built_in">console</span>.log(map2.toObject()) <span class="hljs-comment">// { gender: 'man' }</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="merge-1"><a href="#merge-1" class="headerlink" title="merge"></a>merge</h3><p>合併：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> a = <span class="hljs-built_in">Map</span>({</span><br><span class="line">  <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>,</span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-number">20</span>,</span><br><span class="line">  <span class="hljs-attr">gender</span>: <span class="hljs-string">'man'</span></span><br><span class="line">})</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> b = <span class="hljs-built_in">Map</span>({</span><br><span class="line">  <span class="hljs-attr">brother</span>: <span class="hljs-string">'JOJO'</span>,</span><br><span class="line">  <span class="hljs-attr">father</span>: <span class="hljs-string">'DIO'</span>,</span><br><span class="line">  <span class="hljs-attr">wife</span>: <span class="hljs-string">'PPB'</span></span><br><span class="line">})</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// {</span></span><br><span class="line"><span class="hljs-comment">//   name: 'PeaNu',</span></span><br><span class="line"><span class="hljs-comment">//   age: 20,</span></span><br><span class="line"><span class="hljs-comment">//   gender: 'man',</span></span><br><span class="line"><span class="hljs-comment">//   brother: 'JOJO',</span></span><br><span class="line"><span class="hljs-comment">//   father: 'DIO',</span></span><br><span class="line"><span class="hljs-comment">//   wife: 'PPB'</span></span><br><span class="line"><span class="hljs-comment">// }</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(a.merge(b).toObject())</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="mergeWith"><a href="#mergeWith" class="headerlink" title="mergeWith"></a>mergeWith</h3><p>一般的 <code>merge</code> 如果碰到「相同值」的話會直接覆寫，如果你希望「不要覆蓋」，想做一些處理的話可以改用這個方式：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> a = <span class="hljs-built_in">Map</span>({ <span class="hljs-attr">a</span>: <span class="hljs-number">10</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">20</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">30</span> })</span><br><span class="line"><span class="hljs-keyword">const</span> b = <span class="hljs-built_in">Map</span>({ <span class="hljs-attr">a</span>: <span class="hljs-number">40</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">50</span>, <span class="hljs-attr">e</span>: <span class="hljs-number">60</span>, <span class="hljs-attr">f</span>: <span class="hljs-number">30</span> })</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> result1 = a.mergeWith(<span class="hljs-function">(<span class="hljs-params">oldVal, newVal</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// Ex: a(10) + a(40)</span></span><br><span class="line">  <span class="hljs-keyword">return</span> oldVal + newVal</span><br><span class="line">}, b)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> result2 = a.merge(b)</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(result1.toObject()) <span class="hljs-comment">// { a: 50, b: 70, c: 30, e: 60, f: 30 }</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(result2.toObject()) <span class="hljs-comment">// { a: 40, b: 50, c: 30, e: 60, f: 30 }</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><p>給 Object 用的 map，我覺得很酷：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> obj = <span class="hljs-built_in">Map</span>({ <span class="hljs-attr">a</span>: <span class="hljs-number">10</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">20</span> })</span><br><span class="line"><span class="hljs-keyword">const</span> obj2 = obj.map(<span class="hljs-function">(<span class="hljs-params">num</span>) =&gt;</span> num * <span class="hljs-number">2</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(obj2.toObject()) <span class="hljs-comment">// { a: 20, b: 40 }</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="reverse"><a href="#reverse" class="headerlink" title="reverse"></a>reverse</h3><p>可以反轉內容：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> obj = <span class="hljs-built_in">Map</span>({ <span class="hljs-attr">a</span>: <span class="hljs-number">10</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">20</span> })</span><br><span class="line"><span class="hljs-keyword">const</span> obj2 = obj.reverse()</span><br><span class="line"><span class="hljs-built_in">console</span>.log(obj2.toObject())</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h3><p>神奇的排序：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> obj = <span class="hljs-built_in">Map</span>({ <span class="hljs-attr">a</span>: <span class="hljs-number">5</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">12</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">10</span>, <span class="hljs-attr">d</span>: <span class="hljs-number">8</span>, <span class="hljs-attr">e</span>: <span class="hljs-number">24</span>, <span class="hljs-attr">f</span>: <span class="hljs-number">3</span> })</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> asc = obj.sort(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> b - a)</span><br><span class="line"><span class="hljs-keyword">const</span> desc = obj.sort(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a - b)</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(asc.toObject()) <span class="hljs-comment">// { e: 24, b: 12, c: 10, d: 8, a: 5, f: 3 }</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(desc.toObject()) <span class="hljs-comment">// { f: 3, a: 5, d: 8, c: 10, b: 12, e: 24 }</span></span><br></pre></td></tr></tbody></table></figure>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/08/14/vue-composition-api-computed/">Vue－Composition API（Computed）</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/08/12/vue-ref-and-reactive/">Vue－Composition API（Ref &amp; Reactive）</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

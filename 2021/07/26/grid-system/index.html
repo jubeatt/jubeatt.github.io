@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>一步一步認識Grid - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="目前在網頁佈局的方式有很多種選擇，其中最主流的不外乎就是flex-box。 雖然 flex 確實足以處理許多版面，使用上也不算困難，但為了更增進自己的能力，讓自己在面對各種版型都能有應對之道，所以我決定學習另外一個也算是頗新穎的佈局方式，grid-box。 不過當我在找相關資料時，發現 grid 的相關中文教學似乎比較少一些（比起 flex），所以就決定自己來寫一篇文章，希望能夠為有需要的人提供一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一步一步認識Grid">
+<meta property="og:url" content="https://jubeatt.github.io/2021/07/26/grid-system/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="目前在網頁佈局的方式有很多種選擇，其中最主流的不外乎就是flex-box。 雖然 flex 確實足以處理許多版面，使用上也不算困難，但為了更增進自己的能力，讓自己在面對各種版型都能有應對之道，所以我決定學習另外一個也算是頗新穎的佈局方式，grid-box。 不過當我在找相關資料時，發現 grid 的相關中文教學似乎比較少一些（比起 flex），所以就決定自己來寫一篇文章，希望能夠為有需要的人提供一">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/col&amp;row.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/line-pst.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/line-ngt.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-item.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-item-change-01.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-item-change-02.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-item-change-03.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-implicit-explicit-01.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-implicit-explicit-02.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-implicit-explicit-03.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-implicit-animation.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-implicit-explicit-04.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-implicit-explicit-05.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/span-unit.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/fraction.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-minmax-animation.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/repeat.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-auto-fill.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-auto-fill-animation.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-auto-fit.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-auto-fill-animation.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/auto-fit-auto-fill-difference-01.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/auto-fit-auto-fill-difference-02.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/display-grid.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/display-inline-grid.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-template-rows&amp;grid-template-columns.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/line-name-01.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/line-name-02.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/the-start-end-keyword-of-line-name-01.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/the-start-end-keyword-of-line-name-02.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/the-start-end-keyword-of-line-name-03.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/the-start-end-keyword-of-line-name-04.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-line-name-multi-names.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-line-name&amp;sharing-and-countable.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-auto-flow-inside-of-range-01.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-auto-flow-inside-of-range-02.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-auto-flow-outside-of-range-01.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-auto-flow-outside-of-range-02.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-auto-no-dense.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-auto-flow-dense-row.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-auto-flow-dense-column.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-auto.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/auto-flow-row.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/auto-flow-col.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-960.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-area&amp;grid-template-areas.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-area&amp;grid-template-areas-omitting.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/the-problem-of-named-area-01.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/the-problem-of-named-area-02.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/the-problem-of-named-area-03.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/the-problem-of-named-area-04.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-area.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-template-areas-auto-line-name.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/grid-template-areas-move.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/column-gap&amp;row-gap&amp;gap.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/justify-items-stretch.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/justify-items-start.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/justify-items-center.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/justify-items-end.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/align-items-stretch.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/align-items-start.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/align-items-center.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/align-items-end.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/place-items.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/place-items-center.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/content-structure.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/justify-content-start.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/justify-content-end.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/justify-content-center.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/justify-content-space-around.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/justify-content-space-between.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/justify-content-space-evenly.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/align-content-start.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/align-content-end.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/align-content-center.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/align-content-space-around.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/align-content-space-between.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/align-content-space-evenly.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/place-content.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/justify-self-stretch.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/justify-self-start.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/justify-self-center.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/justify-self-end.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/align-self-stretch.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/align-self-start.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/align-self-center.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/align-self-end.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/place-self.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/26/grid-system/order.jpg">
+<meta property="article:published_time" content="2021-07-26T11:17:00.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.445Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2021/07/26/grid-system/col&amp;row.jpg">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#關於-grid">1&nbsp;&nbsp;<b>關於 grid</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#認識欄與列">1.1&nbsp;&nbsp;認識欄與列</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#認識格線">1.2&nbsp;&nbsp;認識格線</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#認識顯性格線與隱性格線">1.3&nbsp;&nbsp;認識顯性格線與隱性格線</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#為什麼需要隱性格線？">1.4&nbsp;&nbsp;為什麼需要隱性格線？</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#gird-屬性列表">2&nbsp;&nbsp;<b>gird 屬性列表</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#grid-的特別單位與函式">3&nbsp;&nbsp;<b>grid 的特別單位與函式</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#span-關鍵字">3.1&nbsp;&nbsp;span 關鍵字</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#fr-單位">3.2&nbsp;&nbsp;fr 單位</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#minmax">3.3&nbsp;&nbsp;minmax()</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#repeat">3.4&nbsp;&nbsp;repeat()</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#auto-fill-amp-auto-fit">3.5&nbsp;&nbsp;auto-fill &amp;amp; auto-fit</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#display">4&nbsp;&nbsp;<b>display</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#grid-template-rows-amp-grid-template-columns">5&nbsp;&nbsp;<b>grid-template-rows &amp;amp; grid-template-columns</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#自訂義格線名稱">5.1&nbsp;&nbsp;自訂義格線名稱</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#自定義格線名稱時的注意事項">5.2&nbsp;&nbsp;自定義格線名稱時的注意事項</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#一個格線可以有一個以上的格線名稱">5.3&nbsp;&nbsp;一個格線可以有一個以上的格線名稱</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#當有相同的格線名稱時">5.4&nbsp;&nbsp;當有相同的格線名稱時</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#grid-row-amp-grid-column">6&nbsp;&nbsp;<b>grid-row &amp;amp; grid-column</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#grid-auto-flow">7&nbsp;&nbsp;<b>grid-auto-flow</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#運作流程">7.1&nbsp;&nbsp;運作流程</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#記憶小口訣">7.2&nbsp;&nbsp;記憶小口訣</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#設定顯性格線的情況">7.3&nbsp;&nbsp;設定顯性格線的情況</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#設定隱性格線的情況">7.4&nbsp;&nbsp;設定隱性格線的情況</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#解決跳格的問題">7.5&nbsp;&nbsp;解決跳格的問題</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#grid-auto-rows-amp-grid-auto-columns">8&nbsp;&nbsp;<b>grid-auto-rows &amp;amp; grid-auto-columns</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#grid-area-amp-grid-template-areas">9&nbsp;&nbsp;<b>grid-area &amp;amp; grid-template-areas</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#使用-grid-area-的一些小問題">9.1&nbsp;&nbsp;使用 grid-area 的一些小問題</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#grid-template-areas-的使用規則">9.2&nbsp;&nbsp;grid-template-areas 的使用規則</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#grid-area-的其他用途">9.3&nbsp;&nbsp;grid-area 的其他用途</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#grid-template-areas-格線的自動命名機制">9.4&nbsp;&nbsp;grid-template-areas 格線的自動命名機制</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#column-gap-amp-row-gap-amp-gap">10&nbsp;&nbsp;<b>column-gap &amp;amp; row-gap &amp;amp; gap</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#justify-items">11&nbsp;&nbsp;<b>justify-items</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#stretch-填滿整個橫向空間-預設值">11.1&nbsp;&nbsp;stretch 填滿整個橫向空間 (預設值)</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#start-對齊橫向空間的起端">11.2&nbsp;&nbsp;start 對齊橫向空間的起端</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#center-對齊橫向空間的中間">11.3&nbsp;&nbsp;center 對齊橫向空間的中間</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#end-對齊橫向空間的尾端">11.4&nbsp;&nbsp;end 對齊橫向空間的尾端</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#align-items">12&nbsp;&nbsp;<b>align-items</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#stretch-填滿整個直向空間-預設值">12.1&nbsp;&nbsp;stretch 填滿整個直向空間 (預設值)</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#start-對齊直向空間的起端">12.2&nbsp;&nbsp;start 對齊直向空間的起端</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#center-對齊直向空間的中間">12.3&nbsp;&nbsp;center 對齊直向空間的中間</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#end-對齊直向空間的尾端">12.4&nbsp;&nbsp;end 對齊直向空間的尾端</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#place-items">13&nbsp;&nbsp;<b>place-items</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#快速水平-垂直置中">13.1&nbsp;&nbsp;快速水平 / 垂直置中</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#justify-content">14&nbsp;&nbsp;<b>justify-content</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#items-與-content-的差異">14.1&nbsp;&nbsp;items 與 content 的差異</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#start-將橫向的剩餘空間丟到最尾端">14.2&nbsp;&nbsp;start 將橫向的剩餘空間丟到最尾端</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#end-將橫向的剩餘空間丟到最頭端">14.3&nbsp;&nbsp;end 將橫向的剩餘空間丟到最頭端</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#center-將橫向的剩餘空間分配到左右兩側">14.4&nbsp;&nbsp;center 將橫向的剩餘空間分配到左右兩側</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#space-around-將橫向的剩餘空間平均分配到-grid-元素之間以及左右兩側">14.5&nbsp;&nbsp;space-around 將橫向的剩餘空間平均分配到 grid 元素之間以及左右兩側</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#space-between-將橫向的剩餘空間平均分配到-grid-元素之間">14.6&nbsp;&nbsp;space-between 將橫向的剩餘空間平均分配到 grid 元素之間</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#space-evenly-將橫向的剩餘空間平均分配到-grid-元素之間以及左右兩側">14.7&nbsp;&nbsp;space-evenly 將橫向的剩餘空間平均分配到 grid 元素之間以及左右兩側</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#align-content">15&nbsp;&nbsp;<b>align-content</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#start-將直向的剩餘空間丟到最尾端">15.1&nbsp;&nbsp;start 將直向的剩餘空間丟到最尾端</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#end-將橫向的剩餘空間丟到最頭端-1">15.2&nbsp;&nbsp;end 將橫向的剩餘空間丟到最頭端</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#center-將直向的剩餘空間分配到左右兩側">15.3&nbsp;&nbsp;center 將直向的剩餘空間分配到左右兩側</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#space-around-將直向的剩餘空間平均分配到-grid-元素之間以及上下兩側">15.4&nbsp;&nbsp;space-around 將直向的剩餘空間平均分配到 grid 元素之間以及上下兩側</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#space-between-將直向的剩餘空間平均分配到-grid-元素之間">15.5&nbsp;&nbsp;space-between 將直向的剩餘空間平均分配到 grid 元素之間</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#space-evenly-將橫向的剩餘空間平均分配到-grid-元素之間以及上下兩側">15.6&nbsp;&nbsp;space-evenly 將橫向的剩餘空間平均分配到 grid 元素之間以及上下兩側</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#place-content">16&nbsp;&nbsp;<b>place-content</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#justify-self">17&nbsp;&nbsp;<b>justify-self</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#stretch-填滿整個橫向空間-預設值-1">17.1&nbsp;&nbsp;stretch 填滿整個橫向空間 (預設值)</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#start-對齊橫向空間的起端-1">17.2&nbsp;&nbsp;start 對齊橫向空間的起端</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#center-對齊橫向空間的中間-1">17.3&nbsp;&nbsp;center 對齊橫向空間的中間</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#end-對齊橫向空間的尾端-1">17.4&nbsp;&nbsp;end 對齊橫向空間的尾端</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#align-self">18&nbsp;&nbsp;<b>align-self</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#stretch-填滿整個直向空間-預設值-1">18.1&nbsp;&nbsp;stretch 填滿整個直向空間 (預設值)</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#start-對齊直向空間的起端-1">18.2&nbsp;&nbsp;start 對齊直向空間的起端</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#center-對齊直向空間的中間-1">18.3&nbsp;&nbsp;center 對齊直向空間的中間</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#end-對齊直向空間的尾端-1">18.4&nbsp;&nbsp;end 對齊直向空間的尾端</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#place-self">19&nbsp;&nbsp;<b>place-self</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#order">20&nbsp;&nbsp;<b>order</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#參考資料">21&nbsp;&nbsp;<b>參考資料</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            一步一步認識Grid
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>7月 26 2021</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/CSS/">CSS</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>目前在網頁佈局的方式有很多種選擇，其中最主流的不外乎就是<code>flex-box</code>。</p>
+<p>雖然 flex 確實足以處理許多版面，使用上也不算困難，但為了更增進自己的能力，讓自己在面對各種版型都能有應對之道，所以我決定學習另外一個也算是頗新穎的佈局方式，<code>grid-box</code>。</p>
+<p>不過當我在找相關資料時，發現 grid 的相關中文教學似乎比較少一些（比起 flex），所以就決定自己來寫一篇文章，希望能夠為有需要的人提供一份資源。</p>
+<p>另外，由於 <code>grid-box</code> 的概念可能比 <code>flex-box</code> 還要來得複雜一些（至少對我來說是這樣子），所以這篇文章的內容也會比較沉長些，可能會需要花點時間來閱讀，還請各位見諒一下。</p>
+<p>最後希望大家都能夠透過這篇文章來真正理解 grid 的佈局方式，我相信多學一樣技能，對自己只有好，沒有壞。</p>
+<span id="more"></span>
+
+<h2 id="關於-grid"><a href="#關於-grid" class="headerlink" title="關於 grid"></a>關於 grid</h2><p>在學習 grid 的語法前，我認為大家可以先了解一下 grid 的基本結構是長什麼樣子，接著才去學 grid 的相關屬性，這樣子的學習順序對你應該會比較有幫助。</p>
+<h3 id="認識欄與列"><a href="#認識欄與列" class="headerlink" title="認識欄與列"></a>認識欄與列</h3><p>讓我們從建立一個最基本的 grid 網格開始：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">display</span>: grid;</span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: <span class="hljs-number">100px</span> <span class="hljs-number">100px</span> <span class="hljs-number">100px</span> <span class="hljs-number">100px</span>;</span><br><span class="line">  grid-template-rows: <span class="hljs-number">100px</span> <span class="hljs-number">100px</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="col&amp;row.jpg" alt="col &amp; row"></p>
+<p>先不用在意那些數字是什麼意思，總之你能看到，我們建立了一個<strong>四欄兩列</strong>的格子。</p>
+<blockquote>
+<p>欄 = 每一個直排，英文為 “column” 。<br>列 = 每一個橫排，英文為 “row” 。</p>
+</blockquote>
+<p>接著我們來看剛剛設定的每一個屬性吧：</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attribute">display</span>: grid;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>代表我們在<code>.box</code>這個區塊中建立一個 grid 網格，就跟在使用 flex 時的<code>display:flex</code>是一樣的概念。</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grid-template-<span class="hljs-attribute">columns</span>: <span class="hljs-number">100px</span> <span class="hljs-number">100px</span> <span class="hljs-number">100px</span> <span class="hljs-number">100px</span>;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這是用來設定 <code>「欄(column)」</code> 的部分，代表每個欄的寬度為 <code>100px</code>，而我們設定了 4 次，所以總共就會產生 4 個欄。</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grid-template-rows: <span class="hljs-number">100px</span> <span class="hljs-number">100px</span>;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這是用來設定 <code>「列(row)」</code> 的部分，代表每個列的寬度為<code>100px</code>，而我們設定了 2 次，所以總共就產生 2 個列。</p>
+<p>所以，一個最基本的 grid 網格，就是由 <code>「欄與列」</code> 來組成的。</p>
+<h3 id="認識格線"><a href="#認識格線" class="headerlink" title="認識格線"></a>認識格線</h3><p>在你認識欄與列後，讓我們回頭來談談<strong>那些數字</strong>，又是怎麼一回事吧？</p>
+<p>一個 grid 網格 中，除了欄與列之外，還有一個東西叫做 <code>「格線」</code>。</p>
+<p>格線是一個用來<code>分割每個列跟欄的線</code>，而每個格線都會有一個編號，這個編號會從 1 開始算起。</p>
+<p><img src="line-pst.jpg" alt="line-pst"></p>
+<p>我知道你可能接著會想問，那麼負數又代表什麼？</p>
+<p>其實格線除了用正數來表示以外，也可以用負數來表示，用中文來說的話就是 <strong>「倒數第幾個」</strong> 的意思。</p>
+<p><img src="line-ngt.jpg" alt="line-ngt"></p>
+<p>那格線能夠做什麼？一樣讓我們用例子來舉例吧：</p>
+<p>現在我們在剛剛建立好的 grid 網格中新增 <code>grid元素</code></p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--greem"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--pink"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--purple"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="grid-item.jpg" alt="grid-item"></p>
+<p><font size="2">💡 註：這裡只有對方塊設定背景顏色（<code>grid 元素在沒有設定寬高時，預設會填滿整個欄與列的空間</code>）</font></p>
+<p>所以你能看到，在我們還沒有對 grid 網格中的元素做任何設定時，元素會依照 <strong>「左 → 右」</strong>，<strong>「上 → 下」</strong> 這樣的順序來塞到每一個網格中。</p>
+<p>那如果我們想要控制元素的位置呢？</p>
+<p>沒有錯，這個時候格線就派上用場了。</p>
+<p>這裡先介紹一個屬性：<code>grid-column-start</code>，可以用來指定 grid 元素的起始位置。</p>
+<p>現在讓我們來更改<code>紫色方塊</code>的位置：</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item--purple</span> {</span><br><span class="line">  grid-column-start: <span class="hljs-number">2</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><font size="2">💡 註：在沒有指定<code>grid-column-end</code> (終點位置) 時，grid 元素預設會跨到下一條格線 (2 → 3)。</font></p>
+<p><img src="grid-item-change-01.jpg" alt="grid-item-change-01"></p>
+<p>這樣子我們就把<code>紫色方塊</code>放到以<code>格線(2)</code>為起始點的位置。</p>
+<p>還記得我們說過格線也可以用負數來表示嗎？</p>
+<p>讓我們在修改一下<code>紫色方塊</code>的位置：</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item--purple</span> {</span><br><span class="line">  grid-column-start: -<span class="hljs-number">2</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="grid-item-change-02.jpg" alt="grid-item-change-02"></p>
+<p>現在<code>紫色方塊</code>被放到以<code>格線(-2)</code>為起始點的位置。</p>
+<p>我想這樣子你對於格線應該就有一些概念了。</p>
+<p>不過，除了設定元素的起始位置以外，我們也可以設定元素的終點位置。</p>
+<p>再讓我們介紹第二個屬性：<code>grid-columns-end</code></p>
+<p>我們一樣來控制<code>紫色方塊</code>的位置：</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item--purple</span> {</span><br><span class="line">  grid-column-start: <span class="hljs-number">2</span>;</span><br><span class="line">  grid-column-end: <span class="hljs-number">4</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="grid-item-change-03.jpg" alt="grid-item-change-03"></p>
+<p>這裡要特別提醒一下，雖然紫色方塊看起來是佔據第 2 到 第 3 欄的範圍，<br>但由於我們是以<strong>格線來做控制</strong>，所以正確的位置應該是 2 → 4，而不是 2 → 3 哦！</p>
+<p>另外，剛剛都是以 <code>欄(column)</code> 來做介紹，不過除了 <code>欄(column)</code> 以外，我們也能夠控制 <code>列(row)</code> 的部分。<br>兩者的概念其實都是一樣的，只是從 <code>欄(column)</code> 變成 <code>列(row)</code> 而已，<br>這裡我把相關的屬性，以及縮寫形式，條列給各位參考：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 控制欄</span></span><br><span class="line">grid-column-start: <span class="hljs-number">1</span>;</span><br><span class="line">grid-column-end: <span class="hljs-number">3</span>;</span><br><span class="line"><span class="hljs-comment">// 縮寫形式</span></span><br><span class="line">grid-column: <span class="hljs-number">1</span> / <span class="hljs-number">3</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 控制列</span></span><br><span class="line">grid-row-start: <span class="hljs-number">2</span>;</span><br><span class="line">grid-row-end: <span class="hljs-number">4</span>;</span><br><span class="line"><span class="hljs-comment">// 縮寫形式</span></span><br><span class="line">grid-row: <span class="hljs-number">2</span> / <span class="hljs-number">4</span>;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>最後附上 Codepen 給大家練習 ：</p>
+<p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="html,result" data-slug-hash="xxdzqxO" data-editable="true" data-user="jubeatt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/xxdzqxO">
+  grid-column-start / end &amp; grid-row-start / end</a> by jim (<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt">@jubeatt</a>)
+  on <a target="_blank" rel="noopener" href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async="" src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+<center><font size="2">💡 如果看不懂 SCSS 的語法沒有關係，裡面有提供註解來協助各位。</font></center>
+
+<h3 id="認識顯性格線與隱性格線"><a href="#認識顯性格線與隱性格線" class="headerlink" title="認識顯性格線與隱性格線"></a>認識顯性格線與隱性格線</h3><p>在你開始學習 grid 相關的屬性前，最後還有一件事情得知道。</p>
+<p>其實格線本身還可以在區分為以下兩種：</p>
+<ul>
+<li><code>顯性格線 (explicit tracks)</code></li>
+<li><code>隱性格線 (implicit tracks)</code></li>
+</ul>
+<p><font size="2">💡 註：tracks 這個單字的正統翻譯翻作「軌道 / 軌跡」，不過我個人還是喜歡用格線來稱呼。</font></p>
+<p>使用<code>grid-template-rows</code>, <code>grid-template-columns</code>來產生出的格線，都叫做 <code>顯性格線 (explicit tracks)</code>。</p>
+<p>那隱性格線呢？讓我們來看個例子吧：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">display</span>: grid;</span><br><span class="line">  <span class="hljs-comment">// 建立兩個欄（顯性格線）</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: <span class="hljs-number">100px</span> <span class="hljs-number">100px</span>;</span><br><span class="line">  <span class="hljs-comment">// 每欄 "之間" 的間隔</span></span><br><span class="line">  <span class="hljs-attribute">column-gap</span>: <span class="hljs-number">20px</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.item</span> {</span><br><span class="line">  <span class="hljs-comment">// 由於網格中沒有設定列，</span></span><br><span class="line">  <span class="hljs-comment">// grid元素無法填滿列的空間，</span></span><br><span class="line">  <span class="hljs-comment">// 所以這裡先指定一個高度</span></span><br><span class="line">  <span class="hljs-attribute">height</span>: <span class="hljs-number">100px</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="grid-implicit-explicit-01.jpg" alt="grid-implicit-explicit-01"></p>
+<p>嗯…看起來沒有什麼特別的。</p>
+<p>這裡透過 Firefox 的開發者工具來查看，我們能發現一些不一樣的東西：</p>
+<p><img src="grid-implicit-explicit-02.jpg" alt="grid-implicit-explicit-02"></p>
+<center><font size="2">💡 仔細觀察線，你會看到有一些差異（建議要放大一點看比較清楚）</font></center><br>
+
+<p>你會看到有三種格線，分別為：</p>
+<ul>
+<li><code>虛線</code>：代表顯性格線</li>
+<li><code>點線</code>：代表隱性格線</li>
+<li><code>實線</code>：代表顯性格線的起點 / 終點</li>
+</ul>
+<p><img src="grid-implicit-explicit-03.jpg" alt="grid-implicit-explicit-03"></p>
+<p><strong>實線的部分</strong></p>
+<p>我們在一開始透過<code>grid-template-columns: 100px 100px;</code>建立了兩個欄，所以左右兩端的實線代表<code>顯性格線的起點與終點</code>。</p>
+<p>你可能會好奇，頂端那條<code>顯性格線的起點（列）</code>是怎麼回事，畢竟我們並沒有對列做設定不是嗎？<br>這個嘛，我是這樣理解的，有一句話叫做有始有終，所以我想在 grid 中也是這個道理，<br>既使我們沒有對列做設定，它也應該要有一個起始點。</p>
+<p><strong>虛線的部分</strong></p>
+<p>我們設定每一欄的寬度為<code>100px</code>，所以每<code>100px</code>就會有一條虛線來代表<code>一欄的寬度</code>。</p>
+<p><strong>點線的部分</strong></p>
+<p>我們並沒有使用<code>grid-template-rows</code>來設定列，所以這時候瀏覽器就自動幫我們產生了一條新的格線，這種格線就稱為 <code>隱性格線(implicit tracks)</code>。</p>
+<p>要注意的一點是，在沒有做任何設定時，隱性格線的寬度是<code>由 grid 元素來撐開</code>，<br>也就是說，如果 grid 元素的高度（或寬度）為<code>0px</code>，隱性格線的寬度就會是<code>0px</code>。</p>
+<p>參考下面這張圖：</p>
+<p><img src="grid-implicit-animation.gif" alt="grid-implicit-animation"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/jOmegjQ">點這裡</a></font></p>
+<p>要對隱性格線做設定，必須用<code>grid-auto-rows</code>, <code>grid-auto-columns</code>這兩個屬性。</p>
+<p>我們對上面的範例做個調整：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 對隱性格線做設定</span></span><br><span class="line">  grid-template-rows: <span class="hljs-number">130px</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="grid-implicit-explicit-04.jpg" alt="grid-implicit-explicit-04"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/yLbQbMd">點這裡</a></font></p>
+<p><font size="2">💡 雖然我們現在設定了列的格線，不過由於我們設定的是<code>隱性格線</code>，所以你可以看到圖中的列（尾端）還是以<code>點線</code>來顯示。</font></p>
+<h3 id="為什麼需要隱性格線？"><a href="#為什麼需要隱性格線？" class="headerlink" title="為什麼需要隱性格線？"></a>為什麼需要隱性格線？</h3><p>相信看到這裡後，你應該已經知道要怎麼分辨顯性格線與隱性格線。<br>不過你可能還有一個疑問，為什麼需要隱性格線呢？它又是用來做什麼的？</p>
+<p>要了解這件事情，得先弄清楚一件事，<strong>什麼時候會產生隱性格線？</strong></p>
+<p>→ <code>隱性格線只有在 grid 元素超出顯性格線所定義的範圍時，才會產生。</code></p>
+<p>以前面的例子來說，我們用 <code>grid-template-columns</code>來設定兩欄，但沒有設定列，就丟了兩個元素到 grid 網格中，這很顯然會超出顯性格線的範圍。</p>
+<p>而這個時候如果沒有自動產生隱性格線的話，我們的 grid 網格可能會長的像這樣：</p>
+<p><img src="grid-implicit-explicit-05.jpg" alt="grid-implicit-explicit-05"></p>
+<p>所以如果沒有隱性格線的話 → <code>grid 網格會因為缺乏足夠的欄與列，而無法容納超出範圍的元素。</code><br>為了避免這問題，我們才需要隱性格線 → <code>使 grid 網格產生出足夠的欄與列，來容納超出範圍的元素。</code></p>
+<p>最後，做一個小總結：</p>
+<ul>
+<li>格線可以分成<code>隱性格線</code> / <code>顯性格線</code>。</li>
+<li>顯性格線是用 <code>grid-templates-columns / rows</code> 做的設定。</li>
+<li>隱性格線是用 <code>grid-auto-columns / rows</code> 做的設定。</li>
+<li>隱性格線只有在 grid 元素 <code>超出顯性格線的範圍（或是沒有設定顯性格線）</code>時，才會產生。</li>
+<li>隱性格線的預設寬度是由 <code>grid 元素來撐開</code>。</li>
+</ul>
+<p>以及一些額外補充：</p>
+<ul>
+<li>超出顯性格線 grid 範圍的元素，會根據 <code>grid-auto-flow</code> 的設定，來決定要放到<code>下一列</code> or <code>下一欄</code>。</li>
+<li><code>grid-auto-columns / rows</code>可以像<code>grid-templates-columns / rows</code>一樣設定多個值。</li>
+</ul>
+<p>最後附上 Codepen 給大家練習 ：</p>
+<p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="html,result" data-slug-hash="VwbBzYm" data-editable="true" data-user="jubeatt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/VwbBzYm">
+  grid-explicit &amp; implicit </a> by jim (<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt">@jubeatt</a>)
+  on <a target="_blank" rel="noopener" href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async="" src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script><br>
+
+<p>如果以上這些概念你都理解的話，接著就能開始學習 grid 的相關屬性囉！</p>
+<h2 id="gird-屬性列表"><a href="#gird-屬性列表" class="headerlink" title="gird 屬性列表"></a>gird 屬性列表</h2><ul>
+<li><a href="#display">display</a></li>
+<li><a href="#grid-template-rows-amp-grid-template-columns">grid-template-rows &amp; grid-template-columns</a></li>
+<li><a href="#grid-row-amp-grid-column">grid-row &amp; grid-column</a></li>
+<li><a href="#grid-auto-flow">grid-auto-flow</a></li>
+<li><a href="#grid-auto-rows-amp-grid-auto-columns">grid-auto-rows &amp; grid-auto-columns</a></li>
+<li><a href="#grid-area-amp-grid-template-areas">grid-area &amp; grid-template-areas</a></li>
+<li><a href="#column-gap-amp-row-gap-amp-gap">column-gap &amp; row-gap</a></li>
+<li><a href="#justify-items">justify-items</a></li>
+<li><a href="#align-items">align-items</a></li>
+<li><a href="#place-items">place-items</a></li>
+<li><a href="#justify-content">justify-content</a></li>
+<li><a href="#align-content">align-content</a></li>
+<li><a href="#place-content">place-content</a></li>
+<li><a href="#justify-self">justify-self</a></li>
+<li><a href="#align-self">align-self</a></li>
+<li><a href="#place-self">place-self</a></li>
+<li><a href="#order">order</a></li>
+</ul>
+<h2 id="grid-的特別單位與函式"><a href="#grid-的特別單位與函式" class="headerlink" title="grid 的特別單位與函式"></a>grid 的特別單位與函式</h2><p>grid 中有一些特殊的單位或函式，能夠讓 grid 撰寫起來更方便，或是發揮更強大的功能。</p>
+<h3 id="span-關鍵字"><a href="#span-關鍵字" class="headerlink" title="span 關鍵字"></a>span 關鍵字</h3><p>前面有說過，我們能透過<code>grid-row</code>, <code>grid-column</code>來設定 grid 元素的位置。</p>
+<p>但是當格線數量比較多的時候，通常就得一個一個數，這樣很不方便。</p>
+<p>所以 grid 也提供了<code>span</code>這個關鍵字，讓你可以<code>直接指定欄 / 列數</code>，而不用再數格線。</p>
+<p>用法：</p>
+<ul>
+<li>如果是在<code>start</code>上設定的話，就代表<code>從end往前數過去</code>。</li>
+<li>如果是在<code>end</code>上設定的話，就代表<code>從start往後數過去</code>。</li>
+</ul>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item--yellow</span> {</span><br><span class="line">  <span class="hljs-comment">// end = 格線(-1)</span></span><br><span class="line">  <span class="hljs-comment">// start = 從end數過來的第二欄</span></span><br><span class="line">  grid-column: span <span class="hljs-number">2</span> / -<span class="hljs-number">1</span>;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-selector-class">.item--blue</span> {</span><br><span class="line">  <span class="hljs-comment">// start = 格線(1)</span></span><br><span class="line">  <span class="hljs-comment">// end = 從start處數過來的第二欄</span></span><br><span class="line">  grid-column: <span class="hljs-number">1</span> / span <span class="hljs-number">2</span>;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 或是這樣寫也行</span></span><br><span class="line">  grid-column-start: span <span class="hljs-number">2</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="span-unit.jpg" alt="span-unit"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/QWvYyzM">點這裡</a></font></p>
+<h3 id="fr-單位"><a href="#fr-單位" class="headerlink" title="fr 單位"></a>fr 單位</h3><p>fr 為<code>fraction(分數)</code>的縮寫。</p>
+<p><font size="2">💡 註 1：fr 的最小值為<code>grid元素中的內容寬度（不會縮到比內容還要小）</code>，你也能想成 <code>1fr = (auto, 1fr), min=auto, max=1fr</code>。</font></p>
+<p><font size="2">💡 註 2：不知道你有沒有背過這些單字：fracture(斷裂), fragile(易碎的), fragment(碎片)，frag 是「破壞、斷、折」的字首，所以帶有這個字首的單字意思都會差不多，fraction 也是其中之一，所以能利用這個字首來幫助記憶。</font></p>
+<p>fr 跟 flex 中的<code>flex-grow</code>有點像，能夠利用<code>剩餘空間來分配給元素</code>，我們直接看例子：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-number">960px</span>;</span><br><span class="line">  <span class="hljs-attribute">display</span>: grid;</span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: <span class="hljs-number">100px</span> <span class="hljs-number">1</span>fr <span class="hljs-number">1</span>fr <span class="hljs-number">2</span>fr <span class="hljs-number">2</span>fr <span class="hljs-number">3</span>fr;</span><br><span class="line">  grid-gap: <span class="hljs-number">20px</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="fraction.jpg" alt="fraction"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/oNWmxwb?editors=1100">點這裡</a></font></p>
+<p>使用 fr 的時候必須要知道：</p>
+<ul>
+<li><code>總空間有多大</code></li>
+<li><code>哪些東西佔據了多少的固定空間</code></li>
+<li><code>計算出剩餘空間</code></li>
+<li><code>fr的總分數值</code></li>
+<li><code>每個區塊的fr值</code></li>
+</ul>
+<p>所以上面的例子能分析出：</p>
+<ul>
+<li>總空間：<code>960px</code></li>
+<li>固定空間：<code>100px的間距(5個20px)，100px的方塊</code></li>
+<li>剩餘空間：<code>960-100-100 = 760px</code></li>
+<li>fr 的總分數值：<code>1+1+2+2+3 = 9</code></li>
+<li>每個區塊的 fr 值： <code>1/9, 1/9, 2/9, 2/9, 3/9</code></li>
+</ul>
+<p>這些東西都有之後，你就能利用<code>剩餘空間 x fr值</code>來計算出每個方塊的實際大小是多少。</p>
+<p><strong>使用 fr 的好處</strong></p>
+<ul>
+<li>假設想讓每個區塊大小一樣，不需要做任何計算，只要全部設為 <code>1fr</code> 即可。</li>
+<li>新增欄/列時，不用像使用 <code>%</code>一樣，得全部重新計算。</li>
+<li>修改間距時，不用像使用 <code>%</code> 一樣，得全部重新計算。</li>
+<li>修改某個欄/列的寬度時，不用像使用 <code>%</code> 一樣，得全部重新計算。</li>
+</ul>
+<h3 id="minmax"><a href="#minmax" class="headerlink" title="minmax()"></a>minmax()</h3><p>用途：<code>設定欄與列的最大最小值</code></p>
+<p>就跟<code>min-width</code>和<code>max-width</code>的概念是一樣的，你可以指定每個欄列的最大與最小寬度。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--green"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--pink"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 建立五欄</span></span><br><span class="line">  <span class="hljs-comment">// 每個欄的最大寬度 100px</span></span><br><span class="line">  <span class="hljs-comment">// 每個欄的最小寬度 50px</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>:</span><br><span class="line">    minmax(<span class="hljs-number">50px</span>, <span class="hljs-number">100px</span>) minmax(<span class="hljs-number">50px</span>, <span class="hljs-number">100px</span>) minmax(<span class="hljs-number">50px</span>, <span class="hljs-number">100px</span>)</span><br><span class="line">    minmax(<span class="hljs-number">50px</span>, <span class="hljs-number">100px</span>);</span><br><span class="line">  <span class="hljs-comment">// 建立一列</span></span><br><span class="line">  <span class="hljs-comment">// 每個列的最大寬度 100px</span></span><br><span class="line">  <span class="hljs-comment">// 每個列的最小寬度 50px</span></span><br><span class="line">  grid-template-rows: minmax(<span class="hljs-number">50px</span>, <span class="hljs-number">100px</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="grid-minmax-animation.gif" alt="grid-minmax-animation"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/yLbGQRa?editors=1100">點這裡</a></font></p>
+<p><font size="2">💡 現在方塊最小只能縮到 50px，最大只能擴到 100px。</font></p>
+<h3 id="repeat"><a href="#repeat" class="headerlink" title="repeat()"></a>repeat()</h3><p>用途：<code>指定次數，把要重複的值寫進去。</code></p>
+<p>假設我想要建立 100px, 150px 這樣的欄 5 次，就這樣子寫：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 重複建立 50px 100px的欄 "5次"</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: repeat(<span class="hljs-number">5</span>, <span class="hljs-number">100px</span> <span class="hljs-number">150px</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="repeat.jpg" alt="repeat"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/jOmdWpL">點這裡</a></font></p>
+<h3 id="auto-fill-amp-auto-fit"><a href="#auto-fill-amp-auto-fit" class="headerlink" title="auto-fill &amp; auto-fit"></a>auto-fill &amp; auto-fit</h3><p>兩個都得搭配<code>repeat()</code>一起使用。</p>
+<p>當你<code>不想明確指定要有幾欄幾列</code>，也<code>不確定 grid 元素的數量</code>時，這兩個屬性會很有幫助。</p>
+<p>跟隱性格線有一點類似，但隱性格線的問題是：</p>
+<ul>
+<li>grid 元素只會往單一方向排列（欄或列）</li>
+<li>必須要有 grid 元素存在，才會產生網格。</li>
+<li>每當放入新的 grid 元素，就會一直產生新的網格，無法限制在一個範圍內。</li>
+</ul>
+<p><strong>auto-fill</strong></p>
+<p>用途：根據設定的尺寸，<code>盡可能在 grid 空間中建立最多的欄或列</code>。</p>
+<p><font size="2">💡 註 1：既使沒有放入 grid 元素，該<code>網格佔據的空間依然會存在</code>。</font><br><font size="2">💡 註 2：會隨著容器寬度來<code>動態更新網格的欄數</code>。</font></p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--green"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--pink"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--purple"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// grid空間的寬度與高度</span></span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-number">70%</span>;</span><br><span class="line">  <span class="hljs-attribute">max-width</span>: <span class="hljs-number">760px</span>;</span><br><span class="line">  <span class="hljs-attribute">height</span>: <span class="hljs-number">250px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 建立grid網格</span></span><br><span class="line">  <span class="hljs-attribute">display</span>: grid;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 產生100px的欄，直到塞不下grid空間為止。</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: repeat(auto-fill, <span class="hljs-number">100px</span>);</span><br><span class="line">  <span class="hljs-comment">// 產生100px的列，直到塞不下grid空間為止。</span></span><br><span class="line">  grid-template-rows: repeat(auto-fill, <span class="hljs-number">100px</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="grid-auto-fill.jpg" alt="grid-auto-fill"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/LYyMBGj">點這裡</a></font></p>
+<p>你可以看到：</p>
+<ul>
+<li>grid 空間的寬度為 760px，每欄 100px，最多可以建立 <code>7 欄</code>。</li>
+<li>grid 空間的高度為 250px，每列 100px，最多可以建立 <code>2 列</code>。</li>
+<li>grid 空間中只有放入 5 個 grid 元素，但<code>空的網格依然存在</code>。</li>
+</ul>
+<p>並且能夠隨著 grid 空間的範圍<code>動態更新網格</code>：</p>
+<p><img src="grid-auto-fill-animation.gif" alt="grid-auto-fill-animation"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/NWjeOzL">點這裡</a></font></p>
+<p><strong>auto-fit</strong></p>
+<p>用途：根據設定的尺寸，<code>盡可能在 grid 空間中建立最多的欄或列</code>。</p>
+<p><font size="2">💡 註 1：若是沒有放入 grid 元素，該<code>網格佔據的空間會被折疊</code>。</font><br><font size="2">💡 註 2：會隨著容器寬度來<code>動態更新網格的欄數</code>。</font></p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--green"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--pink"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--purple"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// grid空間的寬度與高度</span></span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-number">70%</span>;</span><br><span class="line">  <span class="hljs-attribute">max-width</span>: <span class="hljs-number">760px</span>;</span><br><span class="line">  <span class="hljs-attribute">height</span>: <span class="hljs-number">250px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 建立grid網格</span></span><br><span class="line">  <span class="hljs-attribute">display</span>: grid;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 產生100px的欄，直到塞不下grid空間為止。</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: repeat(auto-fit, <span class="hljs-number">100px</span>);</span><br><span class="line">  <span class="hljs-comment">// 產生100px的列，直到塞不下grid空間為止。</span></span><br><span class="line">  grid-template-rows: repeat(auto-fit, <span class="hljs-number">100px</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="grid-auto-fit.jpg" alt="grid-auto-fit"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/OJmraVB">點這裡</a></font></p>
+<p>你可以看到：</p>
+<ul>
+<li>grid 空間的寬度為 760px，每欄 100px，最多可以建立 <code>7 欄 (注意格線編號)</code>。</li>
+<li>grid 空間的高度為 250px，每列 100px，最多可以建立 <code>2 列 (注意格線編號)</code>。</li>
+<li>grid 空間中只有放入 5 個 grid 元素，但<code>空的網格會被折疊</code>。</li>
+</ul>
+<p>並且能夠隨著 grid 空間的範圍<code>動態更新網格</code>：</p>
+<p><img src="grid-auto-fill-animation.gif" alt="grid-auto-fit-animation"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/wvdRQdZ">點這裡</a></font></p>
+<p><strong>⚠ auto-fill &amp; auto-fit 使用時的小陷阱</strong></p>
+<p>回顧一下剛剛提到這兩者的差異：</p>
+<ul>
+<li>fit：空的網格空間會被<code>折疊成 0px</code></li>
+<li>fill：空網格格空間會仍然<code>維持設定的空間</code></li>
+</ul>
+<p>這跟我們接下來要談的東西有很大的關係，所以請各位務必記得這兩個差異。</p>
+<p>接著來看個例子：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"wrap"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box--fit"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box--fill"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box--fit</span> {</span><br><span class="line">  <span class="hljs-comment">// grid空間的大小為760px</span></span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-number">760px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 盡可能填滿grid空間</span></span><br><span class="line">  <span class="hljs-comment">// 每欄的最小寬 200px</span></span><br><span class="line">  <span class="hljs-comment">// 若寬比 200px大，則套用1fr</span></span><br><span class="line">  grid-template-column: repeat(auto-fit, minmax(<span class="hljs-number">200px</span>, <span class="hljs-number">1</span>fr));</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.box--fill</span> {</span><br><span class="line">  <span class="hljs-comment">// grid空間的大小為760px</span></span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-number">760px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 盡可能填滿grid空間</span></span><br><span class="line">  <span class="hljs-comment">// 每欄的最小寬 200px</span></span><br><span class="line">  <span class="hljs-comment">// 若寬比 200px大，則套用1fr</span></span><br><span class="line">  grid-template-column: repeat(auto-fit, minmax(<span class="hljs-number">200px</span>, <span class="hljs-number">1</span>fr));</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>結果如下：</p>
+<p><img src="auto-fit-auto-fill-difference-01.jpg" alt="auto-fit-auto-fill-difference-01"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/qBmwvgq">點這裡</a></font></p>
+<p>這裡想問的是，同樣都是填滿，也同樣都放入兩個元素，你能解釋出為什麼會這樣的差異嗎？</p>
+<p>你可以先自己思考看看，再來看下面的解釋。</p>
+<p>如果不太清楚的話，參考這張圖：</p>
+<p><img src="auto-fit-auto-fill-difference-02.jpg" alt="auto-fit-auto-fill-difference-02"></p>
+<p>所以最後留給各位一個問題，看看各位是否真的有理解這兩者的差異。</p>
+<p>假設現在的需求是<code>希望不管放入多少元素，元素都要把整個grid空間填滿</code>，請問該用<code>auto-fit</code>還是<code>auto-fill</code>呢？</p>
+<h2 id="display"><a href="#display" class="headerlink" title="display"></a>display</h2><p><strong>用途：</strong><code>建立 grid 網格</code></p>
+<p>我知道介紹這個屬性好像有點多餘，不過你知道其實它有兩個值可以設定嗎？</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container"</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!-- grid-box(1) --&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box__item box__item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!-- grid-box(2) --&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box__item box__item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 建立grid空間，並將grid空間自身設為inline元素</span></span><br><span class="line">  <span class="hljs-attribute">display</span>: inline-grid;</span><br><span class="line">  <span class="hljs-comment">// 建立grid空間，並將grid空間自身設為block元素</span></span><br><span class="line">  <span class="hljs-attribute">display</span>: grid;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="display-grid.jpg" alt="display-grid"><br><img src="display-inline-grid.jpg" alt="display-inline-grid"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/dyWjdym">點這裡</a></font></p>
+<h2 id="grid-template-rows-amp-grid-template-columns"><a href="#grid-template-rows-amp-grid-template-columns" class="headerlink" title="grid-template-rows &amp; grid-template-columns"></a>grid-template-rows &amp; grid-template-columns</h2><p><strong>用途：</strong><code>設定顯性格線(列)的寬度 &amp; 設定顯性格線(欄)的寬度</code></p>
+<p>讓我們來建立一個 4 欄 2 列的 grid 網格。</p>
+<p>建立基本的 HTML：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!-- 第一列 --&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--green"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--pink"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!-- 第二列 --&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--pink"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--green"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>建立 grid 網格以及設定：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 設定欄（4個欄，各100px）</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: <span class="hljs-number">100px</span> <span class="hljs-number">100px</span> <span class="hljs-number">100px</span> <span class="hljs-number">100px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 設定列（2個列，各100px）</span></span><br><span class="line">  grid-template-rows: <span class="hljs-number">100px</span> <span class="hljs-number">100px</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="grid-template-rows&amp;grid-template-columns.jpg" alt="grid-template-rows &amp; grid-template-columns"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/ZEKROWq">點這裡</a></font></p>
+<p>如果覺得上面這樣寫有點麻煩的話，你也可以搭配<code>repeat()</code>來使用：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 第一種</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: repeat(<span class="hljs-number">4</span>, <span class="hljs-number">100px</span>);</span><br><span class="line">  <span class="hljs-comment">// 等於以下</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: <span class="hljs-number">100px</span> <span class="hljs-number">100px</span> <span class="hljs-number">100px</span> <span class="hljs-number">100px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 第二種</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: repeat(<span class="hljs-number">2</span>, <span class="hljs-number">100px</span>) <span class="hljs-number">200px</span>;</span><br><span class="line">  <span class="hljs-comment">// 等於以下</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: <span class="hljs-number">100px</span> <span class="hljs-number">100px</span> <span class="hljs-number">200px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 第三種</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: repeat(<span class="hljs-number">2</span>, <span class="hljs-number">100px</span>) <span class="hljs-number">20%</span>;</span><br><span class="line">  <span class="hljs-comment">// 等於以下</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: <span class="hljs-number">100px</span> <span class="hljs-number">100px</span> <span class="hljs-number">20%</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="自訂義格線名稱"><a href="#自訂義格線名稱" class="headerlink" title="自訂義格線名稱"></a>自訂義格線名稱</h3><p>使用<code>grid-template-columns / rows</code>的時候，是可以自定義格線的名字的。<br><font size="2">💡 只有 grid-template 可以，grid-auto 不行。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">display</span>: grid;</span><br><span class="line">  <span class="hljs-comment">// 欄</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>:</span><br><span class="line">    [Cline-start]<span class="hljs-number">100px</span></span><br><span class="line">    [Cline-<span class="hljs-number">2</span>]<span class="hljs-number">100px</span></span><br><span class="line">    [Cline-<span class="hljs-number">3</span>]<span class="hljs-number">100px</span></span><br><span class="line">    [Cline-<span class="hljs-number">4</span>]<span class="hljs-number">100px</span></span><br><span class="line">    [Cline-end];</span><br><span class="line">  <span class="hljs-comment">// 列</span></span><br><span class="line">  grid-template-rows:</span><br><span class="line">    [Rline-start]<span class="hljs-number">100px</span></span><br><span class="line">    [Rline-<span class="hljs-number">2</span>]<span class="hljs-number">100px</span></span><br><span class="line">    [Rline-end];</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>畫成圖的話會長的像這樣：</p>
+<p><img src="line-name-01.jpg" alt="line-name-01"></p>
+<p>接著 grid 元素就能拿我們取的名字來設定。</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.yellow</span> {</span><br><span class="line">  grid-row-start: Rline-<span class="hljs-number">2</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="line-name-02.jpg" alt="line-name-02"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/wvdXbra">點這裡</a></font></p>
+<h3 id="自定義格線名稱時的注意事項"><a href="#自定義格線名稱時的注意事項" class="headerlink" title="自定義格線名稱時的注意事項"></a>自定義格線名稱時的注意事項</h3><p><font size="2">🎉 註：這個問題是一位臉書中的社友幫助我解開的，非常謝謝你幫助我解惑。</font></p>
+<p>這邊要特別注意一件事，當你想幫格線取名稱時，請盡量避免在名稱中使用<code>-start</code>與<code>-end</code>這兩個<code>關鍵字</code>。</p>
+<p>讓我們直接用例子來做解說：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--green"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--pink"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">display</span>: grid;</span><br><span class="line">  <span class="hljs-comment">// 欄</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>:</span><br><span class="line">    [Cline1-start]<span class="hljs-number">100px</span></span><br><span class="line">    [Cline2-start]<span class="hljs-number">100px</span></span><br><span class="line">    [Cline3-start]<span class="hljs-number">100px</span></span><br><span class="line">    [Cline4-start]<span class="hljs-number">100px</span></span><br><span class="line">    [Cline5-start];</span><br><span class="line">  <span class="hljs-comment">// 列</span></span><br><span class="line">  grid-template-rows:</span><br><span class="line">    [Rline1-end]<span class="hljs-number">100px</span></span><br><span class="line">    [Rline2-end]<span class="hljs-number">100px</span></span><br><span class="line">    [Rline3-end];</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>假設在沒做任何設定時的網格與元素長這樣：</p>
+<p><img src="the-start-end-keyword-of-line-name-01.jpg" alt="the-start-end-keyword-of-line-name-01"></p>
+<p>現在我們對<code>黃色方塊</code>做以下設定：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item--yellow</span> {</span><br><span class="line">  <span class="hljs-comment">// ↓ 將起始點設在Cline3這條格線上</span></span><br><span class="line">  grid-column-start: Cline3;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="the-start-end-keyword-of-line-name-02.jpg" alt="the-start-end-keyword-of-line-name-02"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/rNmXOyK">點這裡</a></font></p>
+<p>你能看到<code>黃色方塊</code>居然自動移動到了<code>Cline3-start</code>這條格線上的位置。</p>
+<p>我個人把這個機制看作是一種<code>備用機制</code>，這個備用機制會在<code>當你指定一條不存在的格線名稱時觸發</code>。</p>
+<p>在我們剛剛使用指定<code>Cline3</code>的時候，<code>grid-column-start</code>會試著去找名字叫做<code>Cline3</code>的這條格線，但它發現並沒有叫做<code>Cline3</code>的格線，所以它會自動幫你在<code>Cline3</code>的後面加上<code>-start</code>這個關鍵字。</p>
+<p>所以當加入這個關鍵字後，<code>grid-column-start</code>會再次尋找是否有<code>Cline3-start</code>這條格線，而這時就能正確找到我們在一開始取名為<code>Cline3-start</code>的那條格線。</p>
+<p>而這也就是為什麼我們明明沒有指定正確的名稱也能夠找到格線的位置。</p>
+<p>所以即便你現在把格線名稱取成這樣：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">display</span>: grid;</span><br><span class="line">  <span class="hljs-comment">// 欄</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>:</span><br><span class="line">    [Cline1-start]<span class="hljs-number">100px</span></span><br><span class="line">    [Cline2-start]<span class="hljs-number">100px</span></span><br><span class="line">    // ↓ 把名稱改成這樣</span><br><span class="line">    [Cline3-start-start]<span class="hljs-number">100px</span></span><br><span class="line">    [Cline4-start]<span class="hljs-number">100px</span></span><br><span class="line">    [Cline5-start];</span><br><span class="line">  <span class="hljs-comment">// 列</span></span><br><span class="line">  grid-template-rows:</span><br><span class="line">    [Rline1-end]<span class="hljs-number">100px</span></span><br><span class="line">    [Rline2-end]<span class="hljs-number">100px</span></span><br><span class="line">    [Rline3-end];</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item--yellow</span> {</span><br><span class="line">  <span class="hljs-comment">// ↓ 將起始點設在Cline3-start這條格線上</span></span><br><span class="line">  grid-column-start: Cline3-start;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>最後的結果也是會跟剛剛是一樣的。（找不到 Cline3-start → 改找 Cline3-start-start）</p>
+<p><img src="the-start-end-keyword-of-line-name-03.jpg" alt="the-start-end-keyword-of-line-name-03"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/LYywQYL">點這裡</a></font></p>
+<p>但如果你現在又改成這樣：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">display</span>: grid;</span><br><span class="line">  <span class="hljs-comment">// 欄</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>:</span><br><span class="line">    [Cline1-start]<span class="hljs-number">100px</span></span><br><span class="line">    [Cline2-start]<span class="hljs-number">100px</span></span><br><span class="line">    // ↓ 不使用-start關鍵字</span><br><span class="line">    [Cline3-abcde]<span class="hljs-number">100px</span></span><br><span class="line">    [Cline4-start]<span class="hljs-number">100px</span></span><br><span class="line">    [Cline5-start];</span><br><span class="line">  <span class="hljs-comment">// 列</span></span><br><span class="line">  grid-template-rows:</span><br><span class="line">    [Rline1-end]<span class="hljs-number">100px</span></span><br><span class="line">    [Rline2-end]<span class="hljs-number">100px</span></span><br><span class="line">    [Rline3-end];</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item--yellow</span> {</span><br><span class="line">  grid-column-start: Cline3;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="the-start-end-keyword-of-line-name-04.jpg" alt="the-start-end-keyword-of-line-name-04"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/zYwgpXq">點這裡</a></font></p>
+<p>此時黃色方塊就消失了，為什麼？</p>
+<p>套用剛剛的機制，當<code>Cline3</code>找不到時，它會改找<code>Cline3-start</code>這條格線，但由於我們取的名稱為<code>Cline3-abcde</code>，所以即便它採取了這個備用機制，它也無法找到正確的位置，因此黃色方塊才會消失。</p>
+<p>至於<code>-end</code>又會發生在什麼情況呢？</p>
+<p>其實跟剛剛都是一樣的道理，只不過<code>-end</code>是在使用<code>grid-column-end</code>來做設定的時候發生。</p>
+<p>所以下次再幫格線命名的時候，<strong>建議最好避免使用<code>-start</code>，<code>-end</code>這兩個關鍵字</strong>。</p>
+<h3 id="一個格線可以有一個以上的格線名稱"><a href="#一個格線可以有一個以上的格線名稱" class="headerlink" title="一個格線可以有一個以上的格線名稱"></a>一個格線可以有一個以上的格線名稱</h3><figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">display</span>: grid;</span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>:</span><br><span class="line">    [Cline-start]<span class="hljs-number">100px</span></span><br><span class="line">    // 以空格分開，這兩個名稱都能代表這條格線。</span><br><span class="line">    [Cline1-end Cline2-start]<span class="hljs-number">100px</span></span><br><span class="line">    [Cline-<span class="hljs-number">3</span>]<span class="hljs-number">100px</span></span><br><span class="line">    [Cline-<span class="hljs-number">4</span>]<span class="hljs-number">100px</span></span><br><span class="line">    [Cline-end];</span><br><span class="line">  grid-template-rows:</span><br><span class="line">    [Rline-start]<span class="hljs-number">100px</span></span><br><span class="line">    [Rline-<span class="hljs-number">2</span>]<span class="hljs-number">100px</span></span><br><span class="line">    [Rline-end];</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這裡利用格線名稱來設定<code>黃色方塊</code>的位置。</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item--yellow</span> {</span><br><span class="line">  <span class="hljs-comment">// 將起始點設為Cline1-end的位置</span></span><br><span class="line">  <span class="hljs-comment">//（第二條欄格線）</span></span><br><span class="line">  grid-column-start: Cline1-end;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="grid-line-name-multi-names.jpg" alt="grid-line-name-multi-names"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/bGWjjmY">點這裡</a></font></p>
+<h3 id="當有相同的格線名稱時"><a href="#當有相同的格線名稱時" class="headerlink" title="當有相同的格線名稱時"></a>當有相同的格線名稱時</h3><p>當有相同的格線名稱時，可以寫成<code>格線名稱 + 指定數字</code>來指定格線：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 都取名為 line</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: [line]<span class="hljs-number">100px</span> [line]<span class="hljs-number">100px</span> [line]<span class="hljs-number">100px</span> [line]<span class="hljs-number">100px</span> [line]<span class="hljs-number">100px</span> [line];</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.yellow</span> {</span><br><span class="line">  <span class="hljs-comment">// 1 = 相同名稱中的第一個。</span></span><br><span class="line">  <span class="hljs-comment">// 2 = 相同名稱中的第二個。</span></span><br><span class="line">  grid-column-start: line <span class="hljs-number">2</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="grid-line-name&amp;sharing-and-countable.jpg" alt="grid-line-name &amp; sharing and countable"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/oNWyRdJ">點這裡</a></font></p>
+<h2 id="grid-row-amp-grid-column"><a href="#grid-row-amp-grid-column" class="headerlink" title="grid-row &amp; grid-column"></a>grid-row &amp; grid-column</h2><p><strong>用途：</strong><code>利用格線來設定 grid 元素 的位置與範圍</code></p>
+<p>grid-row &amp; grid-column 都是縮寫的形式，請參照以下：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item</span> {</span><br><span class="line">  grid-row: <span class="hljs-number">1</span> / <span class="hljs-number">2</span>;</span><br><span class="line">  <span class="hljs-comment">// 等於以下</span></span><br><span class="line">  grid-row-start: <span class="hljs-number">1</span>;</span><br><span class="line">  grid-row-end: <span class="hljs-number">2</span>;</span><br><span class="line"></span><br><span class="line">  grid-column: <span class="hljs-number">2</span> / <span class="hljs-number">5</span>;</span><br><span class="line">  <span class="hljs-comment">// 等於以下</span></span><br><span class="line">  grid-column-start: <span class="hljs-number">2</span>;</span><br><span class="line">  grid-column-end: <span class="hljs-number">5</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>此屬性前面已經介紹過，可以參考前面的範例。</p>
+<h2 id="grid-auto-flow"><a href="#grid-auto-flow" class="headerlink" title="grid-auto-flow"></a>grid-auto-flow</h2><p><strong>用途：</strong><code>設定grid元素的排列方式</code></p>
+<p><font size="2">💡 註：預設值為<code>row</code></font></p>
+<h3 id="運作流程"><a href="#運作流程" class="headerlink" title="運作流程"></a>運作流程</h3><p>我看到大部分的教學是以<code>隱性格線的設定(grid-auto)</code> 來做舉例，但這個屬性並不是只能用在隱性格線，其實在<code>顯性格線上(grid-template)</code>也是可行的。</p>
+<p>如果只用<code>一列一列排序</code>跟<code>一欄一欄排序</code>這個詞來記的話，在顯性或隱性之間會很混淆（我自己是這樣），<br>因此我分析了一下它的實際運作方式，發現原來是我少了一些步驟，才會常常搞混。</p>
+<p>簡單來說，可以拆成以下動作：</p>
+<ol>
+<li>觀察目前的網格中的<code>總欄數</code>與<code>總列數</code></li>
+<li>當網格中的<code>欄或列還沒被填滿時</code>，grid 元素會先根據 grid-auto-flow 的值來決定<code>要填滿欄還是列</code>。</li>
+<li>如果是<code>column(欄)</code> → <code>填滿欄</code>，如果是<code>row(列)</code> → <code>填滿列</code>。</li>
+<li>當網格中的<code>欄或列被填滿時</code>，grid 元素才會跳到<code>下一欄</code>或<code>下一列</code>。</li>
+</ol>
+<p><font size="2">💡 註：所以你可以發現，跳到下一欄或下一列其實是最後一步才做的動作。</font></p>
+<h3 id="記憶小口訣"><a href="#記憶小口訣" class="headerlink" title="記憶小口訣"></a>記憶小口訣</h3><ul>
+<li>grid-auto-flow: <code>row</code> → <code>先把列填滿，再跳下一列。</code></li>
+<li>grid-auto-flow: <code>column</code> → <code>先把欄填滿，再跳下一欄。</code></li>
+</ul>
+<h3 id="設定顯性格線的情況"><a href="#設定顯性格線的情況" class="headerlink" title="設定顯性格線的情況"></a>設定顯性格線的情況</h3><p>直接來看例子：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--green"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--pink"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--purple"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 建立 grid 網格</span></span><br><span class="line">  <span class="hljs-attribute">display</span>: grid;</span><br><span class="line">  <span class="hljs-comment">// 四欄 (顯性格線)</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: repeat(<span class="hljs-number">4</span>, <span class="hljs-number">100px</span>);</span><br><span class="line">  <span class="hljs-comment">// 兩列 (顯性格線)</span></span><br><span class="line">  grid-template-rows: repeat(<span class="hljs-number">2</span>, <span class="hljs-number">100px</span>);</span><br><span class="line">  <span class="hljs-comment">// 預設值</span></span><br><span class="line">  grid-<span class="hljs-attribute">auto</span>-flow: row;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>你可以看到，grid 元素會<code>先把第一個列給填滿，接著在放到第二個列。</code></p>
+<p><img src="grid-auto-flow-inside-of-range-01.jpg" alt="grid-auto-flow-inside-of-range-01"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/MWmzojj">點這裡</a></font></p>
+<p>接著做一點調整：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  grid-<span class="hljs-attribute">auto</span>-flow: column;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>現在 grid 元素會<code>先把第一個欄給填滿，接著在放到第二個欄，以此類推。</code></p>
+<p><img src="grid-auto-flow-inside-of-range-02.jpg" alt="grid-auto-flow-inside-of-range-02"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/MWmzojj">點這裡</a></font></p>
+<h3 id="設定隱性格線的情況"><a href="#設定隱性格線的情況" class="headerlink" title="設定隱性格線的情況"></a>設定隱性格線的情況</h3><p>直接來看例子：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--green"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--pink"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--purple"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 建立 grid 網格</span></span><br><span class="line">  <span class="hljs-attribute">display</span>: grid;</span><br><span class="line">  <span class="hljs-comment">// 設定隱性格線</span></span><br><span class="line">  grid-<span class="hljs-attribute">auto</span>-<span class="hljs-attribute">columns</span>: <span class="hljs-number">100px</span>;</span><br><span class="line">  <span class="hljs-comment">// 設定隱性格線</span></span><br><span class="line">  grid-<span class="hljs-attribute">auto</span>-rows: <span class="hljs-number">100px</span>;</span><br><span class="line">  <span class="hljs-comment">// 預設值</span></span><br><span class="line">  grid-<span class="hljs-attribute">auto</span>-flow: row;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>由於這裡沒有設定顯性格線，所以你能看到 grid 元素會直接<code>往下一個列來擺放。</code></p>
+<p><font size="2">💡 註：因為沒有設定顯性格線，所以代表目前的<code>總欄數 / 總列數的數量皆為1。</code></font></p>
+<p><img src="grid-auto-flow-outside-of-range-01.jpg" alt="grid-auto-flow-outside-of-range-01"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/JjNeJaa">點這裡</a></font></p>
+<p>再做一點調整：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  grid-<span class="hljs-attribute">auto</span>-flow: column;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>跟剛剛一樣，grid 元素會直接<code>往下一個欄來擺放。</code></p>
+<p><img src="grid-auto-flow-outside-of-range-02.jpg" alt="grid-auto-flow-outside-of-range-02"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/JjNeJaa">點這裡</a></font></p>
+<h3 id="解決跳格的問題"><a href="#解決跳格的問題" class="headerlink" title="解決跳格的問題"></a>解決跳格的問題</h3><p>grid-auto-flow 其實還有一個屬性值是<code>dense</code>，主要是用來<code>解決grid元素自動跳格</code>的問題。</p>
+<p>這裡直接看例子會比較清楚：</p>
+<p><img src="grid-auto-no-dense.jpg" alt="grid-auto-no-dense"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/MWmZYbQ">點這裡</a></font></p>
+<p>簡單解釋一下圖中的設定：</p>
+<ul>
+<li>設定 <code>10 欄</code>的網格空間，<code>列數不限制</code>（不設定）。</li>
+<li><code>藍色方塊</code>會佔據 6 欄 2 列</li>
+<li><code>粉色方塊</code>會佔據 2 欄</li>
+<li><code>綠色方塊</code>會從最尾端的位置向前佔據 5 欄</li>
+<li><code>編號為 9 倍數的方塊</code>會佔據 2 欄</li>
+</ul>
+<p>你能看到，一排最多只有 10 欄，所以<code>編號6的藍色方塊</code>只能放到下一排，導致後面的方塊也跟著往後排。</p>
+<p><code>綠色方塊</code>也一樣，因為欄數不夠的關係，放到下一排，並導致後面的方塊也跟著往後排。</p>
+<p>現在讓我們在 grid 網格中加入<code>dense</code>的設定：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  grid-<span class="hljs-attribute">auto</span>-flow: dense;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="grid-auto-flow-dense-row.jpg" alt="grid-auto-flow-dense-row"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/QWvzORE">點這裡</a></font></p>
+<p>看起來整齊多了！雖然<code>編號6的藍色方塊</code>一樣被放到了下一排，但是現在後面的<code>[7] [8] [9] [10] 方塊</code>沒有跟著被放到下一排，而是被放到第一排裡去。</p>
+<p>這是就是<code>dense</code>的作用，當<code>編號6的藍色方塊</code>放不下時，它會繼續<code>從後面的方塊中找出能夠被填進去的方塊</code>。</p>
+<p>不過方塊的順序也會因為這樣而亂掉，這一點要多留意。</p>
+<p>最後做個補充，<code>dense</code>是跟著<code>row / column</code>的設定來執行的，<br>所以如果你希望排列方式是以<code>column</code>來排列，你可以這樣子寫：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  grid-<span class="hljs-attribute">auto</span>-flow: dense column;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><font size="2">💡 註：由於預設的排列方式為 row，所以剛剛才可以只寫一個 dense。</font></p>
+<p><img src="grid-auto-flow-dense-column.jpg" alt="grid-auto-flow-dense-column"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/OJmrzOX">點這裡</a></font></p>
+<h2 id="grid-auto-rows-amp-grid-auto-columns"><a href="#grid-auto-rows-amp-grid-auto-columns" class="headerlink" title="grid-auto-rows &amp; grid-auto-columns"></a>grid-auto-rows &amp; grid-auto-columns</h2><p><strong>用途：</strong><code>設定隱性格線(列)的寬度 &amp; 設定隱性格線(欄)的寬</code></p>
+<p>再次提醒，記得要分清楚 grid-template 與 grid-auto 這兩者的差異：</p>
+<ul>
+<li>grid-template = 設定顯性格線</li>
+<li>grid-auto = 設定隱性格線</li>
+</ul>
+<p>當 grid 網格中的元素超過<code>grid-template</code>的設定範圍時，就會套用<code>grid-auto</code>的設定。</p>
+<p>例如：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--green"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--pink"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 設定顯性格線</span></span><br><span class="line">  <span class="hljs-comment">// 兩欄 100px 100px</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: <span class="hljs-number">100px</span> <span class="hljs-number">100px</span>;</span><br><span class="line">  <span class="hljs-comment">// 一列 100px</span></span><br><span class="line">  grid-template-rows: <span class="hljs-number">100px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 設定隱性格線</span></span><br><span class="line">  <span class="hljs-comment">// 每一列 200px</span></span><br><span class="line">  grid-<span class="hljs-attribute">auto</span>-rows: <span class="hljs-number">200px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 網格的預設排列方式是 "列"</span></span><br><span class="line">  <span class="hljs-comment">// 所以超過範圍的方塊才會被放到下一列</span></span><br><span class="line">  grid-<span class="hljs-attribute">auto</span>-flow: row:</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="grid-auto.jpg" alt="grid-auto"></p>
+<p>你也可以不寫<code>grid-template</code>，只寫<code>grid-auto</code>，這樣子就可以建造出固定的寬度的欄與列。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--pink"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 建立網格空間</span></span><br><span class="line">  <span class="hljs-attribute">display</span>: grid;</span><br><span class="line">  <span class="hljs-comment">// 每一列皆為100px</span></span><br><span class="line">  grid-<span class="hljs-attribute">auto</span>-rows: <span class="hljs-number">100px</span>;</span><br><span class="line">  <span class="hljs-comment">// 每一欄皆為200px</span></span><br><span class="line">  grid-<span class="hljs-attribute">auto</span>-<span class="hljs-attribute">columns</span>: <span class="hljs-number">200px</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="auto-flow-row.jpg" alt="auto-flow-row"></p>
+<p>這樣子不論你在 grid 網格中放了多少個元素，它都會按照<code>grid-auto</code>的設定下去放置。</p>
+<p>如果你希望是 grid 元素是以垂直來排列，記得再加上這一句：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  grid-<span class="hljs-attribute">auto</span>-flow: column;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="auto-flow-col.jpg" alt="auto-flow-col"></p>
+<p>最後，我們參照 <a target="_blank" rel="noopener" href="https://960.gs/">960 grid</a>，來做個相同概念的網格空間：</p>
+<p><img src="grid-960.jpg" alt="grid-960"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/vYmraeK">點這裡</a></font></p>
+<h2 id="grid-area-amp-grid-template-areas"><a href="#grid-area-amp-grid-template-areas" class="headerlink" title="grid-area &amp; grid-template-areas"></a>grid-area &amp; grid-template-areas</h2><p><strong>用途：</strong><code>對 grid 元素取名稱 &amp; 用取好的名稱來排位置</code></p>
+<p>其實這個屬性比較偏向好玩用，我個人認為實際上並不實用，可以了解一下就好。</p>
+<p><font size="2">💡 註 1：一旦對 grid 元素取了名子，就得透過 grid-template-areas 來指定位置，<code>否則grid元素不會自動被放入grid網格中。</code></font></p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--pink"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 對 grid 元素做設定</span></span><br><span class="line"><span class="hljs-comment">// 雖然正常情況下你不該取中文，不過這樣其實是能運作的。</span></span><br><span class="line"><span class="hljs-comment">// (偷偷告訴你，其實 emoji 也可以當名稱...)</span></span><br><span class="line"><span class="hljs-selector-class">.item--yellow</span> {</span><br><span class="line">  grid-area: 小黃;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-selector-class">.item--pink</span> {</span><br><span class="line">  grid-area: 小粉;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-selector-class">.item--blue</span> {</span><br><span class="line">  grid-area: 小藍;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 設定grid元素在網格中的位置</span></span><br><span class="line">  grid-template-areas: <span class="hljs-string">'小黃 小粉 小藍'</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="grid-area&amp;grid-template-areas.jpg" alt="grid-area &amp; grid-template-areas"></p>
+<p>另外，如果你不喜歡<code>小粉</code>，你希望<code>小粉</code>從這個世界上消失的話，也可以這樣子寫：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// "." 代表這一格要留空</span></span><br><span class="line">  grid-template-areas: <span class="hljs-string">'小黃 . 小藍'</span>;</span><br><span class="line">  <span class="hljs-comment">// 或任何不存在的名字也可以</span></span><br><span class="line">  grid-template-areas: <span class="hljs-string">'小黃 小黑 小藍'</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="grid-area&amp;grid-template-areas-omitting.jpg" alt="grid-area &amp; grid-template-areas-omitting"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/ExmRbdx">點這裡</a></font></p>
+<h3 id="使用-grid-area-的一些小問題"><a href="#使用-grid-area-的一些小問題" class="headerlink" title="使用 grid-area 的一些小問題"></a>使用 grid-area 的一些小問題</h3><p><font size="2">🎉 註：這個問題是一位臉書中的社友幫助我解開的，非常謝謝你幫助我解惑。</font></p>
+<p>一旦你對一個 grid 元素取了名字，且又沒有透過<code>grid-template-areas</code>把這個 grid 元素給放到網格中，你就會發現<code>格線的編號</code>會超出預期的狀況，讓我們看以下的例子：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--pink"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>我們對每一個 grid 元素取名字。</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item--yellow</span> {</span><br><span class="line">  grid-area: 小黃;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-selector-class">.item--pink</span> {</span><br><span class="line">  grid-area: 小粉;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-selector-class">.item--blue</span> {</span><br><span class="line">  grid-area: 小藍;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>但我們只在網格中放入<code>小黃</code>：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// ↓ 以下建立一個三欄一列的網格</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: repeat(<span class="hljs-number">3</span>, <span class="hljs-number">100px</span>);</span><br><span class="line">  grid-template-rows: <span class="hljs-number">100px</span>;</span><br><span class="line">  grid-template-areas: <span class="hljs-string">'小黃 小黃 小黃'</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="the-problem-of-named-area-01.jpg" alt="the-problem-of-named-area-01"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/MWmNYNw">點這裡</a></font></p>
+<p>其實這之中發生了一件事情，讓我們用放<strong>非常大的倍率</strong>來重新看一次。</p>
+<p><img src="the-problem-of-named-area-02.jpg" alt="the-problem-of-named-area-02"></p>
+<p>所以其實並不是格線的編號亂掉了，而是當你使用<code>grid-area</code>幫元素取名稱後，又沒有幫他<code>放置到網格中</code>時，這個時候就會<code>自動產生出兩條隱性格線</code>，所以你才會感覺到格線編號自動被加了<code>2</code>。</p>
+<p>如果你有正確的把每一個被命名的 grid 元素都放入到網格中，這個問題就不會發生了。</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// ↓ 現在把小粉跟小藍都乖乖放到網格中</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: repeat(<span class="hljs-number">3</span>, <span class="hljs-number">100px</span>);</span><br><span class="line">  grid-template-rows: <span class="hljs-number">100px</span>;</span><br><span class="line">  grid-template-areas: <span class="hljs-string">'小黃 小粉 小藍'</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="the-problem-of-named-area-03.jpg" alt="the-problem-of-named-area-03"></p>
+<p><img src="the-problem-of-named-area-04.jpg" alt="the-problem-of-named-area-04"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/MWmNaer">點這裡</a></font></p>
+<p>所以…如果沒什麼特殊原因的話，不要做這種幫元素取名稱，卻又不幫他安排位置的這種事情。</p>
+<p>（這就好像你買了電影票卻沒有被安排座位一樣。）</p>
+<h3 id="grid-template-areas-的使用規則"><a href="#grid-template-areas-的使用規則" class="headerlink" title="grid-template-areas 的使用規則"></a>grid-template-areas 的使用規則</h3><p>grid-template-areas 必須遵守下列規則，並不是想怎麼排就怎麼排：</p>
+<p><code>元素必須連續，不可以斷開</code></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 小黃斷掉了</span></span><br><span class="line">  grid-template-areas: <span class="hljs-string">'小黃 小粉 小黃'</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>會重複出現的元素，組合起來一定要是一個矩形</code></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 這樣OK</span></span><br><span class="line">  grid-template-areas:</span><br><span class="line">    <span class="hljs-string">'小黃 小粉 小藍'</span></span><br><span class="line">    <span class="hljs-string">'小黃 小粉 小藍'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 這樣不OK（老鼠屎 = 小藍）</span></span><br><span class="line">  grid-template-areas:</span><br><span class="line">    <span class="hljs-string">'小黃 小粉 小藍'</span></span><br><span class="line">    <span class="hljs-string">'小藍 小粉 小藍'</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>每一列的數量都要一樣</code></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 這樣OK</span></span><br><span class="line">  grid-template-areas:</span><br><span class="line">    <span class="hljs-string">'小黃 小粉 小藍'</span></span><br><span class="line">    <span class="hljs-string">'小黃 小粉 小藍'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 這樣不OK</span></span><br><span class="line">  grid-template-areas:</span><br><span class="line">    <span class="hljs-string">'小黃 小粉'</span></span><br><span class="line">    <span class="hljs-string">'小藍 小粉 小藍'</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>所以…使用上確實不是那麼方便，但就是好玩吧！</p>
+<h3 id="grid-area-的其他用途"><a href="#grid-area-的其他用途" class="headerlink" title="grid-area 的其他用途"></a>grid-area 的其他用途</h3><p><code>grid-area</code>除了對 grid 元素命名以外，也是<code>設定 grid 元素位置的縮寫屬性</code>，請參考這個格式：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// ========= 列格線的起始點 / 欄格線的起始點 / 列格線的終點 / 欄格線的終點</span></span><br><span class="line">grid-area: grid-row-start / grid-column-start / grid-row-end / grid-column-end;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>看得有點眼花？我是這樣記的 → 先設雙方的起點，在設雙方的終點。</p>
+<p>這裡也舉個例子：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">display</span>: grid;</span><br><span class="line">  <span class="hljs-comment">// 建立 4 個欄</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: repeat(<span class="hljs-number">4</span>, <span class="hljs-number">100px</span>);</span><br><span class="line">  <span class="hljs-comment">// 建立 2 個列</span></span><br><span class="line">  grid-template-rows: repeat(<span class="hljs-number">2</span>, <span class="hljs-number">100px</span>);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-class">.item--yellow</span> {</span><br><span class="line">  grid-area: <span class="hljs-number">1</span> / <span class="hljs-number">1</span> / <span class="hljs-number">3</span> / <span class="hljs-number">2</span>;</span><br><span class="line">  <span class="hljs-comment">// 等於以下</span></span><br><span class="line">  grid-row: <span class="hljs-number">1</span> / <span class="hljs-number">3</span>;</span><br><span class="line">  grid-column: <span class="hljs-number">1</span> / <span class="hljs-number">2</span>;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-selector-class">.item-blue</span> {</span><br><span class="line">  grid-area: <span class="hljs-number">1</span> / <span class="hljs-number">2</span> / <span class="hljs-number">3</span> / -<span class="hljs-number">1</span>;</span><br><span class="line">  <span class="hljs-comment">// 等於以下</span></span><br><span class="line">  grid-row: <span class="hljs-number">1</span> / <span class="hljs-number">3</span>;</span><br><span class="line">  grid-column: <span class="hljs-number">2</span> / -<span class="hljs-number">1</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="grid-area.jpg" alt="grid-area"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/PomaXKd">點這裡</a></font></p>
+<h3 id="grid-template-areas-格線的自動命名機制"><a href="#grid-template-areas-格線的自動命名機制" class="headerlink" title="grid-template-areas 格線的自動命名機制"></a>grid-template-areas 格線的自動命名機制</h3><p>在使用<code>grid-template-areas</code>來指定 gird 元素的位置時，每一個格線都會自動以<code>grid-area</code>的名稱來命名，例如：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  grid-template-areas:</span><br><span class="line">    <span class="hljs-string">'小黃 小粉 小藍 小紫'</span></span><br><span class="line">    <span class="hljs-string">'小黃 小粉 小藍 .'</span></span><br><span class="line">    <span class="hljs-string">'小黃 小粉 小藍 .'</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>小黃區塊的<code>起始格線(欄/列)</code>會自動被命名為 <code>小黃-start</code></li>
+<li>小黃區塊的<code>終點格線(欄/列)</code>會自動被命名為 <code>小黃-end</code></li>
+<li>小粉、小藍以此類推</li>
+</ul>
+<p><img src="grid-template-areas-auto-line-name.jpg" alt="grid-template-areas-auto-line-name"></p>
+<p>所以如果我們要移動<code>小紫</code>到<code>小黃-start(欄)</code> 及<code>小黃-end(欄)</code>的位置：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item--purple</span> {</span><br><span class="line">  grid-column: 小黃-start / 小黃-end;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="grid-template-areas-move.jpg" alt="grid-template-areas-move"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/mdmKZEP">點這裡</a></font></p>
+<h2 id="column-gap-amp-row-gap-amp-gap"><a href="#column-gap-amp-row-gap-amp-gap" class="headerlink" title="column-gap &amp; row-gap &amp; gap"></a>column-gap &amp; row-gap &amp; gap</h2><p><strong>用途：</strong><code>設定欄與列之間的距離</code></p>
+<p><font size="2">💡 註：<code>grid-column-gap</code> &amp; <code>grid-row-gap</code> &amp; <code>grid-gap</code>是某些舊版瀏覽器的非標準寫法，故這裡就不再列出。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 列與列之間的間距</span></span><br><span class="line">  row-gap: <span class="hljs-number">10px</span>;</span><br><span class="line">  <span class="hljs-comment">// 欄與欄之間的間距</span></span><br><span class="line">  <span class="hljs-attribute">column-gap</span>: <span class="hljs-number">30px</span>;</span><br><span class="line">  <span class="hljs-comment">// 縮寫形式：row-gap column-gap</span></span><br><span class="line">  gap: <span class="hljs-number">10px</span> <span class="hljs-number">30px</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="column-gap&amp;row-gap&amp;gap.jpg" alt="column-gap &amp; row-gap &amp; gap"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/qBmJebG">點這裡</a></font></p>
+<h2 id="justify-items"><a href="#justify-items" class="headerlink" title="justify-items"></a>justify-items</h2><p><strong>用途：</strong><code>控制所有grid元素在「橫向」的對齊位置</code></p>
+<h3 id="stretch-填滿整個橫向空間-預設值"><a href="#stretch-填滿整個橫向空間-預設值" class="headerlink" title="stretch 填滿整個橫向空間 (預設值)"></a>stretch 填滿整個橫向空間 (預設值)</h3><p><font size="2">💡 註：當 grid 元素<code>沒有設定寬度</code>時才會生效。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  justify-items: stretch;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="justify-items-stretch.jpg" alt="justify-items-stretch"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/JjNerwN">點這裡</a></font></p>
+<h3 id="start-對齊橫向空間的起端"><a href="#start-對齊橫向空間的起端" class="headerlink" title="start 對齊橫向空間的起端"></a>start 對齊橫向空間的起端</h3><p><font size="2">💡 註：當 grid 元素<code>有設定寬度</code>時才會生效。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  justify-items: start;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="justify-items-start.jpg" alt="justify-items-start"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/gOWQXpq">點這裡</a></font></p>
+<h3 id="center-對齊橫向空間的中間"><a href="#center-對齊橫向空間的中間" class="headerlink" title="center 對齊橫向空間的中間"></a>center 對齊橫向空間的中間</h3><p><font size="2">💡 註：當 grid 元素<code>有設定寬度</code>時才會生效。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  justify-items: center;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="justify-items-center.jpg" alt="justify-items-center"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/wvdQPWV">點這裡</a></font></p>
+<h3 id="end-對齊橫向空間的尾端"><a href="#end-對齊橫向空間的尾端" class="headerlink" title="end 對齊橫向空間的尾端"></a>end 對齊橫向空間的尾端</h3><p><font size="2">💡 註：當 grid 元素<code>有設定寬度</code>時才會生效。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  justify-items: end;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="justify-items-end.jpg" alt="justify-items-end"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/BaRGmQX">點這裡</a></font></p>
+<h2 id="align-items"><a href="#align-items" class="headerlink" title="align-items"></a>align-items</h2><p><strong>用途：</strong><code>控制所有grid元素在「直向」的對齊位置</code></p>
+<h3 id="stretch-填滿整個直向空間-預設值"><a href="#stretch-填滿整個直向空間-預設值" class="headerlink" title="stretch 填滿整個直向空間 (預設值)"></a>stretch 填滿整個直向空間 (預設值)</h3><p><font size="2">💡 註：當 grid 元素<code>沒有設定高度</code>時才會生效。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">align-items</span>: stretch;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="align-items-stretch.jpg" alt="align-items-stretch"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/mdmQqWv">點這裡</a></font></p>
+<h3 id="start-對齊直向空間的起端"><a href="#start-對齊直向空間的起端" class="headerlink" title="start 對齊直向空間的起端"></a>start 對齊直向空間的起端</h3><p><font size="2">💡 註：當 grid 元素<code>有設定高度</code>時才會生效。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">align-items</span>: start;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="align-items-start.jpg" alt="align-items-start"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/NWjEwXG">點這裡</a></font></p>
+<h3 id="center-對齊直向空間的中間"><a href="#center-對齊直向空間的中間" class="headerlink" title="center 對齊直向空間的中間"></a>center 對齊直向空間的中間</h3><p><font size="2">💡 註：當 grid 元素<code>有設定高度</code>時才會生效。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">align-items</span>: center;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="align-items-center.jpg" alt="align-items-center"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/VwbVrXq">點這裡</a></font></p>
+<h3 id="end-對齊直向空間的尾端"><a href="#end-對齊直向空間的尾端" class="headerlink" title="end 對齊直向空間的尾端"></a>end 對齊直向空間的尾端</h3><p><font size="2">💡 註：當 grid 元素<code>有設定高度</code>時才會生效。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">align-items</span>: end;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="align-items-end.jpg" alt="align-items-end"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/jOmQaKM">點這裡</a></font></p>
+<h2 id="place-items"><a href="#place-items" class="headerlink" title="place-items"></a>place-items</h2><p><strong>用途：</strong><code>同時設定 align-items 與 justify-items </code></p>
+<ul>
+<li>第一個值設定 <code>align-items</code></li>
+<li>第二個值設定 <code>justify-items</code></li>
+</ul>
+<p><font size="2">💡 註 1：若只設定一個值，則該值會<code>同時指定給兩個屬性。</code></font><br><font size="2">💡 註 2：請記得兩個屬性的規則，<code>什麼時候 grid 元素該有寬/高度，什麼時候不該有寬/高度。</code></font><br><font size="2">💡 註 3：IE 不支援這個縮寫法。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 直向對齊終點 &amp; 橫向對齊中間</span></span><br><span class="line">  place-items: end center;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="place-items.jpg" alt="place-items"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/OJmaOaV">點這裡</a></font></p>
+<h3 id="快速水平-垂直置中"><a href="#快速水平-垂直置中" class="headerlink" title="快速水平 / 垂直置中"></a>快速水平 / 垂直置中</h3><figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 直向 &amp; 橫向對齊中間</span></span><br><span class="line">  place-items: center;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="place-items-center.jpg" alt="place-items-center"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/xxdQPNy">點這裡</a></font></p>
+<h2 id="justify-content"><a href="#justify-content" class="headerlink" title="justify-content"></a>justify-content</h2><p><strong>用途：</strong><code>分配 grid 空間中「橫向」的剩餘空間</code></p>
+<p><font size="2">💡 註：grid 空間中必須要有剩餘的空間，這個屬性才有用。</font></p>
+<p>在學這個屬性前，建議先拆成以下的結構，比較不會搞混：</p>
+<ul>
+<li><code>grid網格</code></li>
+<li><code>grid空間</code></li>
+<li><code>grid元素</code></li>
+</ul>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// grid空間</span></span><br><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-number">960px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// grid網格</span></span><br><span class="line">  <span class="hljs-attribute">display</span>: grid;</span><br><span class="line">  <span class="hljs-comment">// 四欄</span></span><br><span class="line">  grid-template-<span class="hljs-attribute">columns</span>: repeat(<span class="hljs-number">4</span>, <span class="hljs-number">100px</span>);</span><br><span class="line">  <span class="hljs-comment">// 兩列</span></span><br><span class="line">  grid-template-rows: repeat(<span class="hljs-number">2</span>, <span class="hljs-number">100px</span>);</span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">// grid 元素</span></span><br><span class="line"><span class="hljs-selector-class">.item</span> {</span><br><span class="line">...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="content-structure.jpg" alt="content-structure"></p>
+<h3 id="items-與-content-的差異"><a href="#items-與-content-的差異" class="headerlink" title="items 與 content 的差異"></a>items 與 content 的差異</h3><ul>
+<li><p><code>justify-items / align-items</code> 設定的是 <code>grid 元素</code>在 <code>grid 網格</code>中的位置。</p>
+</li>
+<li><p><code>justify-content / align-content</code> 設定的是 <code>grid 網格</code>在 <code>grid 空間</code>中的位置。</p>
+</li>
+</ul>
+<h3 id="start-將橫向的剩餘空間丟到最尾端"><a href="#start-將橫向的剩餘空間丟到最尾端" class="headerlink" title="start 將橫向的剩餘空間丟到最尾端"></a>start 將橫向的剩餘空間丟到最尾端</h3><p><font size="2">💡 註：你可以想像是把多餘空間移到後面後， grid 網格就會往起點處(start)貼齊。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">justify-content</span>: start;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="justify-content-start.jpg" alt="justify-content-start"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/poPQpoW">點這裡</a></font></p>
+<h3 id="end-將橫向的剩餘空間丟到最頭端"><a href="#end-將橫向的剩餘空間丟到最頭端" class="headerlink" title="end 將橫向的剩餘空間丟到最頭端"></a>end 將橫向的剩餘空間丟到最頭端</h3><p><font size="2">💡 註：你可以想像是把多餘空間移到後面後， grid 網格就會往終點處(end)貼齊。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">justify-content</span>: end;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="justify-content-end.jpg" alt="justify-content-end"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/mdmQvym">點這裡</a></font></p>
+<h3 id="center-將橫向的剩餘空間分配到左右兩側"><a href="#center-將橫向的剩餘空間分配到左右兩側" class="headerlink" title="center 將橫向的剩餘空間分配到左右兩側"></a>center 將橫向的剩餘空間分配到左右兩側</h3><p><font size="2">💡 註：你可以想像是把多餘空間分配到兩側後， grid 網格就會往中間處(center)貼齊。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">justify-content</span>: center;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="justify-content-center.jpg" alt="justify-content-center"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/PomxVZO">點這裡</a></font></p>
+<h3 id="space-around-將橫向的剩餘空間平均分配到-grid-元素之間以及左右兩側"><a href="#space-around-將橫向的剩餘空間平均分配到-grid-元素之間以及左右兩側" class="headerlink" title="space-around 將橫向的剩餘空間平均分配到 grid 元素之間以及左右兩側"></a>space-around 將橫向的剩餘空間平均分配到 grid 元素之間以及左右兩側</h3><p><font size="2">💡 註 1：grid 元素之間保留相等的剩餘空間</font><br><font size="2">💡 註 2：左右兩側保留 grid 元素 1/2 的剩餘空間</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">justify-content</span>: space-around;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="justify-content-space-around.jpg" alt="justify-content-space-around"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/xxdQMRw?editors=1100">點這裡</a></font></p>
+<h3 id="space-between-將橫向的剩餘空間平均分配到-grid-元素之間"><a href="#space-between-將橫向的剩餘空間平均分配到-grid-元素之間" class="headerlink" title="space-between 將橫向的剩餘空間平均分配到 grid 元素之間"></a>space-between 將橫向的剩餘空間平均分配到 grid 元素之間</h3><p><font size="2">💡 註： 只有 grid 元素之間會分配到剩餘空間，左右兩側不會。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">justify-content</span>: space-between;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="justify-content-space-between.jpg" alt="justify-content-space-between"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/oNWQmQe">點這裡</a></font></p>
+<h3 id="space-evenly-將橫向的剩餘空間平均分配到-grid-元素之間以及左右兩側"><a href="#space-evenly-將橫向的剩餘空間平均分配到-grid-元素之間以及左右兩側" class="headerlink" title="space-evenly 將橫向的剩餘空間平均分配到 grid 元素之間以及左右兩側"></a>space-evenly 將橫向的剩餘空間平均分配到 grid 元素之間以及左右兩側</h3><p><font size="2">💡 註： grid 元素之間與左右兩端的剩餘空間均相等。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">justify-content</span>: space-evenly;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="justify-content-space-evenly.jpg" alt="justify-content-space-evenly"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/ExmOMKm">點這裡</a></font></p>
+<h2 id="align-content"><a href="#align-content" class="headerlink" title="align-content"></a>align-content</h2><p><strong>用途：</strong><code>分配 grid 空間中「直向」的剩餘空間</code></p>
+<p><font size="2">💡 註：grid 空間中必須要有剩餘的空間，這個屬性才有用。</font></p>
+<h3 id="start-將直向的剩餘空間丟到最尾端"><a href="#start-將直向的剩餘空間丟到最尾端" class="headerlink" title="start 將直向的剩餘空間丟到最尾端"></a>start 將直向的剩餘空間丟到最尾端</h3><p><font size="2">💡 註：你可以想像是把多餘空間移到後面後， grid 網格就會往起點處(start)貼齊。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">align-content</span>: start;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="align-content-start.jpg" alt="align-content-start"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/oNWQVGy">點這裡</a></font></p>
+<h3 id="end-將橫向的剩餘空間丟到最頭端-1"><a href="#end-將橫向的剩餘空間丟到最頭端-1" class="headerlink" title="end 將橫向的剩餘空間丟到最頭端"></a>end 將橫向的剩餘空間丟到最頭端</h3><p><font size="2">💡 註：你可以想像是把多餘空間移到後面後， grid 網格就會往終點處(end)貼齊。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">align-content</span>: end;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="align-content-end.jpg" alt="align-content-end"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/YzVRgad">點這裡</a></font></p>
+<h3 id="center-將直向的剩餘空間分配到左右兩側"><a href="#center-將直向的剩餘空間分配到左右兩側" class="headerlink" title="center 將直向的剩餘空間分配到左右兩側"></a>center 將直向的剩餘空間分配到左右兩側</h3><p><font size="2">💡 註：你可以想像是把多餘空間分配到兩側後， grid 網格就會往中間處(center)貼齊。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">align-content</span>: center;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="align-content-center.jpg" alt="align-content-center"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/xxdQBzW">點這裡</a></font></p>
+<h3 id="space-around-將直向的剩餘空間平均分配到-grid-元素之間以及上下兩側"><a href="#space-around-將直向的剩餘空間平均分配到-grid-元素之間以及上下兩側" class="headerlink" title="space-around 將直向的剩餘空間平均分配到 grid 元素之間以及上下兩側"></a>space-around 將直向的剩餘空間平均分配到 grid 元素之間以及上下兩側</h3><p><font size="2">💡 註 1：grid 元素之間保留相等的剩餘空間</font><br><font size="2">💡 註 2：上下兩側保留 grid 元素 1/2 的剩餘空間</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">align-content</span>: space-around;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="align-content-space-around.jpg" alt="align-content-space-around"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/XWRyGoV">點這裡</a></font></p>
+<h3 id="space-between-將直向的剩餘空間平均分配到-grid-元素之間"><a href="#space-between-將直向的剩餘空間平均分配到-grid-元素之間" class="headerlink" title="space-between 將直向的剩餘空間平均分配到 grid 元素之間"></a>space-between 將直向的剩餘空間平均分配到 grid 元素之間</h3><p><font size="2">💡 註： 只有 grid 元素之間會分配到剩餘空間，上下兩側不會。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">align-content</span>: space-between;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="align-content-space-between.jpg" alt="align-content-space-between"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/mdmQgbb">點這裡</a></font></p>
+<h3 id="space-evenly-將橫向的剩餘空間平均分配到-grid-元素之間以及上下兩側"><a href="#space-evenly-將橫向的剩餘空間平均分配到-grid-元素之間以及上下兩側" class="headerlink" title="space-evenly 將橫向的剩餘空間平均分配到 grid 元素之間以及上下兩側"></a>space-evenly 將橫向的剩餘空間平均分配到 grid 元素之間以及上下兩側</h3><p><font size="2">💡 註： grid 元素之間與上下兩端的剩餘空間均相等。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-attribute">align-content</span>: space-evenly;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="align-content-space-evenly.jpg" alt="align-content-space-evenly"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/GRmwLJg">點這裡</a></font></p>
+<h2 id="place-content"><a href="#place-content" class="headerlink" title="place-content"></a>place-content</h2><p><strong>用途：</strong><code>同時設定 align-content 與 justify-content </code></p>
+<ul>
+<li>第一個值設定 <code>align-content</code></li>
+<li>第二個值設定 <code>justify-content</code></li>
+</ul>
+<p><font size="2">💡 註 1：若只設定一個值，則該值會<code>同時指定給兩個屬性。</code></font><br><font size="2">💡 註 2：IE 不支援這個縮寫法。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.box</span> {</span><br><span class="line">  <span class="hljs-comment">// 直向分配剩餘空間到上下兩端</span></span><br><span class="line">  <span class="hljs-comment">// 橫向分配剩餘空間到左右兩端</span></span><br><span class="line">  place-<span class="hljs-attribute">content</span>: center center;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="place-content.jpg" alt="place-content"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/xxdQeRm">點這裡</a></font></p>
+<h2 id="justify-self"><a href="#justify-self" class="headerlink" title="justify-self"></a>justify-self</h2><p><strong>用途：</strong><code>控制單一個grid元素在「橫向」的對齊位置</code></p>
+<h3 id="stretch-填滿整個橫向空間-預設值-1"><a href="#stretch-填滿整個橫向空間-預設值-1" class="headerlink" title="stretch 填滿整個橫向空間 (預設值)"></a>stretch 填滿整個橫向空間 (預設值)</h3><p><font size="2">💡 註：當 grid 元素<code>沒有設定寬度</code>時才會生效。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item</span> {</span><br><span class="line">  justify-self: stretch;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="justify-self-stretch.jpg" alt="justify-self-stretch"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/ZEKmZmm">點這裡</a></font></p>
+<h3 id="start-對齊橫向空間的起端-1"><a href="#start-對齊橫向空間的起端-1" class="headerlink" title="start 對齊橫向空間的起端"></a>start 對齊橫向空間的起端</h3><p><font size="2">💡 註：當 grid 元素<code>有設定寬度</code>時才會生效。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item</span> {</span><br><span class="line">  justify-self: start;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="justify-self-start.jpg" alt="justify-self-start"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/JjNeqod">點這裡</a></font></p>
+<h3 id="center-對齊橫向空間的中間-1"><a href="#center-對齊橫向空間的中間-1" class="headerlink" title="center 對齊橫向空間的中間"></a>center 對齊橫向空間的中間</h3><p><font size="2">💡 註：當 grid 元素<code>有設定寬度</code>時才會生效。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item</span> {</span><br><span class="line">  justify-self: center;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="justify-self-center.jpg" alt="justify-self-center"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/LYyXoNN">點這裡</a></font></p>
+<h3 id="end-對齊橫向空間的尾端-1"><a href="#end-對齊橫向空間的尾端-1" class="headerlink" title="end 對齊橫向空間的尾端"></a>end 對齊橫向空間的尾端</h3><p><font size="2">💡 註：當 grid 元素<code>有設定寬度</code>時才會生效。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item</span> {</span><br><span class="line">  justify-self: end;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="justify-self-end.jpg" alt="justify-self-end"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/eYWQadw">點這裡</a></font></p>
+<h2 id="align-self"><a href="#align-self" class="headerlink" title="align-self"></a>align-self</h2><p><strong>用途：</strong><code>控制單一個grid元素在「直向」的對齊位置</code></p>
+<h3 id="stretch-填滿整個直向空間-預設值-1"><a href="#stretch-填滿整個直向空間-預設值-1" class="headerlink" title="stretch 填滿整個直向空間 (預設值)"></a>stretch 填滿整個直向空間 (預設值)</h3><p><font size="2">💡 註：當 grid 元素<code>沒有設定高度</code>時才會生效。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item</span> {</span><br><span class="line">  <span class="hljs-attribute">align-self</span>: stretch;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="align-self-stretch.jpg" alt="align-self-stretch"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/abWQrwv">點這裡</a></font></p>
+<h3 id="start-對齊直向空間的起端-1"><a href="#start-對齊直向空間的起端-1" class="headerlink" title="start 對齊直向空間的起端"></a>start 對齊直向空間的起端</h3><p><font size="2">💡 註：當 grid 元素<code>有設定高度</code>時才會生效。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item</span> {</span><br><span class="line">  <span class="hljs-attribute">align-self</span>: start;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="align-self-start.jpg" alt="align-self-start"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/oNWQREZ">點這裡</a></font></p>
+<h3 id="center-對齊直向空間的中間-1"><a href="#center-對齊直向空間的中間-1" class="headerlink" title="center 對齊直向空間的中間"></a>center 對齊直向空間的中間</h3><p><font size="2">💡 註：當 grid 元素<code>有設定高度</code>時才會生效。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item</span> {</span><br><span class="line">  <span class="hljs-attribute">align-self</span>: center;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="align-self-center.jpg" alt="align-self-center"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/yLbQWwL">點這裡</a></font></p>
+<h3 id="end-對齊直向空間的尾端-1"><a href="#end-對齊直向空間的尾端-1" class="headerlink" title="end 對齊直向空間的尾端"></a>end 對齊直向空間的尾端</h3><p><font size="2">💡 註：當 grid 元素<code>有設定高度</code>時才會生效。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item</span> {</span><br><span class="line">  <span class="hljs-attribute">align-self</span>: end;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="align-self-end.jpg" alt="align-self-end"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/dyWQEEZ">點這裡</a></font></p>
+<h2 id="place-self"><a href="#place-self" class="headerlink" title="place-self"></a>place-self</h2><p><strong>用途：</strong><code>同時設定 align-self 與 justify-self </code></p>
+<ul>
+<li>第一個值設定 <code>align-self</code></li>
+<li>第二個值設定 <code>justify-self</code></li>
+</ul>
+<p><font size="2">💡 註 1：若只設定一個值，則該值會<code>同時指定給兩個屬性。</code></font><br><font size="2">💡 註 2：請記得兩個屬性的規則，<code>什麼時候 grid 元素該有寬/高度，什麼時候不該有寬/高度。</code></font><br><font size="2">💡 註 3：IE 不支援這個縮寫法。</font></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.item</span> {</span><br><span class="line">  <span class="hljs-comment">// 直向對齊中間 &amp; 橫向對齊中間</span></span><br><span class="line">  place-self: center center;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="place-self.jpg" alt="place-self"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/ExmOBYZ">點這裡</a></font></p>
+<h2 id="order"><a href="#order" class="headerlink" title="order"></a>order</h2><p><strong>用途：</strong><code>設定grid元素的前後順序</code></p>
+<p>其實就和<code>flex</code>中的 order 是同一個概念，每一個 grid 元素的 <code>order 預設值皆為0</code>。</p>
+<p>order 值越<code>大</code>的 grid 元素，會被放在<code>越前面</code>。<br>order 值越<code>小</code>的 grid 元素，會被放在<code>越後面</code>。</p>
+<p><font size="2">💡 註：要記得留意當下的<code>資料流向</code>，哪個方向代表前面？哪個方向代表後面？`</font></p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">&lt;!-- 原本的排序(左 → 右) --&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box-normal"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--green"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--pink"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">&lt;!-- 反過來排序(右 → 左) --&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box-reverse"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--yellow"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--green"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item--pink"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 原本的排序(左 → 右)</span></span><br><span class="line"><span class="hljs-selector-class">.box-normal</span> <span class="hljs-selector-class">.item--yellow</span> {</span><br><span class="line">  <span class="hljs-attribute">order</span>: <span class="hljs-number">0</span>;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-selector-class">.box-normal</span> <span class="hljs-selector-class">.item--blue</span> {</span><br><span class="line">  <span class="hljs-attribute">order</span>: <span class="hljs-number">0</span>;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-selector-class">.box-normal</span> <span class="hljs-selector-class">.item--green</span> {</span><br><span class="line">  <span class="hljs-attribute">order</span>: <span class="hljs-number">0</span>;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-selector-class">.box-normal</span> <span class="hljs-selector-class">.item--pink</span> {</span><br><span class="line">  <span class="hljs-attribute">order</span>: <span class="hljs-number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>由於每個元素的 order 值都相等，所以會依照 HTML 的順序來排列：</p>
+<p><code>黃</code>→ <code>藍</code> → <code>綠</code> → <code>粉</code></p>
+<p>以下我們透過修改 order 值，來把順序更改成：</p>
+<p><code>粉</code>→ <code>綠</code> → <code>藍</code> → <code>黃</code></p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 反過來排序(右 → 左)</span></span><br><span class="line"><span class="hljs-selector-class">.box-reverse</span> <span class="hljs-selector-class">.item--yellow</span> {</span><br><span class="line">  <span class="hljs-attribute">order</span>: <span class="hljs-number">3</span>;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-selector-class">.box-reverse</span> <span class="hljs-selector-class">.item--blue</span> {</span><br><span class="line">  <span class="hljs-attribute">order</span>: <span class="hljs-number">2</span>;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-selector-class">.box-reverse</span> <span class="hljs-selector-class">.item--green</span> {</span><br><span class="line">  <span class="hljs-attribute">order</span>: <span class="hljs-number">1</span>;</span><br><span class="line">}</span><br><span class="line"><span class="hljs-selector-class">.box-reverse</span> <span class="hljs-selector-class">.item--pink</span> {</span><br><span class="line">  <span class="hljs-attribute">order</span>: <span class="hljs-number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><font size="2">💡 在我們沒有設定 <code>&lt;html&gt;</code> 的 <code>dir</code>屬性時，預設的資料流向會是<code>「由左 → 右」(ltr)</code>。</font></p>
+<p><img src="order.jpg" alt="order"></p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/MWmXxGz">點這裡</a></font></p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://medium.com/enjoy-life-enjoy-coding/css-%E6%89%80%E4%BB%A5%E6%88%91%E8%AA%AA%E9%82%A3%E5%80%8B%E7%89%88%E8%83%BD%E4%B8%8D%E8%83%BD%E5%A5%BD%E5%88%87%E4%B8%80%E9%BB%9E-grid-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-cd763091cf70">CSS | 所以我說那個版能不能好切一點？ - Grid 基本用法</a><br><a target="_blank" rel="noopener" href="https://cssgridgarden.com/">GRID GARDEN</a><br><a target="_blank" rel="noopener" href="https://university.webflow.com/lesson/css-grid-fractional-unit-fr-overview#how-much-is-2fr">Fractional unit (FR) overview</a><br><a target="_blank" rel="noopener" href="https://css-tricks.com/snippets/css/complete-guide-grid/">A Complete Guide to Grid</a><br><a target="_blank" rel="noopener" href="https://blog.hinablue.me/css-grid-layout/">[CSS] 關於 Grid Layout 的使用姿勢</a><br><a target="_blank" rel="noopener" href="https://iter01.com/24066.html">【CSS】Grid 佈局總結</a><br><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10187370">30 天 CSS 隨手筆記 - 第 09 天 - OMG… Grid Layout~!! ( 5/7 - item 屬性 )</a><br><a target="_blank" rel="noopener" href="https://css-tricks.com/difference-explicit-implicit-grids/">The Difference Between Explicit and Implicit Grids</a><br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=8_153Zz4YI8">CSS GRID: Implicit vs Explicit Tracks — 5 of 25</a><br><a target="_blank" rel="noopener" href="https://nicolakacha.coderbridge.io/2020/09/22/css-flex-grid-2/">CSS Flex &amp; Grid 排版詳解（下）：Oh My Grid!</a><br><a target="_blank" rel="noopener" href="https://grid.malven.co/">GRID: A simple visual cheatsheet for CSS Grid Layout</a><br><a target="_blank" rel="noopener" href="https://jhlstudy.blogspot.com/2018/07/grid-layout-auto-fill-auto-fit_8.html">Grid Layout 三部曲：auto-fill ? auto-fit ? 我們不一樣。</a></p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/07/28/scss-note/">SCSS隨筆記</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/07/19/layout-types/">在學響應式設計前，你應該先知道這些。</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

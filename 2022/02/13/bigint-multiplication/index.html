@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>大數相加與相乘 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="蠻有挑戰性的一題">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大數相加與相乘">
+<meta property="og:url" content="https://jubeatt.github.io/2022/02/13/bigint-multiplication/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="蠻有挑戰性的一題">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-02-13T01:21:33.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.232Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡述">1&nbsp;&nbsp;<b>簡述</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#大數相加">2&nbsp;&nbsp;<b>大數相加</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#大數相乘">3&nbsp;&nbsp;<b>大數相乘</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            大數相加與相乘
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>2月 13 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Example/">Example</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>蠻有挑戰性的一題</p>
+<span id="more"></span>
+
+
+<h2 id="簡述"><a href="#簡述" class="headerlink" title="簡述"></a>簡述</h2><p>這題是來自程式導師計畫 week2 的<a target="_blank" rel="noopener" href="https://github.com/Lidemy/mentor-program-5th/tree/master/homeworks/week2#%E8%B6%85%E7%B4%9A%E8%B6%85%E7%B4%9A%E6%8C%91%E6%88%B0%E9%A1%8C">超級超級挑戰題</a>。</p>
+<p>解題的邏輯能用「直式算數」來思考，也就是把大問題拆成小問題的一種思考模式。</p>
+<h2 id="大數相加"><a href="#大數相加" class="headerlink" title="大數相加"></a>大數相加</h2><p>建議先把大數相加弄懂再去解相乘會比較好理解，因為在做相乘時也需要用到相加的概念：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">add</span>(<span class="hljs-params">a, b</span>)</span>{</span><br><span class="line">  <span class="hljs-keyword">let</span> result = <span class="hljs-string">''</span>;</span><br><span class="line">  <span class="hljs-comment">// 有沒有進位（flag）</span></span><br><span class="line">  <span class="hljs-keyword">let</span> hasCarryBit = <span class="hljs-literal">false</span>;</span><br><span class="line">  <span class="hljs-comment">// 看誰比較長</span></span><br><span class="line">  <span class="hljs-keyword">const</span> lengthA = a.length;</span><br><span class="line">  <span class="hljs-keyword">const</span> lengthB = b.length;</span><br><span class="line">  <span class="hljs-keyword">let</span> totalDigits = <span class="hljs-literal">undefined</span>;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 比較短的數字要補 0 </span></span><br><span class="line">  <span class="hljs-keyword">if</span> (lengthA &gt; lengthB) {</span><br><span class="line">    totalDigits = lengthA;</span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;lengthA - lengthB; i++) {</span><br><span class="line">      b = <span class="hljs-string">'0'</span> + b; </span><br><span class="line">    }</span><br><span class="line">  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (lengthA &lt; lengthB) {</span><br><span class="line">    totalDigits = lengthB;</span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;lengthB - lengthA; i++) {</span><br><span class="line">      a = <span class="hljs-string">'0'</span> + a; </span><br><span class="line">    }</span><br><span class="line">  } <span class="hljs-keyword">else</span> {</span><br><span class="line">    totalDigits = lengthA;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 把每一位數相加</span></span><br><span class="line">  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i=totalDigits-<span class="hljs-number">1</span>; i&gt;=<span class="hljs-number">0</span>; i--) {</span><br><span class="line">    <span class="hljs-keyword">let</span> value = <span class="hljs-built_in">Number</span>(a[i]) + <span class="hljs-built_in">Number</span>(b[i]);</span><br><span class="line">    <span class="hljs-comment">// 上一位有進位就加 1 </span></span><br><span class="line">    <span class="hljs-keyword">if</span> (hasCarryBit) {</span><br><span class="line">      value += <span class="hljs-number">1</span>;</span><br><span class="line">      hasCarryBit = <span class="hljs-literal">false</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-comment">// &gt;= 10 更新 flag</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (value &gt;= <span class="hljs-number">10</span>) {</span><br><span class="line">      hasCarryBit = <span class="hljs-literal">true</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">      取出最後一位數</span></span><br><span class="line"><span class="hljs-comment">      19 =&gt; 9 + '' =&gt; '9'</span></span><br><span class="line"><span class="hljs-comment">      5 =&gt; 5 + '' =&gt; '69'</span></span><br><span class="line"><span class="hljs-comment">      13 =&gt; 3 + '' =&gt; '369'</span></span><br><span class="line"><span class="hljs-comment">      ...</span></span><br><span class="line"><span class="hljs-comment">    */</span></span><br><span class="line">    result = value%<span class="hljs-number">10</span> + result;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// 剩一個數字 but 有進位數要再補 1（因為不跑下一圈）</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (i===<span class="hljs-number">0</span> &amp;&amp; hasCarryBit) {</span><br><span class="line">      result = <span class="hljs-string">'1'</span> + result;</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-comment">// 答案</span></span><br><span class="line">  <span class="hljs-keyword">return</span> result;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> TESTNUMBER = <span class="hljs-string">'124902814902890825902840917490127902791247902479027210970941724092174091274902749012740921759037590347438758957283947234273942304239403274093275902375902374092410937290371093719023729103790123'</span>;</span><br><span class="line"><span class="hljs-keyword">const</span> ANSWER = <span class="hljs-built_in">BigInt</span>(add(TESTNUMBER, TESTNUMBER));</span><br><span class="line"><span class="hljs-keyword">const</span> BIGINT = <span class="hljs-built_in">BigInt</span>(TESTNUMBER) + <span class="hljs-built_in">BigInt</span>(TESTNUMBER);</span><br><span class="line"><span class="hljs-built_in">console</span>.log(ANSWER === BIGINT); <span class="hljs-comment">// true</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>解釋一下為什麼一定要加這段：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 剩一個數字 but 有進位數要再補 1（因為不跑下一圈）</span></span><br><span class="line"><span class="hljs-keyword">if</span> (i===<span class="hljs-number">0</span> &amp;&amp; hasCarryBit) {</span><br><span class="line">  result = <span class="hljs-string">'1'</span> + result;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>假設數字是 95 + 40，算到 9 + 4 = <code>13</code> 的時候，前面的 <code>1</code> 理應要在下圈加上去，但要注意迴圈<strong>只會跑到數字長度</strong>，所以如果沒有加上這段答案會是 <code>35</code> 不是 <code>135</code>。 </p>
+<p>所以該怎麼辦？沒有怎麼辦，既然迴圈不會跑下一圈，那你只能在<strong>最後一圈的時候判斷有沒有進位數</strong>，有的話就要<strong>自己補 1 到前面</strong>，這就是為什麼這段很重要。</p>
+<h2 id="大數相乘"><a href="#大數相乘" class="headerlink" title="大數相乘"></a>大數相乘</h2><p>相乘的邏輯大致上跟相加差不多，但有幾點要注意：</p>
+<ol>
+<li>每一層要根據位數在尾巴補上 0（就跟做加法的時候一樣）</li>
+<li>進位值要用除以 10 的方式來算（範圍變成 0 ~ 9）</li>
+<li>要用累加器來紀錄上一次的值（算直式的時候要一層一層加總，所以得紀錄上一層的值）</li>
+</ol>
+<p>這邊我都寫註解了，仔細看的話應該可以理解：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">multiply</span>(<span class="hljs-params">a, b</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">let</span> result = <span class="hljs-string">''</span>;</span><br><span class="line">  <span class="hljs-comment">// 紀錄目前的位數</span></span><br><span class="line">  <span class="hljs-keyword">let</span> currentDigit = <span class="hljs-number">0</span>;</span><br><span class="line">  <span class="hljs-comment">// 累加器</span></span><br><span class="line">  <span class="hljs-keyword">let</span> accumulator = <span class="hljs-string">'0'</span>;</span><br><span class="line">  <span class="hljs-comment">// 把 b 乘上 a 的每一位求出 sum</span></span><br><span class="line">  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i=b.length-<span class="hljs-number">1</span>; i&gt;=<span class="hljs-number">0</span>; i--) {</span><br><span class="line">    <span class="hljs-keyword">let</span> sum = <span class="hljs-string">''</span>;</span><br><span class="line">    <span class="hljs-comment">// 進位的值</span></span><br><span class="line">    <span class="hljs-keyword">let</span> carryBit = <span class="hljs-number">0</span>;</span><br><span class="line">    <span class="hljs-comment">// 有沒有進位（flag）</span></span><br><span class="line">    <span class="hljs-keyword">let</span> hasCarryBit = <span class="hljs-literal">false</span>;</span><br><span class="line">    <span class="hljs-comment">// a 的部分</span></span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j=a.length-<span class="hljs-number">1</span>; j&gt;=<span class="hljs-number">0</span>; j--) {</span><br><span class="line">      <span class="hljs-comment">// b x a 的值</span></span><br><span class="line">      <span class="hljs-keyword">let</span> value = <span class="hljs-built_in">Number</span>(b[i]) * <span class="hljs-built_in">Number</span>(a[j]);</span><br><span class="line">      <span class="hljs-comment">// 有進位就把數字加上去</span></span><br><span class="line">      <span class="hljs-keyword">if</span> (hasCarryBit) {</span><br><span class="line">        value += carryBit;</span><br><span class="line">        carryBit = <span class="hljs-number">0</span>;</span><br><span class="line">        hasCarryBit = <span class="hljs-literal">false</span>;</span><br><span class="line">      }</span><br><span class="line">      <span class="hljs-comment">// 大於 10，算出進位值，更新 flag </span></span><br><span class="line">      <span class="hljs-keyword">if</span> (value &gt;= <span class="hljs-number">10</span>) {</span><br><span class="line">        hasCarryBit = <span class="hljs-literal">true</span>;</span><br><span class="line">        carryBit = <span class="hljs-built_in">Math</span>.floor(value/<span class="hljs-number">10</span>);</span><br><span class="line">      }</span><br><span class="line">      <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">        5 + '' =&gt; '5'</span></span><br><span class="line"><span class="hljs-comment">        9 + '5' =&gt; '95'</span></span><br><span class="line"><span class="hljs-comment">        7 + '95' =&gt; '795'</span></span><br><span class="line"><span class="hljs-comment">        ...</span></span><br><span class="line"><span class="hljs-comment">      */</span></span><br><span class="line">      sum = value%<span class="hljs-number">10</span> + sum;</span><br><span class="line"></span><br><span class="line">      <span class="hljs-comment">// 剩一個數字 but 有進位數</span></span><br><span class="line">      <span class="hljs-keyword">if</span> (j===<span class="hljs-number">0</span> &amp;&amp; hasCarryBit) {</span><br><span class="line">        sum = carryBit + sum;</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">      十位數補一個 0</span></span><br><span class="line"><span class="hljs-comment">      百位數補兩個 0</span></span><br><span class="line"><span class="hljs-comment">      ...</span></span><br><span class="line"><span class="hljs-comment">    */</span></span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;currentDigit; i++) {</span><br><span class="line">      sum = sum + <span class="hljs-string">'0'</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-comment">// 做大數相加（拿上面寫好的來用）</span></span><br><span class="line">    result = add(sum, accumulator);</span><br><span class="line">    <span class="hljs-comment">// 加完後更新累加器</span></span><br><span class="line">    accumulator = result;</span><br><span class="line">    <span class="hljs-comment">// 更新目前是幾位數</span></span><br><span class="line">    currentDigit++;</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-comment">// 答案</span></span><br><span class="line">  <span class="hljs-keyword">return</span> result;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 這段是前面寫好的 function 不用看</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">add</span>(<span class="hljs-params">a, b</span>)</span>{</span><br><span class="line">  <span class="hljs-keyword">let</span> result = <span class="hljs-string">''</span>;</span><br><span class="line">  <span class="hljs-comment">// 有沒有進位（flag）</span></span><br><span class="line">  <span class="hljs-keyword">let</span> hasCarryBit = <span class="hljs-literal">false</span>;</span><br><span class="line">  <span class="hljs-comment">// 看誰比較長</span></span><br><span class="line">  <span class="hljs-keyword">const</span> lengthA = a.length;</span><br><span class="line">  <span class="hljs-keyword">const</span> lengthB = b.length;</span><br><span class="line">  <span class="hljs-keyword">let</span> totalDigits = <span class="hljs-literal">undefined</span>;</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 比較短的數字要補 0 </span></span><br><span class="line">  <span class="hljs-keyword">if</span> (lengthA &gt; lengthB) {</span><br><span class="line">    totalDigits = lengthA;</span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;lengthA - lengthB; i++) {</span><br><span class="line">      b = <span class="hljs-string">'0'</span> + b; </span><br><span class="line">    }</span><br><span class="line">  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (lengthA &lt; lengthB) {</span><br><span class="line">    totalDigits = lengthB;</span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;lengthB - lengthA; i++) {</span><br><span class="line">      a = <span class="hljs-string">'0'</span> + a; </span><br><span class="line">    }</span><br><span class="line">  } <span class="hljs-keyword">else</span> {</span><br><span class="line">    totalDigits = lengthA;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 把每一位數相加</span></span><br><span class="line">  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i=totalDigits-<span class="hljs-number">1</span>; i&gt;=<span class="hljs-number">0</span>; i--) {</span><br><span class="line">    <span class="hljs-keyword">let</span> value = <span class="hljs-built_in">Number</span>(a[i]) + <span class="hljs-built_in">Number</span>(b[i]);</span><br><span class="line">    <span class="hljs-comment">// 上一位有進位就加 1 </span></span><br><span class="line">    <span class="hljs-keyword">if</span> (hasCarryBit) {</span><br><span class="line">      value += <span class="hljs-number">1</span>;</span><br><span class="line">      hasCarryBit = <span class="hljs-literal">false</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-comment">// &gt;= 10 更新 flag</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (value &gt;= <span class="hljs-number">10</span>) {</span><br><span class="line">      hasCarryBit = <span class="hljs-literal">true</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">      取出最後一位數</span></span><br><span class="line"><span class="hljs-comment">      19 =&gt; 9 + '' =&gt; '9'</span></span><br><span class="line"><span class="hljs-comment">      5 =&gt; 5 + '' =&gt; '69'</span></span><br><span class="line"><span class="hljs-comment">      13 =&gt; 3 + '' =&gt; '369'</span></span><br><span class="line"><span class="hljs-comment">      ...</span></span><br><span class="line"><span class="hljs-comment">    */</span></span><br><span class="line">    result = value%<span class="hljs-number">10</span> + result;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// 剩一個數字 but 有進位數要再補 1（因為不跑下一圈）</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (i===<span class="hljs-number">0</span> &amp;&amp; hasCarryBit) {</span><br><span class="line">      result = <span class="hljs-string">'1'</span> + result;</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-comment">// 答案</span></span><br><span class="line">  <span class="hljs-keyword">return</span> result;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> TESTNUMBER = <span class="hljs-string">'124902814902890825902840917490127902791247902479027210970941724092174091274902749012740921759037590347438758957283947234273942304239403274093275902375902374092410937290371093719023729103790123'</span>;</span><br><span class="line"><span class="hljs-keyword">const</span> ANSWER = <span class="hljs-built_in">BigInt</span>(multiply(TESTNUMBER, TESTNUMBER));</span><br><span class="line"><span class="hljs-keyword">const</span> BIGINT = <span class="hljs-built_in">BigInt</span>(TESTNUMBER) * <span class="hljs-built_in">BigInt</span>(TESTNUMBER);</span><br><span class="line"><span class="hljs-built_in">console</span>.log(ANSWER === BIGINT); <span class="hljs-comment">// true</span></span><br></pre></td></tr></tbody></table></figure>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/02/13/mentor-program-day61/">mentor-program-day61</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/02/12/normal-script-and-module-script-difference/">&lt;script&gt; 有沒有 module 屬性的差別</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

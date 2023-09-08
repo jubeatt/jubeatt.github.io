@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>關於 Catch Error 的實際案例 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="錯誤處理很重要。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="關於 Catch Error 的實際案例">
+<meta property="og:url" content="https://jubeatt.github.io/2022/06/23/javascript-catch-error-example/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="錯誤處理很重要。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-06-23T02:46:11.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.521Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡述">1&nbsp;&nbsp;<b>簡述</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#案例一：當頁面載入時有很多資料要初始化">2&nbsp;&nbsp;<b>案例一：當頁面載入時有很多資料要初始化</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#案例二：我想在-custom-hook-中-catch-錯誤，但也希望元件能夠-catch-到。">3&nbsp;&nbsp;<b>案例二：我想在 custom hook 中 catch 錯誤，但也希望元件能夠 catch 到。</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            關於 Catch Error 的實際案例
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>6月 23 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>錯誤處理很重要。</p>
+<span id="more"></span>
+
+<h2 id="簡述"><a href="#簡述" class="headerlink" title="簡述"></a>簡述</h2><p>這篇可以當作是從 <a href="https://jubeatt.github.io/2022/06/22/javascript-error-handling/">JavaScript－處理錯誤的方法</a> 延伸出來的筆記，所以會假設你已經知道下面這幾個概念：</p>
+<ol>
+<li>知道 <code>try...catch..finally</code> 的流程</li>
+<li>知道 <code>throw new Error()</code> 是什麼？跟會發生什麼事？</li>
+<li>知道 <code>Error</code> 物件是什麼？還有 <code>Error</code> 的類別</li>
+</ol>
+<p>總之這篇只是想舉幾個比較特別的範例，所以基本概念不會講太多。</p>
+<h2 id="案例一：當頁面載入時有很多資料要初始化"><a href="#案例一：當頁面載入時有很多資料要初始化" class="headerlink" title="案例一：當頁面載入時有很多資料要初始化"></a>案例一：當頁面載入時有很多資料要初始化</h2><p>這應該是蠻常見的案例，以我在工作的經驗來說，就有碰到下拉選單項目是透過 API 拿到的資料來產生的，所以 <code>useEffect</code> 中就會有一大堆 API 要打，像這樣：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  getDropdown1.then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> setDropdownList1(response))</span><br><span class="line">  getDropdown2.then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> setDropdownList2(response))</span><br><span class="line">  getDropdown3.then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> setDropdownList3(response))</span><br><span class="line">  getDropdown4.then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> setDropdownList4(response))</span><br><span class="line">  ...</span><br><span class="line">}, [])</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這種時候你應該就會想要把這些東西包成一個 function 來處理，不然要處理錯誤的話很麻煩，會變成這樣：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  getDropdown1</span><br><span class="line">    .then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> setDropdownList1(response))</span><br><span class="line">    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> setError(error.message))</span><br><span class="line">  getDropdown2</span><br><span class="line">    .then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> setDropdownList2(response))</span><br><span class="line">    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> setError(error.message))</span><br><span class="line">  getDropdown3</span><br><span class="line">    .then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> setDropdownList3(response))</span><br><span class="line">    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> setError(error.message))</span><br><span class="line">  getDropdown4</span><br><span class="line">    .then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> setDropdownList4(response))</span><br><span class="line">    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> setError(error.message))</span><br><span class="line">}, [])</span><br></pre></td></tr></tbody></table></figure>
+
+<p>所以就要透過 function 來包裝會更簡潔一點。不過在那之前我想先強調一個很重要的觀念：</p>
+<ul>
+<li><code>catch</code> 要留到最外層來做</li>
+<li><code>catch</code> 要留到最外層來做</li>
+<li><code>catch</code> 要留到最外層來做</li>
+</ul>
+<p>什麼意思？我們先假設最後包裝好的結果會像這樣：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  getInitDropdown()</span><br><span class="line">    .then(<span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'finish'</span>))</span><br><span class="line">    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> setError(error.message))</span><br><span class="line">}, [])</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果你要把 error 留到這邊來處理，那麼在 <code>getInitDropdown</code> 中就不可以出現任何 <code>catch</code>。</p>
+<p>下面是錯誤的範例：</p>
+<p>附註：加上 <code>async</code> 後最後才會回傳 Promise</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getInitDropdown</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">await</span> getDropdown1</span><br><span class="line">    .then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> setDropdownList1(response))</span><br><span class="line">    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> setError(error.message))</span><br><span class="line">  <span class="hljs-keyword">await</span> getDropdown2</span><br><span class="line">    .then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> setDropdownList2(response))</span><br><span class="line">    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> setError(error.message))</span><br><span class="line">  <span class="hljs-keyword">await</span> getDropdown3</span><br><span class="line">    .then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> setDropdownList3(response))</span><br><span class="line">    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> setError(error.message))</span><br><span class="line">  <span class="hljs-keyword">await</span> getDropdown4</span><br><span class="line">    .then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> setDropdownList4(response))</span><br><span class="line">    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> setError(error.message))</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果是這樣寫，當任何一個地方出現 Error 時就會被它<strong>最靠近的 catch 給接住</strong>，這時候外面的 <code>getInitDropdown</code> 就沒辦法 <code>catch</code> 到，因為已經先被裡面的 function 被接走了。</p>
+<p>可以參考 <a target="_blank" rel="noopener" href="https://pjchender.dev/javascript/js-error-handling/">PJCHENder</a> 說的這一段：</p>
+<blockquote>
+<p>當 JavaScript 程式執行的過程中發生錯誤時，它會丟出例外狀況（throw an exception），JS 並不會繼續往下走，而是尋找有沒有任何程式碼能夠處理這些錯誤（exception handling code），如果沒有找到任何可以處理錯誤狀況的程式碼，則它會從丟出例外狀況的函式中跳出（return），就這樣重複尋找錯誤處理的程式碼、跳出，直到觸及到最外層的函式（top level function）後終止。</p>
+</blockquote>
+<p>這個就是 JS 裡 <code>catch</code> 的機制，一定一定要搞清楚這一段。</p>
+<p>所以呢，除非你有要針對特定的 <code>getDropdown</code> 做額外處理，不然請一律不要加上任何 <code>catch</code>，留給最外層來做就好：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getInitDropdown</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">await</span> getDropdown1.then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> setDropdownList1(response))</span><br><span class="line">  <span class="hljs-keyword">await</span> getDropdown2.then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> setDropdownList2(response))</span><br><span class="line">  <span class="hljs-keyword">await</span> getDropdown3.then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> setDropdownList3(response))</span><br><span class="line">  <span class="hljs-keyword">await</span> getDropdown4.then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> setDropdownList4(response))</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>改成這樣以後，代表只要有任何一個地方出錯就會立刻 return 出去，然後進入 <code>getInitDropdown</code> 的 <code>catch</code> 區塊。</p>
+<h2 id="案例二：我想在-custom-hook-中-catch-錯誤，但也希望元件能夠-catch-到。"><a href="#案例二：我想在-custom-hook-中-catch-錯誤，但也希望元件能夠-catch-到。" class="headerlink" title="案例二：我想在 custom hook 中 catch 錯誤，但也希望元件能夠 catch 到。"></a>案例二：我想在 custom hook 中 catch 錯誤，但也希望元件能夠 catch 到。</h2><p>你應該會覺得我在公 three 小，不過這確實是我當初碰到的一個問題，所以我會邊舉例邊說明。</p>
+<p>首先我們要把 <a target="_blank" rel="noopener" href="https://codesandbox.io/s/catch-error-in-custom-hook-01-before-hook-5fzwx4?file=/src/App.js">這個表單範例</a> 寫成一個 custom hook，寫完後會像這樣來用它：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> <span class="hljs-string">'./styles.css'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useForm } <span class="hljs-keyword">from</span> <span class="hljs-string">'./useForm'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> { name, job, updateJob, updateName, addNewUser, error, loading } = useForm()</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'container'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Catch Error at custome hook<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">onSubmit</span>=<span class="hljs-string">{addNewUser}</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        {error &amp;&amp; <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'error'</span>&gt;</span>{error}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>}</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'label'</span>&gt;</span>Name: <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">'text'</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{name}</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">{updateName}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'label'</span>&gt;</span>Job: <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">'text'</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{job}</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">{updateJob}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'btn-wrap'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>{loading ? 'sending...' : 'submit'}<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這個 <code>useForm</code> 做的事情有幾個：</p>
+<ol>
+<li>有 Error 時顯示錯誤訊息</li>
+<li>在 Loading 時顯示讀取狀態</li>
+<li>把 input 值跟 state 做綁定</li>
+<li>表單送出時執行 <code>addNewUser</code> 發出 request</li>
+</ol>
+<p>好，假設我們現在希望 <code>addNewUser</code> 完之後做一個「redirect」的動作的話，怎麼寫？</p>
+<p>這是 <code>addNewUser</code> 目前的邏輯：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> addNewUser = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {</span><br><span class="line">  e.preventDefault()</span><br><span class="line">  setLoading(<span class="hljs-literal">true</span>)</span><br><span class="line">  fetch(url, {</span><br><span class="line">    <span class="hljs-attr">method</span>: <span class="hljs-string">'post'</span>,</span><br><span class="line">    <span class="hljs-attr">body</span>: <span class="hljs-built_in">JSON</span>.stringify({ name, job })</span><br><span class="line">  })</span><br><span class="line">    .then(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'add succuess'</span>)</span><br><span class="line">      setLoading(<span class="hljs-literal">false</span>)</span><br><span class="line">    })</span><br><span class="line">    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {</span><br><span class="line">      setLoading(<span class="hljs-literal">false</span>)</span><br><span class="line">      setError(error.message)</span><br><span class="line">    })</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>雖然最簡單的方法是直接把 redirect 的邏輯直接寫在裡面，但考慮到「重用性」的話不會這樣做。</p>
+<p>所以比較好的改法是加上 <code>async</code>，讓 <code>addNewUser</code> 結束後可以被下一個 <code>then</code> 接下去：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> addNewUser = <span class="hljs-keyword">async</span> (e) =&gt; {</span><br><span class="line">  e.preventDefault()</span><br><span class="line">  setLoading(<span class="hljs-literal">true</span>)</span><br><span class="line">  <span class="hljs-comment">// 記得加上 await 才會等這邊執行完才 return</span></span><br><span class="line">  <span class="hljs-keyword">await</span> fetch(url, {</span><br><span class="line">    <span class="hljs-attr">method</span>: <span class="hljs-string">'post'</span>,</span><br><span class="line">    <span class="hljs-attr">body</span>: <span class="hljs-built_in">JSON</span>.stringify({ name, job })</span><br><span class="line">  })</span><br><span class="line">    .then(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'add succuess'</span>)</span><br><span class="line">      setLoading(<span class="hljs-literal">false</span>)</span><br><span class="line">    })</span><br><span class="line">    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {</span><br><span class="line">      setLoading(<span class="hljs-literal">false</span>)</span><br><span class="line">      setError(error.message)</span><br><span class="line">    })</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>接著元件的部分再改寫成這樣：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> <span class="hljs-string">'./styles.css'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useForm } <span class="hljs-keyword">from</span> <span class="hljs-string">'./useForm'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> { name, job, updateJob, updateName, addNewUser, error, loading } = useForm()</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 記得要把 event 要傳進去才不會出錯</span></span><br><span class="line">  <span class="hljs-keyword">const</span> handleSubmit = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {</span><br><span class="line">    addNewUser(e).then(<span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'redirect to some where.'</span>))</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'container'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Catch Error at custome hook<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">onSubmit</span>=<span class="hljs-string">{handleSubmit}</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        {error &amp;&amp; <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'error'</span>&gt;</span>{error}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>}</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'label'</span>&gt;</span>Name: <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">'text'</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{name}</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">{updateName}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'label'</span>&gt;</span>Job: <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">'text'</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{job}</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">{updateJob}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'btn-wrap'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>{loading ? 'sending...' : 'submit'}<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣就完成了。</p>
+<p>OK，剛剛說的都只是鋪陳，現在要講的東西才是重頭戲：</p>
+<blockquote>
+<p>如果我也想要在外面 catch 錯誤的話怎麼辦？</p>
+</blockquote>
+<p>這個就是一開始標題提到的情境，希望做到這邊後你有清楚一些了。</p>
+<p>之所以要這樣是因為我們不想要在發生錯誤時做 redirect 的動作，所以會希望出錯時能夠 catch 錯誤。</p>
+<p>這時候你可能會問說「阿就跟剛剛一樣把 catch 挪到最外層來做不就好了？」，像是這樣：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> addNewUser = <span class="hljs-keyword">async</span> (e) =&gt; {</span><br><span class="line">  e.preventDefault()</span><br><span class="line">  setLoading(<span class="hljs-literal">true</span>)</span><br><span class="line">  <span class="hljs-keyword">await</span> fetch(url, {</span><br><span class="line">    <span class="hljs-attr">method</span>: <span class="hljs-string">'post'</span>,</span><br><span class="line">    <span class="hljs-attr">body</span>: <span class="hljs-built_in">JSON</span>.stringify({ name, job })</span><br><span class="line">  }).then(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'add succuess'</span>)</span><br><span class="line">    setLoading(<span class="hljs-literal">false</span>)</span><br><span class="line">  })</span><br><span class="line">  <span class="hljs-comment">// 把 catch 拿掉</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>但很抱歉，不行。</p>
+<p>當你這樣做以後，你會發現另一個問題：</p>
+<ol>
+<li>沒辦法取消 loading 狀態</li>
+<li>沒辦法把表單的錯誤訊息秀出來</li>
+</ol>
+<p>不要忘了這兩個 state 都是封裝在裡面來處理的，所以除非你把 hook 裡的 <code>setError</code> 跟 <code>setLoading</code> 也 export 到外面給元件用，不然你沒辦法解決這個問題。</p>
+<p>那該怎麼辦才好呢？</p>
+<ul>
+<li><strong>永遠不要忘了我們可以自己拋出 Error</strong></li>
+<li><strong>永遠不要忘了我們可以自己拋出 Error</strong></li>
+<li><strong>永遠不要忘了我們可以自己拋出 Error</strong></li>
+</ul>
+<p>雖然聽起來很奇妙，但這個就是解法，只要在 catch 中在拋出另一個 Error 就好了，像這樣：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> addNewUser = <span class="hljs-keyword">async</span> (e) =&gt; {</span><br><span class="line">  e.preventDefault()</span><br><span class="line">  setLoading(<span class="hljs-literal">true</span>)</span><br><span class="line">  <span class="hljs-keyword">await</span> fetch(url, {</span><br><span class="line">    <span class="hljs-attr">method</span>: <span class="hljs-string">'post'</span>,</span><br><span class="line">    <span class="hljs-attr">body</span>: <span class="hljs-built_in">JSON</span>.stringify({ name, job })</span><br><span class="line">  })</span><br><span class="line">    .then(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'add succuess'</span>)</span><br><span class="line">      setLoading(<span class="hljs-literal">false</span>)</span><br><span class="line">    })</span><br><span class="line">    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {</span><br><span class="line">      setLoading(<span class="hljs-literal">false</span>)</span><br><span class="line">      setError(error.message)</span><br><span class="line">      <span class="hljs-comment">// 改完 state 後拋出新的錯誤</span></span><br><span class="line">      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(err)</span><br><span class="line">    })</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>因為這個 Error 是在 <code>catch</code> 中發生的，所以它就會到外面找另一個 <code>catch</code> 來接住。</p>
+<p>透過這種手法就可以讓元件也能 <code>catch</code> 錯誤，然後做對應的處理：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> <span class="hljs-string">'./styles.css'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useForm } <span class="hljs-keyword">from</span> <span class="hljs-string">'./useForm'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> { name, job, updateJob, updateName, addNewUser, error, loading } = useForm()</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> handleSubmit = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 現在能 catch error 了</span></span><br><span class="line">    addNewUser(e)</span><br><span class="line">      .then(<span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'redirect to some where.'</span>))</span><br><span class="line">      .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(error.message))</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'container'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Catch Error at custome hook<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">onSubmit</span>=<span class="hljs-string">{handleSubmit}</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        {error &amp;&amp; <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'error'</span>&gt;</span>{error}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>}</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'label'</span>&gt;</span>Name: <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">'text'</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{name}</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">{updateName}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'label'</span>&gt;</span>Job: <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">'text'</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{job}</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">{updateJob}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'btn-wrap'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>{loading ? 'sending...' : 'submit'}<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>好啦，這個就是這篇要講的東西，有任何疑問的話可以到這邊來看<a target="_blank" rel="noopener" href="https://codesandbox.io/s/catch-error-in-custom-hook-01-completed-u5hue7?file=/src/App.js">範例</a>。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/06/24/what-is-json-web-token/">關於 JWT（JSON-Web-Token）</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/06/22/javascript-error-handling/">JavaScript－處理錯誤的方法</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

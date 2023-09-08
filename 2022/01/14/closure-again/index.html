@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>先理解作用域跟回傳值，再來談閉包。 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="突然有一點新的想法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="先理解作用域跟回傳值，再來談閉包。">
+<meta property="og:url" content="https://jubeatt.github.io/2022/01/14/closure-again/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="突然有一點新的想法。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-01-14T07:29:39.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.251Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#前言">1&nbsp;&nbsp;<b>前言</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#區域作用域與全域作用域">2&nbsp;&nbsp;<b>區域作用域與全域作用域</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#作用域鏈（Scope-chain）">3&nbsp;&nbsp;<b>作用域鏈（Scope chain）</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#關於回傳值">4&nbsp;&nbsp;<b>關於回傳值</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#靜態作用域與動態作用域">4.1&nbsp;&nbsp;靜態作用域與動態作用域</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#閉包">5&nbsp;&nbsp;<b>閉包</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#setTimeout-印出-i-的值">5.1&nbsp;&nbsp;setTimeout 印出 i 的值</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#建立私有變數及公開方法">5.2&nbsp;&nbsp;建立私有變數及公開方法</a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            先理解作用域跟回傳值，再來談閉包。
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>1月 14 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>突然有一點新的想法。</p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上個月我有寫過一篇：<a href="https://jubeatt.github.io/2021/12/03/closure/">談談 JS 中的 Closure（閉包）</a>，但最近又有了一些新想法，所以想在寫一次關於「閉包（Closure）」這個主題。</p>
+<p>就跟標題一樣，我覺得閉包沒有那麼複雜，你只要先理解「作用域」、「作用域鏈」跟「回傳值」這三樣東西，我覺得就沒那麼複雜了。</p>
+<h2 id="區域作用域與全域作用域"><a href="#區域作用域與全域作用域" class="headerlink" title="區域作用域與全域作用域"></a>區域作用域與全域作用域</h2><p>簡單來說，作用域就是：<strong>一個變數的生存範圍</strong></p>
+<p>在 JavaScript 中，必須透過 <code>function</code> 才能建立出作用域：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scope</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(a)</span><br><span class="line">}</span><br><span class="line">scope() <span class="hljs-comment">// 10</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(a) <span class="hljs-comment">// ReferenceError: a is not defined</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這時候我們會說 <code>scope</code> 產生了一個「區域作用域」，而 <code>a</code> 是這個作用域中的「區域變數」。它只有在 <code>scope</code> 中可以被存取，外面沒辦法。所以 <code>a</code> 的生存範圍只在 <code>scope</code> 這個作用域裡面。</p>
+<p>那全域作用域呢？很簡單，就是沒有宣告在 function 裡的變數：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scope</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(a)</span><br><span class="line">}</span><br><span class="line">scope() <span class="hljs-comment">// 10</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(a) <span class="hljs-comment">// 10</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這時候在哪裡都能存取到 <code>a</code>，因為 <code>a</code> 是「全域變數」，也就是生存範圍是「全域作用域」。</p>
+<h2 id="作用域鏈（Scope-chain）"><a href="#作用域鏈（Scope-chain）" class="headerlink" title="作用域鏈（Scope chain）"></a>作用域鏈（Scope chain）</h2><p>在理解區域作用域跟全域作用域後，要來理解什麼叫「作用域鏈」，舉個簡單的例子：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scopeA</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">var</span> a = <span class="hljs-string">'a'</span></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scopeB</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">var</span> b = <span class="hljs-string">'b'</span></span><br><span class="line">    <span class="hljs-built_in">console</span>.log(a) <span class="hljs-comment">// a</span></span><br><span class="line">  }</span><br><span class="line">  scopeB()</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(b) <span class="hljs-comment">// ReferenceError: a is not defined</span></span><br><span class="line">}</span><br><span class="line">scopeA()</span><br></pre></td></tr></tbody></table></figure>
+
+<p>在這個例子裡面，我們有兩個作用域，分別是 <code>scopeA</code> 和 <code>scopeB</code>。</p>
+<p>先看 <code>b</code> 的部分，依照前面提的概念，<code>b</code> 的生存範圍只在 <code>scopeB</code> 中，所以只要出了 <code>scopeB</code>，它就會 GG，所以 <code>scopeA</code> 去存取 <code>b</code> 的時候才會得到錯誤。 </p>
+<p>那 <code>a</code> 呢？ <code>a</code> 的部分其實就是<strong>作用域鏈的機制</strong>。<code>scopeB</code> 在自己的作用域中找不到 <code>a</code>，所以它就往上找，找到 <code>scopeA</code> 裡面的 <code>a</code>，最後印出 a 的值。</p>
+<p>這個「往上找」的行為就叫做「作用域鏈」，唯一要注意的一點是，<strong>它只能往上找，不能往下找。</strong></p>
+<h2 id="關於回傳值"><a href="#關於回傳值" class="headerlink" title="關於回傳值"></a>關於回傳值</h2><p>其實大部分的文章在告訴你作用域跟作用域鏈後，就會開始講什麼是閉包了。但是在那之前，我覺得還有一個很重要的東西不能忽掉：<strong>回傳值</strong></p>
+<p>一樣來舉點例子，按照作用域的概念，你沒辦法在全域空間中去存取區域變數，但如果真的要存取的話沒有任何辦法嗎？其實是有的，而且你一定也用過，那個方法就是透過「回傳值」：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scope</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span></span><br><span class="line">  <span class="hljs-keyword">return</span> a</span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">var</span> result = scope()</span><br><span class="line"><span class="hljs-built_in">console</span>.log(result) <span class="hljs-comment">// 10</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣就可以拿到 <code>a</code> 的值了。而且不只是這樣，這裡還可以試著回傳物件或陣列看看：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scope</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span></span><br><span class="line">  <span class="hljs-keyword">return</span> [a]</span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">var</span> arr = scope()</span><br><span class="line"><span class="hljs-built_in">console</span>.log(arr) <span class="hljs-comment">// [10]</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scope</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span></span><br><span class="line">  <span class="hljs-keyword">return</span> {<span class="hljs-attr">a</span>: a}</span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">var</span> obj = scope()</span><br><span class="line"><span class="hljs-built_in">console</span>.log(obj) <span class="hljs-comment">// {a: 10}</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>最後如果變成回傳 function 呢？</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scope</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span></span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(a)</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">var</span> fn = scope() <span class="hljs-comment">// 拿到 function</span></span><br><span class="line">fn() <span class="hljs-comment">// 執行 function =&gt; 10 </span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>把 function 放到最後才講是因為我覺得這樣比較好理解，如果一開始就拿 function 來舉例你可能會有點混亂，不知道為什麼可以在 function 裡面存取到 <code>a</code>。因此才用這種一步一步來的方式，希望這樣會好理解一點。</p>
+<p>所以你知道只要利用「回傳」，不管最後的回傳值是變數值、物件、陣列或函式， <code>a</code> 的值都會被保留下來，只不過 function 的例子比較特別一點，你要考慮前面提到的「作用域鏈機制」。還記得嗎？雖然 function 自己的作用域裡面沒有 <code>a</code> 但是它可以往上找，找到 <code>scope</code> 裡面的 <code>a</code>，所以最後在執行 <code>fn</code> 的時候才能夠存取到 <code>a</code>。</p>
+<h3 id="靜態作用域與動態作用域"><a href="#靜態作用域與動態作用域" class="headerlink" title="靜態作用域與動態作用域"></a>靜態作用域與動態作用域</h3><p>不過你可能還有一個疑問：「<code>fn</code> 是在全域空間執行的，如果現在有個全域變數也叫 <code>a</code> 呢？」</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> a = <span class="hljs-number">100</span> <span class="hljs-comment">// =&gt; 新增一個全域變數</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scope</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span></span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(a)</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">var</span> fn = scope() <span class="hljs-comment">// </span></span><br><span class="line">fn() <span class="hljs-comment">// 10 or 100 ? </span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這個問題非常好，首先正確答案是 <code>10</code>。</p>
+<p>其實是這樣的，在 <strong>JavaScript</strong> 中一個 function 被宣告的時候，它的作用域就<strong>已經決定好了</strong>（特別強調 JavaScript 是因為有些程式語言不是這樣子）</p>
+<p>所以按照這個規則，function 在被回傳的時候，它的作用域是這樣子：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> a = <span class="hljs-number">100</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scope</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span></span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(a)</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣應該就好理解多了吧？所以不論你之後在哪裡呼叫這個 function，它的作用域都<strong>不會變</strong>，這一定要搞清楚。</p>
+<h2 id="閉包"><a href="#閉包" class="headerlink" title="閉包"></a>閉包</h2><p>終於要來談今天的主題，但其實剛剛示範的例子裡就包含了閉包的概念：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scope</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span></span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(a)</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">var</span> fn = scope() </span><br><span class="line">fn() <span class="hljs-comment">// 10 </span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(a) <span class="hljs-comment">// ReferenceError: a is not defined</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>不用懷疑，像 <code>a</code> 這樣被關在 function 裡面，只能透過 <code>fn</code> 來存取的這個行為就叫「閉包」。</p>
+<p>我覺得這個機制本身沒有什麼，重要的是你要理解這是怎麼做到的，除了前面提到的「回傳值」外，還要理解「作用域」、「作用域鏈」才能真正理解原因。</p>
+<p>所以接下來只示範一些閉包的經典題目，還有實際用途。</p>
+<h3 id="setTimeout-印出-i-的值"><a href="#setTimeout-印出-i-的值" class="headerlink" title="setTimeout 印出 i 的值"></a>setTimeout 印出 i 的值</h3><p>一個很經典的題目：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;=<span class="hljs-number">5</span>; i++) {</span><br><span class="line">  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(i)</span><br><span class="line">  })</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>最後的結果會是：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">6</span></span><br><span class="line"><span class="hljs-number">6</span></span><br><span class="line"><span class="hljs-number">6</span></span><br><span class="line"><span class="hljs-number">6</span></span><br><span class="line"><span class="hljs-number">6</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>其實原因只是當 callback function 執行的時候，它自己的作用域裡面沒有 <code>i</code>，所以依照作用域鏈往上找，最後找到全域空間的 <code>i</code>，只是這時候迴圈已經跑完了，所以才會是 <code>6</code>。 </p>
+<p>改寫的方式有很多，我列幾個比較常見的。</p>
+<p><strong>1. 在包一層 function</strong></p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">printNumber</span>(<span class="hljs-params">num</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(num)</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;=<span class="hljs-number">5</span>; i++) {</span><br><span class="line">  <span class="hljs-built_in">setTimeout</span>(printNumber(i), <span class="hljs-number">1000</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>或改寫成 IIFE：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;=<span class="hljs-number">5</span>; i++) {</span><br><span class="line">  <span class="hljs-built_in">setTimeout</span>((<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">num</span>)</span>{</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(num)</span><br><span class="line">    }</span><br><span class="line">  })(i), <span class="hljs-number">1000</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>2. 改用 ES6 的 let</strong></p>
+<p>let 的作用域是用 <code>{}</code> 來產生的，所以可以寫成：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;=<span class="hljs-number">5</span>; i++) {</span><br><span class="line">  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(i)</span><br><span class="line">  })</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>可以想成是這樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line"> <span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span></span><br><span class="line"> <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">   <span class="hljs-built_in">console</span>.log(i)</span><br><span class="line"> })</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">{</span><br><span class="line"> <span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span></span><br><span class="line"> <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">   <span class="hljs-built_in">console</span>.log(i)</span><br><span class="line"> })</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="建立私有變數及公開方法"><a href="#建立私有變數及公開方法" class="headerlink" title="建立私有變數及公開方法"></a>建立私有變數及公開方法</h3><p>透過閉包的特性，你可以把變數藏在 function 裡面，讓外面的人沒辦法存取，並且只能透過公開（return）出去的東西來存取。 </p>
+<p>來簡單時做一個「開戶」的功能：</p>
+<ul>
+<li>開戶時要先存 1000 塊</li>
+<li>開戶後可以查詢餘額、領錢、存錢</li>
+</ul>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createBank</span>(<span class="hljs-params">money</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">if</span> (money &lt; <span class="hljs-number">1000</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">'存太少啦'</span></span><br><span class="line">  <span class="hljs-comment">// 要公開出去的東西</span></span><br><span class="line">  <span class="hljs-keyword">let</span> bank = {</span><br><span class="line">    <span class="hljs-function"><span class="hljs-title">searchMoney</span>(<span class="hljs-params"></span>)</span> {</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'目前餘額：'</span>, money)</span><br><span class="line">    },</span><br><span class="line">    <span class="hljs-function"><span class="hljs-title">getMoney</span>(<span class="hljs-params">value</span>)</span> {</span><br><span class="line">      money -= value</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'存入金額：'</span>, value)</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'目前餘額：'</span>, money)</span><br><span class="line">    },</span><br><span class="line">    <span class="hljs-function"><span class="hljs-title">setMoney</span>(<span class="hljs-params">value</span>)</span> {</span><br><span class="line">      money += value</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'領取金額：'</span>, value)</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'目前餘額：'</span>, money)</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'開戶成功'</span>)</span><br><span class="line">  <span class="hljs-keyword">return</span> bank</span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">const</span> error = createBank(<span class="hljs-number">900</span>) </span><br><span class="line"><span class="hljs-built_in">console</span>.log(error) <span class="hljs-comment">// 存太少啦</span></span><br><span class="line"><span class="hljs-keyword">const</span> PeaNu_BANK = createBank(<span class="hljs-number">1000</span>) <span class="hljs-comment">// 開戶成功</span></span><br><span class="line">PeaNu_BANK.searchMoney() <span class="hljs-comment">// 目前餘額：1000 </span></span><br><span class="line">PeaNu_BANK.setMoney(<span class="hljs-number">500</span>) <span class="hljs-comment">// 存入金額：500，目前餘額：1500</span></span><br><span class="line">PeaNu_BANK.getMoney(<span class="hljs-number">1000</span>) <span class="hljs-comment">// 領取金額：1000，目前餘額：500</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(money) <span class="hljs-comment">// ReferenceError: a is not defined</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊簡單示範所以就沒做太多的額外處理了，方便看懂最重要。</p>
+<p>所以以上這是關於閉包，還有閉包的用處。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/01/14/mentor-program-day33/">mentor-program-day33</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/01/14/regular-expression-capturing-groups/">正則表達式之「我只想要 xxx 裡面的內容」</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

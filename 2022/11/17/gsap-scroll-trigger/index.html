@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Gsap－ScrollTrigger - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="寫視差的必背工具。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gsap－ScrollTrigger">
+<meta property="og:url" content="https://jubeatt.github.io/2022/11/17/gsap-scroll-trigger/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="寫視差的必背工具。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/17/gsap-scroll-trigger/example1-basic-1.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/17/gsap-scroll-trigger/example1-basic-2.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/17/gsap-scroll-trigger/example2-toggle-action.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/17/gsap-scroll-trigger/example3-scrub-1.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/17/gsap-scroll-trigger/example3-scrub-2.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/17/gsap-scroll-trigger/example3-scrub-3.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/17/gsap-scroll-trigger/example3-scrub-4.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/17/gsap-scroll-trigger/example4-pin-1.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/17/gsap-scroll-trigger/example4-pin-2.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/17/gsap-scroll-trigger/example5-pin-spacing-1.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/17/gsap-scroll-trigger/example5-pin-spacing-2.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/17/gsap-scroll-trigger/example5-pin-spacing-3.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/17/gsap-scroll-trigger/example6-pin-parallax.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/17/gsap-scroll-trigger/example7-transition.gif">
+<meta property="article:published_time" content="2022-11-17T03:52:21.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.473Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/11/17/gsap-scroll-trigger/example1-basic-1.gif">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#基本觀念">1&nbsp;&nbsp;<b>基本觀念</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Toggle-Actions">2&nbsp;&nbsp;<b>Toggle Actions</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Scrub">2.1&nbsp;&nbsp;Scrub</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Pin">3&nbsp;&nbsp;<b>Pin</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#pinSpacing">3.1&nbsp;&nbsp;pinSpacing</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#實作簡易的視差效果">3.2&nbsp;&nbsp;實作簡易的視差效果</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#實作簡易的進場效果">3.3&nbsp;&nbsp;實作簡易的進場效果</a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Gsap－ScrollTrigger
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>11月 17 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Plug-in/">Plug-in</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>寫視差的必背工具。</p>
+<span id="more"></span>
+
+<h2 id="基本觀念"><a href="#基本觀念" class="headerlink" title="基本觀念"></a>基本觀念</h2><p>當我們希望動畫是藉由「滾動」來觸發時，就會用到 ScrollTrigger 這個 Plugin，來看一個簡單的範例：</p>
+<p><img src="example1-basic-1.gif" alt="example1-basic-1"></p>
+<p>這個範例做的事情是當我們把滾軸捲到距離 viewport 30px 的位置時就會觸發動畫，原始碼如下：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { gsap } <span class="hljs-keyword">from</span> <span class="hljs-string">'gsap'</span></span><br><span class="line"><span class="hljs-keyword">import</span> ScrollTrigger <span class="hljs-keyword">from</span> <span class="hljs-string">'gsap/ScrollTrigger'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 要先註冊 plugin，這樣我們才能用這個功能</span></span><br><span class="line">    gsap.registerPlugin(ScrollTrigger)</span><br><span class="line">    gsap.to(<span class="hljs-string">'.square'</span>, {</span><br><span class="line">      <span class="hljs-attr">rotationZ</span>: <span class="hljs-number">180</span>,</span><br><span class="line">      <span class="hljs-attr">duration</span>: <span class="hljs-number">1</span>,</span><br><span class="line">      <span class="hljs-attr">ease</span>: <span class="hljs-string">'none'</span>,</span><br><span class="line">      <span class="hljs-attr">scrollTrigger</span>: {</span><br><span class="line">        <span class="hljs-attr">trigger</span>: <span class="hljs-string">'.square'</span>, <span class="hljs-comment">// 用來 trigger 這個動畫的元素</span></span><br><span class="line">        <span class="hljs-attr">start</span>: <span class="hljs-number">100</span> <span class="hljs-comment">// 距離 viewport 位置 100px 時觸發動畫</span></span><br><span class="line">      }</span><br><span class="line">    })</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'section'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'square'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊想特別講的是 <code>start</code> 值的設定方式，除了像上面那樣直接指定距離 viewport 多少 px 時觸發以外，也可以用「字串」的方式來指定，例如這樣子：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { gsap } <span class="hljs-keyword">from</span> <span class="hljs-string">'gsap'</span></span><br><span class="line"><span class="hljs-keyword">import</span> ScrollTrigger <span class="hljs-keyword">from</span> <span class="hljs-string">'gsap/ScrollTrigger'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    gsap.registerPlugin(ScrollTrigger)</span><br><span class="line">    gsap.to(<span class="hljs-string">'.square'</span>, {</span><br><span class="line">      <span class="hljs-attr">rotationZ</span>: <span class="hljs-number">180</span>,</span><br><span class="line">      <span class="hljs-attr">duration</span>: <span class="hljs-number">1</span>,</span><br><span class="line">      <span class="hljs-attr">ease</span>: <span class="hljs-string">'none'</span>,</span><br><span class="line">      <span class="hljs-attr">scrollTrigger</span>: {</span><br><span class="line">        <span class="hljs-attr">trigger</span>: <span class="hljs-string">'.square'</span>, <span class="hljs-comment">// 用來 trigger 這個動畫的元素</span></span><br><span class="line">        <span class="hljs-attr">start</span>: <span class="hljs-string">'bottom 250px'</span>, <span class="hljs-comment">// 當 .square 的底端碰到 viewport 位置 250px 時觸發動畫</span></span><br><span class="line">        <span class="hljs-attr">markers</span>: <span class="hljs-literal">true</span></span><br><span class="line">      }</span><br><span class="line">    })</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'section'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'square'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="example1-basic-2.gif" alt="example1-basic-2"></p>
+<p>總之一定要記得：</p>
+<ul>
+<li><strong>第一個值是相對於 trigger 的那個元素，第二個值是相對於 viewport</strong></li>
+<li><strong>第一個值是相對於 trigger 的那個元素，第二個值是相對於 viewport</strong></li>
+<li><strong>第一個值是相對於 trigger 的那個元素，第二個值是相對於 viewport</strong></li>
+</ul>
+<p>所以如果我設定 <code>start: 'bottom 100px'</code> 的話，意思就是：</p>
+<blockquote>
+<p>當 .square 的底端（bottom）碰到 viewport 100px 的位置時觸發動畫。</p>
+</blockquote>
+<h2 id="Toggle-Actions"><a href="#Toggle-Actions" class="headerlink" title="Toggle Actions"></a>Toggle Actions</h2><p>簡單來說這個功能是讓你可以決定當元素進入 or 離開滾軸範圍時妳想做什麼樣的動作（Action）</p>
+<p>直接來看個例子：</p>
+<p><img src="example2-toggle-action.gif" alt="example2-toggle-action"></p>
+<p>這個動畫其實很簡單，就是當滾軸進入範圍時把方塊用旋轉到中間的位置，不過特別的地方在於我們多加了一些 actions，讓他可以在進入、離開滾軸範圍時做不同的操作：</p>
+<ol>
+<li>當 start 碰到 scroller-start 時重新播放動畫（進入）</li>
+<li>當 end 碰到 scroller-end 時暫停動畫（離開）</li>
+<li>當 end 又碰到 scroler-end 時繼續播放動畫（重新進入）</li>
+<li>當 start 又碰到 scroller-start 時倒放動畫（重新離開）</li>
+</ol>
+<p>這邊的 <a target="_blank" rel="noopener" href="https://codesandbox.io/s/gsap-toggleactions-78lncu?file=/src/App.tsx">原始碼</a> 如下，我覺得看註解搭配圖片大概就能懂意思了：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { gsap } <span class="hljs-keyword">from</span> <span class="hljs-string">'gsap'</span></span><br><span class="line"><span class="hljs-keyword">import</span> ScrollTrigger <span class="hljs-keyword">from</span> <span class="hljs-string">'gsap/ScrollTrigger'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    gsap.registerPlugin(ScrollTrigger)</span><br><span class="line">    gsap.to(<span class="hljs-string">'.square'</span>, {</span><br><span class="line">      <span class="hljs-attr">rotationZ</span>: <span class="hljs-number">180</span>,</span><br><span class="line">      <span class="hljs-attr">duration</span>: <span class="hljs-number">1</span>,</span><br><span class="line">      <span class="hljs-attr">position</span>: <span class="hljs-string">'absolute'</span>,</span><br><span class="line">      <span class="hljs-attr">left</span>: <span class="hljs-string">'50%'</span>,</span><br><span class="line">      <span class="hljs-attr">xPercent</span>: <span class="hljs-string">'-50'</span>,</span><br><span class="line">      <span class="hljs-attr">scrollTrigger</span>: {</span><br><span class="line">        <span class="hljs-attr">trigger</span>: <span class="hljs-string">'.square'</span>,</span><br><span class="line">        <span class="hljs-attr">start</span>: <span class="hljs-string">'top 200px'</span>,</span><br><span class="line">        <span class="hljs-attr">end</span>: <span class="hljs-string">'center 100px'</span>,</span><br><span class="line">        <span class="hljs-attr">markers</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">        <span class="hljs-comment">// 用這個屬性來控制 action</span></span><br><span class="line">        <span class="hljs-comment">// 可以設定的值：play resume reverse restart reset complete none</span></span><br><span class="line">        <span class="hljs-attr">toggleActions</span>: <span class="hljs-string">'restart pause resume reverse'</span></span><br><span class="line">        <span class="hljs-comment">// 每個值會對應到：onEnter onLeave onEnterBack onLeaveBack</span></span><br><span class="line">      }</span><br><span class="line">    })</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'section'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'square'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Scrub"><a href="#Scrub" class="headerlink" title="Scrub"></a>Scrub</h3><p>當你希望把動畫的時間軸完全交給「滾軸」來控制時就會用到這個功能。</p>
+<p><img src="example3-scrub-1.png" alt="example3-scrub-1"></p>
+<p>首先跟剛剛一樣要註冊一個時間軸，不同的是現在要多填入一些參數，讓 gsap 知道這個時間軸是<strong>可以被滾軸控制</strong>的：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { gsap } <span class="hljs-keyword">from</span> <span class="hljs-string">'gsap'</span></span><br><span class="line"><span class="hljs-keyword">import</span> ScrollTrigger <span class="hljs-keyword">from</span> <span class="hljs-string">'gsap/ScrollTrigger'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 記得先對 gsap 註冊額外的 module</span></span><br><span class="line">    gsap.registerPlugin(ScrollTrigger)</span><br><span class="line">    <span class="hljs-comment">// 建立 timeline 並帶入參數</span></span><br><span class="line">    <span class="hljs-keyword">const</span> timeline = gsap.timeline({</span><br><span class="line">      <span class="hljs-attr">scrollTrigger</span>: {</span><br><span class="line">        <span class="hljs-attr">trigger</span>: <span class="hljs-string">'.wrapper'</span>, <span class="hljs-comment">// 觸發 scrollTrigger 的那個元素</span></span><br><span class="line">        <span class="hljs-attr">markers</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 讓 gsap 自動幫你畫出 start / end 標記點</span></span><br><span class="line">        <span class="hljs-attr">start</span>: <span class="hljs-string">'top 200px'</span>, <span class="hljs-comment">// 動畫開始的位置</span></span><br><span class="line">        <span class="hljs-attr">end</span>: <span class="hljs-string">'top 10px'</span>, <span class="hljs-comment">// 動畫結束的位置</span></span><br><span class="line">        <span class="hljs-attr">scrub</span>: <span class="hljs-literal">true</span> <span class="hljs-comment">// 決定動畫播放是否由滾軸來控制（重要！！！）</span></span><br><span class="line">      }</span><br><span class="line">    })</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'App'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'wrapper'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'square square1'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App</span><br></pre></td></tr></tbody></table></figure>
+
+<p>設定好以後應該會看到這樣的畫面：</p>
+<p><img src="example3-scrub-2.gif" alt="example3-scrub-2"></p>
+<p>簡單來說這邊的意思是當 <code>start</code> 碰到 <code>scroller-start</code> 的時候就會播放動畫，而 <code>end</code> 碰到 <code>scroller-end</code> 時動畫就會結束。而且因為我們有設定 <code>scrub: true</code>，所以動畫會隨著滾軸來控制播放的時間軸。</p>
+<p>所以我們可以試著加上一點動畫，像這樣：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { gsap } <span class="hljs-keyword">from</span> <span class="hljs-string">'gsap'</span></span><br><span class="line"><span class="hljs-keyword">import</span> ScrollTrigger <span class="hljs-keyword">from</span> <span class="hljs-string">'gsap/ScrollTrigger'</span></span><br><span class="line"><span class="hljs-keyword">import</span> TextPlugin <span class="hljs-keyword">from</span> <span class="hljs-string">'gsap/TextPlugin'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    gsap.registerPlugin(ScrollTrigger, TextPlugin)</span><br><span class="line">    demo()</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">demo</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">const</span> timeline = gsap.timeline({</span><br><span class="line">      <span class="hljs-attr">scrollTrigger</span>: {</span><br><span class="line">        <span class="hljs-attr">trigger</span>: <span class="hljs-string">'.wrapper'</span>,</span><br><span class="line">        <span class="hljs-attr">markers</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">        <span class="hljs-attr">start</span>: <span class="hljs-string">'top 200px'</span>,</span><br><span class="line">        <span class="hljs-attr">end</span>: <span class="hljs-string">'top 10px'</span>,</span><br><span class="line">        <span class="hljs-attr">scrub</span>: <span class="hljs-literal">true</span></span><br><span class="line">      }</span><br><span class="line">    })</span><br><span class="line">    <span class="hljs-comment">// 加上動畫（移動到中間的位置）</span></span><br><span class="line">    timeline.to(<span class="hljs-string">'.square1'</span>, {</span><br><span class="line">      <span class="hljs-attr">position</span>: <span class="hljs-string">'absolute'</span>, <span class="hljs-comment">// 記得 .wrapper 要設置為 relative</span></span><br><span class="line">      <span class="hljs-attr">top</span>: <span class="hljs-string">'0'</span>,</span><br><span class="line">      <span class="hljs-attr">left</span>: <span class="hljs-string">'50%'</span>,</span><br><span class="line">      <span class="hljs-attr">xPercent</span>: <span class="hljs-string">'-50'</span></span><br><span class="line">    })</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'App'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'wrapper'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'square square1'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：注意 <code>start</code> 碰到 <code>scroller-start</code> 時動畫才開始播放，而 <code>end</code> 碰到 <code>scroller-end</code> 時動畫會剛好結束播放。</p>
+<p><img src="example3-scrub-3.gif" alt="example3-scrub-3"></p>
+<p>看到這邊以後，應該就不難理解這是怎麼運作的了，所以接著只要再把動畫的部分給完成就行了：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { gsap } <span class="hljs-keyword">from</span> <span class="hljs-string">'gsap'</span></span><br><span class="line"><span class="hljs-keyword">import</span> ScrollTrigger <span class="hljs-keyword">from</span> <span class="hljs-string">'gsap/ScrollTrigger'</span></span><br><span class="line"><span class="hljs-keyword">import</span> TextPlugin <span class="hljs-keyword">from</span> <span class="hljs-string">'gsap/TextPlugin'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    gsap.registerPlugin(ScrollTrigger, TextPlugin)</span><br><span class="line">    demo()</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">demo</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">const</span> timeline = gsap.timeline({</span><br><span class="line">      <span class="hljs-attr">scrollTrigger</span>: {</span><br><span class="line">        <span class="hljs-attr">trigger</span>: <span class="hljs-string">'.wrapper'</span>,</span><br><span class="line">        <span class="hljs-attr">markers</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">        <span class="hljs-attr">start</span>: <span class="hljs-string">'top 200px'</span>,</span><br><span class="line">        <span class="hljs-attr">end</span>: <span class="hljs-string">'top 10px'</span>,</span><br><span class="line">        <span class="hljs-attr">scrub</span>: <span class="hljs-literal">true</span></span><br><span class="line">      }</span><br><span class="line">    })</span><br><span class="line">    timeline</span><br><span class="line">      <span class="hljs-comment">// 移動到中間的動畫</span></span><br><span class="line">      .to(<span class="hljs-string">'.square1'</span>, {</span><br><span class="line">        <span class="hljs-attr">position</span>: <span class="hljs-string">'absolute'</span>,</span><br><span class="line">        <span class="hljs-attr">top</span>: <span class="hljs-string">'0'</span>,</span><br><span class="line">        <span class="hljs-attr">left</span>: <span class="hljs-string">'50%'</span>,</span><br><span class="line">        <span class="hljs-attr">xPercent</span>: <span class="hljs-string">'-50'</span></span><br><span class="line">      })</span><br><span class="line">      <span class="hljs-comment">// 移動到下面的動畫</span></span><br><span class="line">      .to(<span class="hljs-string">'.square1'</span>, {</span><br><span class="line">        <span class="hljs-attr">position</span>: <span class="hljs-string">'absolute'</span>,</span><br><span class="line">        <span class="hljs-attr">top</span>: <span class="hljs-string">'100%'</span>,</span><br><span class="line">        <span class="hljs-attr">left</span>: <span class="hljs-string">'50%'</span>,</span><br><span class="line">        <span class="hljs-attr">xPercent</span>: <span class="hljs-string">'-50'</span>,</span><br><span class="line">        <span class="hljs-attr">yPercent</span>: <span class="hljs-string">'-100'</span></span><br><span class="line">      })</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'App'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'wrapper'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'square square1'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App</span><br></pre></td></tr></tbody></table></figure>
+
+<p>最後就達成一開始想要的結果了：</p>
+<p><img src="example3-scrub-4.gif" alt="example3-scrub-4"></p>
+<h2 id="Pin"><a href="#Pin" class="headerlink" title="Pin"></a>Pin</h2><p>當初在學這個屬性時我自己覺得實在沒有很好理解，所以先來看一個範例吧。</p>
+<p>這是沒 pin 的時候：</p>
+<p><img src="example4-pin-1.gif" alt="example4-pin-1"></p>
+<p>這是有 pin 的時候：</p>
+<p><img src="example4-pin-2.gif" alt="example4-pin-2"></p>
+<p>附註：原始碼可以到這個 <a href="">範例</a> 參考。</p>
+<p>簡單來說，只要設了 <code>pin: true</code> 以後，藍色方塊就會在 <code>start</code> 碰到 <code>scroller-start</code> 時，把自己「釘（pin）」在 <code>scroller-start</code> 的位置。接著等到 <code>end</code> 碰到 <code>scroller-end</code> 時，藍色方塊才會取消釘選。（有點饒口，建議多閱讀幾次）</p>
+<h3 id="pinSpacing"><a href="#pinSpacing" class="headerlink" title="pinSpacing"></a>pinSpacing</h3><p>接著再來看另外一個例子，跟剛剛不同的是現在多了一個方塊：</p>
+<p><img src="example5-pin-spacing-1.gif" alt="example5-pin-spacing-1"></p>
+<p>這個範例是拿橘色方塊來當作 <code>scrollTrigger</code>，觸發時會把藍色方塊給 pin 住住，直到 <code>end</code> 碰到 <code>scroller-end</code> 為止。</p>
+<p>這段主要的原始碼大概長這樣：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> tl = gsap.timeline({</span><br><span class="line">    <span class="hljs-attr">scrollTrigger</span>: {</span><br><span class="line">      <span class="hljs-attr">trigger</span>: <span class="hljs-string">'.square2'</span>, <span class="hljs-comment">// 橘色方塊</span></span><br><span class="line">      <span class="hljs-attr">start</span>: <span class="hljs-string">'top 80%'</span>,</span><br><span class="line">      <span class="hljs-attr">end</span>: <span class="hljs-string">'top 50%'</span>,</span><br><span class="line">      <span class="hljs-attr">markers</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">      <span class="hljs-attr">pin</span>: <span class="hljs-string">'.square'</span>, <span class="hljs-comment">// 藍色方塊</span></span><br><span class="line">      <span class="hljs-attr">pinSpacing</span>: <span class="hljs-literal">false</span> <span class="hljs-comment">// 下面會解釋這個的用途</span></span><br><span class="line">    }</span><br><span class="line">  })</span><br><span class="line">}, [])</span><br></pre></td></tr></tbody></table></figure>
+
+<p>不過為什麼要特別講這個呢？首先看了上面的原始碼後應該會注意到 <code>pinSpacing</code> 這個屬性，他的用途是「自動把要<strong>被 pin 住的元素</strong>跟後面的元素加上一段距離」。我知道這樣子講很難理解，所以直接來看範例吧。</p>
+<p>現在把 pinSpacing 設為 <code>true</code>：</p>
+<p><img src="example5-pin-spacing-2.gif" alt="example5-pin-spacing-2"></p>
+<p>注意到藍色方塊跟橘色方塊一開始就產生了一段「距離」，這段距離就是透過 <code>pinSpacing</code> 來產生的。而且這個距離會算的剛剛好，當藍色方塊結束 pin 時會正好停在它原本跟橘色方塊應該相隔的距離，假設它們原本有 10px 的間隔，那藍色方塊結束 pin 時就會停在橘色方塊上方 10px 的距離。</p>
+<p>如果有點難理解的話我直接示範給你看（現在把方塊加上 <code>margin</code>）：</p>
+<p><img src="example5-pin-spacing-3.gif" alt="example5-pin-spacing-3"></p>
+<p>如果還是不懂的話，自己到 <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/OJERJWN">範例</a> 去玩玩看吧。</p>
+<h3 id="實作簡易的視差效果"><a href="#實作簡易的視差效果" class="headerlink" title="實作簡易的視差效果"></a>實作簡易的視差效果</h3><p>在知道 <code>pin</code> 跟 <code>pinSpacing</code> 的原理後，就可以做出這樣的效果：</p>
+<p><img src="example6-pin-parallax.gif" alt="example6-pin-parallax"></p>
+<p>我的思路是這樣：</p>
+<ol>
+<li>建立一個 <code>section</code>（100vh 滿版高）</li>
+<li>在 <code>section</code> 中放置左右各 50% 的區塊，並透過 <code>absolute</code> 定位在 <code>section</code> 的左邊與右邊</li>
+<li>步驟二的左右 50% 區塊要透過 <code>z-index</code> 來疊三層，調整圖層順序</li>
+<li>透過 <code>scrollTrigger</code> 來設置動畫，trigger 為 <code>section</code>。觸發點為 <code>section</code> 最上方，結束點為 <code>section</code> 最下方，而 <code>scroller-start</code> / <code>scroller-end</code> 皆為 viewport 的最上方（0%）</li>
+<li>建立 <code>timeline</code>，第一段要把左邊向上位移 100%，右邊向下位移 100%，第二段也以此類推。</li>
+</ol>
+<p>這個範例我剛開始實作的時候有碰到一個不太懂的地方，就是為什麼<code>section</code> 明明只有設置 <code>100vh</code> 而已，整個網頁的高度卻是 <code>200vh</code>，並且產生滾軸？</p>
+<p>其實是因為前面介紹的 <code>pinSpacing</code>，預設 <code>true</code> 時他會自動產生一段距離，讓你在這段 pin 結束時可以剛好跟下面的元素無縫接軌，也避免掉 pin 的期間會覆蓋到下面元素的問題。</p>
+<p>而這裡 <code>section</code> 會 pin 住的範圍正好是 <code>100vh</code>，所以額外產生出來的範圍就會是 <code>100vh</code>，所以跟原本的高度加起來就會是 <code>200vh</code>。</p>
+<p>這段比較複雜一點，建議實際到 <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/KKegdav?editors=0010">範例</a> 看一下原始碼跟試試看，應該就會比較清楚了。</p>
+<h3 id="實作簡易的進場效果"><a href="#實作簡易的進場效果" class="headerlink" title="實作簡易的進場效果"></a>實作簡易的進場效果</h3><p><img src="example7-transition.gif" alt="example7-transition"></p>
+<p>這個範例主要是練習對 ScrollTrigger 的應用，也順便介紹幾個新知識：</p>
+<ol>
+<li><code>ScrollTrigger.create</code> 可以透過這種方式來設定滾軸觸發，不用一定要綁在 tween 或 timeline 上</li>
+<li><code>gsap.utils.toArray('.selector')</code> 其實就跟 <code>querySelectorAll</code> 差不多，差別在於它會自動幫你轉成 Array，而不是 NodeList。</li>
+</ol>
+<p>至於思路的部分簡單說一下：</p>
+<ol>
+<li>對每個方塊設置獨立的 <code>ScrollTrigger</code>，並且根據順序來決定從「左邊 / 右邊」來進場</li>
+<li>對每個文字段落設置獨立的 <code>ScrollTrigger</code>，進入 <code>scroller-start</code> 時播放動畫（利用 <code>fromTo</code>）</li>
+<li>游標只要不停閃爍即可，所以只需要設定閃爍動畫後就行了</li>
+</ol>
+<p>最後老話一句，想理解細節的話可以參考<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/bGKgXOo?editors=0011">原始碼</a>。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/11/18/canvas-basic-draw-and-export-image/">Canvas－基本繪製與輸出圖片</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/11/12/gsap-basic-methods/">Gsap－常見的基本方法</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

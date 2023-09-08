@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>串接 Twitch 的 API - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="一個比較多驗證的 API，所以紀錄一下，不然以後要用又忘記怎麼用會很麻煩。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="串接 Twitch 的 API">
+<meta property="og:url" content="https://jubeatt.github.io/2022/01/07/twitch-api/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="一個比較多驗證的 API，所以紀錄一下，不然以後要用又忘記怎麼用會很麻煩。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-01-07T09:38:06.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.691Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#流程簡述">1&nbsp;&nbsp;<b>流程簡述</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#取得驗證-token">2&nbsp;&nbsp;<b>取得驗證 token</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#快樂發-request">3&nbsp;&nbsp;<b>快樂發 request</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            串接 Twitch 的 API
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>1月 7 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Example/">Example</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>一個比較多驗證的 API，所以紀錄一下，不然以後要用又忘記怎麼用會很麻煩。</p>
+<span id="more"></span>
+
+<h2 id="流程簡述"><a href="#流程簡述" class="headerlink" title="流程簡述"></a>流程簡述</h2><p>簡單來說，你要先拿到這三樣東西：</p>
+<ul>
+<li>access_token</li>
+<li>client_id</li>
+<li>client_secret</li>
+</ul>
+<p><code>access_token</code> 跟 <code>client_id</code> 都是要在 request header 裡面帶上的驗證碼，<code>client_secret</code> 是用來取得 <code>access_token</code> 的時候會用到。</p>
+<p>流程：</p>
+<ol>
+<li>註冊 twitch 帳號</li>
+<li>在 twitch developer 網站上註冊一個 <a target="_blank" rel="noopener" href="https://dev.twitch.tv/console/apps/create">APP</a></li>
+<li>在 APP 頁面裡面取得 <code>client_id</code> 跟 <code>client_secret</code>（這個要記得案新密碼才會產生）</li>
+<li>取得驗證 token，有三種取得方式，我目前是用「Client credentials flow」。（每一種的差別可以參考 <a target="_blank" rel="noopener" href="https://dev.twitch.tv/docs/authentication#getting-tokens">這裡</a>）</li>
+</ol>
+<h2 id="取得驗證-token"><a href="#取得驗證-token" class="headerlink" title="取得驗證 token"></a>取得驗證 token</h2><p>備註：本來偷懶想用 Postman 來做，但似乎會被 twitch 擋，一直拿到 <code>403 Invalid client_secret</code> 的回傳值。所以這邊建議還是乖乖用 Node.js 來發會比好。</p>
+<p>就是這個部分比較麻煩，所以特別解釋一下。</p>
+<p>按照 <a target="_blank" rel="noopener" href="https://dev.twitch.tv/docs/authentication/getting-tokens-oauth#oauth-client-credentials-flow">官方文件</a> 的說明，你要帶上 <code>client_id</code> 跟 <code>client_secret</code> 這兩個參數發一個 <code>POST</code> 請求到 <code>https://id.twitch.tv/oauth2/token</code> 這個網站，接著就會吐給你 <code>access_token</code>，就是這麼簡單，簡單到我搞了一個下午。</p>
+<p>所以就寫一個 request 來發請求：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 載入 request 套件</span></span><br><span class="line"><span class="hljs-keyword">const</span> request = <span class="hljs-built_in">require</span>(<span class="hljs-string">'request'</span>)</span><br><span class="line"><span class="hljs-comment">// 發出 post 請求</span></span><br><span class="line">request.post(<span class="hljs-string">`https://id.twitch.tv/oauth2/token?client_id=<span class="hljs-subst">${你的client_id}</span>&amp;client_secret=<span class="hljs-subst">${你的cliend_secret}</span>&amp;grant_type=client_credentials`</span>,</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">error, response, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'statusCode:'</span>, response.statusCode)</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'body:'</span>, body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>成功的話應該就會拿到 token：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="hljs-string">"access_token"</span>:<span class="hljs-string">"qwtjoiqjqwe2wqeqeyqieq"</span>, <span class="hljs-comment">// 這裡是我亂打的</span></span><br><span class="line">  <span class="hljs-string">"expires_in"</span>:<span class="hljs-number">4740717</span>,</span><br><span class="line">  <span class="hljs-string">"token_type"</span>:<span class="hljs-string">"bearer"</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="快樂發-request"><a href="#快樂發-request" class="headerlink" title="快樂發 request"></a>快樂發 request</h2><p>最麻煩的部分完成後就能快樂串 API 了，這裡要串的是「最受歡迎的遊戲列表（Get Top Games）」，詳細說明可以 <a target="_blank" rel="noopener" href="https://dev.twitch.tv/docs/api/reference#get-top-games">這裡</a></p>
+<p>接下來就簡單紀錄一下，不多做解說。</p>
+<p>備註：這裡把 <code>access_token</code> 跟 <code>client_id</code> 都藏在環境變數裡了，詳細可以參考<a href="https://jubeatt.github.io/2022/01/07/load-environment-variable/">這裡</a></p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 載入 dotenv（取得環境變數）</span></span><br><span class="line"><span class="hljs-built_in">require</span>(<span class="hljs-string">'dotenv'</span>).config()</span><br><span class="line"><span class="hljs-comment">// 發送 request 的模組</span></span><br><span class="line"><span class="hljs-keyword">const</span> request = <span class="hljs-built_in">require</span>(<span class="hljs-string">'request'</span>)</span><br><span class="line"><span class="hljs-comment">// 資料數量</span></span><br><span class="line"><span class="hljs-keyword">const</span> count = <span class="hljs-number">20</span></span><br><span class="line"></span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">method</span>: <span class="hljs-string">'GET'</span>,</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`https://api.twitch.tv/helix/games/top?first=<span class="hljs-subst">${count}</span>`</span>,</span><br><span class="line">  <span class="hljs-comment">// 授權跟驗證 header</span></span><br><span class="line">  <span class="hljs-attr">headers</span>: {</span><br><span class="line">    <span class="hljs-comment">// token 的格式一定要是「Bearer + ' ' + token」`(一定要大寫)</span></span><br><span class="line">    <span class="hljs-string">"authorization"</span>: process.env.ACCESS_TOKEN,</span><br><span class="line">    <span class="hljs-string">"Client-ID"</span>: process.env.CLIENT_ID</span><br><span class="line">  }</span><br><span class="line">}, <span class="hljs-function">(<span class="hljs-params">error, response, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">if</span>(error) {</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'oops! 發生了一些錯誤！'</span>)</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(error)</span><br><span class="line">    <span class="hljs-keyword">return</span></span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-keyword">if</span>(response.statusCode &gt;= <span class="hljs-number">200</span> &amp;&amp; response.statusCode &lt; <span class="hljs-number">400</span>) {</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'statusCode:'</span>, response.statusCode)</span><br><span class="line">    <span class="hljs-comment">// 解析資料</span></span><br><span class="line">    <span class="hljs-keyword">const</span> res = <span class="hljs-built_in">JSON</span>.parse(body)</span><br><span class="line">    <span class="hljs-comment">// 印出內容</span></span><br><span class="line">    res.data.forEach(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> {</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Number</span>(item.id), item.name)</span><br><span class="line">    })</span><br><span class="line">  } <span class="hljs-keyword">else</span> {</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'請求失敗'</span>)</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.parse(body))</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>輸出結果：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">statusCode: <span class="hljs-number">200</span></span><br><span class="line"><span class="hljs-number">509658</span> Just Chatting</span><br><span class="line"><span class="hljs-number">21779</span> League <span class="hljs-keyword">of</span> Legends</span><br><span class="line"><span class="hljs-number">491931</span> Escape <span class="hljs-keyword">from</span> Tarkov</span><br><span class="line"><span class="hljs-number">516575</span> VALORANT</span><br><span class="line"><span class="hljs-number">511224</span> Apex Legends</span><br><span class="line"><span class="hljs-number">32982</span> Grand Theft Auto V</span><br><span class="line"><span class="hljs-number">29595</span> Dota <span class="hljs-number">2</span></span><br><span class="line"><span class="hljs-number">498566</span> Slots</span><br><span class="line"><span class="hljs-number">512710</span> Call <span class="hljs-keyword">of</span> Duty: Warzone</span><br><span class="line"><span class="hljs-number">33214</span> Fortnite</span><br><span class="line"><span class="hljs-number">513143</span> Teamfight Tactics</span><br><span class="line"><span class="hljs-number">26936</span> Music</span><br><span class="line"><span class="hljs-number">138585</span> Hearthstone</span><br><span class="line"><span class="hljs-number">1869092879</span> FIFA <span class="hljs-number">22</span></span><br><span class="line"><span class="hljs-number">491487</span> Dead by Daylight</span><br><span class="line"><span class="hljs-number">27471</span> Minecraft</span><br><span class="line"><span class="hljs-number">513181</span> Genshin Impact</span><br><span class="line"><span class="hljs-number">32399</span> Counter-Strike: Global Offensive</span><br><span class="line"><span class="hljs-number">490100</span> LOST ARK</span><br><span class="line"><span class="hljs-number">509660</span> Art</span><br></pre></td></tr></tbody></table></figure>
+
+<p>題外話，League of Legends 真的是歷久不衰阿。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/01/07/what-is-api/">你覺得什麼是 API？</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/01/07/load-environment-variable/">在 Node.js 設定環境變數的方法</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>React Native－串接 Firebase - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="終於來填這個坑。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native－串接 Firebase">
+<meta property="og:url" content="https://jubeatt.github.io/2022/06/04/react-with-firebase/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="終於來填這個坑。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/06/04/react-with-firebase/path.png">
+<meta property="article:published_time" content="2022-06-04T12:27:50.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.638Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/06/04/react-with-firebase/path.png">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#解到死的-bug（React-Native）">1&nbsp;&nbsp;<b>解到死的 bug（React Native）</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#基礎概念">2&nbsp;&nbsp;<b>基礎概念</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#懶人包-API">3&nbsp;&nbsp;<b>懶人包 API</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#general">3.1&nbsp;&nbsp;general</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#query-相關">3.2&nbsp;&nbsp;query 相關</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#前置作業">4&nbsp;&nbsp;<b>前置作業</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#建立-database">4.1&nbsp;&nbsp;建立 database</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#跟資料庫連線（初始化）">5&nbsp;&nbsp;<b>跟資料庫連線（初始化）</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#基本的-CRUD">6&nbsp;&nbsp;<b>基本的 CRUD</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Create（setDoc）">6.1&nbsp;&nbsp;Create（setDoc）</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Read（getDoc）">6.2&nbsp;&nbsp;Read（getDoc）</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Update（setDoc）">6.3&nbsp;&nbsp;Update（setDoc）</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Delete（deleteDoc）">6.4&nbsp;&nbsp;Delete（deleteDoc）</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#複雜一點的操作（下-Query）">7&nbsp;&nbsp;<b>複雜一點的操作（下 Query）</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#參考資料">8&nbsp;&nbsp;<b>參考資料</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            React Native－串接 Firebase
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>6月 4 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Firebase/">Firebase</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>終於來填這個坑。</p>
+<span id="more"></span>
+
+<h2 id="解到死的-bug（React-Native）"><a href="#解到死的-bug（React-Native）" class="headerlink" title="解到死的 bug（React Native）"></a>解到死的 bug（React Native）</h2><p>放置頂是因為當初一直找不到關鍵字來解這個 bug，所以花了一段時間才解出來。</p>
+<p>總之呢，這個 bug 是只要把 firebase 引入來用時，就會出現編譯失敗然後顯示下面的錯誤訊息：</p>
+<blockquote>
+<p>While trying to resolve module ‘idb’ from file … the package was successfully found. However, this package itself specifies a main module field that could not be resolved.<br>Indeed, none of these files exist:</p>
+</blockquote>
+<p>簡單來說這是因為 firebase 使用 <code>.cjs</code> 的副檔名，而 Expo 跟 React Native 不支援，所以你要手動調整一些設定來讓他們支援。</p>
+<p>在根目錄建立 <code>metro.config.js</code>，填入底下內容：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> { getDefaultConfig } = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@expo/metro-config"</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> defaultConfig = getDefaultConfig(__dirname);</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// push .cjs 這個副檔名</span></span><br><span class="line">defaultConfig.resolver.assetExts.push(<span class="hljs-string">"cjs"</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">module</span>.exports = defaultConfig;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果是 React Native cli 的話：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> { getDefaultConfig } = <span class="hljs-built_in">require</span>(<span class="hljs-string">"metro-config"</span>);</span><br><span class="line"><span class="hljs-keyword">const</span> { <span class="hljs-attr">resolver</span>: defaultResolver } = getDefaultConfig.getDefaultValues();</span><br><span class="line"><span class="hljs-built_in">exports</span>.resolver = {</span><br><span class="line">  ...defaultResolver,</span><br><span class="line">  <span class="hljs-attr">sourceExts</span>: [</span><br><span class="line">    ...defaultResolver.sourceExts,</span><br><span class="line">    <span class="hljs-string">"cjs"</span>,</span><br><span class="line">  ],</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣就解決了，詳細可以參考 <a target="_blank" rel="noopener" href="https://docs.expo.dev/guides/customizing-metro/#adding-more-file-extensions-to--assetexts">官方文件</a> 或這篇 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/72179070/react-native-bundling-failure-error-message-while-trying-to-resolve-module-i">討論</a>。</p>
+<h2 id="基礎概念"><a href="#基礎概念" class="headerlink" title="基礎概念"></a>基礎概念</h2><p>Firebase 中有兩個主要的東西：</p>
+<ol>
+<li>collection 可以想成是 table 的感覺</li>
+<li>document 可以想成是欄位的意思</li>
+</ol>
+<p>Firebase 是透過「路徑」來表示資料庫，比如說我有這樣的東西：</p>
+<p><img src="path.png" alt="path"></p>
+<p>把資料轉換成網址的話就會像上面這張圖一樣。</p>
+<h2 id="懶人包-API"><a href="#懶人包-API" class="headerlink" title="懶人包 API"></a>懶人包 API</h2><h3 id="general"><a href="#general" class="headerlink" title="general"></a>general</h3><ul>
+<li><code>initializeApp</code> 初始化，<code>initializeApp(firebaseConfig)</code></li>
+<li><code>getFirestore</code> 建立 DB 的 reference，<code>getFirestore(app)</code></li>
+<li><code>doc</code> 建立 document 的 reference</li>
+<li><code>getDoc</code> 取得單一個 document（注意沒有 s）</li>
+<li><code>getDocs</code> 一次取得 collection 中的所有 document</li>
+<li><code>setDoc</code> 建立或更新 document</li>
+<li><code>deleteDoc</code> 刪除 document</li>
+<li><code>collection</code> 用來設定 reference 的方法，例如：<code>collection(db, 'orders')</code></li>
+<li><code>serverTimestamp</code> 取得時間戳（可用來設定 createdAt）</li>
+</ul>
+<h3 id="query-相關"><a href="#query-相關" class="headerlink" title="query 相關"></a>query 相關</h3><ul>
+<li><code>query</code> 拿來下指令</li>
+<li><code>orderBy</code> 排序</li>
+<li><code>limit</code> 限制數量</li>
+</ul>
+<h2 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h2><p>首先：<code>expo install firebase</code></p>
+<p>附註：建議裝的套件 <code>npm install tslib</code>（能避免噴 Error）</p>
+<ol>
+<li>先建立<a target="_blank" rel="noopener" href="https://console.firebase.google.com/">專案</a></li>
+<li>跳轉後選擇「web」來建立 App</li>
+<li>把 config 的內容記下來，等一下會用到</li>
+</ol>
+<h3 id="建立-database"><a href="#建立-database" class="headerlink" title="建立 database"></a>建立 database</h3><ol>
+<li>從側邊欄點選「firestore database」</li>
+<li>點選「建立資料庫」</li>
+<li>點選「已測試模式啟動」</li>
+<li>點選「啟用」</li>
+</ol>
+<p>完成後就可以建立 collection（table） 了。</p>
+<p>如果想要設定一些限制，可以到「規則」這個 tab 來設定。</p>
+<h2 id="跟資料庫連線（初始化）"><a href="#跟資料庫連線（初始化）" class="headerlink" title="跟資料庫連線（初始化）"></a>跟資料庫連線（初始化）</h2><p>詳細可以參考這個<a target="_blank" rel="noopener" href="https://firebase.google.com/docs/firestore/quickstart#web-version-9">官方文件</a></p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { initializeApp } <span class="hljs-keyword">from</span> <span class="hljs-string">"firebase/app"</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> { getFirestore } <span class="hljs-keyword">from</span> <span class="hljs-string">"firebase/firestore"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> firebaseConfig = {</span><br><span class="line">  <span class="hljs-attr">apiKey</span>: <span class="hljs-string">"..."</span>,</span><br><span class="line">  <span class="hljs-attr">authDomain</span>: <span class="hljs-string">"..."</span>,</span><br><span class="line">  <span class="hljs-attr">projectId</span>: <span class="hljs-string">"..."</span>,</span><br><span class="line">  <span class="hljs-attr">storageBucket</span>: <span class="hljs-string">"..."</span>,</span><br><span class="line">  <span class="hljs-attr">messagingSenderId</span>: <span class="hljs-string">"..."</span>,</span><br><span class="line">  <span class="hljs-attr">appId</span>: <span class="hljs-string">"..."</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Initialize Firebase</span></span><br><span class="line"><span class="hljs-keyword">const</span> app = initializeApp(firebaseConfig);</span><br><span class="line"><span class="hljs-comment">// Db reference（後續的操作都會透過他來做）</span></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> db = getFirestore(app);</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="基本的-CRUD"><a href="#基本的-CRUD" class="headerlink" title="基本的 CRUD"></a>基本的 CRUD</h2><h3 id="Create（setDoc）"><a href="#Create（setDoc）" class="headerlink" title="Create（setDoc）"></a>Create（setDoc）</h3><figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { db } <span class="hljs-keyword">from</span> <span class="hljs-string">"../firebase"</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> { doc, setDoc } <span class="hljs-keyword">from</span> <span class="hljs-string">"firebase/firestore"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Com1</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> create = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// document Reference</span></span><br><span class="line">    <span class="hljs-keyword">const</span> docRef = doc(db, <span class="hljs-string">'MyCollection'</span>, <span class="hljs-string">'MyDocument'</span>);</span><br><span class="line">    <span class="hljs-comment">// 要輸入的資料</span></span><br><span class="line">    <span class="hljs-keyword">const</span> docData = {</span><br><span class="line">      <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>,</span><br><span class="line">      <span class="hljs-attr">age</span>: <span class="hljs-number">30</span>,</span><br><span class="line">      <span class="hljs-attr">job</span>: <span class="hljs-string">'Front-End'</span></span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-comment">// Send request to firebase</span></span><br><span class="line">    setDoc(docRef, docData)</span><br><span class="line">    .then(<span class="hljs-function">() =&gt;</span> alert(<span class="hljs-string">'Create Succuess!'</span>))</span><br><span class="line">    .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> alert(err.message))</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{create}</span>&gt;</span>Create Document<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+
+<h3 id="Read（getDoc）"><a href="#Read（getDoc）" class="headerlink" title="Read（getDoc）"></a>Read（getDoc）</h3><figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { db } <span class="hljs-keyword">from</span> <span class="hljs-string">"../firebase"</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> { doc, setDoc, getDoc } <span class="hljs-keyword">from</span> <span class="hljs-string">"firebase/firestore"</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> { useEffect, useState } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Com1</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// Store user data</span></span><br><span class="line">  <span class="hljs-keyword">const</span> [user, setUser] = useState(<span class="hljs-literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> read = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// document Reference</span></span><br><span class="line">    <span class="hljs-keyword">const</span> docRef = doc(db, <span class="hljs-string">'MyCollection'</span>, <span class="hljs-string">'MyDocument'</span>);</span><br><span class="line">    getDoc(docRef)</span><br><span class="line">      .then(<span class="hljs-function"><span class="hljs-params">snapshot</span> =&gt;</span> {</span><br><span class="line">        <span class="hljs-comment">// Check if data exists or not</span></span><br><span class="line">        <span class="hljs-keyword">if</span> (snapshot.exists()) {</span><br><span class="line">          setUser(snapshot.data());</span><br><span class="line">        }</span><br><span class="line">        <span class="hljs-keyword">else</span> {</span><br><span class="line">          alert(<span class="hljs-string">'No doc found'</span>);</span><br><span class="line">        }</span><br><span class="line">      })</span><br><span class="line">      .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> alert(err.message))</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {user &amp;&amp; (</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Name: {user.name}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Age: {user.age}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Job: {user.job}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      )}</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{read}</span>&gt;</span>Read Document<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p>如果 collection 或 document 不存在的話就會幫你建立一個新的。反之，如果存在的話就會幫你把內容更新。</p>
+<h3 id="Update（setDoc）"><a href="#Update（setDoc）" class="headerlink" title="Update（setDoc）"></a>Update（setDoc）</h3><p>一樣是用 <code>setDoc</code> 這個方法，不過會稍微做點變化：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { db } <span class="hljs-keyword">from</span> <span class="hljs-string">"../firebase"</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> { doc, setDoc, getDoc } <span class="hljs-keyword">from</span> <span class="hljs-string">"firebase/firestore"</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> { useState } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Com1</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// Store user data</span></span><br><span class="line">  <span class="hljs-keyword">const</span> [user, setUser] = useState(<span class="hljs-literal">null</span>);</span><br><span class="line">  <span class="hljs-comment">// Store input value</span></span><br><span class="line">  <span class="hljs-keyword">const</span> [value, setValue] = useState(<span class="hljs-string">""</span>);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> read = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">const</span> docRef = doc(db, <span class="hljs-string">'MyCollection'</span>, <span class="hljs-string">'MyDocument'</span>);</span><br><span class="line">    getDoc(docRef)</span><br><span class="line">      .then(<span class="hljs-function"><span class="hljs-params">snapshot</span> =&gt;</span> {</span><br><span class="line">        <span class="hljs-keyword">if</span> (snapshot.exists()) {</span><br><span class="line">          setUser(snapshot.data());</span><br><span class="line">        }</span><br><span class="line">        <span class="hljs-keyword">else</span> {</span><br><span class="line">          alert(<span class="hljs-string">'No doc found'</span>);</span><br><span class="line">        }</span><br><span class="line">      })</span><br><span class="line">      .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> alert(err.message))</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> update = <span class="hljs-function">(<span class="hljs-params">data, merge</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">const</span> docRef = doc(db, <span class="hljs-string">'MyCollection'</span>, <span class="hljs-string">'MyDocument'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// merge: true = 只更新部分資料</span></span><br><span class="line">    <span class="hljs-comment">// merge: false = 整筆覆寫</span></span><br><span class="line">    setDoc(docRef, data, { <span class="hljs-attr">merge</span>: merge })</span><br><span class="line">      .then(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">        alert(<span class="hljs-string">'Update Success'</span>)</span><br><span class="line">        <span class="hljs-comment">// reload screen when finish update</span></span><br><span class="line">        read()</span><br><span class="line">      })</span><br><span class="line">      .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> alert(err.message))</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {user &amp;&amp; (</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Name: {user.name}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Age: {user.age}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Job: {user.job}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      )}</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> update({name: value}, true)}&gt;Update Document<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> </span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">display:</span> '<span class="hljs-attr">block</span>', <span class="hljs-attr">margin:</span> '<span class="hljs-attr">20px</span> <span class="hljs-attr">0</span>'}}</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Update name"</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">onChange</span>=<span class="hljs-string">{e</span> =&gt;</span> setValue(e.target.value)}</span></span><br><span class="line"><span class="hljs-xml">        value={value} /&gt;</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+
+<h3 id="Delete（deleteDoc）"><a href="#Delete（deleteDoc）" class="headerlink" title="Delete（deleteDoc）"></a>Delete（deleteDoc）</h3><p>刪除總是最單純：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { db } <span class="hljs-keyword">from</span> <span class="hljs-string">"../firebase"</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> { doc, deleteDoc } <span class="hljs-keyword">from</span> <span class="hljs-string">"firebase/firestore"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Com1</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> Delete = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">const</span> docRef = doc(db, <span class="hljs-string">'MyCollection'</span>, <span class="hljs-string">'MyDocument'</span>);</span><br><span class="line">    deleteDoc(docRef)</span><br><span class="line">      .then(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">        alert(<span class="hljs-string">'Delete Success'</span>);</span><br><span class="line">      })</span><br><span class="line">      .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> alert(err.message))</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{Delete}</span>&gt;</span>Delete Document<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+
+<h2 id="複雜一點的操作（下-Query）"><a href="#複雜一點的操作（下-Query）" class="headerlink" title="複雜一點的操作（下 Query）"></a>複雜一點的操作（下 Query）</h2><p>假設我的需求是這樣：</p>
+<ol>
+<li>抓出 collection 中的所有 document</li>
+<li>根據 document 資料裡的時間戳排序，取出最新的一筆資料</li>
+</ol>
+<p>這就會用到 <code>query</code>，一個可以讓我們下指令的方法：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { db } <span class="hljs-keyword">from</span> <span class="hljs-string">"../firebase"</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> { getDocs, collection, query, orderBy, limit } <span class="hljs-keyword">from</span> <span class="hljs-string">"firebase/firestore"</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> { useEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Com1</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">const</span> q = query(collection(db, <span class="hljs-string">'orders'</span>), orderBy(<span class="hljs-string">'createdAt'</span>, <span class="hljs-string">'desc'</span>), limit(<span class="hljs-number">1</span>));</span><br><span class="line">    getDocs(q).then(<span class="hljs-function"><span class="hljs-params">querySnapshot</span> =&gt;</span> {</span><br><span class="line">      querySnapshot.forEach(<span class="hljs-function"><span class="hljs-params">document</span> =&gt;</span> {</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Document'</span>, <span class="hljs-built_in">document</span>.data());</span><br><span class="line">      })</span><br><span class="line">    })</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (...)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊要特別注意，如果你試著用 <code>console.log(querySnapshot)</code> 是拿不到真正的資料的，因為在 firebase 中「取值」這件事都得透過 <code>getter</code>，所以才會用 <code>forEach</code> 搭配 <code>.data()</code> 來取出 document 的值。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://firebase.google.com/docs/firestore/query-data/get-data">官方文件</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=QQI2Hr2S5oY">幫助很大的 CRUD 影片</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/72179070/react-native-bundling-failure-error-message-while-trying-to-resolve-module-i">Debug 的討論</a></li>
+</ul>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/06/06/react-fragment-props/">React Fragment－以前沒發現到的小技巧</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/06/03/react-native-google-places-autocomplete-style/">React Native－關於 Goole places autocomplete 的樣式</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

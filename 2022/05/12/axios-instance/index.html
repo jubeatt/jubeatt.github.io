@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>利用 Axios 來封裝 API - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="還蠻不錯的想法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用 Axios 來封裝 API">
+<meta property="og:url" content="https://jubeatt.github.io/2022/05/12/axios-instance/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="還蠻不錯的想法。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/05/12/axios-instance/typescript.png">
+<meta property="article:published_time" content="2022-05-12T05:23:47.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.230Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/05/12/axios-instance/typescript.png">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡述">1&nbsp;&nbsp;<b>簡述</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#前置作業">2&nbsp;&nbsp;<b>前置作業</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#封裝">3&nbsp;&nbsp;<b>封裝</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#附註－關於-axios-的參數值">3.1&nbsp;&nbsp;附註－關於 axios 的參數值</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#參考資料">4&nbsp;&nbsp;<b>參考資料</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            利用 Axios 來封裝 API
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>5月 12 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>還蠻不錯的想法。</p>
+<span id="more"></span>
+
+<h2 id="簡述"><a href="#簡述" class="headerlink" title="簡述"></a>簡述</h2><p>以前因為我總認為 Axios 是個有點多餘的 library，因為不過就是把 <code>fetch</code> 包裝成 <code>axios.get</code> 或 <code>axios.post</code> 而已，那幹嘛不直接 <code>fetch</code> 就好了？</p>
+<p>但一直到最近才發現原來有 Axios 有提供 instance（實體）的功能來讓你方便管理 API。實際用過以後覺得還不錯，所以來做個紀錄。</p>
+<h2 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h2><p>等一下會提到幾個東西：</p>
+<ul>
+<li><code>axios.create()</code> 用來建立 instance</li>
+<li><code>instance.interceptors</code> 攔截器，用來處理發出 req 之前和拿到 res 之前要做的事</li>
+</ul>
+<p>接著來邊看 code 邊解釋。</p>
+<p>首先會先建立一個 axios 的實體：</p>
+<p>附註：這邊用的測試 API 是<a target="_blank" rel="noopener" href="https://reqres.in/">這支</a>。</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> instance = axios.create({</span><br><span class="line">  <span class="hljs-comment">// 之後發 req 時就能寫相對路徑，例如： /users/1</span></span><br><span class="line">  <span class="hljs-attr">baseURL</span>: <span class="hljs-string">"https://reqres.in/api/"</span>,</span><br><span class="line">  <span class="hljs-attr">headers</span>: { <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span> },</span><br><span class="line">  <span class="hljs-comment">// 超過幾 ms 就算失敗</span></span><br><span class="line">  <span class="hljs-attr">timeout</span>: <span class="hljs-number">20000</span></span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>建立好以後它就跟一般的 axios 一樣，可以用 <code>instance.get</code> <code>instance.post</code> 之類的方法，不過在那之前我們會先設定「攔截器（interceptors）」。</p>
+<p>攔截器就是讓你設定：</p>
+<ul>
+<li>request 發出去以前我想做什麼事？</li>
+<li>response 拿到以後，把值回傳給其他 handler 以前要做什麼？</li>
+</ul>
+<p>所以 request 的部分會這樣設定：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 第一個 function 會拿到 config</span></span><br><span class="line"><span class="hljs-comment">// 第二個 function 會拿到 error（發生錯誤時）</span></span><br><span class="line">instance.interceptors.request.use(</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">config</span>) </span>{</span><br><span class="line">    <span class="hljs-comment">// 可以在這裡修改 config</span></span><br><span class="line">    <span class="hljs-comment">// 這邊只是隨便示範，例如在這加上 Auth token header</span></span><br><span class="line">    config.headers.Authorization = <span class="hljs-string">'Bearer 12345'</span>;</span><br><span class="line">    <span class="hljs-keyword">return</span> config;</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.reject(err);</span><br><span class="line">  }</span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>而 response 的部分通常會著重在錯誤處理：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">instance.interceptors.response.use(</span><br><span class="line">  <span class="hljs-comment">// 成功的處理</span></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">res</span>) </span>{</span><br><span class="line">    <span class="hljs-comment">// 如果想做些事情可以在這裡做</span></span><br><span class="line">    <span class="hljs-keyword">return</span> res;</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-comment">// 失敗的處理</span></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">if</span> (err.response) {</span><br><span class="line">      <span class="hljs-keyword">switch</span> (err.response.status) {</span><br><span class="line">        <span class="hljs-keyword">case</span> <span class="hljs-number">404</span>:</span><br><span class="line">          <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'不存在'</span>);</span><br><span class="line">          <span class="hljs-comment">// 導向 404 頁面</span></span><br><span class="line">          <span class="hljs-keyword">break</span></span><br><span class="line">        <span class="hljs-keyword">case</span> <span class="hljs-number">500</span>:</span><br><span class="line">          <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'伺服器錯誤'</span>);</span><br><span class="line">          <span class="hljs-keyword">break</span></span><br><span class="line">        <span class="hljs-attr">default</span>:</span><br><span class="line">          <span class="hljs-built_in">console</span>.log(err.message);</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">window</span>.navigator.onLine) {</span><br><span class="line">      alert(<span class="hljs-string">"你網路有問題哦！"</span>)</span><br><span class="line">      <span class="hljs-keyword">return</span></span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.reject(err)</span><br><span class="line">  }</span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="封裝"><a href="#封裝" class="headerlink" title="封裝"></a>封裝</h2><p>雖然上面做好後就可以直接用了，不過更好的方式是把他做封裝起來，讓我們在用的時候更直覺，像這樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 取得的第一頁的 user 列表</span></span><br><span class="line">gerUserList({</span><br><span class="line">  <span class="hljs-attr">page</span>: <span class="hljs-number">1</span></span><br><span class="line">}).then(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Get user list'</span>, res.data))</span><br><span class="line">  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'err'</span>, err))</span><br></pre></td></tr></tbody></table></figure>
+
+<p>經過包裝後就能很快知道我們要用哪隻 API，跟要帶的資料、參數是什麼。</p>
+<p>不然原本的話得這樣寫：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">instance.get(<span class="hljs-string">'/users/1'</span>)</span><br><span class="line">  .then(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span>  <span class="hljs-built_in">console</span>.log(res))</span><br><span class="line">  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'err'</span>, err))</span><br></pre></td></tr></tbody></table></figure>
+
+<p>所以第一步是先把 method 用 function 來包裝起來，讓它可以透過參數來決定要做什麼事：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// parms 是 query string，例如：https://example[?gender=female&amp;age=20]</span></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">api</span> (<span class="hljs-params">method, url, data = <span class="hljs-literal">null</span>, config</span>) </span>{</span><br><span class="line">  method = method.toLowerCase();</span><br><span class="line">  <span class="hljs-keyword">switch</span> (method) {</span><br><span class="line">    <span class="hljs-keyword">case</span> <span class="hljs-string">"post"</span>:</span><br><span class="line">      <span class="hljs-keyword">return</span> instance.post(url, data, config)</span><br><span class="line">    <span class="hljs-keyword">case</span> <span class="hljs-string">"get"</span>:</span><br><span class="line">      <span class="hljs-keyword">return</span> instance.get(url, { <span class="hljs-attr">params</span>: data })</span><br><span class="line">    <span class="hljs-keyword">case</span> <span class="hljs-string">"delete"</span>:</span><br><span class="line">      <span class="hljs-keyword">return</span> instance.delete(url, { <span class="hljs-attr">params</span>: data })</span><br><span class="line">    <span class="hljs-keyword">case</span> <span class="hljs-string">"put"</span>:</span><br><span class="line">      <span class="hljs-keyword">return</span> instance.put(url, data)</span><br><span class="line">    <span class="hljs-keyword">case</span> <span class="hljs-string">"patch"</span>:</span><br><span class="line">      <span class="hljs-keyword">return</span> instance.patch(url, data)</span><br><span class="line">    <span class="hljs-attr">default</span>:</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'unknown method type'</span>);</span><br><span class="line">      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="附註－關於-axios-的參數值"><a href="#附註－關於-axios-的參數值" class="headerlink" title="附註－關於 axios 的參數值"></a>附註－關於 axios 的參數值</h3><p>我原本不太懂上面的參數值為什麼可以那樣設，所以這邊才留個補充。如果你本來就看得懂的話請無視這一段。</p>
+<p>來舉個例子，假設我想發一個 POST 請求，那我有兩種寫法。</p>
+<p>第一種是用 <code>post()</code> 方法 + <code>url</code> + <code>data</code> + <code>config</code>：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">axios.post(<span class="hljs-string">"https://example.com/api/users"</span>, {</span><br><span class="line">  <span class="hljs-attr">name</span>: <span class="hljs-string">"PeaNu"</span>,</span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-number">20</span>,</span><br><span class="line">  <span class="hljs-attr">des</span>: <span class="hljs-string">"..."</span></span><br><span class="line">}, {</span><br><span class="line">  <span class="hljs-attr">params</span>: {</span><br><span class="line">    <span class="hljs-attr">token</span>: <span class="hljs-string">"123456"</span></span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>第二種是全部塞在 <code>config</code>：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">axios({</span><br><span class="line">  <span class="hljs-attr">method</span>: <span class="hljs-string">"post"</span>,</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://aaa.com/api/users'</span>,</span><br><span class="line">  <span class="hljs-attr">data</span>: {</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNU'</span>,</span><br><span class="line">    <span class="hljs-attr">age</span>: <span class="hljs-number">20</span>,</span><br><span class="line">    <span class="hljs-attr">des</span>: <span class="hljs-string">"..."</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">params</span>: {</span><br><span class="line">    <span class="hljs-attr">token</span>: <span class="hljs-string">"12345"</span></span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>總之這兩個東西會是一樣的，只是寫法不同而已。</p>
+<p>而上面用的 <code>instance.post</code> 正是第一種寫法，所以才要傳給他 <code>url</code> + <code>data</code> + <code>config</code> 這三個參數。</p>
+<p>最後再補充一件事，就是 <code>get()</code> 跟 <code>delete()</code> 因為不需要傳資料，所以只會有 <code>url</code> 跟 <code>config</code> 這兩個參數，所以上面才會寫成 <code>instance.delete(url, { params: data })</code> 的形式。</p>
+<p>如果怕忘記的話可以參考 vs code 的 TypeScript 提示</p>
+<p><img src="typescript.png" alt="typescript"></p>
+<p>OK，解說就到這邊為止。</p>
+<p>接著新增一個檔案，讓跟剛剛 export 出來的 function 在做一層包裝：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// user.js</span></span><br><span class="line"><span class="hljs-keyword">import</span> { api } <span class="hljs-keyword">from</span> <span class="hljs-string">"./api"</span>;</span><br><span class="line"><span class="hljs-keyword">const</span> URL = <span class="hljs-string">"/users"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> gerUserList = <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> api(<span class="hljs-string">"GET"</span>, URL, data);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> addUser = <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> api(<span class="hljs-string">"POST"</span>, URL, data);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> putUser = <span class="hljs-function">(<span class="hljs-params">userId, data</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> api(<span class="hljs-string">"PUT"</span>, <span class="hljs-string">`<span class="hljs-subst">${URL}</span>/<span class="hljs-subst">${userId}</span>`</span>, data);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> patchUser = <span class="hljs-function">(<span class="hljs-params">userId, data</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> api(<span class="hljs-string">"PATCH"</span>, <span class="hljs-string">`<span class="hljs-subst">${URL}</span>/<span class="hljs-subst">${userId}</span>`</span>, data);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> deleteUser = <span class="hljs-function">(<span class="hljs-params">userId</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> api(<span class="hljs-string">"DELETE"</span>, <span class="hljs-string">`<span class="hljs-subst">${URL}</span>/<span class="hljs-subst">${userId}</span>`</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>或你要用 OOP 的方式包裝成 <code>class</code> 也可以：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { api } <span class="hljs-keyword">from</span> <span class="hljs-string">"./api"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> URL = <span class="hljs-string">"/users"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserApi</span> </span>{</span><br><span class="line">  gerUserList = <span class="hljs-keyword">async</span> (data) =&gt; {</span><br><span class="line">    <span class="hljs-keyword">return</span> api(<span class="hljs-string">"GET"</span>, URL, data);</span><br><span class="line">  }</span><br><span class="line">  </span><br><span class="line">  addUser = <span class="hljs-keyword">async</span> (data) =&gt; {</span><br><span class="line">    <span class="hljs-keyword">return</span> api(<span class="hljs-string">"POST"</span>, URL, data);</span><br><span class="line">  }</span><br><span class="line">  </span><br><span class="line">  putUser = <span class="hljs-keyword">async</span> (userId, data) =&gt; {</span><br><span class="line">    <span class="hljs-keyword">return</span> api(<span class="hljs-string">"PUT"</span>, <span class="hljs-string">`<span class="hljs-subst">${URL}</span>/<span class="hljs-subst">${userId}</span>`</span>, data);</span><br><span class="line">  }</span><br><span class="line">  </span><br><span class="line">  patchUser = <span class="hljs-keyword">async</span> (userId, data) =&gt; {</span><br><span class="line">    <span class="hljs-keyword">return</span> api(<span class="hljs-string">"PATCH"</span>, <span class="hljs-string">`<span class="hljs-subst">${URL}</span>/<span class="hljs-subst">${userId}</span>`</span>, data);</span><br><span class="line">  }</span><br><span class="line">  </span><br><span class="line">  deleteUser = <span class="hljs-keyword">async</span> (userId) =&gt; {</span><br><span class="line">    <span class="hljs-keyword">return</span> api(<span class="hljs-string">"DELETE"</span>, <span class="hljs-string">`<span class="hljs-subst">${URL}</span>/<span class="hljs-subst">${userId}</span>`</span>);</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p>最後呢，就可以把我們寫好的東西拿來用了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { gerUserList } <span class="hljs-keyword">from</span> <span class="hljs-string">"./user"</span>;</span><br><span class="line"></span><br><span class="line">gerUserList({</span><br><span class="line">  <span class="hljs-attr">page</span>: <span class="hljs-number">1</span></span><br><span class="line">}).then(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Get user list'</span>, res.data))</span><br><span class="line">  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'err'</span>, err))</span><br><span class="line">  </span><br></pre></td></tr></tbody></table></figure>
+
+<p>class 的寫法：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { UserApi } <span class="hljs-keyword">from</span> <span class="hljs-string">"./userByClass"</span>;</span><br><span class="line"><span class="hljs-keyword">const</span> api = <span class="hljs-keyword">new</span> UserApi();</span><br><span class="line"></span><br><span class="line">api.gerUserList({</span><br><span class="line">  <span class="hljs-attr">page</span>: <span class="hljs-number">1</span></span><br><span class="line">}).then(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Get user list'</span>, res.data))</span><br><span class="line">  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'err'</span>, err))</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p>以上，有任何問題的話都可以到這邊參考<a target="_blank" rel="noopener" href="https://codesandbox.io/s/axios-instance-fan-li-snkrl5?file=/src/index.js">原始碼</a>。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10230336">用 Axios Instance 管理 API</a></li>
+</ul>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/05/13/mobx-basic/">來點不一樣的狀態管理 mobx</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/05/11/git-config-setting/">Git 設定個人資訊</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

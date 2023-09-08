@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Git Rebase－合併分支 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="學會以後會覺得它很好用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git Rebase－合併分支">
+<meta property="og:url" content="https://jubeatt.github.io/2022/10/05/git-rebase-merge/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="學會以後會覺得它很好用。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/05/git-rebase-merge/example.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/05/git-rebase-merge/example-merge-result.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/05/git-rebase-merge/example-rebase-result.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/05/git-rebase-merge/example-rebase-swap.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/05/git-rebase-merge/example-rebase-result.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/05/git-rebase-merge/example-reset.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/05/git-rebase-merge/example-reflog.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/05/git-rebase-merge/example-reset-by-reflog.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/05/git-rebase-merge/example-reset-by-reflog.png">
+<meta property="article:published_time" content="2022-10-05T05:16:36.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.430Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/10/05/git-rebase-merge/example.png">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡述">1&nbsp;&nbsp;<b>簡述</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#rebase-背後做了什麼？">2&nbsp;&nbsp;<b>rebase 背後做了什麼？</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#怎麼取消-rebase-後的結果">3&nbsp;&nbsp;<b>怎麼取消 rebase 後的結果</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Git Rebase－合併分支
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>10月 5 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Git/">Git</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>學會以後會覺得它很好用。</p>
+<span id="more"></span>
+
+<h2 id="簡述"><a href="#簡述" class="headerlink" title="簡述"></a>簡述</h2><p>在使用 rebase 以前我們先來看一下一般的 merge 是怎麼併的。</p>
+<p>假設目前的紀錄長這樣：</p>
+<p><img src="example.png" alt="example"></p>
+<p>接著我們在 <code>cat</code> 分支執行：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge dog // 把 dog 合併到 cat</span><br></pre></td></tr></tbody></table></figure>
+
+<p>解除完 conflict（如果有）以後的結果如下：</p>
+<p><img src="example-merge-result.png" alt="example-merge-result"></p>
+<p>好，這就是我們熟知的 merge，但為什麼要特別提這個？這是因為等一下要介紹的 <code>rebase</code> 合併完的結果會跟現在不太一樣。</p>
+<p>現在讓我們改用 <code>rebase</code> 來合併剛剛的 <code>cat</code> 和 <code>dog</code> 分支（一樣是在 <code>cat</code> 分支）：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase dog cat</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這段指令的意思是 <code>git rebase &lt;基準點&gt; &lt;被複製的人&gt;</code>，不過你應該比較常看到 <code>git rebase dog</code> 的寫法，因為 git 會把 <code>&lt;被複製的人&gt;</code> 自動帶入目前所在的分支。</p>
+<p>至於 <code>&lt;基準點&gt;</code> 跟 <code>&lt;被複製的人&gt;</code> 是什麼意思待會再解釋，我們先看一下 rebase 後的結果會長什麼樣：</p>
+<p><img src="example-rebase-result.png" alt="example-rebase-result"></p>
+<p>在 <code>merge</code> 的時候會自動幫我們產生一個新的 commit 來表示「合併」這件事，可是在 <code>rebase</code> 的時候就沒有這個行為了，看起來就好像直接「把 <code>cat</code> 接到 <code>dog</code> 上面一樣」的感覺。</p>
+<p>除了最後的結果長的不太一樣以外，「合併」這件事本身是相同的，所以要用哪一種方式來合併都是可以的。</p>
+<h2 id="rebase-背後做了什麼？"><a href="#rebase-背後做了什麼？" class="headerlink" title="rebase 背後做了什麼？"></a>rebase 背後做了什麼？</h2><p>前面有提到在使用 rebase 指令時會設定 <code>&lt;基準點&gt;</code> 和 <code>&lt;被複製的人&gt;</code> 這兩個不同的「對象」，所以這到底是什麼？</p>
+<p>簡單來說，回憶一下剛剛的例子，我們在用 rebase 做合併時大概做了這幾件事：</p>
+<ol>
+<li>複製一份 <code>cat</code> 身上的 commit 紀錄（建立新的 hash 值）</li>
+<li>把複製過來的紀錄「接」到 <code>dog</code> 的最後一筆 commit 上</li>
+<li>完成 rebase</li>
+</ol>
+<p>因為會有「複製」這個動作，所以 <code>&lt;被複製的人&gt;</code> 就是在指你要複製哪一個分支的 commit 紀錄？而複製完以後要再「接到某個分支上」，所以 <code>&lt;基準點&gt;</code> 就是在指要被接上去的那個分支是誰？</p>
+<p>這個是我自己的理解方式，如果要看更詳細的說明可以看<a target="_blank" rel="noopener" href="https://gitbook.tw/chapters/branch/merge-with-rebase">這篇</a>。</p>
+<p>所以剛剛的範例如果改成：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase cat dog</span><br></pre></td></tr></tbody></table></figure>
+
+<p>出來的結果就會變成：</p>
+<p><img src="example-rebase-swap.png" alt="example-rebase-swap"></p>
+<p>因為 <code>&lt;基準點&gt;</code> 和 <code>&lt;被複製的人&gt;</code> 交換了，所以出來的結果也會不一樣，所以我覺得在使用 rebase 的時候只要搞清楚這兩個角色就不會有太多疑惑了。</p>
+<p>順道一提，這兩個詞只是我自己發明的，如果出去外面這樣跟別人說的話別人可能會滿臉問號。</p>
+<h2 id="怎麼取消-rebase-後的結果"><a href="#怎麼取消-rebase-後的結果" class="headerlink" title="怎麼取消 rebase 後的結果"></a>怎麼取消 rebase 後的結果</h2><p>一樣是剛剛的範例，假設這是 rebase 後的結果：</p>
+<p><img src="example-rebase-result.png" alt="example-rebase-result"></p>
+<p>現在會碰到的問題是，如果想要跳回「還沒有 rebase 前」的狀態該怎麼做？你可能會想說：</p>
+<blockquote>
+<p>啊就直接用 <code>reset HEAD^ --hard</code> 不行嗎？」</p>
+</blockquote>
+<p>答案是不行，這樣子只會回到前一個 commit 紀錄而已：</p>
+<p><img src="example-reset.png" alt="example-reset"></p>
+<p>這是因為 rebase 不像 merge 會自動幫我們另外產生一個新的 commit 紀錄，所以你就算想用 reset 回到前一筆紀錄，這筆紀錄也不會是「做 rebase 之前」的那一筆。</p>
+<p>這時候有兩種方法：</p>
+<ol>
+<li>用 reflog 找到 rebase 以前的 commit 紀錄</li>
+<li>用 ORIG_HEAD 回到上一個「危險操作」以前的位置</li>
+</ol>
+<p>這邊先來看第一種，首先下 <code>git reflog</code> 來查看歷史紀錄：</p>
+<p><img src="example-reflog.png" alt="example-reflog"></p>
+<p>附註：這邊我有重寫過紀錄，所以才不會有剛剛的 reset 紀錄</p>
+<p>紅色框起來的部分都是跟 rebase 相關的操作，所以我們只要回到這之前的紀錄就行了。</p>
+<p>撇除掉 rebase 後的最新紀錄是 <code>add cat2（138f72c）</code>，這個就是我們要的了，所以可以下：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset 138f72c --hard</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣子就能回到 rebase 前的狀態囉：</p>
+<p><img src="example-reset-by-reflog.png" alt="example-reset-by-reflog"></p>
+<p>接著是第二種方式，這個只要直接下：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset ORIG_HEAD --hard</span><br></pre></td></tr></tbody></table></figure>
+
+<p>一樣也能回到 rebase 前的狀態：</p>
+<p><img src="example-reset-by-reflog.png" alt="example-reset-by-reflog"></p>
+<p>很神奇吧！這是因為 <code>ORIG_HEAD</code> 是 Git 中比較特別的紀錄點，它會自動記住上一次「合併分支」、「Reset」或是「Rebase」這些比較<strong>危險的操作</strong>，也因為這樣所以才會稱為「危險操作」，所以如果你懶的用 reflog 去查 hash 值的話就可以直接用這個方式來 reset，會更方便一些。</p>
+<p>總之這兩種方法都是 OK 的，挑一個你喜歡的來用就行了。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/10/08/git-rebase-squash-commit/">Git Rebase－把多個 commit 合成一個 commit</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/10/04/git-head/">Git－HEAD</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

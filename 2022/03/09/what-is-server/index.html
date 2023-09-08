@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>什麼是伺服器？ - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="解除多年疑惑。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什麼是伺服器？">
+<meta property="og:url" content="https://jubeatt.github.io/2022/03/09/what-is-server/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="解除多年疑惑。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/09/what-is-server/ssh.jpg">
+<meta property="article:published_time" content="2022-03-09T07:33:24.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.817Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/03/09/what-is-server/ssh.jpg">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡述">1&nbsp;&nbsp;<b>簡述</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#談談關於伺服器主機">2&nbsp;&nbsp;<b>談談關於伺服器主機</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#實體主機">2.1&nbsp;&nbsp;實體主機</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#虛擬空間">2.2&nbsp;&nbsp;虛擬空間</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#虛擬主機（目前的主流）">2.3&nbsp;&nbsp;虛擬主機（目前的主流）</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#管理主機的方法">3&nbsp;&nbsp;<b>管理主機的方法</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            什麼是伺服器？
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>3月 9 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Network/">Network</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>解除多年疑惑。</p>
+<span id="more"></span>
+
+
+<h2 id="簡述"><a href="#簡述" class="headerlink" title="簡述"></a>簡述</h2><p>伺服器其實只是一台裝了「伺服器程式」的電腦，例如：<a target="_blank" rel="noopener" href="https://httpd.apache.org/">Apache</a> 就是一種伺服器程式。</p>
+<p>所以呢，只要你在自己的電腦上裝伺服器程式，就可以說它是一台「伺服器」。</p>
+<h2 id="談談關於伺服器主機"><a href="#談談關於伺服器主機" class="headerlink" title="談談關於伺服器主機"></a>談談關於伺服器主機</h2><p>雖然說只要安裝伺服器程式就可以當成是一個伺服器，不過有幾個問題：</p>
+<ol>
+<li>正常人不會想讓電腦 24 小時全年無休的開著吧？</li>
+<li>家裡電腦的網路有可能是浮動 IP，一直變來變去的話別人是要怎麼連？</li>
+</ol>
+<p>所以接下來會來介紹幾種建立伺服器的方式：</p>
+<ul>
+<li>實體主機</li>
+<li>虛擬空間</li>
+<li>虛擬主機</li>
+</ul>
+<h3 id="實體主機"><a href="#實體主機" class="headerlink" title="實體主機"></a>實體主機</h3><p>這個就是前面講的，在「實體電腦」上安裝伺服器程式來用，例如我現在用的電腦就是一台實體主機。不過常見的做法是去外面跟人家「租一台」實體主機來用，為了避免前面提的那些問題。</p>
+<p>實體主機的特性是使用者擁有「主機的控制權和資源」，所以想怎麼搞都可以。</p>
+<p>不過有一個很大的缺點：<strong>當實體主機壞了，東西就壞掉了。</strong></p>
+<h3 id="虛擬空間"><a href="#虛擬空間" class="headerlink" title="虛擬空間"></a>虛擬空間</h3><p>一台電腦的某個空間（像是資料夾），你沒有這台電腦的所有控制權，只侷限在我給你的這個空間（資料夾）裡面，你可以放檔案在這裡，但不可以裝新的伺服器程式也不能玩遊戲。</p>
+<p>實際例子：只能用 FTP 來傳檔案，因為沒有控制權。</p>
+<h3 id="虛擬主機（目前的主流）"><a href="#虛擬主機（目前的主流）" class="headerlink" title="虛擬主機（目前的主流）"></a>虛擬主機（目前的主流）</h3><p>本質也是一台「實體主機」，但裡面可以有很多個虛擬主機，就像我可以在電腦上同時裝 Mac、Linux 系統的道理差不多。</p>
+<p>簡單來說可以想成是跟<strong>別人共用一台電腦的概念</strong>，但跟虛擬空間不同的是所有人都有這台主機的<strong>控制權</strong>，可以安裝伺服器程式、也可以放自己的網站之類的。</p>
+<p>另外是資源要跟大家共享，例如說實體主機只有 4GB 的 RAM，現在有四個虛擬主機，代表每個虛擬主機只能分配到 1GB 的 RAM。</p>
+<p>好處是不用擔心「實體主機壞掉」的問題，因為虛擬主機可以再遷移到別的實體主機上。原理可以想成是虛擬主機也是某種「程式」，只要把程式放到別的主機上來跑一樣能運作。</p>
+<h2 id="管理主機的方法"><a href="#管理主機的方法" class="headerlink" title="管理主機的方法"></a>管理主機的方法</h2><p>關於虛擬主機，你可能會好奇「電腦不在我這裡的話，要怎麼操控它？」，所以這邊會做個解釋。</p>
+<p>比較常見的作法有兩種：</p>
+<ol>
+<li>遠端桌面</li>
+</ol>
+<p>透過某種方式連到遠端電腦，把畫面顯示到自己的電腦上（Window 比較常見）。</p>
+<ol start="2">
+<li>SSH（Secure shell）</li>
+</ol>
+<p>透過 CLI 來連到遠端的主機，接著就能「下指令」來操控。</p>
+<p>連到虛擬主機的畫面大概就長這樣：</p>
+<p><img src="ssh.jpg" alt="ssh"></p>
+<p>跟一般的 GUI 不同，你只能透過 CLI 來跟它溝通，這時候就考驗你對 CLI 的熟悉度了。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/03/09/can-someone-get-my-position-by-ip/">知道實體 IP 的話可以知道我的位置嗎？</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/03/09/mentor-program-day85/">mentor-program-day85</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

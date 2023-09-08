@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>JavaScript－實作下載檔案的方式 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="趁早填坑。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript－實作下載檔案的方式">
+<meta property="og:url" content="https://jubeatt.github.io/2022/07/22/javascript-dowload-feature/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="趁早填坑。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/07/22/javascript-dowload-feature/file-object.png">
+<meta property="article:published_time" content="2022-07-22T02:08:58.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.521Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/07/22/javascript-dowload-feature/file-object.png">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡述">1&nbsp;&nbsp;<b>簡述</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#先從-HTML-標籤開始">1.1&nbsp;&nbsp;先從 HTML 標籤開始</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#createObjectURL">1.2&nbsp;&nbsp;createObjectURL</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#關於-Blob-與-File">2&nbsp;&nbsp;<b>關於 Blob 與 File</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#實作下載檔案">3&nbsp;&nbsp;<b>實作下載檔案</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            JavaScript－實作下載檔案的方式
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>7月 22 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>趁早填坑。</p>
+<span id="more"></span>
+
+<h2 id="簡述"><a href="#簡述" class="headerlink" title="簡述"></a>簡述</h2><p>在實際介紹下載檔案的方法前，我覺得先認識底下幾個東西會比較好上手：</p>
+<ul>
+<li><code>&lt;input type="file"&gt;</code> 的使用方式</li>
+<li><code>window.URL.createObjectURL</code> 的用法</li>
+<li><code>Blob</code> 資料格式和轉換格式的觀念</li>
+</ul>
+<p>看完後你就會覺得下載檔案並沒有想像中那麼困難囉。</p>
+<h3 id="先從-HTML-標籤開始"><a href="#先從-HTML-標籤開始" class="headerlink" title="先從 HTML 標籤開始"></a>先從 HTML 標籤開始</h3><p>要讓使用者上傳檔案的話基本上都會透過 <code>&lt;input type="file"&gt;</code> 來實作，他的基本用法是像這樣：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"file"</span> <span class="hljs-attr">multiple</span> <span class="hljs-attr">accept</span>=<span class="hljs-string">"image/*"</span> /&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'input'</span>).addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.files)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>輸出結果：</p>
+<p><img src="file-object.png" alt="file-object"></p>
+<p>懶人包：</p>
+<ol>
+<li>input 可以用來讓使用者上傳檔案，依據需求可以添加 <code>multiple</code> 來決定使否能多選？<code>accept</code> 決定只能選擇哪些 MIME 類型的檔案</li>
+<li>input 節點會有 <code>files</code> 這個屬性，就是 File 物件（儲存檔案的資訊）</li>
+</ol>
+<h3 id="createObjectURL"><a href="#createObjectURL" class="headerlink" title="createObjectURL"></a>createObjectURL</h3><p>他是一個 HTML5 的 API，我們先來看它在文件上的定義：</p>
+<blockquote>
+<p>Object URL is a URL representing a object. The URL lifetime is tied to the document in the window on which it was created. The new object URL represents the specified File object or Blob object. — MDN</p>
+</blockquote>
+<p>簡單來說他是用來「建立 URL 的一個物件」，但這個物件的值必須是「File」或是「Blob」。</p>
+<p>File 可以透過 <code>&lt;input type="file"&gt;</code> 上的 <code>files</code> 屬性來取得，而 Blob 則是一種資料格式。如果目前不太懂這兩個東西也沒關係，後面會再解釋，只要先記得下面這個原則就好：</p>
+<ul>
+<li>輸入：File / Blob</li>
+<li>輸出：URL</li>
+</ul>
+<p>重點在於<strong>輸出URL</strong>，因為是 URL 的關係，所以只要是<strong>任何使用 URL 的標籤</strong>都可以拿來用，像是 <code>&lt;img&gt;</code> 和 <code>&lt;a&gt;</code>（通常是拿來做下載功能）。</p>
+<p>這邊有一個很經典的例子：如果我想實作預覽圖片的功能怎麼做？這很常出現在「換頭像」的時候。</p>
+<p>順道一提這種作法是有好處的，可以參考這篇：<a target="_blank" rel="noopener" href="https://medium.com/@kf99916/html5-%E7%A5%9E%E5%A5%87%E7%9A%84-object-url-%E4%B8%8D%E7%94%A8%E5%BE%8C%E7%AB%AF-%E5%89%8D%E7%AB%AF%E4%BE%BF%E8%83%BD%E7%94%A2%E7%94%9F%E7%8D%B2%E5%8F%96%E6%8C%87%E5%AE%9A%E7%89%A9%E4%BB%B6%E7%9A%84%E7%B6%B2%E5%9D%80-6df283d58505">HTML5 神奇的 Object URL：不用後端，前端便能產生獲取指定物件的網址</a></p>
+<p>只要透過 <code>createObjectURL</code> 可以很輕鬆的做到這件事：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container mt-5"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"file"</span> <span class="hljs-attr">accept</span>=<span class="hljs-string">"image/*"</span> /&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'input'</span>).addEventListener(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// reset screen</span></span><br><span class="line">  <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'p'</span>)?.remove()</span><br><span class="line">  <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'img'</span>)?.remove()</span><br><span class="line">  <span class="hljs-comment">// show message when no file selected</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.files.length === <span class="hljs-number">0</span>) {</span><br><span class="line">    <span class="hljs-keyword">const</span> p = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'p'</span>)</span><br><span class="line">    p.innerText = <span class="hljs-string">'Not select any files'</span></span><br><span class="line">    <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'.container'</span>).append(p)</span><br><span class="line">    <span class="hljs-keyword">return</span></span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-comment">// show preview img</span></span><br><span class="line">  <span class="hljs-keyword">const</span> img = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'img'</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> url = <span class="hljs-built_in">window</span>.URL.createObjectURL(<span class="hljs-built_in">this</span>.files[<span class="hljs-number">0</span>])</span><br><span class="line">  img.src = url</span><br><span class="line">  img.classList.add(<span class="hljs-string">'img'</span>)</span><br><span class="line">  <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'.container'</span>).append(img)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>實際範例可以參考<a target="_blank" rel="noopener" href="https://codesandbox.io/s/createurl-preview-img-1cgcrn?file=/src/index.js">這裡</a>。</p>
+<h2 id="關於-Blob-與-File"><a href="#關於-Blob-與-File" class="headerlink" title="關於 Blob 與 File"></a>關於 Blob 與 File</h2><p>Blob 其實就是一種「資料格式」，Blob 是縮寫，全名為「Binary Large Object（二進位大型物件）」，而 File 是基於 Blob 來製作的另一種資料格式，所以本質上是差不多的東西。</p>
+<p>這就跟 JSON 是一樣的道理，兩個都只是用來表示資料的一種「格式」，不用想得太複雜。</p>
+<p>不過我們都知道碰到 JSON 時我們要用 <code>JSON.parse</code> 來解析，那 Blob 呢？</p>
+<p>這邊要先說一個重要觀念：</p>
+<blockquote>
+<p>JS 本身就是只能操作 JavaScript，而 Blob 沒辦法像 JSON 一樣可以轉換成 JavaScript，所以你是沒辦法直接用 JS 來操作 Blob 的。</p>
+<p>你唯一能做的就是透過 Blob 來產生一段 url，接著再綁到對應的 HTML 標籤上來做處理（下載 or 顯示內容），畢竟 blob 的用途主要就是拿來處理檔案。</p>
+</blockquote>
+<p>所以這邊先講步驟，待會再來示範：</p>
+<ol>
+<li>建立 Blob 物件</li>
+<li>透過 <code>createObjectURL</code> 來建立一個屬於 blob 的 URL</li>
+<li>把 URL 綁到相關的 HTML 標籤上</li>
+</ol>
+<p>這邊我要示範的是把一份 JSON 資料轉成 Blob，接著再把這個 Blob 轉成連結來打開它：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> jsonData = <span class="hljs-built_in">JSON</span>.stringify({ <span class="hljs-attr">hello</span>: <span class="hljs-string">'blob'</span> }, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>)</span><br><span class="line"><span class="hljs-comment">// 1. create blob</span></span><br><span class="line"><span class="hljs-keyword">const</span> jsonBlob = <span class="hljs-keyword">new</span> Blob([jsonData], { <span class="hljs-attr">type</span>: <span class="hljs-string">'application/json'</span> })</span><br><span class="line"><span class="hljs-comment">// 2. create url</span></span><br><span class="line"><span class="hljs-keyword">const</span> url = <span class="hljs-built_in">window</span>.URL.createObjectURL(jsonBlob)</span><br><span class="line"><span class="hljs-comment">// 3. bind to dom</span></span><br><span class="line"><span class="hljs-keyword">const</span> a = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'a'</span>)</span><br><span class="line">a.href = url</span><br><span class="line">a.innerText = <span class="hljs-string">'JSON'</span></span><br><span class="line"><span class="hljs-built_in">document</span>.body.append(a)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：實際示範可以參考<a target="_blank" rel="noopener" href="https://codesandbox.io/s/create-blob-by-json-yk08z0?file=/src/index.js">這邊</a></p>
+<p>補充一下 <code>new Blob</code> 的部分：</p>
+<p>簡單來說他會接收兩個參數，第一個是「你要轉換的資料（必須放在陣列裡）」，第二個則是「MIME Type（簡單來說就是檔案類型啦）」，所以 <code>new Blob([jsonData], { type: 'application/json' })</code> 的意思就是：</p>
+<ul>
+<li><code>[jsonData]</code> = 要轉換的資料</li>
+<li><code>{ type: 'application/json' }</code> = MIME type</li>
+</ul>
+<p>至於詳細的 MIME 列表可以參考 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types">MDN</a></p>
+<h2 id="實作下載檔案"><a href="#實作下載檔案" class="headerlink" title="實作下載檔案"></a>實作下載檔案</h2><p>其實主要的概念就是前面說的 <code>new Blob</code> 和 <code>createObjectURL</code> ，所以這邊就直接附上 code：</p>
+<p>（這邊是透過 API 來取得對應的 Excel 檔案）</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">api</span><br><span class="line">  .exportFile(requestData)</span><br><span class="line">  .then(<span class="hljs-function">(<span class="hljs-params">response: any</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 檔案名稱</span></span><br><span class="line">    <span class="hljs-keyword">const</span> fileName = response.headers[<span class="hljs-string">'content-disposition'</span>].split(<span class="hljs-string">'filename='</span>)[<span class="hljs-number">1</span>]</span><br><span class="line">    <span class="hljs-keyword">const</span> blob = <span class="hljs-keyword">new</span> Blob([response.data], { <span class="hljs-attr">type</span>: response.headers[<span class="hljs-string">'content-type'</span>] })</span><br><span class="line">    <span class="hljs-keyword">const</span> url = <span class="hljs-built_in">window</span>.URL.createObjectURL(blob)</span><br><span class="line">    <span class="hljs-keyword">const</span> link = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'a'</span>)</span><br><span class="line">    link.href = url</span><br><span class="line">    link.setAttribute(<span class="hljs-string">'download'</span>, fileName)</span><br><span class="line">    <span class="hljs-built_in">document</span>.body.appendChild(link)</span><br><span class="line">    <span class="hljs-comment">// dowload</span></span><br><span class="line">    link.click()</span><br><span class="line">    link.remove()</span><br><span class="line">  })</span><br><span class="line">  .catch(<span class="hljs-function">(<span class="hljs-params">error: any</span>) =&gt;</span> {</span><br><span class="line">    Notification(<span class="hljs-string">'error'</span>, error.message)</span><br><span class="line">  })</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這段的背後其實只是把 blob 產生的網址拿來寫入這段 HTML 後再幫你自動點擊：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> </span></span><br><span class="line"><span class="hljs-tag">  <span class="hljs-attr">href</span>=<span class="hljs-string">"blob:http://localhost:2051/4db51291-7057-4975-a6d5-727d0084c093"</span></span></span><br><span class="line"><span class="hljs-tag">  <span class="hljs-attr">download</span>=<span class="hljs-string">"IR_Export_20220719113912.xlsx"</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：當 <code>&lt;a&gt;</code> 有 <code>dowload</code> 屬性時就等於下載檔案</p>
+<p>所以下載檔案的實作還蠻單純的，只要搞清楚資料格式怎麼轉換就好了。順道一提，如果檔案是透過 AJAX 來取得的話，請務必：</p>
+<ul>
+<li>在 header 加上 <code>responseType = 'blob'</code></li>
+<li>在 header 加上 <code>responseType = 'blob'</code></li>
+<li>在 header 加上 <code>responseType = 'blob'</code></li>
+</ul>
+<p>這樣子才會把 response 轉成 blob 的形式。看很多人都被這個雷到，所以特別強調一下。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/07/23/vue-element-plus-set-up/">Vue-element-plus 環境配置</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/07/21/typescript-review-and-note/">TypeScript－複習與一些小技巧</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

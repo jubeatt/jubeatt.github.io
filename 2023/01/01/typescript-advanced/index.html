@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>TypeScript－各種進階使用的技巧 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="沒有 TypeScript 做不到的，只有你想不到的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TypeScript－各種進階使用的技巧">
+<meta property="og:url" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="沒有 TypeScript 做不到的，只有你想不到的。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example1-extends-error.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example2-generic-error.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example3-generic-error.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example4-keyof.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example4-keyof-any.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example4-keyof-string.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example5-indexed-access.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example5-indexed-access-multiple.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example5-indexed-access-all.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example6-sample2.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example6-sample1.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example6-error.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example6-add-generic.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example7-sample1.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example7-sample2.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example7-flatten-1.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example7-flatten-2.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example7-flatten-3.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example8-extract.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example9-flatten.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example9-add-infer.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example9-other-sample.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example10-return-type.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example10-parameters.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example11-template-literal.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example11-with-union.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example11-with-enum.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example12-recursive.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example12-snake-to-camel-case.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example12-snake-to-camel-case-without-recursive.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example13-auto-infer.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example13-typeof.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example13-mapped-type.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example13-to-event-handler.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example13-as.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example13-to-event-handler-result.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example14-property-modifier.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example15-default-value.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example15-error.png">
+<meta property="og:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example15-use-default-value.png">
+<meta property="article:published_time" content="2023-01-01T08:11:44.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.691Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2023/01/01/typescript-advanced/example1-extends-error.png">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#泛型搭配-extends">1&nbsp;&nbsp;<b>泛型搭配 extends</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#範例一">1.1&nbsp;&nbsp;範例一</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#範例二">1.2&nbsp;&nbsp;範例二</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#範例三">1.3&nbsp;&nbsp;範例三</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#keyof-的使用">2&nbsp;&nbsp;<b>keyof 的使用</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Indexd-accessing">3&nbsp;&nbsp;<b>Indexd accessing</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#generic-amp-keyof-amp-indexed-access-綜合練習">4&nbsp;&nbsp;<b>generic &amp;amp; keyof &amp;amp; indexed access 綜合練習</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#幫-key-加上限制">4.1&nbsp;&nbsp;幫 key 加上限制</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Utility-Type">5&nbsp;&nbsp;<b>Utility Type</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Conditional-Types">6&nbsp;&nbsp;<b>Conditional Types</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Flatten">6.1&nbsp;&nbsp;Flatten</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#關於-T-number">6.2&nbsp;&nbsp;關於 T[number]</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#分配律的概念">7&nbsp;&nbsp;<b>分配律的概念</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#不想要分配律的行為">7.1&nbsp;&nbsp;不想要分配律的行為</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Infer">8&nbsp;&nbsp;<b>Infer</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#另一個範例">8.1&nbsp;&nbsp;另一個範例</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#使用-infer-的時機與注意事項">8.2&nbsp;&nbsp;使用 infer 的時機與注意事項</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#試著理解-ReturnType-和-Parameters">8.3&nbsp;&nbsp;試著理解 ReturnType 和 Parameters</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Template-Literal-Types">9&nbsp;&nbsp;<b>Template Literal Types</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#當-Template-Literal-Types-碰到-Union-時">9.1&nbsp;&nbsp;當 Template Literal Types 碰到 Union 時</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#把-Enum-的-values-變成-Union-Type">9.2&nbsp;&nbsp;把 Enum 的 values 變成 Union Type</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Recursive-type">10&nbsp;&nbsp;<b>Recursive type</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#範例－SnakeToCamelCase">10.1&nbsp;&nbsp;範例－SnakeToCamelCase</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#typeof">11&nbsp;&nbsp;<b>typeof</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#利用-typeof-取出-Enum-的-Key">11.1&nbsp;&nbsp;利用 typeof 取出 Enum 的 Key</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Index-Signatures-amp-Mapped-Type">12&nbsp;&nbsp;<b>Index Signatures &amp;amp; Mapped Type</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#搭配-Template-Literal-修改-key-的值">12.1&nbsp;&nbsp;搭配 Template Literal 修改 key 的值</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Property-modifiers">13&nbsp;&nbsp;<b>Property modifiers</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#搭配-Mapped-Type-來使用">13.1&nbsp;&nbsp;搭配 Mapped Type 來使用</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Partial、Required-和-Readonly">13.2&nbsp;&nbsp;Partial、Required 和 Readonly</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#泛型參數預設值">14&nbsp;&nbsp;<b>泛型參數預設值</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#參考資料">15&nbsp;&nbsp;<b>參考資料</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            TypeScript－各種進階使用的技巧
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>1月 1 2023</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/TypeScript/">TypeScript</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>沒有 TypeScript 做不到的，只有你想不到的。</p>
+<span id="more"></span>
+
+<h2 id="泛型搭配-extends"><a href="#泛型搭配-extends" class="headerlink" title="泛型搭配 extends"></a>泛型搭配 extends</h2><h3 id="範例一"><a href="#範例一" class="headerlink" title="範例一"></a>範例一</h3><figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFirstElement</span>&lt;<span class="hljs-title">T</span> <span class="hljs-title">extends</span> <span class="hljs-title">number</span>&gt;(<span class="hljs-params">arr: T[]</span>): <span class="hljs-title">T</span> </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [first] = arr</span><br><span class="line">  <span class="hljs-keyword">return</span> first</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>extends</code> 在這邊的意思是指「<code>T</code> 至少要滿足 <code>number</code> 這個 type」，而 <code>arr</code> 的 type 是 <code>T[]</code>，把兩個組合起來的意思就是：</p>
+<blockquote>
+<p>傳入的值必須是「陣列」，且陣列中的元素必須為「number」。</p>
+</blockquote>
+<p>所以用起來會是這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getFirstElement([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>])</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果傳入不是 <code>number</code> 的 type 時就會編譯錯誤：</p>
+<p><img src="example1-extends-error.png" alt="example1-extends-error"></p>
+<p>如果想要讓 <code>T</code> 也支援 <code>string</code> 的話可以改成這樣子：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFirstElement</span>&lt;<span class="hljs-title">T</span> <span class="hljs-title">extends</span> <span class="hljs-title">number</span> | <span class="hljs-title">string</span>&gt;(<span class="hljs-params">arr: T[]</span>): <span class="hljs-title">T</span> </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [first] = arr</span><br><span class="line">  <span class="hljs-keyword">return</span> first</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣的意思就會變成：</p>
+<blockquote>
+<p>傳入的值必須是「陣列」，且陣列中的元素必須為「number」或「string」。</p>
+</blockquote>
+<p>所以現在傳入 <code>string</code> 陣列的話就不會出錯了：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">getFirstElement([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]) <span class="hljs-comment">// correct ✅</span></span><br><span class="line">getFirstElement([<span class="hljs-string">'A'</span>, <span class="hljs-string">'B'</span>, <span class="hljs-string">'C'</span>]) <span class="hljs-comment">// correct ✅</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="範例二"><a href="#範例二" class="headerlink" title="範例二"></a>範例二</h3><p>假設現在有一個印出名字的 function，長這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">logPersonName</span>(<span class="hljs-params">person</span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${person.firstName}</span> <span class="hljs-subst">${person.lastName}</span>`</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>然而當我們對這個 function 定義 type 時會碰到一個問題，因為通常 <code>person</code> 可能會有各式各樣的屬性，像這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Person1 = {</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-built_in">number</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">type</span> Person2 = {</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">gender</span>: <span class="hljs-built_in">number</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>所以如果要針對不同的 person 去定義 type 時，就得各別寫一個 function 來處理：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 給 Person1 用的 function</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">logPersonName1</span>(<span class="hljs-params">person: Person1</span>): <span class="hljs-title">void</span> </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${person.firstName}</span> <span class="hljs-subst">${person.lastName}</span>`</span>)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">// 給 Person2 用的 function</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">logPersonName2</span>(<span class="hljs-params">person: Person2</span>): <span class="hljs-title">void</span> </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${person.firstName}</span> <span class="hljs-subst">${person.lastName}</span>`</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>看到這邊應該會覺得這是很麻煩的做法吧？所以這時候聰明的你就會想說「阿，我可以用泛型來處理吧！」，接著寫出這樣的東西：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">logPersonName</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params">person: T</span>): <span class="hljs-title">void</span> </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${person.firstName}</span> <span class="hljs-subst">${person.lastName}</span>`</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>然後就會看到這段錯誤訊息：</p>
+<p><img src="example2-generic-error.png" alt="example2-generic-error"></p>
+<p>這裡有特別把 <code>any</code> 給框起來，是因為這就是主要原因。TS 的意思是說：</p>
+<blockquote>
+<p>我知道你給了一個泛型，但是這個泛型的範圍實在是太「廣『泛』了」，因此我無法保證 <code>firstName</code> 和 <code>lastName</code> 會出現在 person 中。</p>
+</blockquote>
+<p>為了讓 TS 確保 <code>person</code> <strong>至少</strong>會有 <code>firstName</code> 和 <code>lastName</code> 這兩個屬性，我們可以用 <code>extends</code> 改寫成這樣子：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Person = {</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// T 至少要出現 Person 中的屬性，所以 person 至少會有 firstName 和 lastName</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">logPersonName</span>&lt;<span class="hljs-title">T</span> <span class="hljs-title">extends</span> <span class="hljs-title">Person</span>&gt;(<span class="hljs-params">person: T</span>): <span class="hljs-title">void</span> </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${person.firstName}</span> <span class="hljs-subst">${person.lastName}</span>`</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣子就可以確保 <code>firstName</code> 和 <code>lastName</code> 存在，但又不會僅限於特定幾個 person 才能使用這個 function 了：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// correct ✅</span></span><br><span class="line">logPersonName({</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-string">'Pea'</span>,</span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-string">'Nu'</span>,</span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-number">20</span></span><br><span class="line">})</span><br><span class="line"><span class="hljs-comment">// correct ✅</span></span><br><span class="line">logPersonName({</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-string">'Pea'</span>,</span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-string">'Nu'</span>,</span><br><span class="line">  <span class="hljs-attr">gender</span>: <span class="hljs-string">'man'</span></span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="範例三"><a href="#範例三" class="headerlink" title="範例三"></a>範例三</h3><p>如果要對 Type Alias 本身來限制泛型的話，可以這樣做：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 至少要出現的屬性</span></span><br><span class="line"><span class="hljs-keyword">type</span> BasePerson = {</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">// 加上限制的泛型</span></span><br><span class="line"><span class="hljs-keyword">type</span> GenericPerson&lt;T <span class="hljs-keyword">extends</span> BasePerson&gt; = T</span><br></pre></td></tr></tbody></table></figure>
+
+<p>現在這個 <code>GenericPerson</code> 的用途就是：</p>
+<blockquote>
+<p>給我一個 type(T)，我會回傳你一個新的 type。傳進來的 type 可以包含任何屬性，但前提是至少要有 <code>firstName</code> 和 <code>lastName</code> 屬性，否則不給過。</p>
+</blockquote>
+<p>實際用起來會像這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> MyPerson = {</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-number">20</span></span><br><span class="line">  <span class="hljs-attr">gender</span>: <span class="hljs-string">'man'</span></span><br><span class="line">}</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">logPersonName</span>(<span class="hljs-params">person: GenericPerson&lt;MyPerson&gt;</span>): <span class="hljs-title">void</span> </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${person.firstName}</span> <span class="hljs-subst">${person.lastName}</span>`</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果現在把其中一個屬性拿掉的話，就會看到錯誤訊息：</p>
+<p><img src="example3-generic-error.png" alt="example3-generic-error"></p>
+<p>這邊會看到兩個錯誤。</p>
+<p>第一個是 <code>person.lastName</code>，這是因為 <code>MyPerson</code> 中並沒有 <code>lastName</code>，所以自然不該去存取這個屬性。</p>
+<p>第二個是 <code>GenericPerson&lt;MyPerson&gt;</code>，因為 <code>GenericPerson</code> 中的 <code>T</code> 有用 <code>extends</code> 來限制傳入的 <code>T</code> 至少要有 <code>firstName</code> 和 <code>lastName</code> 兩個屬性，而 <code>MyPerson</code> 中沒有 <code>lastName</code>，所以就會出錯。</p>
+<h2 id="keyof-的使用"><a href="#keyof-的使用" class="headerlink" title="keyof 的使用"></a>keyof 的使用</h2><p>如果你有一個 type 長這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Person = {</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這時候你只想要 <code>Person</code> 中的 key 的話可以用 <code>keyof</code> 來萃取：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Person = {</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">// 'firstName' | 'lastName'</span></span><br><span class="line"><span class="hljs-keyword">type</span> PersonKey = keyof Person</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="example4-keyof.png" alt="example4-keyof"></p>
+<p>這邊你可能會有一個疑惑是為什麼不會顯示 <code>'firstName' | 'lastName'</code> 而是 <code>keyof Person</code>？這是因為在定義一個物件的 type 時它的 key 有可能會是 <code>string</code>、<code>number</code> 或 <code>symbol</code> 這三種類別：</p>
+<p><img src="example4-keyof-any.png" alt="example4-keyof-any"></p>
+<p>這樣子 TS 就無法確保型別是什麼，所以才無法直接顯示 <code>'firstName' | 'lastName'</code>。</p>
+<p>要解決這個問題的話可以搭配 <code>&amp; string</code> 來讓 TS 知道這邊的 key 是只會是 <code>string</code> 就行了：</p>
+<p><img src="example4-keyof-string.png" alt="example4-keyof-string"></p>
+<h2 id="Indexd-accessing"><a href="#Indexd-accessing" class="headerlink" title="Indexd accessing"></a>Indexd accessing</h2><p>如果你有一個 type 長這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Person = {</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-built_in">number</span></span><br><span class="line">  <span class="hljs-attr">isMarried</span>: <span class="hljs-built_in">boolean</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這時候你想把 <code>firsName</code> 的 type（<code>string</code>） 取出來的話，可以這樣做：</p>
+<p><img src="example5-indexed-access.png" alt="example5-indexed-access"></p>
+<p>透過這種方式產生的 type 就稱為「Indexd accessing」。</p>
+<p>如果想要取出「多個值」的話可以這樣寫：</p>
+<p><img src="example5-indexed-access-multiple.png" alt="example5-indexed-access-multiple"></p>
+<p>接下來你要問說「如果我想要所有的值呢」，對嗎？在講解答前可以先想想看剛剛的邏輯，當我們想要取出 <code>firstName</code> 的 type 時會寫 <code>Person['firstName']</code>，想要 <code>firstName</code> 和 <code>age</code> 時會寫 <code>Person['firstName' | 'age']</code>，…以此類推。</p>
+<p>也就是說，<strong>只要把所有 <code>Person</code> 的 <code>key</code> 都放到 <code>[]</code> 裡面的話就可以拿到所有屬性的 type。</strong></p>
+<p>有察覺到在暗示什麼嗎？其實就是前面的 <code>keyof</code>，只要寫成這樣就可以取出所有屬性的 type 了：</p>
+<p><img src="example5-indexed-access-all.png" alt="example5-indexed-access-all"></p>
+<h2 id="generic-amp-keyof-amp-indexed-access-綜合練習"><a href="#generic-amp-keyof-amp-indexed-access-綜合練習" class="headerlink" title="generic &amp; keyof &amp; indexed access 綜合練習"></a>generic &amp; keyof &amp; indexed access 綜合練習</h2><p>這邊是測試你對前面的東西有沒有熟悉，只要懂這三樣東西後就能做出蠻方便的東西。</p>
+<p>這裡要實作的是一個用來取出物件屬性值的 function，用起來會像這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> person = {</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-string">'Pea'</span>,</span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-string">'Nu'</span>,</span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-number">24</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">getObjectValue(person, <span class="hljs-string">'firstName'</span>) <span class="hljs-comment">// 'Pea'</span></span><br><span class="line">getObjectValue(person, <span class="hljs-string">'lastName'</span>) <span class="hljs-comment">// 'Nu'</span></span><br><span class="line">getObjectValue(person, <span class="hljs-string">'age'</span>) <span class="hljs-comment">// 24</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>但我希望除了基本的功能以外，它還要有底下的功能：</p>
+<p>1. 避免傳入不正確的 key：</p>
+<p><img src="example6-sample2.png" alt="example6-sample2"></p>
+<p>2. 可以自動顯示能傳入哪些值：</p>
+<p><img src="example6-sample1.png" alt="example6-sample1"></p>
+<p>這功能其實還蠻方便的吧？來看看這是怎麼做出來的。</p>
+<p>首先這個 function 原本應該是長這樣子：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getObjectValue</span>(<span class="hljs-params">obj: <span class="hljs-built_in">any</span>, key: <span class="hljs-built_in">any</span></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> obj[key]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>一開始可以先不用考慮泛型的部分，我們先做簡單一點的版本就好。</p>
+<p>如果只是單純想把 <code>obj</code> 跟 <code>key</code> 限制在一定某個範圍的話，我們只要建立一個實際的 type 來限制即可，像這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 建立一個 Person type</span></span><br><span class="line"><span class="hljs-keyword">type</span> Person = {</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-built_in">number</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// obj 限制為 Person，key 限制為 Person 中的所有屬性</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getObjectValue</span>(<span class="hljs-params">obj: Person, key: keyof Person</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> obj[key]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣子其實就能實現上面的兩種功能了，現在第二個參數只能傳入 <code>firstName</code>、<code>lastName</code>、<code>age</code> ，並且有自動提示的功能。</p>
+<p>問題在於今天如果想傳入的 <code>obj</code> 不是 <code>Person</code> 這個 type 的話就沒辦法用了：</p>
+<p><img src="example6-error.png" alt="example6-error"></p>
+<p>（改傳入另一個叫做 <code>car</code> 的物件）</p>
+<p>雖然可以幫每一個物件建立一個不同的 function 來處理，但那樣子有點不切實際，畢竟邏輯明明都一樣。</p>
+<p>這時候泛型就很好用了，既然 <code>obj</code> 會隨著傳入的值而改變，我們就把會「改變」的地方變成泛型就好了：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Person = {</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-built_in">number</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 改成 T（泛型）</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getObjectValue</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params">obj: T, key: keyof T</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> obj[key]</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> person = {</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-string">'Pea'</span>,</span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-string">'Nu'</span>,</span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-number">24</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> car = {</span><br><span class="line">  <span class="hljs-attr">brand</span>: <span class="hljs-string">'Toyota'</span>,</span><br><span class="line">  <span class="hljs-attr">type</span>: <span class="hljs-string">'SUV'</span>,</span><br><span class="line">  <span class="hljs-attr">id</span>: <span class="hljs-string">'CTY-1268'</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">getObjectValue(car, <span class="hljs-string">'brand'</span>)</span><br><span class="line">getObjectValue(person, <span class="hljs-string">'firstName'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣就不會出現錯誤訊息了：</p>
+<p><img src="example6-add-generic.png" alt="example6-add-generic"></p>
+<p>做到這邊其實就完成一開始想要的功能了，我們可以傳入任何物件，並且只能傳入對應的 key，也能有提示的功能。</p>
+<h3 id="幫-key-加上限制"><a href="#幫-key-加上限制" class="headerlink" title="幫 key 加上限制"></a>幫 key 加上限制</h3><p>如果現在想要把可以傳入的 key 加上限制，像這樣子：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 只能傳入 'age' 這個 key</span></span><br><span class="line">getObjectValue&lt;Person, <span class="hljs-string">'age'</span>&gt;(person, <span class="hljs-string">'age'</span>)</span><br><span class="line"><span class="hljs-comment">// 傳入 'age' 以外的 key 會出錯</span></span><br><span class="line">getObjectValue&lt;Person, <span class="hljs-string">'age'</span>&gt;(person, <span class="hljs-string">'firstName'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊給幾個提示，可以先自己思考看看後再往下看解答：</p>
+<ol>
+<li>需要第二個泛型，用來當作 key 的 type</li>
+<li>第二個泛型必須要有一定的限制，否則會因為太廣泛而出問題</li>
+</ol>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 加入第二個泛型 U，並且限制 U 只能傳入 T 的 key</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getObjectValue</span>&lt;<span class="hljs-title">T</span>, <span class="hljs-title">U</span> <span class="hljs-title">extends</span> <span class="hljs-title">keyof</span> <span class="hljs-title">T</span>&gt;(<span class="hljs-params">obj: T, key: U</span>): <span class="hljs-title">T</span>[<span class="hljs-title">U</span>] </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> obj[key]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>稍微解釋一下這邊的流程：</p>
+<ol>
+<li>先把 key 的 type 變成 U，讓 key 變成是可以自訂的 type</li>
+<li>利用 extends 把 U 的範圍限制在 T 的 key，以免傳入不存在 T 身上的 key</li>
+</ol>
+<p>最後可以注意到回傳值的部分：<code>T[U]</code>。</p>
+<p>因為我們最後會回傳的是「T 這個物件的 value」，而如果要表示這個 value 的 type 的話會用 <code>T[...]</code> 來表示，例如 <code>T['firstName']</code> 會是 <code>string</code>，<code>T['age']</code> 會是 <code>number</code>。只是現在我們把 <code>[...]</code> 的部分也變成是泛型了，所以就會變成 <code>T[U]</code>。</p>
+<p>這一段可能有點抽象，建議可以回憶一下之前的範例並練習看看會比較好理解一點。</p>
+<h2 id="Utility-Type"><a href="#Utility-Type" class="headerlink" title="Utility Type"></a>Utility Type</h2><p>在寫專案的時候我們通常會有一種 function 是「把某個值丟進去，再輸出成想要的結果」，這種東西就稱為「Utility」。而這種觀念也可以套用到 TS 上，只是會變成「把某個 type 丟進去，再輸出成另外一個 type」。</p>
+<p>底下附上幾個簡單的範例，只要前面的觀念有弄懂應該就不會覺得複雜：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// sample</span></span><br><span class="line"><span class="hljs-keyword">type</span> Manufacture = <span class="hljs-string">'Apple'</span> | <span class="hljs-string">'Google'</span> | <span class="hljs-string">'Samsung'</span> | <span class="hljs-string">'Sony'</span></span><br><span class="line"><span class="hljs-keyword">type</span> Product = {</span><br><span class="line">  <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">price</span>: <span class="hljs-built_in">number</span></span><br><span class="line">  <span class="hljs-attr">manufacture</span>: Manufacture</span><br><span class="line">  <span class="hljs-attr">isLaunched</span>: <span class="hljs-built_in">boolean</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// utility</span></span><br><span class="line"><span class="hljs-keyword">type</span> OrNull&lt;T&gt; = T | <span class="hljs-literal">null</span></span><br><span class="line"><span class="hljs-keyword">type</span> OneOrMany&lt;T&gt; = T | T[]</span><br><span class="line"><span class="hljs-keyword">type</span> OneOrManyOrNull&lt;T&gt; = T | T[] | <span class="hljs-literal">null</span></span><br><span class="line"><span class="hljs-keyword">type</span> Keys&lt;T&gt; = keyof T &amp; <span class="hljs-built_in">string</span></span><br><span class="line"><span class="hljs-keyword">type</span> Values&lt;T&gt; = T[keyof T]</span><br><span class="line"><span class="hljs-keyword">type</span> PickObj&lt;T, U <span class="hljs-keyword">extends</span> keyof T&gt; = T[U]</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// output</span></span><br><span class="line"><span class="hljs-keyword">type</span> ProductOrNull = OrNull&lt;Product&gt; <span class="hljs-comment">// Product | null</span></span><br><span class="line"><span class="hljs-keyword">type</span> ManufactureOrManufactures = OneOrMany&lt;Manufacture&gt; <span class="hljs-comment">// 'Apple | ['Apple']</span></span><br><span class="line"><span class="hljs-keyword">type</span> ManufactureOrManufacturesOrNull = OneOrManyOrNull&lt;Manufacture&gt; <span class="hljs-comment">// 'Apple | ['Apple'] | null</span></span><br><span class="line"><span class="hljs-keyword">type</span> KeysOfProduct = Keys&lt;Product&gt; <span class="hljs-comment">// 'Apple' | 'Google' | 'Samsung' | 'Sony'</span></span><br><span class="line"><span class="hljs-keyword">type</span> ValuesOfProduct = Values&lt;Product&gt; <span class="hljs-comment">// string | number | boolean</span></span><br><span class="line"><span class="hljs-keyword">type</span> PickedProduct = PickObj&lt;Product, <span class="hljs-string">'manufacture'</span>&gt; <span class="hljs-comment">// "Apple" | "Google" | "Samsung" | "Sony"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>每個 utility 會輸出的結果：</p>
+<ul>
+<li><code>OrNull</code> 某個 type 或是 null</li>
+<li><code>OneOrMany</code> 單一或陣列形式的 type</li>
+<li><code>OneOrManyNull</code> 單一或陣列形式或 null 的 type</li>
+<li><code>Keys</code> 只取出 key 的 type</li>
+<li><code>Values</code> 只取出屬性值的 type</li>
+<li><code>PickObj</code> 取出指定屬性值的 type</li>
+</ul>
+<h2 id="Conditional-Types"><a href="#Conditional-Types" class="headerlink" title="Conditional Types"></a>Conditional Types</h2><p>在 TS 中可以像 JS 一樣用三元運算子來計算出最後的值，只是一個是回傳「值」，一個是回傳「型別（type）」。</p>
+<p>來看個簡單的範例：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// SomeType1 的型別是 'PeaNu' 這個字串</span></span><br><span class="line"><span class="hljs-keyword">type</span> SomeType1 = <span class="hljs-string">'PeaNu'</span></span><br><span class="line"><span class="hljs-comment">// 如果 SomeType1 是 string 的子集合，回傳型別  true，反之則回傳 false</span></span><br><span class="line"><span class="hljs-keyword">type</span> NewType1 = SomeType1 <span class="hljs-keyword">extends</span> <span class="hljs-built_in">string</span> ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>出來的結果會是這樣：</p>
+<p><img src="example7-sample1.png" alt="example7-sample1"></p>
+<p>這段如果還記得 <code>extends</code> 的用途應該就不難理解，意思是「如果 <code>SomeType1</code> 的型別有出現在 <code>string</code> 的子集合裡，就回傳 <code>true</code> 來當作新的型別，反之則回傳 <code>false</code>。</p>
+<p>而 <code>PeaNu</code> 雖然是一個固定的字串值，但它當然符合 <code>string</code> 這個條件，所以最後的型別就會是 <code>true</code>。</p>
+<h3 id="Flatten"><a href="#Flatten" class="headerlink" title="Flatten"></a>Flatten</h3><p>接著是 TS 官方提供的一個範例：</p>
+<p><img src="example7-sample2.png" alt="example7-sample2"></p>
+<p>跟剛剛的範例差不多，但可能會有疑惑的地方是 <code>T[number]</code>，這個先不用的心，後面會再回來解釋。</p>
+<p>把這段型別翻成白話的意思是「如果傳進來的 <code>T</code> 是<strong>陣列型別</strong>，就回傳 <code>T[number]</code>，否則直接回傳原本的 <code>T</code>。</p>
+<p>所以我們可以來做個測試：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Flatten&lt;T&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-built_in">any</span>[] ? T[<span class="hljs-built_in">number</span>] : T</span><br><span class="line"><span class="hljs-keyword">type</span> Manufacture = <span class="hljs-string">'Apple'</span> | <span class="hljs-string">'Google'</span> | <span class="hljs-string">'Samsung'</span> | <span class="hljs-string">'Sony'</span></span><br><span class="line"><span class="hljs-comment">// 把 T 傳入一個非陣列的型別</span></span><br><span class="line"><span class="hljs-keyword">type</span> FlattenManufacture = Flatten&lt;Manufacture&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>結果就會跟剛剛預期的一樣，會是 <code>T</code> 原本的型別：</p>
+<p><img src="example7-flatten-1.png" alt="example7-flatten-1"></p>
+<p>那如果現在改傳入陣列型別呢？</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Flatten&lt;T&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-built_in">any</span>[] ? T[<span class="hljs-built_in">number</span>] : T</span><br><span class="line"><span class="hljs-keyword">type</span> Manufacture = <span class="hljs-string">'Apple'</span> | <span class="hljs-string">'Google'</span> | <span class="hljs-string">'Samsung'</span> | <span class="hljs-string">'Sony'</span>[]</span><br><span class="line"><span class="hljs-comment">// 把 T 傳入一個陣列的型別</span></span><br><span class="line"><span class="hljs-keyword">type</span> FlattenManufacture = Flatten&lt;Manufacture&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>會發現陣列被「拿掉了」：</p>
+<p><img src="example7-flatten-2.png" alt="example7-flatten-2"></p>
+<p>這個其實就是 <code>Flatten</code> 的真正的用途：「把陣列中的元素型別抽出來」。</p>
+<p>不太懂的話可以再來看個例子：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Flatten&lt;T&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-built_in">any</span>[] ? T[<span class="hljs-built_in">number</span>] : T</span><br><span class="line"><span class="hljs-comment">// 一樣傳入陣列型別</span></span><br><span class="line"><span class="hljs-keyword">type</span> Manufacture = [<span class="hljs-string">'a'</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">null</span>]</span><br><span class="line"><span class="hljs-keyword">type</span> FlattenManufacture = Flatten&lt;Manufacture&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>輸出結果：</p>
+<p><img src="example7-flatten-3.png" alt="example7-flatten-3"></p>
+<h3 id="關於-T-number"><a href="#關於-T-number" class="headerlink" title="關於 T[number]"></a>關於 T[number]</h3><p>搞懂了上面的 Conditional Type 後，現在回來談一下 <code>T[number]</code> 的部分。剛剛你可能會有疑惑的地方是「為什麼用了 <code>T[number]</code> 就可以把陣列元素的型別拿出來？」</p>
+<p>這是因為當一個型別是陣列時，他的 index 值一定會是「數字」，所以我們可以透過這些數字來取出對應的元素：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Manufacture = [<span class="hljs-string">'a'</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">null</span>]</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">type</span> Manufacture1 = Manufacture[<span class="hljs-number">0</span>] <span class="hljs-comment">// 'a'</span></span><br><span class="line"><span class="hljs-keyword">type</span> Manufacture2 = Manufacture[<span class="hljs-number">1</span>] <span class="hljs-comment">// false</span></span><br><span class="line"><span class="hljs-keyword">type</span> Manufacture3 = Manufacture[<span class="hljs-number">2</span>] <span class="hljs-comment">// 'a'</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>但當我們想要指向陣列中的所有元素時不會是一個特定的數字，所以這時候只要把 index 指定為 <code>number</code> 即可：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> ManufactureAll = Manufacture[<span class="hljs-built_in">number</span>] <span class="hljs-comment">// false | "a" | null</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="分配律的概念"><a href="#分配律的概念" class="headerlink" title="分配律的概念"></a>分配律的概念</h2><p>我們先來看一個官方提供的 utility：<code>Extract</code>，它的原始碼如下：</p>
+<p><img src="example8-extract.png" alt="example8-extract"></p>
+<p>意思是說「當 <code>T</code> 為 <code>U</code> 的子集合時，回傳 <code>T</code> 的型別，反之回傳 <code>never</code>」。</p>
+<p>實際使用起來會像這樣子：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Collection = <span class="hljs-string">'a'</span> | <span class="hljs-string">'b'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">type</span> T1 = Extract&lt;<span class="hljs-string">'a'</span> | <span class="hljs-string">'b'</span> | <span class="hljs-string">'c'</span>, Collection&gt; <span class="hljs-comment">// 'a' | 'b'</span></span><br><span class="line"><span class="hljs-keyword">type</span> T2 = Extract&lt;<span class="hljs-string">'a'</span> | <span class="hljs-string">'b'</span> | <span class="hljs-string">'c'</span> | <span class="hljs-string">'d'</span>, Collection&gt; <span class="hljs-comment">// 'a' | 'b'</span></span><br><span class="line"><span class="hljs-keyword">type</span> T3 = Extract&lt;<span class="hljs-string">'b'</span> | <span class="hljs-string">'c'</span> | <span class="hljs-string">'d'</span> | <span class="hljs-string">'e'</span>, Collection&gt; <span class="hljs-comment">// 'b'</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>先來看 <code>T1</code>，能看到 <code>a</code> 和 <code>b</code> 因為有出現在 <code>Collection</code> 的集合中，所以會被留下，而 <code>c</code> 因為不屬於 <code>Collection</code> 的集合所以不會被留下。如果這段有理解的話應該就能看懂 <code>T2</code> 和 <code>T3</code>，因為都是相同的概念。</p>
+<p>可是你仔細想想後會發現一道瑕疵，「為什麼前面明明說符合條件時就回傳 <code>T</code> 的型別（<code>a | b | c</code>），但最後回傳的卻只有 <code>a | b</code>？說好的 <code>c</code> 呢？」</p>
+<p>這是因為當泛型傳入的型別為 union type 時，會出現類似分配律的行為。如果忘記什麼是分配律的話，這裡幫你複習一下：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a * (b + c) = (a * b) + (a * c)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>所以拿 <code>T1</code> 的例子來示範的話，其實可以拆成這樣子：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//   'a' | 'b'</span></span><br><span class="line"><span class="hljs-keyword">type</span> T1Distribute = Extract&lt;<span class="hljs-string">'a'</span>, Collection&gt; | Extract&lt;<span class="hljs-string">'b'</span>, Collection&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>T2</code> 的話則是：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// | 'a' | 'b' | never | never</span></span><br><span class="line"><span class="hljs-keyword">type</span> T2 =</span><br><span class="line">  | Extract&lt;<span class="hljs-string">'a'</span>, Collection&gt;</span><br><span class="line">  | Extract&lt;<span class="hljs-string">'b'</span>, Collection&gt;</span><br><span class="line">  | Extract&lt;<span class="hljs-string">'c'</span>, Collection&gt;</span><br><span class="line">  | Extract&lt;<span class="hljs-string">'d'</span>, Collection&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>註：任何跟 <code>never</code> 交集的結果都還是它自己</p>
+<p>所以這就是為什麼可以只回傳部分的 <code>T</code>，因為有分配律的概念在後面。</p>
+<h3 id="不想要分配律的行為"><a href="#不想要分配律的行為" class="headerlink" title="不想要分配律的行為"></a>不想要分配律的行為</h3><p>如果不想要 TS 使用分配律的行為來進行判斷的話，可以加上 <code>[]</code> 來改寫：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> ExtractNoDistribute&lt;T, U&gt; = [T] <span class="hljs-keyword">extends</span> [U] ? T : <span class="hljs-built_in">never</span></span><br><span class="line"><span class="hljs-comment">// 'a' | 'b'</span></span><br><span class="line"><span class="hljs-keyword">type</span> T1 = ExtractNoDistribute&lt;<span class="hljs-string">'a'</span> | <span class="hljs-string">'b'</span>, Collection&gt;</span><br><span class="line"><span class="hljs-comment">// never</span></span><br><span class="line"><span class="hljs-keyword">type</span> T2 = ExtractNoDistribute&lt;<span class="hljs-string">'a'</span> | <span class="hljs-string">'b'</span> | <span class="hljs-string">'c'</span>, Collection&gt;</span><br><span class="line"><span class="hljs-comment">// 'a'</span></span><br><span class="line"><span class="hljs-keyword">type</span> T3 = ExtractNoDistribute&lt;<span class="hljs-string">'a'</span>, Collection&gt;</span><br><span class="line"><span class="hljs-comment">// 'b'</span></span><br><span class="line"><span class="hljs-keyword">type</span> T4 = ExtractNoDistribute&lt;<span class="hljs-string">'b'</span>, Collection&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>現在只有當 <code>T</code> <strong>全部</strong>都符合條件時才會回傳整個 <code>T</code>，否則一率回傳 <code>never</code>。</p>
+<h2 id="Infer"><a href="#Infer" class="headerlink" title="Infer"></a>Infer</h2><p>Infer 是一個讓 TS 自動推導型別的關鍵字。這邊會拿前面介紹過的 <code>Flatten</code> 來示範如何使用：</p>
+<p><img src="example9-flatten.png" alt="example9-flatten"></p>
+<p>原本在 <code>Flatten</code> 對 <code>T</code> 的限制是「符合任何型別的陣列」，但現在可以利用 <code>infer</code> 來自動推導出該陣列的型別為何：</p>
+<p><img src="example9-add-infer.png" alt="example9-add-infer"></p>
+<p>如果你對於這邊的 <code>(infer R)[]</code> 有點疑惑的話，可以回憶一下你在幫陣列定義 type 的時候都是怎麼寫的，通常會是這樣子：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">string</span>[]</span><br><span class="line"><span class="hljs-built_in">number</span>[]</span><br><span class="line"><span class="hljs-built_in">boolean</span>[]</span><br><span class="line">...</span><br></pre></td></tr></tbody></table></figure>
+
+<p>而現在我們希望把 <code>[]</code> 前面的 <code>string</code>、<code>number</code> 交給 TS 去自動判斷，所以才會用 <code>(infer R)</code> 的方式來告訴 TS：「我要你幫我自動推導出 R 的型別」。</p>
+<p>接著我們在用的時後就會是這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 此時的 R 等於 'PeaNu' | 'PPB' | 'Andy'</span></span><br><span class="line"><span class="hljs-keyword">type</span> FlattenPersons = Flatten&lt;[<span class="hljs-string">'PeaNu'</span>, <span class="hljs-string">'PPB'</span>, <span class="hljs-string">'Andy'</span>]&gt;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 此時的 R 等於 number</span></span><br><span class="line"><span class="hljs-keyword">type</span> FlattenNumbers = Flatten&lt;<span class="hljs-built_in">number</span>[]&gt;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 此時的 R 等於 string</span></span><br><span class="line"><span class="hljs-keyword">type</span> FlattenStrings = Flatten&lt;<span class="hljs-built_in">string</span>[]&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>以這個例子來說傳入的型別都有符合「陣列子集合」的條件，所以最回傳的就會是 <code>R</code> 的型別。</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Persons = [<span class="hljs-string">'PeaNu'</span>, <span class="hljs-string">'PPB'</span>, <span class="hljs-string">'Andy'</span>]</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 'PeaNu' | 'PPB' | 'Andy'</span></span><br><span class="line"><span class="hljs-keyword">type</span> FlattenPersons = Flatten&lt;Persons&gt;</span><br><span class="line"><span class="hljs-comment">// number</span></span><br><span class="line"><span class="hljs-keyword">type</span> FlattenNumbers = Flatten&lt;<span class="hljs-built_in">number</span>[]&gt;</span><br><span class="line"><span class="hljs-comment">// string</span></span><br><span class="line"><span class="hljs-keyword">type</span> FlattenStrings = Flatten&lt;<span class="hljs-built_in">string</span>[]&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="另一個範例"><a href="#另一個範例" class="headerlink" title="另一個範例"></a>另一個範例</h3><p>剛剛的範例可能看不太出來 infer 的用途，所以這邊再舉一個例子：</p>
+<p><img src="example9-other-sample.png" alt="example9-other-sample"></p>
+<p>關於這個內容我會這樣子來解釋：「<code>T</code> 必須是 <code>{response: ..., status: number}</code> 的子集合，若符合的話就回傳 <code>...</code>，反之則回傳 <code>any</code>」。</p>
+<p>而 <code>...</code> 的部分我們用了 <code>infer R</code>，也就是請 TS 自動推導出 R 的型別，例如說：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> RespType1 = InferResponse&lt;{ <span class="hljs-attr">response</span>: { <span class="hljs-attr">data</span>: <span class="hljs-string">'PeaNu'</span> }; status: <span class="hljs-number">200</span> }&gt; <span class="hljs-comment">// { data: 'PeaNu' }</span></span><br><span class="line"><span class="hljs-keyword">type</span> RespType2 = InferResponse&lt;{ <span class="hljs-attr">status</span>: <span class="hljs-number">200</span> }&gt; <span class="hljs-comment">// any</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>RespType1</code> 的內容因為有符合 <code>extends</code> 的條件，所以會回傳 R 的型別。而 R 的型別會依據 <code>response</code> 中的內容來判斷，應該能看出是 <code>{ data: 'PeaNu' }</code>，所以這就會變成最後的結果。</p>
+<p><code>RespType2</code> 的內容因為沒有符合 <code>extends</code> 的條件，所以會直接回傳 <code>any</code> 型別。</p>
+<h3 id="使用-infer-的時機與注意事項"><a href="#使用-infer-的時機與注意事項" class="headerlink" title="使用 infer 的時機與注意事項"></a>使用 infer 的時機與注意事項</h3><p>看了前面兩個範例以後應該能察覺 <code>infer</code> 通常使用在<strong>需要條件判斷，但又不確定型別時使用。</strong></p>
+<p>此外，還有幾個必須要遵循的條件：</p>
+<ul>
+<li><code>infer</code> 只能用在 <strong>condition type</strong> 中的 <code>extends</code> 和 <code>?</code> 前的位置使用，不可以在一般的 generic <code>extends</code> 中使用。</li>
+<li><code>infer R</code> 的這個 R 若要當成回傳值時只能在 <code>true</code> 的情況（即 <code>?</code> 後面），不能在 <code>false</code> 的情況（即 <code>:</code> 後面）下使用。</li>
+</ul>
+<h3 id="試著理解-ReturnType-和-Parameters"><a href="#試著理解-ReturnType-和-Parameters" class="headerlink" title="試著理解 ReturnType 和 Parameters"></a>試著理解 ReturnType 和 Parameters</h3><p>如果前面都有理解的話，這兩個 type 應該就不難理解。</p>
+<p>先來看 <code>ReturnType</code> 的原始碼：</p>
+<p><img src="example10-return-type.png" alt="example10-return-type"></p>
+<p>因為比較複雜，所以這邊可以拆成兩個部分來看：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T <span class="hljs-keyword">extends</span> (...args: <span class="hljs-built_in">any</span>) =&gt; <span class="hljs-built_in">any</span>&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>首先傳入的 <code>T</code> 必須符合「function 的子集合，且該 function 可以接收任何參數、任何回傳值」。</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T <span class="hljs-keyword">extends</span> (...args: <span class="hljs-built_in">any</span>) =&gt; infer R ? R : <span class="hljs-built_in">any</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>接著是條件判斷。若傳入的 <code>T</code> 符合條件（剛剛上面提的），那就把該 function 的回傳值用<code>infer</code> 推導出來後回傳（即 <code>R</code>），反之則回傳 <code>any</code>。</p>
+<p>實際使用起來會是這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> FuncReturnType1 = ReturnType&lt;<span class="hljs-function">(<span class="hljs-params">a: <span class="hljs-built_in">number</span>, b: <span class="hljs-built_in">string</span></span>) =&gt;</span> <span class="hljs-built_in">number</span>&gt; <span class="hljs-comment">// number</span></span><br><span class="line"><span class="hljs-keyword">type</span> FuncParamsType2 = ReturnType&lt;<span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">string</span>&gt; <span class="hljs-comment">// string</span></span><br><span class="line"><span class="hljs-keyword">type</span> FuncParamsType4 = ReturnType&lt;<span class="hljs-built_in">string</span>&gt; <span class="hljs-comment">// any</span></span><br><span class="line"><span class="hljs-keyword">type</span> FuncParamsType4 = ReturnType&lt;<span class="hljs-built_in">number</span>&gt; <span class="hljs-comment">// any</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>接著來看 <code>Parameters</code> 的原始碼：</p>
+<p><img src="example10-parameters.png" alt="example10-parameters"></p>
+<p>其實跟剛剛很類似，不過我們一樣拆成兩部分來看：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T <span class="hljs-keyword">extends</span> (...args: <span class="hljs-built_in">any</span>) =&gt; <span class="hljs-built_in">any</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>首先傳入的 <code>T</code> 必須符合「function 的子集合，且該 function 可以接收任何參數、任何回傳值」，到目前為止都跟剛剛一樣。</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T <span class="hljs-keyword">extends</span> (...args: infer P) =&gt; <span class="hljs-built_in">any</span> ? P : <span class="hljs-built_in">never</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>接著就有點不同了。若傳入的 <code>T</code> 符合條件（剛剛上面提的），那就把該 function 的「參數值」用<code>infer</code> 推導出來後回傳（即 <code>P</code>），反之則回傳 <code>never</code>。</p>
+<p>所以跟剛剛的差別只在於 <strong><code>infer</code> 的對象不同</strong>，一個 <code>infer</code> 參數，一個 <code>infer</code> 回傳值；以及當條件不符合時回傳 <code>never</code>。</p>
+<p>實際使用起來會是這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> FunctionParamsType1 = Parameters&lt;<span class="hljs-function">(<span class="hljs-params">a: <span class="hljs-built_in">number</span>, b: <span class="hljs-built_in">string</span></span>) =&gt;</span> <span class="hljs-built_in">number</span>&gt; <span class="hljs-comment">// [a: number, b: string]</span></span><br><span class="line"><span class="hljs-keyword">type</span> FunctionParamsType2 = Parameters&lt;<span class="hljs-function">(<span class="hljs-params">a: <span class="hljs-built_in">number</span></span>) =&gt;</span> <span class="hljs-built_in">number</span>&gt; <span class="hljs-comment">// [a: number]</span></span><br><span class="line"><span class="hljs-keyword">type</span> FunctionParamsType3 = Parameters&lt;<span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">number</span>&gt; <span class="hljs-comment">// []</span></span><br><span class="line"><span class="hljs-keyword">type</span> FunctionParamsType4 = Parameters&lt;<span class="hljs-built_in">string</span>&gt; <span class="hljs-comment">// never</span></span><br><span class="line"><span class="hljs-keyword">type</span> FunctionParamsType5 = Parameters&lt;<span class="hljs-built_in">number</span>&gt; <span class="hljs-comment">// never</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="Template-Literal-Types"><a href="#Template-Literal-Types" class="headerlink" title="Template Literal Types"></a>Template Literal Types</h2><p>好像沒有什麼是 TS 做不到的，就連 JS 的「Template Literal」也是。直接來看範例：</p>
+<p><img src="example11-template-literal.png" alt="example11-template-literal"></p>
+<p>就真的跟你在寫 JS 的用法幾乎一樣，不要懷疑。不過除了用來定義型別以外，在 TS 中它還有一些蠻方便的用途，下面來介紹一下。</p>
+<h3 id="當-Template-Literal-Types-碰到-Union-時"><a href="#當-Template-Literal-Types-碰到-Union-時" class="headerlink" title="當 Template Literal Types 碰到 Union 時"></a>當 Template Literal Types 碰到 Union 時</h3><p>當我們在 <code>${}</code> 中放入的型別是一個 union 時，它會再產生另外一組新的 union，來看範例：</p>
+<p><img src="example11-with-union.png" alt="example11-with-union"></p>
+<p>所以來考考你，底下的範例會輸出什麼：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> X = <span class="hljs-string">'left'</span> | <span class="hljs-string">'right'</span></span><br><span class="line"><span class="hljs-keyword">type</span> Y = <span class="hljs-string">'top'</span> | <span class="hljs-string">'bottom'</span></span><br><span class="line"><span class="hljs-keyword">type</span> Position = <span class="hljs-string">`<span class="hljs-subst">${X}</span>-<span class="hljs-subst">${Y}</span>`</span> <span class="hljs-comment">// ?</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>答案：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;<span class="hljs-string">'left-top'</span> | <span class="hljs-string">'left-bottom'</span> | <span class="hljs-string">'right-top'</span> | <span class="hljs-string">'right-bottom'</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="把-Enum-的-values-變成-Union-Type"><a href="#把-Enum-的-values-變成-Union-Type" class="headerlink" title="把 Enum 的 values 變成 Union Type"></a>把 Enum 的 values 變成 Union Type</h3><p>如果你有一個 Enum 長這樣：</p>
+<p><img src="example11-with-enum.png" alt="example11-with-enum"></p>
+<p>當你想把這些「值」變成一個 type 時，你可能會額外寫一個 Type Alias 來處理：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> ManufactureValues = <span class="hljs-string">'apple'</span> | <span class="hljs-string">'samsung'</span> | <span class="hljs-string">'google'</span> | <span class="hljs-string">'sony'</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣子的缺點是如果未來要新增 <code>MANUFACTURE</code> 的內容時，就得同步更新 <code>ManufactureValues</code> 的內容，其實還蠻麻煩的。</p>
+<p>因此可以利用 Template Literal Types 來改寫成這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> ManufactureValues = <span class="hljs-string">`<span class="hljs-subst">${MANUFACTURE}</span>`</span> <span class="hljs-comment">// "apple" | "samsung" | "google" | "sony"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>只要把 <code>MANUFACTURE</code> 放入 <code>${}</code> 以後就會自動產生對應的 union 出來，非常非常好用！</p>
+<h2 id="Recursive-type"><a href="#Recursive-type" class="headerlink" title="Recursive type"></a>Recursive type</h2><p>建立 Type Alias 的方式有很多種，但沒想到連「遞迴」也是有可能的！？讓我們來看個範例：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> ValueOrArray&lt;T&gt; = T | T[]</span><br><span class="line"><span class="hljs-keyword">type</span> NumberOrNumbers = ValueOrArray&lt;<span class="hljs-built_in">number</span>&gt;</span><br><span class="line"><span class="hljs-keyword">let</span> something: NumberOrNumbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]</span><br><span class="line">something = <span class="hljs-number">100</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這裡先建立了一個 <code>ValueOrArray</code>，用途是讓我們可以建立一個「純值」或「陣列值」的變數，所以 <code>something</code> 可以是 <code>number</code> 或 <code>number[]</code>。</p>
+<p>可是當出現巢狀陣列時會有問題：</p>
+<p><img src="example12-recursive.png" alt="example12-recursive"></p>
+<p>其實也沒什麼奇怪的，因為我們只有說型別是 <code>number[]</code> 或 <code>number</code>，並沒有定義 <code>number[][]</code>。</p>
+<p>所以這裡可以用遞迴的方式來處理：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> ValueOrNestedArray&lt;T&gt; = T | ValueOrNestedArray&lt;T&gt;[]</span><br><span class="line"><span class="hljs-keyword">type</span> NumberOrNestedNumbers = ValueOrNestedArray&lt;<span class="hljs-built_in">number</span>&gt;</span><br><span class="line"><span class="hljs-keyword">let</span> something: NumberOrNestedNumbers = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]</span><br><span class="line">something = <span class="hljs-number">100</span></span><br><span class="line"><span class="hljs-comment">// 想巢狀幾層都沒問題</span></span><br><span class="line">something = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, [<span class="hljs-number">3</span>, [<span class="hljs-number">4</span>]]]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊的 <code>ValueOrNestedArray</code> 的值是 <code>T | ValueOrNestedArray&lt;T&gt;[]</code>。要注意的地方是它在裡面又呼叫了自己，所以就會有點類似這樣的感覺：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T | T[] | T[][] | T[][][] | ...</span><br></pre></td></tr></tbody></table></figure>
+
+<p>所以用這種方式改寫後就能處理巢狀陣列的問題。</p>
+<h3 id="範例－SnakeToCamelCase"><a href="#範例－SnakeToCamelCase" class="headerlink" title="範例－SnakeToCamelCase"></a>範例－SnakeToCamelCase</h3><p>這是另一個遞迴的應用範例，原始碼如下：</p>
+<p><img src="example12-snake-to-camel-case.png" alt="example12-snake-to-camel-case"></p>
+<p>雖然剛開始看我也覺得有點複雜，不過拆成一塊一塊來解讀就會比較好理解了。我們先來看第一個部分：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> SnakeToCamelCase&lt;T <span class="hljs-keyword">extends</span> <span class="hljs-built_in">string</span>&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這段的意思是「傳入的 T 必須是 string 的子集合」。</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T <span class="hljs-keyword">extends</span> <span class="hljs-string">`<span class="hljs-subst">${infer Head}</span>_<span class="hljs-subst">${infer Tail}</span>`</span> ? ... : T</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊是一個條件判斷，「當 <code>T</code> 屬於 <code>xxx_ooo</code> 字串的子集合」時符合條件，不符合的話就回傳 <code>T</code>。</p>
+<p>此外，這邊還搭配了 <code>infer</code> 來推導出字串的 literal string type。舉例來說，如果傳入的 <code>T</code> 為 <code>hello_my_world</code>，那 <code>infer</code> 出來的結果就會是 <code>hello</code> 與 <code>my_world</code>（前者為 <code>Head</code>，後者為 <code>Tail</code>）。</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;<span class="hljs-string">`<span class="hljs-subst">${Uncapitalize&lt;Head&gt;}</span><span class="hljs-subst">${Capitalize&lt;SnakeToCamelCase&lt;Tail&gt;&gt;}</span>`</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊使用了兩個內建的 Utility Types：</p>
+<ul>
+<li><code>Uncapitalize</code> 顧名思義，把第一個字轉成小寫。</li>
+<li><code>Capitalize</code> 顧名思義，把第一個字轉成大寫。</li>
+</ul>
+<p>舉個範例：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> CapitalizeWord1 = Uncapitalize&lt;<span class="hljs-string">'Hello'</span>&gt; <span class="hljs-comment">// 'hello'</span></span><br><span class="line"><span class="hljs-keyword">type</span> CapitalizeWord2 = Capitalize&lt;<span class="hljs-string">'world'</span>&gt; <span class="hljs-comment">// 'World'</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>理解後讓我們繼續回到剛剛的段落，現在假設 <code>&lt;Head&gt;</code> 與 <code>&lt;Tail&gt;</code> 的值為 <code>hello</code> 與 <code>my_world</code> 的話，出來的結果會是這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">${<span class="hljs-string">'hello'</span>}${Capitalize&lt;SnakeToCamelCase&lt;<span class="hljs-string">'My_world'</span>&gt;&gt;}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊如果跟我一樣對遞迴苦手的話，可以先拿掉 <code>SnakeToCamelCase</code> 這一段：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">${<span class="hljs-string">'hello'</span>}${Capitalize&lt;<span class="hljs-string">'My_world'</span>&gt;}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣子最後的結果就會是 <code>helloMy_world</code>，應該不難理解：</p>
+<p><img src="example12-snake-to-camel-case-without-recursive.png" alt="example12-snake-to-camel-case-without-recursive"></p>
+<p>可以看到如果沒有遞迴的話，就只會對第一段的 <code>xxx_ooo</code> 做轉換，後面的部分沒有處理完全。所以這個時候我們要做的事情很簡單，就是把<strong>剛剛的事情再做一次</strong>，反覆的重複這段動作，直到不會再出現 <code>xxx_ooo</code> 的格式為止，這個就是遞迴的用意。</p>
+<p>這邊附上遞迴中的每個步驟的流程，希望有助於理解：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">1.</span> hello_my_world <span class="hljs-comment">// 第一次執行 SnakeToCamelCase&lt;'hello_my_world'&gt;</span></span><br><span class="line">${Head} -&gt; <span class="hljs-string">'hello'</span>, ${Tail} -&gt; <span class="hljs-string">'my_world'</span></span><br><span class="line">${<span class="hljs-string">'hello'</span>}${Capitalize( S( <span class="hljs-string">'my_world'</span> ) )}</span><br><span class="line"></span><br><span class="line"><span class="hljs-number">2.</span> my_world <span class="hljs-comment">// 第二次執行 SnakeToCamelCase&lt;'my_world'&gt;</span></span><br><span class="line">${Head} -&gt; <span class="hljs-string">'my'</span>, ${Tail} -&gt; <span class="hljs-string">'world'</span></span><br><span class="line">${<span class="hljs-string">'my'</span>}${Capitalize( S( <span class="hljs-string">'world'</span> ) )}</span><br><span class="line"></span><br><span class="line"><span class="hljs-number">3.</span> world  <span class="hljs-comment">// 第三次執行 SnakeToCamelCase&lt;'world'&gt;</span></span><br><span class="line">到這裡時因為沒有符合 xxx_ooo 子集合的條件，所以直接回傳 T（也就是 world）</span><br><span class="line"></span><br><span class="line"><span class="hljs-number">4.</span> 跳回步驟二</span><br><span class="line">${<span class="hljs-string">'my'</span>}${Capitalize( <span class="hljs-string">'world'</span> )} -&gt; ${<span class="hljs-string">'my'</span>}${<span class="hljs-string">'World'</span>}</span><br><span class="line"></span><br><span class="line"><span class="hljs-number">5.</span> 跳回步驟一</span><br><span class="line">${<span class="hljs-string">'hello'</span>}${Capitalize( <span class="hljs-string">'myWorld'</span> )} -&gt; ${<span class="hljs-string">'hello'</span>}${<span class="hljs-string">'MyWorld'</span>}</span><br><span class="line"></span><br><span class="line">結束並回傳 <span class="hljs-string">`helloMyWorld`</span> 型別</span><br></pre></td></tr></tbody></table></figure>
+
+<p>我覺得遞迴之所以難懂，是在於它的執行順序跟你想的不太一樣。以上面的例子來說，雖然 <code>SnakeToCamelCase&lt;'hello_my_world'&gt;</code> 是第一個被執行的，但他實際跑完的時間點卻要等到後面的 <code>SnakeToCamelCase&lt;'my_world'&gt;</code>、 <code>SnakeToCamelCase&lt;'world'&gt;</code> 跑完並把值<strong>回傳</strong>以後，才會執行回過頭來下一行的 <code>${'hello'}${Capitalize( 'myWorld' )}</code>。</p>
+<p>所以碰到遞迴的時候要常常用反向的方式去思考，要用「排在後面那個 function 的回傳值應該是什麼？」下去思考，我覺得這樣就會好理解一點了。</p>
+<h2 id="typeof"><a href="#typeof" class="headerlink" title="typeof"></a>typeof</h2><p>如果你寫 TS 已經有一段時間了，應該會知道 TS 有一個自動推導的功能，就是即便我們沒有幫變數指定型別，它也能自動推導出來：<br><img src="example13-auto-infer.png" alt="example13-auto-infer"></p>
+<p>這樣的好處是什麼？好處是只要用 TS 中的 <code>typeof</code>（不是 JS 的那個）就能產生出新一個型別，像這樣：</p>
+<p><img src="example13-typeof.png" alt="example13-typeof"></p>
+<p>注意這裡是直接檢查一個變數的型別（<code>bio</code>），再把這個型別賦給 <code>BioType</code>，跟以往的做法不太一樣。</p>
+<p>既然可以用 <code>typeof</code> 來取出型別，那這樣子玩也是 ok 的：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> bio = {</span><br><span class="line">  <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>,</span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-number">24</span>,</span><br><span class="line">  <span class="hljs-attr">occupation</span>: <span class="hljs-string">'Frontend'</span>,</span><br><span class="line">  <span class="hljs-attr">level</span>: <span class="hljs-string">'Senior'</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">type</span> BioType = <span class="hljs-keyword">typeof</span> bio <span class="hljs-comment">// { name: string, .... }</span></span><br><span class="line"><span class="hljs-keyword">type</span> BioKeys = keyof <span class="hljs-keyword">typeof</span> bio <span class="hljs-comment">// "name" | "age" | "occupation" | "level"</span></span><br><span class="line"><span class="hljs-keyword">type</span> BioValues = BioType[keyof <span class="hljs-keyword">typeof</span> bio] <span class="hljs-comment">// string | number</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="利用-typeof-取出-Enum-的-Key"><a href="#利用-typeof-取出-Enum-的-Key" class="headerlink" title="利用 typeof 取出 Enum 的 Key"></a>利用 typeof 取出 Enum 的 Key</h3><p>上次有介紹過如何用 Template Literal Types 來取出 Enum 的值：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> ManufactureValues = <span class="hljs-string">`<span class="hljs-subst">${MANUFACTURE}</span>`</span> <span class="hljs-comment">// "APPLE" | "SAMSUNG" | "GOOGLE" | "SONY"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這次來介紹如何用 <code>typeof</code> 來取出 Enum 的 keys：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> ManufactureKeys = keyof <span class="hljs-keyword">typeof</span> MANUFACTURE <span class="hljs-comment">// "APPLE" | "SAMSUNG" | "GOOGLE" | "SONY"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這兩招學起來後對 Enum 會非常有幫助！</p>
+<h2 id="Index-Signatures-amp-Mapped-Type"><a href="#Index-Signatures-amp-Mapped-Type" class="headerlink" title="Index Signatures &amp; Mapped Type"></a>Index Signatures &amp; Mapped Type</h2><p>一般在幫物件建立型別時會這樣子做：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Person = {</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-built_in">number</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>但如果哪天你碰到「有太多屬性」的問題時，你可能不會想像上面這樣子把每一個屬性都列出來，這時候就可以改寫成這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Person = {</span><br><span class="line">  [key: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">string</span> | <span class="hljs-built_in">number</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這種寫法叫做「Index Signatures」。我們沒有直接指定屬性名稱，而是用一個 <code>key</code> 來當作變數，並把這個 <code>key</code> 的型別設為 <code>string</code>。</p>
+<p><code>key</code> 只是一個變數，你想取什麼名字都 ok。而型別的部分可以指定的值有 <code>string | number | symbol</code>。當然，這邊 <code>Person</code> 的屬性很顯然是一個字串，所以 <code>string</code> 自然是最符合的型別。</p>
+<p>在理解完 Index Signatures 以後，接著就可以來介紹「Mapped Type」。</p>
+<p>Mapped Type 的用法跟前面很類似，只差在它會多用到一個 <code>in</code> 關鍵字，來看一個範例：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Person = {</span><br><span class="line">  [key <span class="hljs-keyword">in</span> <span class="hljs-string">'firstName'</span> | <span class="hljs-string">'lastName'</span>]: <span class="hljs-built_in">string</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>註：這裡的 <code>key</code> 一樣只是個變數，想取啥就取啥。</p>
+<p>如果你熟 ES6 的話應該會覺得這跟 <code>for...in</code> 和 <code>for...of</code> 的寫法很類似。確實，這兩者背後的共通點就是「iterable」的概念。</p>
+<p>以上面的例子來說，其實只是去迭代 <code>firstName</code> 和 <code>lastName</code> 這兩個值，並產生出像這樣的東西：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Person = {</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這個例子看起來有點脫褲子放屁的感覺，不過如果用對地方的話會發現這是一個很厲害的功能，讓我們再看一個例子。</p>
+<p>假設目前有個 type 長這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Events = {</span><br><span class="line">  <span class="hljs-attr">click</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">change</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">keyup</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">keydown</span>: <span class="hljs-built_in">string</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果我想要再多一個一樣的型別，只是 <code>string</code> 的部分改成 <code>function</code>，像這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> EventHandlers = {</span><br><span class="line">  <span class="hljs-attr">click</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span></span><br><span class="line">  <span class="hljs-attr">change</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span></span><br><span class="line">  <span class="hljs-attr">keyup</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span></span><br><span class="line">  <span class="hljs-attr">keydown</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>你可以想想看怎麼利用 Mapped Type 來改寫嗎？不然這樣子寫會有一個問題，就是當 A 改變時也得一併修改 B，才能確保兩邊的內容是一致的。</p>
+<p>答案是：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> HandleEvents = {</span><br><span class="line">  [K <span class="hljs-keyword">in</span> keyof Events]: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>產出的內容：</p>
+<p><img src="example13-mapped-type.png" alt="example13-mapped-type"></p>
+<p>很神奇吧！但其實只是利用前面提過的概念而已，先用 <code>keyof</code> 把 <code>Events</code> 的屬性取出來，再利用 Mapped Type 來迭代出新的型別。</p>
+<h3 id="搭配-Template-Literal-修改-key-的值"><a href="#搭配-Template-Literal-修改-key-的值" class="headerlink" title="搭配 Template Literal 修改 key 的值"></a>搭配 Template Literal 修改 key 的值</h3><p>剛剛已經介紹過怎麼利用 Mapped Type 來修改物件型別的<strong>值</strong>的 type，這邊再教你一招新的：「如何修改 key 的值」。</p>
+<p>這邊會拿剛剛的範例來用：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> HandleEvents = {</span><br><span class="line">  <span class="hljs-attr">click</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span></span><br><span class="line">  <span class="hljs-attr">change</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span></span><br><span class="line">  <span class="hljs-attr">keyup</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span></span><br><span class="line">  <span class="hljs-attr">keydown</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊想做的事情是，把 key 的部分改成：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> EventHandlers = {</span><br><span class="line">  <span class="hljs-attr">handlerClick</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span></span><br><span class="line">  <span class="hljs-attr">handlerChange</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span></span><br><span class="line">  <span class="hljs-attr">handlerKeyup</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span></span><br><span class="line">  <span class="hljs-attr">handlerKeydown</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果要達成這樣的效果，可以建立一個 utility type 來達成：</p>
+<p><img src="example13-to-event-handler.png" alt="example13-to-event-handler"></p>
+<p>首先來看 <code>K in key of T &amp; string</code> 這一段。因為我們要對傳入的型別（即 <code>T</code>）的 key 做修改，所以必須先把原本的 key 透過 <code>keyof</code> 取出。</p>
+<p>另外 <code>T &amp; string</code> 後面 <code>&amp; string</code> 的用途在前面有提過，一個 key 的型別可以是 <code>string | number | symbol</code>，所以要用 <code>&amp; string</code> 來讓 TS 知道這邊的 key 是 <code>string</code>，否則後面在使用時會有一些衝突。</p>
+<p>順利取出 <code>key</code> 以後就可以搭配 <code>in</code> 來迭代每一個 key。</p>
+<p>接著看到 <code>as ...</code> 的部分。<code>as</code> 的作用是「斷言」，例如說：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> something = <span class="hljs-string">'123'</span> <span class="hljs-keyword">as</span> <span class="hljs-built_in">number</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這裡的 <code>'123'</code> 照理說會是 <code>string</code>，但是當我們在後面加上 <code>as number</code> 以後，<code>something</code> 就會被強制變成 <code>number</code> 的型別：</p>
+<p><img src="example13-as.png" alt="example13-as"></p>
+<p>我知道這個例子看起來有點詭異，但重點是要強調 <code>as</code> 可以把<strong>原本的型別修改成另一個型別</strong>。</p>
+<p>所以 <code>K in key of T &amp; string</code> 後面的 <code>as</code> 就是在「把前面的 <code>K</code> 修改成 <code>???</code> 型別」。這裡想做的修改是把原本的 <code>K</code> 加上前綴字 <code>handler</code>，所以搭配了 Template Literal 來做處理（即 <code>handler${Capitalize&lt;K&gt;}</code>），透過這種方式產出的型別就會是 <code>handler(xxx)</code>（<code>xxx</code> 就是 <code>K</code> 原本的字串內容）。</p>
+<p>除了加上 <code>handler</code> 前綴以外，這邊還用了 <code>Capitalize</code> 把 <code>K</code> 的字首變成大寫，藉此讓產出的文字符合 JS 的命名慣例（駝峰式）。</p>
+<p>理解完每一步的邏輯後，現在可以利用它來達到我們想要的結果了：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> ToEventHandler&lt;T&gt; = {</span><br><span class="line">  [K <span class="hljs-keyword">in</span> keyof T &amp; <span class="hljs-built_in">string</span> <span class="hljs-keyword">as</span> <span class="hljs-string">`handler<span class="hljs-subst">${Capitalize&lt;K&gt;}</span>`</span>]: T[K]</span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">type</span> EventHandler = ToEventHandler&lt;HandleEvents&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="example13-to-event-handler-result.png" alt="example13-to-event-handler-result"></p>
+<h2 id="Property-modifiers"><a href="#Property-modifiers" class="headerlink" title="Property modifiers"></a>Property modifiers</h2><p>雖然你可能不知道什麼是「Property modifiers」，但你其實早就在用它了：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Person = {</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-keyword">readonly</span> lastName: <span class="hljs-built_in">string</span></span><br><span class="line">  age?: <span class="hljs-built_in">number</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>?</code> 跟 <code>readonly</code> 這兩個符號都是 Property modifiers。如其名，就是 property 的修飾符號。以這個例子來說的話：</p>
+<ol>
+<li><code>age</code> 屬性是 optional 的，沒有也沒關係</li>
+<li><code>lastName</code> 的屬性值只能讀，不可以改寫它的值</li>
+</ol>
+<h3 id="搭配-Mapped-Type-來使用"><a href="#搭配-Mapped-Type-來使用" class="headerlink" title="搭配 Mapped Type 來使用"></a>搭配 Mapped Type 來使用</h3><p>如果現在我們有兩個 Type 是：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> OptionalPerson = {</span><br><span class="line">  firstName?: <span class="hljs-built_in">string</span></span><br><span class="line">  lastName?: <span class="hljs-built_in">string</span></span><br><span class="line">  age?: <span class="hljs-built_in">number</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">type</span> NonOptionalPerson = {</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-built_in">number</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>現在如果要讓 <code>OptionalPerson</code> 的所有屬性變成 Optional，可以這樣寫：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> ToOptional&lt;T&gt; = {</span><br><span class="line">  <span class="hljs-comment">// ? 前面的 + 可以省略（預設值）</span></span><br><span class="line">  [K <span class="hljs-keyword">in</span> keyof T]+?: <span class="hljs-built_in">string</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>或者是把 <code>NonOptionalPerson</code> 的所有屬性變成 Required 的話：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> ToRequired&lt;T&gt; = {</span><br><span class="line">  <span class="hljs-comment">// - 不可以省略</span></span><br><span class="line">  [K <span class="hljs-keyword">in</span> keyof T]-?: <span class="hljs-built_in">string</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>又或者是設為 <code>readonly</code> 或 <code>non-readonly</code> 的話也可以這樣做：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> ToNonReadOnly&lt;T&gt; = {</span><br><span class="line">  -<span class="hljs-keyword">readonly</span> [K <span class="hljs-keyword">in</span> keyof T]: <span class="hljs-built_in">string</span></span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">type</span> ToReadOnly&lt;T&gt; = {</span><br><span class="line">  +<span class="hljs-keyword">readonly</span> [K <span class="hljs-keyword">in</span> keyof T]: <span class="hljs-built_in">string</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>最後來做個測試。</p>
+<p>如果現在把 <code>OptionalPerson</code> 丟給 <code>ToRequired</code>，所有屬性就會變成 Required：</p>
+<p><img src="example14-property-modifier.png" alt="example14-property-modifier"></p>
+<h3 id="Partial、Required-和-Readonly"><a href="#Partial、Required-和-Readonly" class="headerlink" title="Partial、Required 和 Readonly"></a>Partial、Required 和 Readonly</h3><p>剛剛利用 property modifier 建立的三種 Type，其實就是 TS 內建提供的 <code>Partial</code>、<code>Required</code> 和 <code>Readonly</code>。這邊分別來看一下它們原始碼：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Partial&lt;T&gt; = {</span><br><span class="line">  [P <span class="hljs-keyword">in</span> keyof T]?: T[P]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Required&lt;T&gt; = {</span><br><span class="line">  [P <span class="hljs-keyword">in</span> keyof T]-?: T[P]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> Readonly&lt;T&gt; = {</span><br><span class="line">  <span class="hljs-keyword">readonly</span> [P <span class="hljs-keyword">in</span> keyof T]-?: T[P]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="泛型參數預設值"><a href="#泛型參數預設值" class="headerlink" title="泛型參數預設值"></a>泛型參數預設值</h2><p><img src="example15-default-value.png" alt="example15-default-value"></p>
+<p>如果你有用過 JS 中的參數預設值的話，要理解 TS 中的泛型參數預設值應該就不困難。</p>
+<p>我們一般在 JS 中使用參數預設值的時候通常是這樣：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 如果 arr 沒有傳，將預設值設為空陣列</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getLength</span>(<span class="hljs-params">arr = []</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> arr.length</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">getLength() <span class="hljs-comment">// 0</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>要在 TS 中做一樣的事情也是 OK 的，讓我們回到一開始的例子：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">type</span> PickWithDefaultValue&lt;T, K <span class="hljs-keyword">extends</span> keyof T = keyof T&gt; = Pick&lt;T, K&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這裡的 <code>PickWithDefaultValue</code> 跟原本的 <code>Pick</code> 功能是一樣的，會接收兩個參數，第一個參數是原本的物件型別，第二個參數是要取出的屬性。</p>
+<p>兩個的差別只在於<strong>第二個參數是不是一定要傳入</strong>？以原本 <code>Pick</code> 來說，如果你沒有傳入第二個參數的話會 TS 會報錯：</p>
+<p><img src="example15-error.png" alt="example15-error"></p>
+<p>但如果是用 <code>PickWithDefaultValue</code> 的話，因為有預設值的關係，所以就算不傳入第二個參數也沒關係：</p>
+<p><img src="example15-use-default-value.png" alt="example15-use-default-value"></p>
+<p>這是怎麼做到的？只是因為我們幫他加上了預設值而已：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 如果 K 沒有值，就設為 T 的所有 key</span></span><br><span class="line"><span class="hljs-keyword">type</span> PickWithDefaultValue&lt;T, K <span class="hljs-keyword">extends</span> keyof T = keyof T&gt; = Pick&lt;T, K&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/users/20103315/ironman/4764">React 前端工程師的兩把刷子</a></p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2023/01/09/11ty-note/">11ty-Notes</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/12/09/react-testing/">React－Testing</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

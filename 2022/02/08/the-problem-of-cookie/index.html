@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>當 Cookie 被竄改會怎麼樣？ - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="就糟糕啦～">
+<meta property="og:type" content="article">
+<meta property="og:title" content="當 Cookie 被竄改會怎麼樣？">
+<meta property="og:url" content="https://jubeatt.github.io/2022/02/08/the-problem-of-cookie/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="就糟糕啦～">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/02/08/the-problem-of-cookie/problem.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/02/08/the-problem-of-cookie/token.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/02/08/the-problem-of-cookie/success.gif">
+<meta property="article:published_time" content="2022-02-08T08:06:56.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.660Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/02/08/the-problem-of-cookie/problem.gif">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡述">1&nbsp;&nbsp;<b>簡述</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#假冒別人身分">2&nbsp;&nbsp;<b>假冒別人身分</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#解決辦法">3&nbsp;&nbsp;<b>解決辦法</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#後記">4&nbsp;&nbsp;<b>後記</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            當 Cookie 被竄改會怎麼樣？
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>2月 8 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/PHP/">PHP</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>就糟糕啦～</p>
+<span id="more"></span>
+
+<h2 id="簡述"><a href="#簡述" class="headerlink" title="簡述"></a>簡述</h2><p>上次在 <a href="https://jubeatt.github.io/2022/02/08/cookie-and-login-system/">利用 Cookie 實作登入機制</a> 中已經實作出一個基本的登入功能，但文末有提過這樣會有 cookie 被竄改的問題。這篇文章就來解釋一下是什麼問題？以及該如何解決？</p>
+<h2 id="假冒別人身分"><a href="#假冒別人身分" class="headerlink" title="假冒別人身分"></a>假冒別人身分</h2><p>既然 cookie 值可以任我改，那只要知道其他人的 <code>username</code> 是什麼就可以假冒身分了：</p>
+<p><img src="problem.gif" alt="problem"></p>
+<p>補充一下「新增留言」的程式邏輯，不然會看不太懂：</p>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/* handle_add_comments.php */</span></span><br><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line">  <span class="hljs-keyword">require_once</span>(<span class="hljs-string">'./conn.php'</span>);</span><br><span class="line">  <span class="hljs-keyword">require_once</span>(<span class="hljs-string">'./utils.php'</span>);</span><br><span class="line">  <span class="hljs-comment">// 透過 cookie 拿到目前的 user</span></span><br><span class="line">  <span class="hljs-variable">$username</span> = <span class="hljs-variable">$_COOKIE</span>[<span class="hljs-string">'username'</span>];</span><br><span class="line">  <span class="hljs-comment">// 撈出 user 資料</span></span><br><span class="line">  <span class="hljs-variable">$user</span> = getUser(<span class="hljs-variable">$username</span>);</span><br><span class="line">  <span class="hljs-comment">// 從 user 資料中找出暱稱的欄位</span></span><br><span class="line">  <span class="hljs-variable">$nickname</span> = <span class="hljs-variable">$user</span>[<span class="hljs-string">'nickname'</span>];</span><br><span class="line">  <span class="hljs-comment">// 用 POST 帶過來的留言內容</span></span><br><span class="line">  <span class="hljs-variable">$content</span> = <span class="hljs-variable">$_POST</span>[<span class="hljs-string">'content'</span>];</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 檢查留言內容</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>(<span class="hljs-variable">$content</span>)) {</span><br><span class="line">    header(<span class="hljs-string">'Location: index.php?errorCode=1'</span>);</span><br><span class="line">    <span class="hljs-keyword">die</span>();</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 加到資料庫</span></span><br><span class="line">  <span class="hljs-variable">$sql</span> = sprintf(</span><br><span class="line">      <span class="hljs-string">"INSERT INTO comments(`nickname`, `content`) VALUES ('%s', '%s')"</span>,</span><br><span class="line">      <span class="hljs-variable">$nickname</span>,</span><br><span class="line">      <span class="hljs-variable">$content</span></span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">try</span> {</span><br><span class="line">    <span class="hljs-variable">$result</span> = <span class="hljs-variable">$conn</span>-&gt;query(<span class="hljs-variable">$sql</span>);</span><br><span class="line">    header(<span class="hljs-string">'Location: index.php'</span>);</span><br><span class="line">  } <span class="hljs-keyword">catch</span> (<span class="hljs-built_in">Exception</span> <span class="hljs-variable">$e</span>) {</span><br><span class="line">    <span class="hljs-keyword">echo</span> <span class="hljs-string">'執行失敗：'</span> . <span class="hljs-variable">$e</span>-&gt;getMessage() . <span class="hljs-string">'&lt;br&gt;'</span>;</span><br><span class="line">    <span class="hljs-keyword">echo</span> <span class="hljs-string">'錯誤代碼：'</span> . <span class="hljs-variable">$conn</span>-&gt;errno;</span><br><span class="line">  }</span><br><span class="line"><span class="hljs-meta">?&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>簡單來說，當 request 送出去時，<code>handle_add_comments.php</code> 會從 cookie 的內容找出對應的 user，取得使用者資訊後再把內容寫到資料庫裡。也就是說 <strong>cookie 寫誰就代表誰</strong> 的意思，因此最後留言的才會是無慘而不是煉獄。</p>
+<h2 id="解決辦法"><a href="#解決辦法" class="headerlink" title="解決辦法"></a>解決辦法</h2><p>前面這種「把資訊都存在瀏覽器的 Cookie」的做法其實叫做「Cookie-based session」，但現在要換個思維，我們可以改成「把資訊存在 Server 端」來處理，這種作法叫「Session Identifier」。</p>
+<p>意思是說，要存在 cookie 的東西不是資訊本身，而是一個類似「通行證」的東西。就好像你去好市多購物要檢查會員卡一樣，「會員卡」就是要用來放在 cookie 裡面給 Server 識別的東西。</p>
+<p>話說回來，剛剛說把要儲存的資訊放在 Server 端，但實際上是指哪裡？</p>
+<p>當然就是 <strong>資料庫</strong> 囉！</p>
+<p>我們可以新開一個叫做 <code>tokens</code> 的資料庫，專門放每個 token 對應到哪個 user，像這樣：</p>
+<p><img src="token.jpg" alt="token"></p>
+<p>現在還沒存任何東西所以欄位都是空的。</p>
+<p>總之呢，登入這一段要做的事情很簡單：</p>
+<ol>
+<li>當登入成功後，產生一個 token</li>
+<li>把 token 寫到 cookie，並且把 token 對應到的 user 寫到資料庫中</li>
+</ol>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 先寫好產生 token 的 function</span></span><br><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">generateToken</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-variable">$s</span> = <span class="hljs-string">''</span>;</span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-variable">$i</span>=<span class="hljs-number">0</span>; <span class="hljs-variable">$i</span>&lt;<span class="hljs-number">15</span>; <span class="hljs-variable">$i</span>++) {</span><br><span class="line">      <span class="hljs-comment">// A ~ Z</span></span><br><span class="line">      <span class="hljs-variable">$s</span> .= chr(rand(<span class="hljs-number">65</span>,<span class="hljs-number">90</span>));</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-variable">$s</span>;</span><br><span class="line">  }</span><br><span class="line">&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/* handle_login.php */</span></span><br><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line">  <span class="hljs-keyword">require_once</span>(<span class="hljs-string">'./conn.php'</span>);</span><br><span class="line">  <span class="hljs-keyword">require_once</span>(<span class="hljs-string">'./utils.php'</span>);</span><br><span class="line">  <span class="hljs-comment">// POST 過來的帳號密碼</span></span><br><span class="line">  <span class="hljs-variable">$username</span> = <span class="hljs-variable">$_POST</span>[<span class="hljs-string">'username'</span>];</span><br><span class="line">  <span class="hljs-variable">$password</span> = <span class="hljs-variable">$_POST</span>[<span class="hljs-string">'password'</span>];</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 檢查帳號密碼 </span></span><br><span class="line">  <span class="hljs-variable">$sql</span> = <span class="hljs-string">"SELECT * FROM users WHERE username='<span class="hljs-subst">$username</span>' AND password='<span class="hljs-subst">$password</span>'"</span>;</span><br><span class="line">  <span class="hljs-variable">$result</span> = <span class="hljs-variable">$conn</span>-&gt;query(<span class="hljs-variable">$sql</span>);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">    帳號密碼正確的話：</span></span><br><span class="line"><span class="hljs-comment">    1. 產生 Token</span></span><br><span class="line"><span class="hljs-comment">    2. 把 Token 跟對應的 username 存到資料庫</span></span><br><span class="line"><span class="hljs-comment">    3. 把 Token 存到 cookie 中</span></span><br><span class="line"><span class="hljs-comment">  */</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (<span class="hljs-variable">$result</span>-&gt;num_rows &gt; <span class="hljs-number">0</span>) {</span><br><span class="line">    <span class="hljs-comment">// 產生 Token</span></span><br><span class="line">    <span class="hljs-variable">$token</span> = generateToken();</span><br><span class="line">    <span class="hljs-comment">// 下 query</span></span><br><span class="line">    <span class="hljs-variable">$sql</span> = <span class="hljs-string">"INSERT INTO tokens(`token`, username) VALUE('<span class="hljs-subst">$token</span>', '<span class="hljs-subst">$username</span>')"</span>;</span><br><span class="line">    <span class="hljs-variable">$conn</span>-&gt;query(<span class="hljs-variable">$sql</span>);</span><br><span class="line">    <span class="hljs-comment">// cookie 過期時間</span></span><br><span class="line">    <span class="hljs-variable">$expire</span> = time() + <span class="hljs-number">3600</span> * <span class="hljs-number">24</span> * <span class="hljs-number">30</span>;</span><br><span class="line">    <span class="hljs-comment">// 設定 cookie</span></span><br><span class="line">    setcookie(<span class="hljs-string">'token'</span>, <span class="hljs-variable">$token</span>, <span class="hljs-variable">$expire</span>);</span><br><span class="line">    <span class="hljs-comment">// 登入成功，導回首頁</span></span><br><span class="line">    header(<span class="hljs-string">'Location: ./index.php'</span>);</span><br><span class="line">  } <span class="hljs-keyword">else</span> {</span><br><span class="line">    <span class="hljs-comment">// 登入失敗</span></span><br><span class="line">    header(<span class="hljs-string">'Location: ./login.php?errorCode=2'</span>);</span><br><span class="line">  }</span><br><span class="line"><span class="hljs-meta">?&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>接下來的 <code>index.php</code> 的流程也差不多，只是稍微多幾個步驟：</p>
+<ol>
+<li>根據 cookie 中的 token 去 <code>tokens</code>（table） 找到對應的 username</li>
+<li>拿 username 去 <code>users</code>（table） 找到對應的 user</li>
+</ol>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/* index.php */</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line">  <span class="hljs-keyword">require_once</span>(<span class="hljs-string">"./conn.php"</span>);</span><br><span class="line">  <span class="hljs-keyword">require_once</span>(<span class="hljs-string">"./utils.php"</span>);</span><br><span class="line">  <span class="hljs-comment">// 沒登入的話就是 null</span></span><br><span class="line">  <span class="hljs-variable">$username</span> = <span class="hljs-literal">Null</span>;</span><br><span class="line">  <span class="hljs-comment">// 檢查 cookie 中的 token </span></span><br><span class="line">  <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">empty</span>(<span class="hljs-variable">$_COOKIE</span>[<span class="hljs-string">'token'</span>])) {</span><br><span class="line">    <span class="hljs-variable">$token</span> = <span class="hljs-variable">$_COOKIE</span>[<span class="hljs-string">'token'</span>];</span><br><span class="line">    <span class="hljs-comment">// 用 token 去拿 user 資料</span></span><br><span class="line">    <span class="hljs-variable">$user</span> = getUserFromToken(<span class="hljs-variable">$token</span>);</span><br><span class="line">    <span class="hljs-variable">$username</span> = <span class="hljs-variable">$user</span>[<span class="hljs-string">'username'</span>];</span><br><span class="line">    <span class="hljs-variable">$nickname</span> = <span class="hljs-variable">$user</span>[<span class="hljs-string">'nickname'</span>];</span><br><span class="line">  }</span><br><span class="line"><span class="hljs-meta">?&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>一樣附上 <code>getUserFromToken($token)</code> 的程式邏輯：</p>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/* utils.php */</span></span><br><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line">  <span class="hljs-keyword">require_once</span>(<span class="hljs-string">'./conn.php'</span>);</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getUserFromToken</span>(<span class="hljs-params"><span class="hljs-variable">$token</span></span>) </span>{</span><br><span class="line">    <span class="hljs-comment">// 存取全域變數要記得用 global</span></span><br><span class="line">    <span class="hljs-keyword">global</span> <span class="hljs-variable">$conn</span>;</span><br><span class="line">    <span class="hljs-comment">// 先從 tokens 中找到對應的 username</span></span><br><span class="line">    <span class="hljs-variable">$sql</span> = <span class="hljs-string">"SELECT username FROM tokens WHERE token='<span class="hljs-subst">$token</span>'"</span>;</span><br><span class="line">    <span class="hljs-variable">$result</span> = <span class="hljs-variable">$conn</span>-&gt;query(<span class="hljs-variable">$sql</span>);</span><br><span class="line">    <span class="hljs-comment">// 代表沒有找到對應的 user，回傳 Failed</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (<span class="hljs-variable">$result</span>-&gt;num_rows === <span class="hljs-number">0</span>) {</span><br><span class="line">      <span class="hljs-keyword">return</span> <span class="hljs-string">'Failed'</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-comment">// 成功拿到 tokens 中的 username</span></span><br><span class="line">    <span class="hljs-variable">$row</span> = <span class="hljs-variable">$result</span>-&gt;fetch_assoc();</span><br><span class="line">    <span class="hljs-variable">$username</span> = <span class="hljs-variable">$row</span>[<span class="hljs-string">'username'</span>];</span><br><span class="line">    <span class="hljs-comment">// 下第二個 query</span></span><br><span class="line">    <span class="hljs-variable">$sql</span> = <span class="hljs-string">"SELECT * FROM users WHERE username='<span class="hljs-subst">$username</span>'"</span>;</span><br><span class="line">    <span class="hljs-variable">$result</span> = <span class="hljs-variable">$conn</span>-&gt;query(<span class="hljs-variable">$sql</span>);</span><br><span class="line">    <span class="hljs-comment">// 這邊就是 user 的資料了，傳回去</span></span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-variable">$result</span>-&gt;fetch_assoc();</span><br><span class="line">  }</span><br><span class="line"><span class="hljs-meta">?&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>最後一樣就完成登入機制了，但跟剛剛不同的是現在沒辦法再竄改 cookie 來假冒別人身分：</p>
+<p><img src="success.gif" alt="success"></p>
+<p>一樣附上「新增留言」的程式邏輯：</p>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line">  <span class="hljs-keyword">require_once</span>(<span class="hljs-string">'./conn.php'</span>);</span><br><span class="line">  <span class="hljs-keyword">require_once</span>(<span class="hljs-string">'./utils.php'</span>);</span><br><span class="line">  <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">    這邊一樣是存取 cookie 值，</span></span><br><span class="line"><span class="hljs-comment">    但是當 token 不正確時，getUserFromToken($token) 會回傳 Failed，</span></span><br><span class="line"><span class="hljs-comment">    所以下面的 $nickname = $user['nickname'] 就會噴 Fatal error，</span></span><br><span class="line"><span class="hljs-comment">    你可以把這邊改成導回 index.php?errorCode=2 顯示錯誤訊息之類的。</span></span><br><span class="line"><span class="hljs-comment">    總之，這邊的重點是要說明沒辦法再竄改 cookie 了而已。</span></span><br><span class="line"><span class="hljs-comment">  */</span></span><br><span class="line">  <span class="hljs-variable">$token</span> = <span class="hljs-variable">$_COOKIE</span>[<span class="hljs-string">'token'</span>];</span><br><span class="line">  <span class="hljs-variable">$user</span> = getUserFromToken(<span class="hljs-variable">$token</span>);</span><br><span class="line">  <span class="hljs-variable">$nickname</span> = <span class="hljs-variable">$user</span>[<span class="hljs-string">'nickname'</span>];</span><br><span class="line">  <span class="hljs-variable">$content</span> = <span class="hljs-variable">$_POST</span>[<span class="hljs-string">'content'</span>];</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 檢查留言內容</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>(<span class="hljs-variable">$content</span>)) {</span><br><span class="line">    header(<span class="hljs-string">'Location: index.php?errorCode=1'</span>);</span><br><span class="line">    <span class="hljs-keyword">die</span>();</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 加到資料庫</span></span><br><span class="line">  <span class="hljs-variable">$sql</span> = sprintf(</span><br><span class="line">      <span class="hljs-string">"INSERT INTO comments(`nickname`, `content`) VALUES ('%s', '%s')"</span>,</span><br><span class="line">      <span class="hljs-variable">$nickname</span>,</span><br><span class="line">      <span class="hljs-variable">$content</span></span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">try</span> {</span><br><span class="line">    <span class="hljs-variable">$result</span> = <span class="hljs-variable">$conn</span>-&gt;query(<span class="hljs-variable">$sql</span>);</span><br><span class="line">    header(<span class="hljs-string">'Location: index.php'</span>);</span><br><span class="line">  } <span class="hljs-keyword">catch</span> (<span class="hljs-built_in">Exception</span> <span class="hljs-variable">$e</span>) {</span><br><span class="line">    <span class="hljs-keyword">echo</span> <span class="hljs-string">'執行失敗：'</span> . <span class="hljs-variable">$e</span>-&gt;getMessage() . <span class="hljs-string">'&lt;br&gt;'</span>;</span><br><span class="line">    <span class="hljs-keyword">echo</span> <span class="hljs-string">'錯誤代碼：'</span> . <span class="hljs-variable">$conn</span>-&gt;errno;</span><br><span class="line">  }</span><br><span class="line"><span class="hljs-meta">?&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>以上就是解決 cookie 被竄改的應對方法，以及 Session Identifier 的概念，把資料存在 Server，Cookie 只存 Token（或叫 Session ID）。</p>
+<p>最後補充一下，登出的時候不要忘了把資料庫中的 token 給清掉：</p>
+<figure class="highlight php hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/* handle_logout.php */</span></span><br><span class="line"><span class="hljs-meta">&lt;?php</span></span><br><span class="line">  <span class="hljs-keyword">require_once</span>(<span class="hljs-string">'./conn.php'</span>);</span><br><span class="line">  <span class="hljs-variable">$token</span> = <span class="hljs-variable">$_COOKIE</span>[<span class="hljs-string">'token'</span>];</span><br><span class="line">  <span class="hljs-comment">// 先刪除資料庫中的內容</span></span><br><span class="line">  <span class="hljs-variable">$sql</span> = <span class="hljs-string">"DELETE FROM tokens WHERE token='<span class="hljs-subst">$token</span>'"</span>;</span><br><span class="line">  <span class="hljs-variable">$conn</span>-&gt;query(<span class="hljs-variable">$sql</span>);</span><br><span class="line">  <span class="hljs-comment">// 再清除 cookie</span></span><br><span class="line">  setcookie(<span class="hljs-string">'token'</span>, <span class="hljs-string">''</span>, time() - <span class="hljs-number">3600</span>);</span><br><span class="line">  header(<span class="hljs-string">'Location: ./index.php'</span>);</span><br><span class="line"><span class="hljs-meta">?&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>其實 PHP 裡面就有內建的 session 機制，用法可以參考這篇：<a href="https://jubeatt.github.io/2022/02/07/php-session/">PHP 內建的 session 方法</a></p>
+<p>雖然內建方法用起來簡單，而且也比較穩定，但自己手工實作一遍確實會對「Session Identifier」的概念有更深的理解，所以才會想寫篇文章來做紀錄。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/02/08/what-are-encoding-encrypt-and-hashing/">Encode、Encrypt 跟 Hash 的差別</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/02/08/cookie-and-login-system/">利用 Cookie 實作登入機制</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

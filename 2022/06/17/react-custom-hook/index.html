@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>React－來捏一個 Custom hook - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="熟悉以後應該會很實用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React－來捏一個 Custom hook">
+<meta property="og:url" content="https://jubeatt.github.io/2022/06/17/react-custom-hook/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="熟悉以後應該會很實用。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-06-17T10:45:32.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.553Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡述">1&nbsp;&nbsp;<b>簡述</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#用-custom-hook-有什麼好處？">2&nbsp;&nbsp;<b>用 custom hook 有什麼好處？</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#實作-custom-hook">3&nbsp;&nbsp;<b>實作 custom hook</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#延伸：我不只要-GET，我還想要-POST">4&nbsp;&nbsp;<b>延伸：我不只要 GET，我還想要 POST</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            React－來捏一個 Custom hook
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>6月 17 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/React/">React</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>熟悉以後應該會很實用。</p>
+<span id="more"></span>
+
+<h2 id="簡述"><a href="#簡述" class="headerlink" title="簡述"></a>簡述</h2><p>最近在上 <a target="_blank" rel="noopener" href="https://www.udemy.com/course/build-web-apps-with-react-firebase/">Build Web Apps with React &amp; Firebase</a> 這門課，裡面有介紹到如何利用 hook 來建立一個 custom hook。</p>
+<p>我覺得這東西還蠻實用的，但我還不是很熟，所以想透過這篇筆記來多做一點練習。</p>
+<h2 id="用-custom-hook-有什麼好處？"><a href="#用-custom-hook-有什麼好處？" class="headerlink" title="用 custom hook 有什麼好處？"></a>用 custom hook 有什麼好處？</h2><p>在學任何一項東西以前，試著先問自己「為什麼要用這個東西？」是比較好的觀念，才不會學了一大堆東西後卻完全不知道用途。</p>
+<p>首先，我們拿一個最常見的例子來舉例：串接 API</p>
+<p>最簡單的串接方式是透過 <code>fetch</code>，此時你的腦袋中應該會有這樣的 code：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [data, setData] = useState(<span class="hljs-literal">null</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> [error, setError] = useState(<span class="hljs-literal">null</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> [fetching, setFetching] = useState(<span class="hljs-literal">false</span>)</span><br><span class="line">  </span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    setFetching(<span class="hljs-literal">true</span>)</span><br><span class="line">    fetch(url)</span><br><span class="line">      .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {</span><br><span class="line">        <span class="hljs-comment">// 強制進入 catch 區塊 </span></span><br><span class="line">        <span class="hljs-keyword">if</span> (!response.ok) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(response.status)</span><br><span class="line">        <span class="hljs-keyword">return</span> response.json()</span><br><span class="line">      })</span><br><span class="line">      .then(<span class="hljs-function"><span class="hljs-params">json</span> =&gt;</span> {</span><br><span class="line">        setData(json)</span><br><span class="line">        setFetching(<span class="hljs-literal">false</span>)</span><br><span class="line">      })</span><br><span class="line">      .catch(<span class="hljs-function"><span class="hljs-params">error</span> =&gt;</span> {</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(error.message)</span><br><span class="line">        setError(<span class="hljs-string">'Can not fetch data'</span>)</span><br><span class="line">        setFetching(<span class="hljs-literal">false</span>)</span><br><span class="line">      })</span><br><span class="line">  }, [])</span><br><span class="line">  </span><br><span class="line">  <span class="hljs-keyword">return</span> ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>看起來就是非常標準的寫法，這樣有什麼問題嗎？</p>
+<p>問這問題以前，要先問問看「你有多少元件會用到 fetch？」，如果說就只有一個 App 會用到的話當然沒什麼問題。</p>
+<p><strong>可是如果有很多個呢？</strong></p>
+<p>那你就得在每一個元件上都寫上那段 boilerplate，這樣子聽起來就不是那麼好了吧？</p>
+<p>但如果我們自己寫了一個專門用來處理 <code>fetch</code> 的 custom hook，就可以改寫成這樣子：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { useFetch } <span class="hljs-keyword">from</span> <span class="hljs-string">"hooks/useFetch"</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> { data, error, fetching } = useFetch(url)</span><br><span class="line">  <span class="hljs-keyword">return</span> ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>有沒有突然覺得世界變美好了 XD，這個就是 custom hook 的威力。</p>
+<p>回歸正題，custom hook 的主要用意是用來「把邏輯抽出去，讓元件只要專注在 render 這件事情上」，可以想成是另一種 HOC（Higher Order Component） 的感覺。</p>
+<h2 id="實作-custom-hook"><a href="#實作-custom-hook" class="headerlink" title="實作 custom hook"></a>實作 custom hook</h2><p>這邊會以剛剛的範例來實作，所以如果忘記的話可以拉回去複習。</p>
+<p>順道一提，在寫 custom hook 前可以先思考看看「我希望最後會怎麼用這個 hook？」，這樣會讓整個思路更清晰一些。</p>
+<p>再貼一次剛剛的 code，我希望最後會長這樣：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { useFetch } <span class="hljs-keyword">from</span> <span class="hljs-string">"hooks/useFetch"</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> { data, error, fetching } = useFetch(url)</span><br><span class="line">  <span class="hljs-keyword">return</span> ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>也就是說這個 hook 最後得回傳 <code>data</code>、<code>error</code> 和 <code>fetching</code> 這三樣東西。這些東西看起來就是會「跟畫面顯示有關」，所以會用 <code>useState</code> 來實作。</p>
+<p>接下來我會直接附 code，因為你看完再仔細思考一下，就會發現只是「把原本寫在元件裡的東西抽出來而已」，所以我就不解釋太多了。</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { useState, useEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">useFetch</span> (<span class="hljs-params">url</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [data, setData] = useState(<span class="hljs-literal">null</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> [error, setError] = useState(<span class="hljs-literal">null</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> [fetching, setFetching] = useState(<span class="hljs-literal">false</span>)</span><br><span class="line">  </span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    setFetching(<span class="hljs-literal">true</span>)</span><br><span class="line">    fetch(url)</span><br><span class="line">      .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {</span><br><span class="line">        <span class="hljs-comment">// 強制進入 catch 區塊 </span></span><br><span class="line">        <span class="hljs-keyword">if</span> (!response.ok) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(response.status)</span><br><span class="line">        <span class="hljs-keyword">return</span> response.json()</span><br><span class="line">      })</span><br><span class="line">      .then(<span class="hljs-function"><span class="hljs-params">json</span> =&gt;</span> {</span><br><span class="line">        setData(json)</span><br><span class="line">        setFetching(<span class="hljs-literal">false</span>)</span><br><span class="line">      })</span><br><span class="line">      .catch(<span class="hljs-function"><span class="hljs-params">error</span> =&gt;</span> {</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(error.message)</span><br><span class="line">        setError(<span class="hljs-string">'Can not fetch data'</span>)</span><br><span class="line">        setFetching(<span class="hljs-literal">false</span>)</span><br><span class="line">      })</span><br><span class="line">  }, [])</span><br><span class="line">  </span><br><span class="line">  <span class="hljs-keyword">return</span> {data, error, fetching}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣就完成囉！接著就能在其他元件透過 <code>useFetch</code> 來使用了。</p>
+<p>如果有任何疑問的話都可以到我寫的 <a target="_blank" rel="noopener" href="https://codesandbox.io/s/custom-hook-fetch-1kzjsb?file=/src/App.js">範例</a> 來玩玩看。</p>
+<h2 id="延伸：我不只要-GET，我還想要-POST"><a href="#延伸：我不只要-GET，我還想要-POST" class="headerlink" title="延伸：我不只要 GET，我還想要 POST"></a>延伸：我不只要 GET，我還想要 POST</h2><p>這個是上面的延伸練習，你可以試著先自己練習看看，要怎麼做才可以讓 <code>useFetch</code> 同時支援 GET 跟 POST 這兩種不同的方法。</p>
+<p>給你一些提示：</p>
+<ol>
+<li>這代表我們在用 <code>useFetch</code> 時得多傳入一個參數讓他知道要用 GET / POST</li>
+<li>如果是 POST 的話會需要傳入資料（body）。這個會有兩種做法，一種是當作參數傳給 <code>useFetch</code>，另一種是在 <code>useFetch</code> 中定義新的 state。你可以想到第二種該怎麼做嗎？</li>
+</ol>
+<p>想好的話就可以往下看解答了：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { useState, useEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 如果沒有傳，把預設值設為 GET</span></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">useFetch</span>(<span class="hljs-params">url, method = <span class="hljs-string">"GET"</span></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [data, setData] = useState(<span class="hljs-literal">null</span>);</span><br><span class="line">  <span class="hljs-keyword">const</span> [error, setError] = useState(<span class="hljs-literal">null</span>);</span><br><span class="line">  <span class="hljs-keyword">const</span> [fetching, setFetching] = useState(<span class="hljs-literal">false</span>);</span><br><span class="line">  <span class="hljs-comment">// 新增一個用來儲存資料的 state</span></span><br><span class="line">  <span class="hljs-keyword">const</span> [options, setOptions] = useState(<span class="hljs-literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 為了讓元件可以更新 options，新開一個 setter</span></span><br><span class="line">  <span class="hljs-keyword">const</span> setPostData = <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {</span><br><span class="line">    setOptions({</span><br><span class="line">      <span class="hljs-attr">method</span>: <span class="hljs-string">"POST"</span>,</span><br><span class="line">      <span class="hljs-attr">headers</span>: {</span><br><span class="line">        <span class="hljs-string">"Content-Type"</span>: <span class="hljs-string">"application/json"</span></span><br><span class="line">      },</span><br><span class="line">      <span class="hljs-attr">body</span>: <span class="hljs-built_in">JSON</span>.stringify(data)</span><br><span class="line">    });</span><br><span class="line">  };</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 根據 options 來決定執行哪一段 fetch</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (method === <span class="hljs-string">"GET"</span>) {</span><br><span class="line">      setFetching(<span class="hljs-literal">true</span>);</span><br><span class="line">      fetch(url)</span><br><span class="line">        .then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> {</span><br><span class="line">          <span class="hljs-keyword">if</span> (!response.ok) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(response.status);</span><br><span class="line">          <span class="hljs-keyword">return</span> response.json();</span><br><span class="line">        })</span><br><span class="line">        .then(<span class="hljs-function">(<span class="hljs-params">json</span>) =&gt;</span> {</span><br><span class="line">          setData(json);</span><br><span class="line">          setFetching(<span class="hljs-literal">false</span>);</span><br><span class="line">        })</span><br><span class="line">        .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {</span><br><span class="line">          <span class="hljs-built_in">console</span>.log(error.message);</span><br><span class="line">          setError(<span class="hljs-string">"Can not fetch data"</span>);</span><br><span class="line">          setFetching(<span class="hljs-literal">false</span>);</span><br><span class="line">        });</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-keyword">if</span> (method === <span class="hljs-string">"POST"</span> &amp;&amp; options) {</span><br><span class="line">      setFetching(<span class="hljs-literal">true</span>);</span><br><span class="line">      fetch(url)</span><br><span class="line">        .then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> {</span><br><span class="line">          <span class="hljs-keyword">if</span> (!response.ok) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(response.status);</span><br><span class="line">          <span class="hljs-keyword">return</span> response.json();</span><br><span class="line">        })</span><br><span class="line">        .then(<span class="hljs-function">(<span class="hljs-params">json</span>) =&gt;</span> {</span><br><span class="line">          setData(json);</span><br><span class="line">          setFetching(<span class="hljs-literal">false</span>);</span><br><span class="line">        })</span><br><span class="line">        .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {</span><br><span class="line">          <span class="hljs-built_in">console</span>.log(error.message);</span><br><span class="line">          setError(<span class="hljs-string">"Can not send request"</span>);</span><br><span class="line">          setFetching(<span class="hljs-literal">false</span>);</span><br><span class="line">        });</span><br><span class="line">    }</span><br><span class="line">  }, [url, options]);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> { data, error, fetching, setPostData };</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>簡單來說就是判斷 method 來執行對應的 fetch 就行了，不太懂的話可以到這邊來看<a target="_blank" rel="noopener" href="https://codesandbox.io/s/custom-hook-fetch-upgrade-ke52tz?file=/src/App.js">範例</a>。</p>
+<p>另外如果你覺得這樣子很攏長（fetch 的部分），想包裝成 function 的話絕對沒問題，但這邊就不示範了，留給你自己來練習。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/06/18/react-nprogress/">react-nprogress 懶人包</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/06/16/import-trick/">一個 import 的小技巧</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

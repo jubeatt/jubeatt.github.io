@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Vim 筆記 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="傳說中的 vim。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vim 筆記">
+<meta property="og:url" content="https://jubeatt.github.io/2022/10/16/vim-note/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="傳說中的 vim。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/16/vim-note/example2.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/16/vim-note/example2-insert-mode.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/16/vim-note/example1-warning.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/16/vim-note/example3-search.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/16/vim-note/example3-auto-search.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/16/vim-note/example4-waypoint.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/16/vim-note/example5-replace-all.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/16/vim-note/example6-replace-some.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/16/vim-note/example7-replace-first.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/10/16/vim-note/example8-replace-slash.gif">
+<meta property="article:published_time" content="2022-10-16T13:46:38.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.715Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/10/16/vim-note/example2.png">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Vim-的三種模式">1&nbsp;&nbsp;<b>Vim 的三種模式</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#其實可以插到你想插的地方">2&nbsp;&nbsp;<b>其實可以插到你想插的地方</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#離開-Vim-的方法">3&nbsp;&nbsp;<b>離開 Vim 的方法</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#都說了是-q-不是-q">3.1&nbsp;&nbsp;都說了是 :q! 不是 :!q</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#編輯器相關的設定">4&nbsp;&nbsp;<b>編輯器相關的設定</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#普通模式中的相關的熱鍵">5&nbsp;&nbsp;<b>普通模式中的相關的熱鍵</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#組合技">5.1&nbsp;&nbsp;組合技</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#搜尋">6&nbsp;&nbsp;<b>搜尋</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#搜尋好了，可以不要再-highlight-了嗎？">6.1&nbsp;&nbsp;搜尋好了，可以不要再 highlight 了嗎？</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#跳躍到上個記憶點">7&nbsp;&nbsp;<b>跳躍到上個記憶點</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#取代檔案中的所有文字">8&nbsp;&nbsp;<b>取代檔案中的所有文字</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Vim 筆記
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>10月 16 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Vim/">Vim</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>傳說中的 vim。</p>
+<span id="more"></span>
+
+<h2 id="Vim-的三種模式"><a href="#Vim-的三種模式" class="headerlink" title="Vim 的三種模式"></a>Vim 的三種模式</h2><p>基本上 Vim 會有三種模式，分別是：</p>
+<ul>
+<li>普通模式（Normal Mode）</li>
+<li>插入模式（Insert Mode）</li>
+<li>選取模式（Visual Mode）</li>
+</ul>
+<p>在一開始進入 vim 的時後預設會是普通模式，在這個模式中每一個鍵會有不同的功能，像是 <code>d</code> 可以用來刪除一排文字，<code>a</code>、<code>o</code>、 <code>i</code> 可以用來進入插入模式等等。</p>
+<p>除此之外在普通模式中可以用 <code>:</code> 來下指令，所以最簡單的例子就是在普通模式中用 <code>:q</code> 下一個「我要離開」的指令，vim 接收到指令後才會帶你離開。</p>
+<p>至於插入模式就是純粹的讓你「輸入任何文字」，每一個鍵就是單純代表某一個字，不像普通模式一樣會具有特定的功能。</p>
+<p>順道一提，要從插入模式回到普通模式的方式很簡單：<strong>只要按下 <code>ESC</code> 或 <code>Ctrl + [</code> 就行了</strong></p>
+<p>最後是插入模式，這個說穿了就只是讓你可以像滑鼠一樣做「選取」的動作而已。</p>
+<h2 id="其實可以插到你想插的地方"><a href="#其實可以插到你想插的地方" class="headerlink" title="其實可以插到你想插的地方"></a>其實可以插到你想插的地方</h2><p>前面有提到 <code>a</code>、<code>i</code>、<code>o</code> 這三個鍵都能用來進入插入模式，但這其實這不是什麼為了防呆來配置的各種快捷鍵，而是他們<strong>插入的方式</strong>不太一樣。</p>
+<p>假設這是目前的狀態（注意游標的位置在 <code>5</code>）：</p>
+<p><img src="example2.png" alt="example2"></p>
+<p>接下來如果我按下：</p>
+<ul>
+<li><code>i</code> ，vim 就會自動幫我把游標插入到 5 的前面</li>
+<li><code>a</code>，vim 就會自動幫我把游標插入到 5 的後面</li>
+<li><code>o</code>，vim 就會自動幫我把游標插到下一行的位置</li>
+</ul>
+<p>（我在進入後輸入的文字是表示目前是用哪個鍵來進入的，你只要注意我輸入後出現的位置在哪就好，這個就是上面的意思）</p>
+<p><img src="example2-insert-mode.gif" alt="example2-insert-mode"></p>
+<p>此外 <code>A</code>、<code>I</code>、<code>O</code> （可以搭配 shift）也可以用來進入插入模式，不過又會是另外一種插入的方式，但概念上都跟前面差不多。</p>
+<h2 id="離開-Vim-的方法"><a href="#離開-Vim-的方法" class="headerlink" title="離開 Vim 的方法"></a>離開 Vim 的方法</h2><p>在你還沒有輸入任何東西以前，可以用 <code>:q</code> 來離開。</p>
+<p>可是一旦你進入「Insert 模式」並打了任何一個字，你就得用 <code>:q!</code> 來告訴 Vim 你不想保留任何修改，讓我離開就對了。</p>
+<p>否則會出現這個警告：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E37: No write since last change (add ! to override)</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="都說了是-q-不是-q"><a href="#都說了是-q-不是-q" class="headerlink" title="都說了是 :q! 不是 :!q"></a>都說了是 :q! 不是 :!q</h3><p>在對這些指令不熟的時候常常會把指令給記錯，像我就很常把 <code>:q!</code> 打成 <code>:!q</code>，結果就會跳到這個奇怪的畫面：</p>
+<p><img src="example1-warning.png" alt="example1-warning"></p>
+<p>後來發現其實 <code>:!</code> 的用途其實是「我要執行 Terminal 相關的指令」，所以當你執行 <code>:!q</code> 的時候就等同於直接在 Terminal 上執行 <code>q</code> 這個指令的意思，所以上面才會跳一段：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zsh:1: command not found: q</span><br></pre></td></tr></tbody></table></figure>
+
+<p>就是在跟你說「沒有 q 這個指令哦」的意思。</p>
+<p>所以 <code>:q!</code> 跟 <code>:!q</code> 雖然長得很類似，但實際用途卻是天差地遠，這一點要特別記住。</p>
+<h2 id="編輯器相關的設定"><a href="#編輯器相關的設定" class="headerlink" title="編輯器相關的設定"></a>編輯器相關的設定</h2><ul>
+<li><code>:set number</code> 顯示行數（絕對位置）</li>
+<li><code>:set relativenumber</code> 顯示行數（相對位置）</li>
+<li><code>:set mouser=a</code> 開啟滑鼠功能（點擊、選取）</li>
+<li><code>set tabstop=2</code> tab 的寬度</li>
+<li><code>set shiftwidth=2</code> 縮排的寬度（通常會跟 tabstop 一樣）</li>
+<li><code>colorscheme default</code> 主題色</li>
+<li><code>syntax on</code> 語法高亮</li>
+<li><code>set expandtab</code> 把 tab 替換成空白鍵</li>
+</ul>
+<p>如果要套用為全域設定的話可以在 <code>~/.vimrc</code> 中建立檔案，並填入內容：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">set number</span><br><span class="line">set relativenumber</span><br><span class="line">set tabstop=2</span><br><span class="line">set shiftwidth=2</span><br><span class="line">set autoindent</span><br><span class="line">set mouse=a</span><br><span class="line">colorscheme default</span><br><span class="line">syntax on</span><br><span class="line">set expandtab</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="普通模式中的相關的熱鍵"><a href="#普通模式中的相關的熱鍵" class="headerlink" title="普通模式中的相關的熱鍵"></a>普通模式中的相關的熱鍵</h2><ul>
+<li><code>d</code> 刪除</li>
+<li><code>D</code> 刪除游標後剩下的文字</li>
+<li><code>y</code> 複製（yanking）</li>
+<li><code>p</code> 貼上（paste）</li>
+<li><code>u</code> 取消動作（Undo）</li>
+<li><code>r</code> 替換單個文字（replace）</li>
+<li><code>w</code> 跳到下個單字（word）</li>
+<li><code>w</code> 跳到下個單字（依據空格來跳）</li>
+<li><code>b</code> 跳到前一個單字（back word）</li>
+<li><code>B</code> 跳到前一個單字（依據空格來跳）</li>
+<li><code>e</code> 跳到單字的最尾端（end of word）</li>
+<li><code>$</code> 跳到行內的終點（可以想成正則表達的 $）</li>
+<li><code>g_</code> 跳到行內的終點（可以想成正則表達的 $）</li>
+<li><code>0</code> 跳到行內的起始點（會回到那一行的最起點，無視縮排）</li>
+<li><code>^</code> 跳到行內的起始點（跟 Home 鍵一樣的位置）</li>
+<li><code>_</code> 跳到行內的起始點（跟 Home 鍵一樣的位置）</li>
+<li><code>%</code> 跳到成對符號起始 or 終點（例如 <code>{</code>）</li>
+<li><code>t*</code> 跳到 <code>*</code> 的前一格（until）</li>
+<li><code>f*</code> 跳到 <code>*</code> 的位置（find）</li>
+<li><code>dd</code> 刪除整行</li>
+<li><code>yy</code> 複製整行</li>
+<li><code>cc</code> 只清除但不刪除行數，並開啟插入模式（change）</li>
+<li><code>gg</code> 跳到檔案的最後一行（good game）</li>
+<li><code>zz</code> 自動聚焦到畫面中央（根據游標位置）</li>
+<li><code>ctrl + r</code> redo- <code>shift + g</code> 跳到檔案的第一行（shit game）</li>
+<li><code>shift + v</code> 一次選取一行</li>
+<li><code>ctrl + v</code> 選取多個區塊</li>
+<li><code>=G</code> 對整個檔案做 indent</li>
+<li><code>&lt;&lt; / &gt;&gt; </code> 往前 / 後 indent（單行）</li>
+<li><code>m + &lt;記憶鍵&gt;</code> 設定記憶點（行數）</li>
+<li><code>' + &lt;記憶鍵&gt;</code> 跳回記憶點（行數）</li>
+<li><code>" + * + y</code> 把內容複製到系統的剪貼板（這樣才能貼到其他地方）</li>
+<li><code>&lt;number&gt; + gg</code> 跳到指定的行數</li>
+<li><code>gu / gU</code> 快速切換大小寫</li>
+<li><code>~</code> 把目前游標上的字轉換成大小寫</li>
+</ul>
+<h3 id="組合技"><a href="#組合技" class="headerlink" title="組合技"></a>組合技</h3><ul>
+<li><code>dw</code> 刪除單字</li>
+<li><code>d2w</code> 刪除兩個單字</li>
+<li><code>diw</code> 刪除游標內的單字（delete inner word）</li>
+<li><code>ciw</code> 修改游標內的單字（change inner word）</li>
+<li><code>yiw</code> 複製游標內的單字（yank inner word）</li>
+<li><code>ci(</code> 改變 <code>(</code> 內的文字（👍）</li>
+<li><code>yi(</code> 複製 <code>(</code> 內的文字（👍）</li>
+<li><code>di(</code> 刪除 <code>(</code> 內的文字（👍）</li>
+<li><code>(行數) + G</code> 跳到指定的行數（或是直接下指令 <code>:行數</code>）</li>
+<li><code>:norm $a,</code> 對選取的區塊執行這個動作（在最後面 appren 一個逗號）</li>
+<li><code>:! sort</code> 把選取的文字做排序（unix only）</li>
+<li><code>gf</code> 對目前檔案裡的路徑（字串）執行後就能打開那個檔案</li>
+<li><code>*cgn.</code> 替換掉多組相同的單字（詳細可以參考<a target="_blank" rel="noopener" href="https://vi.stackexchange.com/questions/27812/select-multiple-words-one-at-a-time-then-replace-them-all">這篇</a>）</li>
+<li><code>f&lt;letter&gt;;</code> 當你用 <code>f</code> + <code>&lt;letter&gt;</code> 找到第一個字不是你想要的那一個，可以按 <code>;</code> 來重複這個動作</li>
+</ul>
+<h2 id="搜尋"><a href="#搜尋" class="headerlink" title="搜尋"></a>搜尋</h2><p>要在 vim 裡面搜尋文字的話可以在普通模式中下「<code>/</code> + 關鍵字」，就可以根據關鍵字來搜尋所有符合的文字。</p>
+<p>如果要往下尋找可以按下 <code>n</code>，往前尋找可以按下 <code>N</code>。</p>
+<p><img src="example3-search.gif" alt="example3-search"></p>
+<p>或者是我想搜尋目前游標附近的單字，可以在那個單字旁邊用 <code>*</code> 或 <code>#</code> 來自動搜尋這個單字：</p>
+<p><img src="example3-auto-search.gif" alt="example3-auto-search"></p>
+<p>附註：<code>*</code> 是往下找，<code>#</code> 是往上找。</p>
+<h3 id="搜尋好了，可以不要再-highlight-了嗎？"><a href="#搜尋好了，可以不要再-highlight-了嗎？" class="headerlink" title="搜尋好了，可以不要再 highlight 了嗎？"></a>搜尋好了，可以不要再 highlight 了嗎？</h3><p>有些主題可能會自動把 match 的文字給 highlight 起來，這個是好功能是沒錯，但前提是不要在我已經經取消搜尋了還持續 highlight。</p>
+<p>總之碰到這種問題的時候你可以重新用 <code>/</code> 搜尋一串無意義文字就能取消了。</p>
+<h2 id="跳躍到上個記憶點"><a href="#跳躍到上個記憶點" class="headerlink" title="跳躍到上個記憶點"></a>跳躍到上個記憶點</h2><p>這招我覺得很值得學所以特別列一下，簡單來說就是你可以用 <code>m + &lt;記憶點&gt;</code> 來把這個行數給記起來，接著當你想跳回記憶點的時候只要用 <code>' + &lt;記憶點&gt;</code> 就可以馬上跳回那當初的行數。</p>
+<p>直接來看示範：</p>
+<p><img src="example4-waypoint.gif" alt="example4-waypoint"></p>
+<p>先原諒我這時候還不會設定 highlight，所以看起來很傷眼 QQ，不過這邊的重點是我先在 <code>onSave</code> 和 <code>onAddFile</code> 各別設定了記憶點，接著當我跳到其他地方要再跳回去時，我只要下：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">' + &lt;記憶點&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>就可以馬上跳回我當初記憶的地方，這個功能真的超方便的啦~</p>
+<h2 id="取代檔案中的所有文字"><a href="#取代檔案中的所有文字" class="headerlink" title="取代檔案中的所有文字"></a>取代檔案中的所有文字</h2><p>簡單來說就是對檔案中的字串做全域修改，用法是：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%s/&lt;舊字串&gt;/&lt;新字串&gt;/g</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="example5-replace-all.gif" alt="example5-replace-all"></p>
+<p>或者我也可以只選擇一個區塊來做修改：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:s/&lt;舊字串&gt;/&lt;新字串&gt;/g</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="example6-replace-some.gif" alt="example6-replace-some"></p>
+<p>順道一提，如果不加上 <code>g</code> 的話只會把每一行第一個符合的字給替換掉，像這樣：</p>
+<p><img src="example7-replace-first.gif" alt="example7-replace-first"></p>
+<p>如果要替換的字剛好是 <code>/</code> 的話，可以改用其他的分隔符（delimiter）來取代，比較常見的會是 <code>#</code>：</p>
+<p><img src="example8-replace-slash.gif" alt="example8-replace-slash"></p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/10/19/vim-lsp-note/">Vim－LSP 筆記</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/10/14/git-cherry-pick/">Git Cherry-pick－只把想要的 commit 併進來</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>跟字串有關的內建函式 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="常用到的內建函式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="跟字串有關的內建函式">
+<meta property="og:url" content="https://jubeatt.github.io/2021/12/20/built-in-function-string/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="常用到的內建函式。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-12-20T07:11:40.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.238Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#String">1&nbsp;&nbsp;<b>String</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            跟字串有關的內建函式
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>12月 20 2021</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>常用到的內建函式。</p>
+<span id="more"></span>
+
+<h2 id="String"><a href="#String" class="headerlink" title="String"></a>String</h2><p><code>String.charCodeAt(n)</code>  第 n 個字元儲存的 ASCII 碼</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> str = <span class="hljs-string">'abc'</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.charCodeAt(<span class="hljs-number">0</span>)) <span class="hljs-comment">// 97</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.charCodeAt(<span class="hljs-number">1</span>)) <span class="hljs-comment">// 98</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.charCodeAt(<span class="hljs-number">2</span>)) <span class="hljs-comment">// 99</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>String.FromCharCode(n)</code>  轉換成對應的字元（n = ASCII）</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> ASCII1 = <span class="hljs-number">97</span></span><br><span class="line"><span class="hljs-keyword">const</span> ASCII2 = <span class="hljs-number">98</span></span><br><span class="line"><span class="hljs-keyword">const</span> ASCII3 = <span class="hljs-number">99</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">String</span>.fromCharCode(ASCII1))  <span class="hljs-comment">// a</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">String</span>.fromCharCode(ASCII2))  <span class="hljs-comment">// b</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">String</span>.fromCharCode(ASCII3))  <span class="hljs-comment">// c</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>String.toUpperCase(str)</code>  字串轉大寫<br><code>String.toLowerCase(str)</code>  字串轉小寫</p>
+<p>「非英文字母」的字元不會做轉換。</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> Upper = <span class="hljs-string">'abc'</span>.toUpperCase()</span><br><span class="line"><span class="hljs-keyword">const</span> Lower = <span class="hljs-string">'ABC'</span>.toLowerCase()</span><br><span class="line"><span class="hljs-keyword">const</span> NotEn = <span class="hljs-string">'@123'</span>.toUpperCase()</span><br><span class="line"><span class="hljs-built_in">console</span>.log(Upper)  <span class="hljs-comment">// ABC</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(Lower)  <span class="hljs-comment">// abc</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(NotEn)  <span class="hljs-comment">// @123</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+<p><code>String.endsWith(string)</code> 結尾字串跟 string 相不相同。 </p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> str = <span class="hljs-string">'abc'</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.endsWith(<span class="hljs-string">'c'</span>))  <span class="hljs-comment">// true</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.endsWith(<span class="hljs-string">'bc'</span>))  <span class="hljs-comment">// true</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.endsWith(<span class="hljs-string">'abc'</span>))  <span class="hljs-comment">// true</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.endsWith(<span class="hljs-string">'abc '</span>))  <span class="hljs-comment">// false</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.endsWith(<span class="hljs-string">' abc'</span>))  <span class="hljs-comment">// false</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.endsWith(<span class="hljs-string">''</span>))  <span class="hljs-comment">// true</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>String.padEnd(string, targetLength, padSting)</code> 把填充文字塞到原字串，直到結果長度為止</p>
+<p>補充：</p>
+<ul>
+<li>如果沒有填充文字，自動以「空格」來代替</li>
+<li>如果填充文字為「空字串」，回傳原字串</li>
+<li>如果「結果長度 &lt;= 原字串長度」，回傳原字串</li>
+</ul>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> str = <span class="hljs-string">'abc'</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.padEnd(<span class="hljs-number">10</span>,<span class="hljs-string">'a'</span>))    <span class="hljs-comment">// 'abcaaaaaaa'</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.padEnd(<span class="hljs-number">10</span>,<span class="hljs-string">'dog'</span>))  <span class="hljs-comment">// 'abcdogdogd'</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.padEnd(<span class="hljs-number">2</span>,<span class="hljs-string">'abbc'</span>))  <span class="hljs-comment">// 'abc'</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.padEnd(<span class="hljs-number">10</span>,<span class="hljs-string">''</span>))     <span class="hljs-comment">// 'abc'</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.padEnd(<span class="hljs-number">10</span>))        <span class="hljs-comment">// 'abc       '</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<p><code>String.indexOf(string)</code>  搜尋 string 出現位置的索引值（第一個字元），不存在則回傳 -1</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> str = <span class="hljs-string">'hello how are you today.'</span></span><br><span class="line"><span class="hljs-keyword">const</span> n1 = str.indexOf(<span class="hljs-string">'hello'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> n2 = str.indexOf(<span class="hljs-string">'today'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> n3 = str.indexOf(<span class="hljs-string">'tomorrow'</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(n1)  <span class="hljs-comment">// 0</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(n2)  <span class="hljs-comment">// 18</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(n3)  <span class="hljs-comment">// -1</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>String.includes(str)</code> 看 String 有沒有包含 str，有的話回傳 true，沒有回傳 false</p>
+<p>補充：</p>
+<ul>
+<li>有分大小寫</li>
+<li>在 String 有值的前提下，str 代空字串永遠回傳 true</li>
+</ul>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> str = <span class="hljs-string">'abc'</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.includes(<span class="hljs-string">'a'</span>))   <span class="hljs-comment">// true</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.includes(<span class="hljs-string">'ab'</span>))  <span class="hljs-comment">// true</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.includes(<span class="hljs-string">'abc'</span>)) <span class="hljs-comment">// true</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.includes(<span class="hljs-string">'d'</span>)) <span class="hljs-comment">// true</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.includes(<span class="hljs-string">''</span>)) <span class="hljs-comment">// true</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>小技巧：可以反向操作，判斷傳入的 str 是否「是空字串」</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> empty = <span class="hljs-string">''</span></span><br><span class="line"><span class="hljs-comment">// 意思是說 abc 跟 '' 是否在「空字串」裡面？</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(empty.includes(<span class="hljs-string">'abc'</span>))  <span class="hljs-comment">// false</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(empty.includes(<span class="hljs-string">''</span>))  <span class="hljs-comment">// true</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>甚至也可以用 <code>NOT (!)</code> 來判斷傳入的 str 是否「不是空字串」：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> empty = <span class="hljs-string">''</span></span><br><span class="line"><span class="hljs-comment">// 意思是說 abc 跟 '' 是否在「非空字串」裡面？</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(!(empty).includes(<span class="hljs-string">'abc'</span>))  <span class="hljs-comment">// true</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(!(empty).includes(<span class="hljs-string">''</span>))  <span class="hljs-comment">// false</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>String.replace(str, replace)</code>  把 str 換成 replace。只會把第一個符合的對象給替換，</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> str = <span class="hljs-string">'yoyoyoyooooyoyyyo'</span></span><br><span class="line"><span class="hljs-keyword">const</span> n1 = str.replace(<span class="hljs-string">'y'</span>, <span class="hljs-string">'!'</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(n1)  <span class="hljs-comment">// !oyoyoyooooyoyyyo</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果要把每個符合的都改掉得用 <code>regExp</code>：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> str = <span class="hljs-string">'yoyoyoyooooyoyyyo'</span></span><br><span class="line"><span class="hljs-keyword">const</span> n1 = str.replace(<span class="hljs-regexp">/y/g</span>, <span class="hljs-string">'!'</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(n1)  <span class="hljs-comment">// !o!o!o!oooo!o!!!o</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>String.replaceAll(str, replace)</code>  把所有的 str 換成 replace。</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> str = <span class="hljs-string">'yoyoyoyooooyoyyyo'</span></span><br><span class="line"><span class="hljs-keyword">const</span> n1 = str.replaceAll(<span class="hljs-string">'y'</span>, <span class="hljs-string">'!'</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(n1) <span class="hljs-comment">// !o!o!o!oooo!o!!!o</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+<p><code>String.split(separator)</code> 對字串分割，回傳一個 <code>Array</code></p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> str = <span class="hljs-string">'1y2y3y4y5'</span></span><br><span class="line"><span class="hljs-keyword">const</span> n1 = str.split(<span class="hljs-string">'y'</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(n1)  <span class="hljs-comment">// [ '1', '2', '3', '4', '5' ]</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>注意一下如果 <code>separator</code> 的前面沒有字串，會自動把空字串填入陣列：</p>
+<p>（因為分割的位置還沒有任何的字元）</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> str = <span class="hljs-string">'yyyy1y2y3y4y5y'</span></span><br><span class="line"><span class="hljs-keyword">const</span> n1 = str.split(<span class="hljs-string">'y'</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(n1)  <span class="hljs-comment">// [ '', '', '', '', '1', '2', '3', '4', '5', '']</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>另外，<code>separator</code> 也可以是正則表達式：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> str = <span class="hljs-string">'yo2yoy3oyo1o'</span></span><br><span class="line"><span class="hljs-keyword">const</span> n1 = str.split(<span class="hljs-regexp">/[0-9]/</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(n1)  <span class="hljs-comment">// [ 'yo', 'yoy', 'oyo', 'o' ]</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+<p><code>String.trim</code> 去掉字串頭尾的空格（不管有幾個）</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> str = <span class="hljs-string">'    yooooo   '</span></span><br><span class="line"><span class="hljs-keyword">const</span> n1 = str.trim()</span><br><span class="line"><span class="hljs-built_in">console</span>.log(n1)  <span class="hljs-comment">// 'yooooo'</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>String.substring(start, end)</code> 回傳指定範圍的字串（不含 end）</p>
+<p>補充：跟 slice 的差別在 substring 不可以指定「負值」</p>
+<p>小技巧：不指定 end 的話會自動算到最後一個字</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> str = <span class="hljs-string">'abcdefg'</span></span><br><span class="line"><span class="hljs-keyword">const</span> result1 = str.substring(<span class="hljs-number">1</span>, <span class="hljs-number">5</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> result2 = str.substring(<span class="hljs-number">3</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(result1)  <span class="hljs-comment">// bcde</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(result2)     <span class="hljs-comment">// defg</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>String.slice(start, end)</code> 回傳指定範圍的字串（不含 end）</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> str = <span class="hljs-string">'Today is a good day'</span>;</span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.slice(<span class="hljs-number">0</span>, <span class="hljs-number">5</span>))  <span class="hljs-comment">// Today </span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.slice(<span class="hljs-number">6</span>));    <span class="hljs-comment">// is a good day</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>小技巧：輸入負數代表「從後面數來第 n 個字」</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> str = <span class="hljs-string">'Today is a good day'</span>;</span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.slice(<span class="hljs-number">0</span>, -<span class="hljs-number">4</span>)) <span class="hljs-comment">// Today is a good</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(str.slice(-<span class="hljs-number">3</span>))  <span class="hljs-comment">// day</span></span><br></pre></td></tr></tbody></table></figure></body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/12/20/string-can-be-calculate/">字元是可以比大小的</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/12/20/number-to-string/">把數字轉字串的三種方法</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

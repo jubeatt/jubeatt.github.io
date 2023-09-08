@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Canvas－利用 fabric 打造更好的 Canvas - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="讓你的 canvas 更靈活。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Canvas－利用 fabric 打造更好的 Canvas">
+<meta property="og:url" content="https://jubeatt.github.io/2022/11/29/canvas-fabric/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="讓你的 canvas 更靈活。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/29/canvas-fabric/example1.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/29/canvas-fabric/example2-event-prac.gif">
+<meta property="article:published_time" content="2022-11-29T04:39:44.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.239Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/11/29/canvas-fabric/example1.gif">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#什麼是-fabric？">1&nbsp;&nbsp;<b>什麼是 fabric？</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#關於背後的原理">1.1&nbsp;&nbsp;關於背後的原理</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#事件">2&nbsp;&nbsp;<b>事件</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#綜合範例">2.1&nbsp;&nbsp;綜合範例</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#怎麼對-Group-起來後的子元素事件監聽？">2.2&nbsp;&nbsp;怎麼對 Group 起來後的子元素事件監聽？</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#更好用的繪圖功能">3&nbsp;&nbsp;<b>更好用的繪圖功能</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#實作-PDF-簽名功能">4&nbsp;&nbsp;<b>實作 PDF 簽名功能</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#加上刪除按鈕">5&nbsp;&nbsp;<b>加上刪除按鈕</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Canvas－利用 fabric 打造更好的 Canvas
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>11月 29 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/HTML/">HTML</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>讓你的 canvas 更靈活。</p>
+<span id="more"></span>
+
+<h2 id="什麼是-fabric？"><a href="#什麼是-fabric？" class="headerlink" title="什麼是 fabric？"></a>什麼是 fabric？</h2><p><a target="_blank" rel="noopener" href="https://github.com/fabricjs/fabric.js">fabric</a> 是一個 Canvas 的套件，他可以讓 Canvas 中的內容變得更具有互動性，像這樣：</p>
+<p><img src="example1.gif" alt="example1"></p>
+<p>附註：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/xxzLOqG?editors=1010">CodePen</a></p>
+<p>這段功能只需要這樣的原始碼就可以實現：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> canvasEl = useRef&lt;HTMLCanvasElement&gt;(<span class="hljs-literal">null</span>)</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 用 fabric new 一個 Canvas 出來</span></span><br><span class="line">    <span class="hljs-keyword">const</span> canvas = <span class="hljs-keyword">new</span> fabric.Canvas(canvasEl.current)</span><br><span class="line">    <span class="hljs-comment">// 建立文字元素</span></span><br><span class="line">    <span class="hljs-keyword">const</span> text = <span class="hljs-keyword">new</span> fabric.Text(<span class="hljs-string">'Hello PeaNu'</span>)</span><br><span class="line">    <span class="hljs-comment">// 建立圈圈元素</span></span><br><span class="line">    <span class="hljs-keyword">const</span> circle = <span class="hljs-keyword">new</span> fabric.Circle({ <span class="hljs-attr">fill</span>: <span class="hljs-string">'dodgerblue'</span>, <span class="hljs-attr">radius</span>: <span class="hljs-number">100</span> })</span><br><span class="line">    <span class="hljs-comment">// 放入 Canvas 中</span></span><br><span class="line">    canvas.add(text, circle)</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'App'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">canvas</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">ref</span>=<span class="hljs-string">{canvasEl}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">width</span>=<span class="hljs-string">'500'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">height</span>=<span class="hljs-string">'300'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">border:</span> '<span class="hljs-attr">1px</span> <span class="hljs-attr">solid</span> <span class="hljs-attr">black</span>' }}</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">canvas</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="關於背後的原理"><a href="#關於背後的原理" class="headerlink" title="關於背後的原理"></a>關於背後的原理</h3><p>其實 fabric 的原理簡單來說就是用一個「新的 canvas 來包住原本的 canvas」，有點像是代理的感覺。當你想對 canvas 做任何操作時，都是先跟 fabric 說，fabric 在幫你做對應的處理。</p>
+<p>所以在用 fabric 的時候通常都是我們給他一些資訊（例如：物件），接著 fabric 就會利用這些資訊來對 canvas 做處理。</p>
+<p>如果想瞭解更多的話建議閱讀官網上的 <a target="_blank" rel="noopener" href="http://fabricjs.com/fabric-intro-part-1">Tutorial</a>，裡面能學到大部分的基礎概念。</p>
+<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><p>fabric 有提供對應的事件可以監聽，像是常見的點擊，選取都可以透過特定的「名稱」來綁定，這邊介紹幾個比較常用到的：</p>
+<ul>
+<li><code>mouse:down</code> 點擊當下觸發（可想成 click）</li>
+<li><code>mouse:move</code> 當 hover 的時候觸發</li>
+<li><code>mouse:up</code> 點擊以後觸發（鬆開滑鼠鍵）</li>
+<li><code>after:render</code> 渲染完畢後觸發</li>
+<li><code>before:selection:cleared</code> 取消選取<strong>之前</strong>觸發</li>
+<li><code>selection:cleared</code> 取消選取<strong>之後</strong>觸發</li>
+<li><code>selection:created</code> 選取後觸發（單個或多個都適用）</li>
+<li><code>object:moving</code> 當移動物件時觸發（連續）</li>
+<li><code>object:selected</code> 物件被選取時觸發（已棄用）</li>
+</ul>
+<p>附註：後來發現這些事件名稱如果是給「物件」用的話，名稱會有一點不同，像 <code>mouse:down</code> 會變成 <code>mousedown</code>，所以如果遇到沒反應的問題，很有可能是你事件名稱寫錯的關係 QQ</p>
+<p>附註：只要有 <code>object</code> 這個前綴基本上就是針對 canvas 中的「物件」來做監聽。</p>
+<p>來一個簡單的範例：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> canvasEl = useRef&lt;HTMLCanvasElement&gt;(<span class="hljs-literal">null</span>)</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">const</span> canvas = <span class="hljs-keyword">new</span> fabric.Canvas(canvasEl.current)</span><br><span class="line">    <span class="hljs-keyword">const</span> circle = <span class="hljs-keyword">new</span> fabric.Circle({ <span class="hljs-attr">fill</span>: <span class="hljs-string">'dodgerblue'</span>, <span class="hljs-attr">radius</span>: <span class="hljs-number">100</span> })</span><br><span class="line">    canvas.add(circle)</span><br><span class="line">    canvas.on(<span class="hljs-string">'mouse:down'</span>, <span class="hljs-function">(<span class="hljs-params">option</span>) =&gt;</span> {</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'event'</span>, option.e)</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'target'</span>, option.target)</span><br><span class="line">    })</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'App'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">canvas</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">ref</span>=<span class="hljs-string">{canvasEl}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">width</span>=<span class="hljs-string">'500'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">height</span>=<span class="hljs-string">'300'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">border:</span> '<span class="hljs-attr">1px</span> <span class="hljs-attr">solid</span> <span class="hljs-attr">black</span>' }}</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">canvas</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/poKWqxv?editors=1010">CodePen</a></p>
+<p>當 callback 觸發時會接收一個 <code>option</code> 物件，主要的內容是：</p>
+<ol>
+<li><code>option.e</code> 原生的 JS event 物件</li>
+<li><code>option.target</code> 觸發該事件的那個主要物件（通常叫做 Klass）</li>
+</ol>
+<p>另外像 <code>object:moving</code> 這種事件也可以綁定在「物件」上，不一定要直接綁在 canvas 實例上，像這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> canvasEl = useRef&lt;HTMLCanvasElement&gt;(<span class="hljs-literal">null</span>)</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">const</span> canvas = <span class="hljs-keyword">new</span> fabric.Canvas(canvasEl.current)</span><br><span class="line">    <span class="hljs-keyword">const</span> circle = <span class="hljs-keyword">new</span> fabric.Circle({ <span class="hljs-attr">fill</span>: <span class="hljs-string">'dodgerblue'</span>, <span class="hljs-attr">radius</span>: <span class="hljs-number">100</span> })</span><br><span class="line">    canvas.add(circle)</span><br><span class="line">    <span class="hljs-comment">// 注意這時候是用 moving，而不是 object:moving</span></span><br><span class="line">    circle.on(<span class="hljs-string">'moving'</span>, <span class="hljs-function">(<span class="hljs-params">option</span>) =&gt;</span> {</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'event'</span>, option.e)</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'target'</span>, option.target)</span><br><span class="line">    })</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'App'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">canvas</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">ref</span>=<span class="hljs-string">{canvasEl}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">width</span>=<span class="hljs-string">'500'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">height</span>=<span class="hljs-string">'300'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">border:</span> '<span class="hljs-attr">1px</span> <span class="hljs-attr">solid</span> <span class="hljs-attr">black</span>' }}</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">canvas</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/mdKBaoz?editors=1010">CodePen</a></p>
+<h3 id="綜合範例"><a href="#綜合範例" class="headerlink" title="綜合範例"></a>綜合範例</h3><p>在知道大概有哪些事件可以用之後，就可以做出簡單的清除功能：</p>
+<p><img src="example2-event-prac.gif" alt="example2-event-prac"></p>
+<p>這邊的思路還直覺的，就是：</p>
+<ol>
+<li>當選取物件時，更新 state 讓 clear 按鈕可以點選</li>
+<li>若取消選取，則更新 state 禁用 clear 按鈕</li>
+<li>最後按下 clear 按鈕時，透過 <code>getActiveObject</code> 來取得目前被選取的物件並用 <code>remove</code> 來移除</li>
+</ol>
+<p>有興趣可以到 <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/mdKqPYd">Codepen</a> 上參考。</p>
+<h3 id="怎麼對-Group-起來後的子元素事件監聽？"><a href="#怎麼對-Group-起來後的子元素事件監聽？" class="headerlink" title="怎麼對 Group 起來後的子元素事件監聽？"></a>怎麼對 Group 起來後的子元素事件監聽？</h3><p>我當初試過這幾種方法，但都沒效：</p>
+<ol>
+<li>直接對子元素設置監聽器（事件會沒效）</li>
+<li>想透過 option.e.target 來取得觸發的子元素（只會取到 group）</li>
+</ol>
+<p>後來參考了<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/49352518/how-to-trigger-or-receive-events-of-objects-in-the-group">這篇</a>才解決，簡單來說就是要在建立 group 的時候把 <code>subTargetCheck</code> 設為 <code>true</code>，接著事件發生時就可以透過 <code>option.subTargets[0]</code> 來存取該真正的那個<strong>目標</strong>。</p>
+<h2 id="更好用的繪圖功能"><a href="#更好用的繪圖功能" class="headerlink" title="更好用的繪圖功能"></a>更好用的繪圖功能</h2><p>雖然在之前有實作過如何用原生的 canvas 來實現繪製功能，但用 fabric 可以更輕鬆且畫出更滑順的線條，直接來看範例吧：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> canvasEl = useRef&lt;HTMLCanvasElement&gt;(<span class="hljs-literal">null</span>)</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 用 fabric new 一個 Canvas 出來，並存到 ref</span></span><br><span class="line">    canvasEl.current = <span class="hljs-keyword">new</span> fabric.Canvas(<span class="hljs-string">'orig-canvas'</span>)</span><br><span class="line">    <span class="hljs-comment">// 建立筆刷</span></span><br><span class="line">    <span class="hljs-keyword">const</span> brush = <span class="hljs-keyword">new</span> fabric.PencilBrush(canvasEl.current)</span><br><span class="line">    <span class="hljs-comment">// 筆刷設定</span></span><br><span class="line">    canvasEl.current.freeDrawingBrush = brush</span><br><span class="line">    canvasEl.current.freeDrawingBrush.width = <span class="hljs-number">5</span></span><br><span class="line">    <span class="hljs-comment">// 開啟繪圖模式（重要!!!）</span></span><br><span class="line">    canvasEl.current.isDrawingMode = <span class="hljs-literal">true</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">      <span class="hljs-comment">// 因為 Strick Mode，所以第一次要先清掉</span></span><br><span class="line">      <span class="hljs-keyword">const</span> data = canvasEl.current.dispose()</span><br><span class="line">    }</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">swicher</span>(<span class="hljs-params"><span class="hljs-keyword">type</span>: <span class="hljs-string">'brush'</span> | <span class="hljs-string">'erase'</span></span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">switch</span> (<span class="hljs-keyword">type</span>) {</span><br><span class="line">      <span class="hljs-keyword">case</span> <span class="hljs-string">'brush'</span>:</span><br><span class="line">        <span class="hljs-comment">// 新增筆刷 -&gt; 設定 -&gt; 開啟繪圖模式</span></span><br><span class="line">        <span class="hljs-keyword">const</span> brush = <span class="hljs-keyword">new</span> fabric.PencilBrush(canvasEl.current)</span><br><span class="line">        canvasEl.current.freeDrawingBrush = brush</span><br><span class="line">        canvasEl.current.freeDrawingBrush.width = <span class="hljs-number">5</span></span><br><span class="line">        canvasEl.current.isDrawingMode = <span class="hljs-literal">true</span></span><br><span class="line">        <span class="hljs-keyword">break</span></span><br><span class="line">      <span class="hljs-keyword">case</span> <span class="hljs-string">'erase'</span>:</span><br><span class="line">        <span class="hljs-comment">// 新增橡皮擦 -&gt; 設定 -&gt; 開啟繪圖模式</span></span><br><span class="line">        <span class="hljs-keyword">const</span> erase = <span class="hljs-keyword">new</span> fabric.EraserBrush(canvasEl.current)</span><br><span class="line">        canvasEl.current.freeDrawingBrush = erase</span><br><span class="line">        canvasEl.current.freeDrawingBrush.width = <span class="hljs-number">10</span></span><br><span class="line">        canvasEl.current.isDrawingMode = <span class="hljs-literal">true</span></span><br><span class="line">        <span class="hljs-keyword">break</span></span><br><span class="line">      <span class="hljs-attr">default</span>:</span><br><span class="line">        <span class="hljs-keyword">break</span></span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'App'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'options'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> swicher('brush')}&gt;Brush<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> swicher('erase')}&gt;Erase<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">canvas</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">id</span>=<span class="hljs-string">'orig-canvas'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">width</span>=<span class="hljs-string">'500'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">height</span>=<span class="hljs-string">'300'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">border:</span> '<span class="hljs-attr">1px</span> <span class="hljs-attr">solid</span> <span class="hljs-attr">black</span>' }}</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">canvas</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：橡皮擦功能並沒有內建在 fabric 中，必需引入額外的<a target="_blank" rel="noopener" href="http://fabricjs.com/build/">模組</a>才行，詳細可參考<a target="_blank" rel="noopener" href="http://fabricjs.com/erasing">官方說明</a>。</p>
+<p>這樣就有一個畫畫跟橡皮擦的功能囉！而且用起來更滑順，可以去底下範例去實際玩玩看就能感受到差異了：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/YzvQQer">原生範例</a></li>
+<li><a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/abKyRzY">fabric 範例</a></li>
+</ul>
+<h2 id="實作-PDF-簽名功能"><a href="#實作-PDF-簽名功能" class="headerlink" title="實作 PDF 簽名功能"></a>實作 PDF 簽名功能</h2><p>這邊只解釋思路，剩下的就麻煩各位看 code 和註解了。</p>
+<p><strong>把 PDF 顯示到 canvas 上的流程：</strong></p>
+<ol>
+<li>使用者點擊「上傳檔案」時，讀取檔案內容並轉換成 base64 格式</li>
+<li>產生一個 canvas 元素，並把轉成 base64 格式的檔案丟給 Pdfjs 處理後塞進去裡面</li>
+<li>利用 fabric 把 canvas 元素（那個 PDF）轉成 img 後丟渲染到真正要顯示在畫面上的 canvas</li>
+</ol>
+<p><strong>簽名的流程：</strong></p>
+<ol>
+<li>使用者點擊「Signature」，彈出 Modal 後把裡面的 canvas 開啟繪圖功能</li>
+<li>使用者簽好名後按下「Save」，把簽名的部分利用 fabric 轉換圖片，接著在插入到畫面上那個 canvas 中（顯示 PDF 內容的那個）</li>
+</ol>
+<p>這邊會比較亂的地方就是有各種 canvas 和資料轉換的流程，所以可能還是要搭配原始碼來讀會比較好理解一點：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> { isOpen, onOpen, onClose } = useDisclosure()</span><br><span class="line">  <span class="hljs-comment">// 顯示 pdf 和簽名區塊的 canvas</span></span><br><span class="line">  <span class="hljs-keyword">const</span> canvasPdf = useRef&lt;<span class="hljs-built_in">any</span>&gt;(<span class="hljs-literal">null</span>)</span><br><span class="line">  <span class="hljs-comment">// 顯示簽名區塊的 canvas</span></span><br><span class="line">  <span class="hljs-keyword">const</span> canvasSignature = useRef&lt;<span class="hljs-built_in">any</span>&gt;(<span class="hljs-literal">null</span>)</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    canvasPdf.current = <span class="hljs-keyword">new</span> fabric.Canvas(<span class="hljs-string">'canvas-pdf'</span>)</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">      canvasPdf.current.dispose()</span><br><span class="line">    }</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">readBlob</span>(<span class="hljs-params">blob: Blob</span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">string</span>&gt; </span>{</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {</span><br><span class="line">      <span class="hljs-keyword">const</span> fileReader = <span class="hljs-keyword">new</span> FileReader()</span><br><span class="line">      fileReader.addEventListener(<span class="hljs-string">'load'</span>, <span class="hljs-function">() =&gt;</span> resolve(fileReader.result <span class="hljs-keyword">as</span> <span class="hljs-built_in">string</span>))</span><br><span class="line">      fileReader.addEventListener(<span class="hljs-string">'error'</span>, <span class="hljs-function">() =&gt;</span> reject(<span class="hljs-string">'read blob failed'</span>))</span><br><span class="line">      fileReader.readAsDataURL(blob)</span><br><span class="line">    })</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getPdfCanvas</span>(<span class="hljs-params">file: File</span>) </span>{</span><br><span class="line">    <span class="hljs-comment">// 把 blob 轉成 base64 格式</span></span><br><span class="line">    <span class="hljs-keyword">const</span> base64 = <span class="hljs-keyword">await</span> readBlob(file)</span><br><span class="line">    <span class="hljs-comment">// 記得要去掉檔案 type 的前綴，不然沒有辦法處理</span></span><br><span class="line">    <span class="hljs-keyword">const</span> data = atob(base64.substring(base64Prefix.length))</span><br><span class="line">    <span class="hljs-comment">// 注意是以 Object 來傳入</span></span><br><span class="line">    <span class="hljs-keyword">const</span> pdfDoc = <span class="hljs-keyword">await</span> getDocument({ data }).promise</span><br><span class="line">    <span class="hljs-keyword">const</span> pdfPage = <span class="hljs-keyword">await</span> pdfDoc.getPage(<span class="hljs-number">1</span>)</span><br><span class="line">    <span class="hljs-keyword">const</span> viewport = pdfPage.getViewport({ <span class="hljs-attr">scale</span>: <span class="hljs-built_in">window</span>.devicePixelRatio })</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// 建立 canvas 元素</span></span><br><span class="line">    <span class="hljs-keyword">const</span> canvasElement = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'canvas'</span>)</span><br><span class="line">    <span class="hljs-keyword">const</span> context = canvasElement.getContext(<span class="hljs-string">'2d'</span>)!</span><br><span class="line">    <span class="hljs-comment">// 設定 canvas 的寬高</span></span><br><span class="line">    canvasElement.height = viewport.height</span><br><span class="line">    canvasElement.width = viewport.width</span><br><span class="line">    <span class="hljs-comment">// 把 pdf 渲染到 canvas 中</span></span><br><span class="line">    <span class="hljs-keyword">await</span> pdfPage.render({</span><br><span class="line">      <span class="hljs-attr">canvasContext</span>: context,</span><br><span class="line">      viewport</span><br><span class="line">    }).promise</span><br><span class="line">    <span class="hljs-comment">// 把做好的 canvas 回傳</span></span><br><span class="line">    <span class="hljs-keyword">return</span> canvasElement</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onFileSelect</span>(<span class="hljs-params">event: React.ChangeEvent&lt;HTMLInputElement&gt;</span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">const</span> file = event.target.files![<span class="hljs-number">0</span>]</span><br><span class="line">    <span class="hljs-comment">// 沒有選擇檔案就跳出</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (!file) <span class="hljs-keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// 把 pdf 變成 canvas 元素</span></span><br><span class="line">    <span class="hljs-keyword">await</span> getPdfCanvas(file).then(<span class="hljs-function">(<span class="hljs-params">element</span>) =&gt;</span> {</span><br><span class="line">      <span class="hljs-keyword">const</span> scale = <span class="hljs-number">1</span> / <span class="hljs-built_in">window</span>.devicePixelRatio</span><br><span class="line">      <span class="hljs-comment">// 利用 canvas(pdf) 來產生 fabric image 元素</span></span><br><span class="line">      <span class="hljs-keyword">const</span> img = <span class="hljs-keyword">new</span> fabric.Image(element, {</span><br><span class="line">        <span class="hljs-attr">scaleX</span>: scale,</span><br><span class="line">        <span class="hljs-attr">scaleY</span>: scale</span><br><span class="line">      })</span><br><span class="line">      <span class="hljs-comment">// 用來更新 canvas 的畫面（重新渲染）</span></span><br><span class="line">      canvasPdf.current.requestRenderAll()</span><br><span class="line">      canvasPdf.current.setWidth(img.width! / <span class="hljs-built_in">window</span>.devicePixelRatio)</span><br><span class="line">      canvasPdf.current.setHeight(img.height! / <span class="hljs-built_in">window</span>.devicePixelRatio)</span><br><span class="line">      <span class="hljs-comment">// 把 pdf 圖片設為 canvas 的背景</span></span><br><span class="line">      canvasPdf.current.setBackgroundImage(img, canvasPdf.current.renderAll.bind(canvasPdf.current))</span><br><span class="line">    })</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 關閉 modal，並把簽名轉成圖片放入顯示 PDF 的 canvas 中</span></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onSave</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">const</span> imgSrc = canvasSignature.current.toDataURL({ <span class="hljs-attr">format</span>: <span class="hljs-string">'png'</span> })</span><br><span class="line">    fabric.Image.fromURL(imgSrc, <span class="hljs-function">(<span class="hljs-params">img</span>) =&gt;</span> {</span><br><span class="line">      img.left = <span class="hljs-number">200</span></span><br><span class="line">      img.top = <span class="hljs-number">200</span></span><br><span class="line">      img.scaleX = <span class="hljs-number">0.5</span></span><br><span class="line">      img.scaleY = <span class="hljs-number">0.5</span></span><br><span class="line">      canvasPdf.current.add(img)</span><br><span class="line">    })</span><br><span class="line">    onClose()</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 把畫面上已選取的元素刪除</span></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onClear</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    canvasPdf.current.remove(canvasPdf.current.getActiveObject())</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 打開用來簽名的 modal</span></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onModal</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    onOpen()</span><br><span class="line">    <span class="hljs-comment">// modal 剛打開時還抓不到元素，所以才利用 setTimeout 處理（我相信一定有比這更好的寫法，但我目前沒想到）</span></span><br><span class="line">    <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">      <span class="hljs-comment">// 把 modal 中的 canvas 加入繪圖功能</span></span><br><span class="line">      canvasSignature.current = <span class="hljs-keyword">new</span> fabric.Canvas(<span class="hljs-string">'canvas-signature'</span>)</span><br><span class="line">      <span class="hljs-keyword">const</span> brush = <span class="hljs-keyword">new</span> fabric.PencilBrush(canvasSignature.current)</span><br><span class="line">      canvasSignature.current.freeDrawingBrush = brush</span><br><span class="line">      canvasSignature.current.freeDrawingBrush.width = <span class="hljs-number">3</span></span><br><span class="line">      canvasSignature.current.isDrawingMode = <span class="hljs-literal">true</span></span><br><span class="line">    }, <span class="hljs-number">0</span>)</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'App'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">'file'</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">{onFileSelect}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'canvas-pdf-wrapper'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">canvas</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">id</span>=<span class="hljs-string">'canvas-pdf'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">width</span>=<span class="hljs-string">'500'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">height</span>=<span class="hljs-string">'300'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">border:</span> '<span class="hljs-attr">1px</span> <span class="hljs-attr">solid</span> <span class="hljs-attr">black</span>' }}</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">canvas</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'options'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">colorScheme</span>=<span class="hljs-string">'pink'</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{onClear}</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          Clear</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">colorScheme</span>=<span class="hljs-string">'teal'</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{onModal}</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          Signature</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Modal</span> <span class="hljs-attr">isOpen</span>=<span class="hljs-string">{isOpen}</span> <span class="hljs-attr">onClose</span>=<span class="hljs-string">{onClose}</span> <span class="hljs-attr">useInert</span>=<span class="hljs-string">{false}</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">ModalOverlay</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">ModalContent</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">ModalHeader</span>&gt;</span>Signature<span class="hljs-tag">&lt;/<span class="hljs-name">ModalHeader</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">ModalCloseButton</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">ModalBody</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">canvas</span> <span class="hljs-attr">id</span>=<span class="hljs-string">'canvas-signature'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">canvas</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">ModalBody</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">ModalFooter</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">colorScheme</span>=<span class="hljs-string">'pink'</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{onClose}</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">              Close</span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">colorScheme</span>=<span class="hljs-string">'teal'</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{onSave}</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">              Save</span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">ModalFooter</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">ModalContent</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Modal</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：<a target="_blank" rel="noopener" href="https://codesandbox.io/s/fabric-shi-zuo-qian-ming-gong-neng-p861o6?file=/src/App.tsx">codesandbox</a>，順道一提這邊因為懶得手刻所以套了一下 chakra。</p>
+<h2 id="加上刪除按鈕"><a href="#加上刪除按鈕" class="headerlink" title="加上刪除按鈕"></a>加上刪除按鈕</h2><p>如果你想要讓每一個物件可以有點 X 來清除的這種功能，可以參考這篇 <a target="_blank" rel="noopener" href="http://fabricjs.com/custom-control-render">官方文件</a>。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/11/30/eslint-airbnb-concept/">ESlint - 配置一個 Airbnb 環境</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/11/19/canvas-render-pdf/">Canvas－渲染 PDF 的方法</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

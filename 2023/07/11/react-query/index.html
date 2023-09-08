@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>讓 API 打得更順手－React Query - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="希望有機會的話能實際用用看。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="讓 API 打得更順手－React Query">
+<meta property="og:url" content="https://jubeatt.github.io/2023/07/11/react-query/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="希望有機會的話能實際用用看。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2023/07/11/react-query/cache-1.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2023/07/11/react-query/cache-2.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2023/07/11/react-query/cache-3.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2023/07/11/react-query/refetch-1.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2023/07/11/react-query/refetch-2.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2023/07/11/react-query/event-1.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2023/07/11/react-query/effect-1.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2023/07/11/react-query/key-1.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2023/07/11/react-query/key-2.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2023/07/11/react-query/initial-data-1.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2023/07/11/react-query/initial-data-2.gif">
+<meta property="article:published_time" content="2023-07-11T09:21:33.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.581Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2023/07/11/react-query/cache-1.gif">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#置頂-Note">1&nbsp;&nbsp;<b>置頂 Note</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#相關的狀態">1.1&nbsp;&nbsp;相關的狀態</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Global-Config">1.2&nbsp;&nbsp;Global Config</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#useQuery-最基本的用法">1.3&nbsp;&nbsp;useQuery 最基本的用法</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#useMutation-最基本的用法">1.4&nbsp;&nbsp;useMutation 最基本的用法</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#React-Query-vs-傳統-useEffect">2&nbsp;&nbsp;<b>React Query vs 傳統 useEffect</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Cache-cacheTime">3&nbsp;&nbsp;<b>Cache - cacheTime</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Cache-staleTime">4&nbsp;&nbsp;<b>Cache - staleTime</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#refetchOnWindowFocus">5&nbsp;&nbsp;<b>refetchOnWindowFocus</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#refetchInterval">6&nbsp;&nbsp;<b>refetchInterval</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#想在事件發生時才去呼叫-API：enabled">7&nbsp;&nbsp;<b>想在事件發生時才去呼叫 API：enabled</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#注意事項">7.1&nbsp;&nbsp;注意事項</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#side-effect-的好朋友：onSuccess-onError">8&nbsp;&nbsp;<b>side effect 的好朋友：onSuccess / onError</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#後端的資料太髒了，讓我-select-一下">9&nbsp;&nbsp;<b>後端的資料太髒了，讓我 select 一下</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#你的-key-設對了嗎？抓取-Detail-資料時可能會犯的錯">10&nbsp;&nbsp;<b>你的 key 設對了嗎？抓取 Detail 資料時可能會犯的錯</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Dynamic-Parallel-fetch">11&nbsp;&nbsp;<b>Dynamic Parallel fetch</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#有相依性的請求">12&nbsp;&nbsp;<b>有相依性的請求</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#不想要一直看到-Loading？也許可以試試-initialData">13&nbsp;&nbsp;<b>不想要一直看到 Loading？也許可以試試 initialData</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            讓 API 打得更順手－React Query
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>7月 11 2023</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/React/">React</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>希望有機會的話能實際用用看。</p>
+<span id="more"></span>
+
+<h2 id="置頂-Note"><a href="#置頂-Note" class="headerlink" title="置頂 Note"></a>置頂 Note</h2><h3 id="相關的狀態"><a href="#相關的狀態" class="headerlink" title="相關的狀態"></a>相關的狀態</h3><ul>
+<li><code>isLoading</code> 是否拿到 response 了（注意，如果有快取的話就算正在抓也會是 false）</li>
+<li><code>isFetching</code> 是否拿到 response 了（不會管有沒有快取）</li>
+</ul>
+<p>懶人包：如果你不管有沒有 cache 都要顯示 Loading 的話，請一律用 <code>isFetching</code> 來當作你的 flag，<code>isLoading</code> 的本意只是為了讓你利用 cache 來減少等待 Loading 的次數。</p>
+<h3 id="Global-Config"><a href="#Global-Config" class="headerlink" title="Global Config"></a>Global Config</h3><p>有些 config 的預設值可能不是我們要的，這時候我們除了在每一次使用 <code>useQuery</code> 的時候去調整以外，也可以直接在 Global 做設定。</p>
+<p>設定的方法如下：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// global 設定</span></span><br><span class="line">  <span class="hljs-keyword">const</span> queryClient = <span class="hljs-keyword">new</span> QueryClient({</span><br><span class="line">    <span class="hljs-attr">defaultOptions</span>: {</span><br><span class="line">      <span class="hljs-attr">queries</span>: {</span><br><span class="line">        <span class="hljs-attr">retry</span>: <span class="hljs-literal">false</span>,</span><br><span class="line">        <span class="hljs-attr">refetchOnWindowFocus</span>: <span class="hljs-literal">false</span></span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  })</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">QueryClientProvider</span> <span class="hljs-attr">client</span>=<span class="hljs-string">{queryClient}</span>&gt;</span>{/* 略 */}<span class="hljs-tag">&lt;/<span class="hljs-name">QueryClientProvider</span>&gt;</span></span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="useQuery-最基本的用法"><a href="#useQuery-最基本的用法" class="headerlink" title="useQuery 最基本的用法"></a>useQuery 最基本的用法</h3><p>基本上你要打 <code>GET</code> 請求的話都會用這個 hook。（如果是需要用 <code>POST</code> 帶參數來拿的那種也行啦）</p>
+<p><code>useQuery</code> 會接收三個參數：</p>
+<ul>
+<li><code>key</code> 用來區分每一個請求（一個的話傳字串，多個的話傳陣列）</li>
+<li><code>fetcher</code> 你要 call api 的那個 function（會回傳一個 Promise 的那種）</li>
+<li><code>config</code> 用來調整配置的物件</li>
+</ul>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">'axios'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useQuery } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-query'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> getHeros = <span class="hljs-function">() =&gt;</span> axios.get(<span class="hljs-string">'http://localhost:4000/superheroes1'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> RQSuperHeroesPage = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> { isLoading, data, isError, error } = useQuery(<span class="hljs-string">'super-hero'</span>, getHeros)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">if</span> (isLoading) {</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">if</span> (isError) {</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{error.message}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>RQ Super Heros Page<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {data?.data.map((hero) =&gt; (</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{hero.id}</span>&gt;</span>{hero.name}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      ))}</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這個 hook 會回傳一些常用的狀態，包含 <code>isLoading</code>、<code>isError</code> 等等，你直接拿出來用就可以了，很方便。</p>
+<h3 id="useMutation-最基本的用法"><a href="#useMutation-最基本的用法" class="headerlink" title="useMutation 最基本的用法"></a>useMutation 最基本的用法</h3><p>只要是<strong>會修改到 Sever 資料</strong>的請求，像是 <code>POST</code>、<code>DELETE</code> 等等你都需要用這一個 hook。（畢竟都用「mutation」這個字了，就代表你想「改變」某些東西）</p>
+<p><code>useMutation</code> 會接收兩個參數：</p>
+<ul>
+<li><code>fetcher</code> 你要 call api 的那個 function</li>
+<li><code>config</code> 用來調整配置的</li>
+</ul>
+<p>下面是一個簡單的示範：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { Link, useHistory } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-router-dom/cjs/react-router-dom.min'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useMutation, useQuery } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-query'</span></span><br><span class="line"><span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">'axios'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useState } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> addHero = <span class="hljs-function">(<span class="hljs-params">payload</span>) =&gt;</span> axios.post(<span class="hljs-string">'http://localhost:4000/superheroes'</span>, payload)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> RQSuperHeroesPage = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// 使用 useMutation</span></span><br><span class="line">  <span class="hljs-keyword">const</span> postQuery = useMutation(addHero)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> [formValue, setFormValue] = useState({</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">''</span>,</span><br><span class="line">    <span class="hljs-attr">alterEgo</span>: <span class="hljs-string">''</span></span><br><span class="line">  })</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> handleChange = <span class="hljs-function">(<span class="hljs-params">type, value</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">switch</span> (type) {</span><br><span class="line">      <span class="hljs-keyword">case</span> <span class="hljs-string">'name'</span>:</span><br><span class="line">        setFormValue(<span class="hljs-function">(<span class="hljs-params">oldState</span>) =&gt;</span> ({ ...oldState, <span class="hljs-attr">name</span>: value }))</span><br><span class="line">        <span class="hljs-keyword">break</span></span><br><span class="line">      <span class="hljs-keyword">case</span> <span class="hljs-string">'alterEgo'</span>:</span><br><span class="line">        setFormValue(<span class="hljs-function">(<span class="hljs-params">oldState</span>) =&gt;</span> ({ ...oldState, <span class="hljs-attr">alterEgo</span>: value }))</span><br><span class="line">        <span class="hljs-keyword">break</span></span><br><span class="line">      <span class="hljs-attr">default</span>:</span><br><span class="line">        <span class="hljs-keyword">break</span></span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> handleAddButton = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 用 .mutate 來發出請求。這裡傳的東西會自動傳入 addHero</span></span><br><span class="line">    postQuery.mutate(formValue)</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">input</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">type</span>=<span class="hljs-string">'text'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">value</span>=<span class="hljs-string">{formValue.name}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(event)</span> =&gt;</span> handleChange('name', event.target.value)}</span></span><br><span class="line"><span class="hljs-xml">      /&gt;</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">input</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">type</span>=<span class="hljs-string">'text'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">value</span>=<span class="hljs-string">{formValue.alterEgo}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(event)</span> =&gt;</span> handleChange('alterEgo', event.target.value)}</span></span><br><span class="line"><span class="hljs-xml">      /&gt;</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{handleAddButton}</span>&gt;</span>Add<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="React-Query-vs-傳統-useEffect"><a href="#React-Query-vs-傳統-useEffect" class="headerlink" title="React Query vs 傳統 useEffect"></a>React Query vs 傳統 useEffect</h2><p>在學之前可以先看一下前後差異長什麼樣，看完你應該會覺得 React Query 乾淨且直覺很多。</p>
+<p>useEffect 版本：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { useState, useEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">'axios'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> SuperHeroesPage = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> [isLoading, setIsLoading] = useState(<span class="hljs-literal">true</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> [errorMessage, setErrorMessage] = useState(<span class="hljs-string">''</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> [data, setData] = useState([])</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    axios</span><br><span class="line">      .get(<span class="hljs-string">'http://localhost:4000/superheroes1'</span>)</span><br><span class="line">      .then(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {</span><br><span class="line">        setData(res.data)</span><br><span class="line">        setIsLoading(<span class="hljs-literal">false</span>)</span><br><span class="line">      })</span><br><span class="line">      .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {</span><br><span class="line">        setErrorMessage(error.message)</span><br><span class="line">        setIsLoading(<span class="hljs-literal">false</span>)</span><br><span class="line">      })</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">if</span> (isLoading) {</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">if</span> (errorMessage) {</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{errorMessage}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Super Heroes Page<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {data.map((hero) =&gt; {</span></span><br><span class="line"><span class="hljs-xml">        return <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{hero.id}</span>&gt;</span>{hero.name}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      })}</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>React Query 版本：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">'axios'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useQuery } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-query'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> getHeros = <span class="hljs-function">() =&gt;</span> axios.get(<span class="hljs-string">'http://localhost:4000/superheroes1'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> RQSuperHeroesPage = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> { isLoading, data, isError, error } = useQuery(<span class="hljs-string">'super-hero'</span>, getHeros)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">if</span> (isLoading) {</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">if</span> (isError) {</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{error.message}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>RQ Super Heros Page<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {data?.data.map((hero) =&gt; (</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{hero.id}</span>&gt;</span>{hero.name}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      ))}</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>可以注意到兩個點：</p>
+<ol>
+<li>豪無疑問，行數少了很多。</li>
+<li>不用自己處理 <code>loading</code>、<code>error</code>、<code>data</code> 相關的 state。React Query 的 <code>useQuery</code> 會自動在內部管理這些狀態</li>
+</ol>
+<p>不知道你心動了嗎，React Query 很香哦～</p>
+<h2 id="Cache-cacheTime"><a href="#Cache-cacheTime" class="headerlink" title="Cache - cacheTime"></a>Cache - cacheTime</h2><p>React Query 有快取機制，會把第一次抓到的內容先存起來，並且在下一次需要的時候拿出來用，像這樣：</p>
+<p><img src="cache-1.gif" alt="cache-1"></p>
+<p>注意第一次的時候會有 Loading，第二次的時候就沒有了，這個就是快取，目的是為了讓使用者不用每次都要等待讀取的時間。</p>
+<p>這時候應該會有一個疑問：</p>
+<blockquote>
+<p>啊我如果 Server 的資料有更新勒？只從快取拿的話不就會是舊資料嗎！</p>
+</blockquote>
+<p>問的好！React Query 當然有考慮到這一點，所以實際上並不是只有從快取拿資料而已，它還會在背後幫你重新抓一次新的資料。我們可以打開 network 來看就會發現確實是這樣子：</p>
+<p><img src="cache-2.gif" alt="cache-2"></p>
+<p>雖然畫面上不會出現 Loading，但可以看到背後還是發了一個請求去抓取最新的資料，並自動更新到畫面上。</p>
+<p>React Query 的快取預設會保留五分鐘，如果你不喜歡的話可以透過 config 去改：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useQuery(<span class="hljs-string">'super-hero'</span>, getHeros, { <span class="hljs-attr">cacheTime</span>: <span class="hljs-number">5000</span> }) <span class="hljs-comment">// 快取保留 5 秒</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="Cache-staleTime"><a href="#Cache-staleTime" class="headerlink" title="Cache - staleTime"></a>Cache - staleTime</h2><p>前面有介紹了一點快取機制，我們知道 React Query 會優先拿快取的資料來做顯示，接著在從背景重新抓一次最新資料。到這邊不知道你會不會有一個疑問：</p>
+<blockquote>
+<p>既然都有快取了，有必要每一次都在背景重抓一次嗎？（假設已經知道某些資料不常更新）</p>
+</blockquote>
+<p>如果你有這個困擾的話，<code>staleTime</code> 就是用來解決這個問題的。</p>
+<p>我們可以透過 <code>staleTime</code> 來設定一個快取的「新鮮度」有多久？</p>
+<p>原本的預設值是 <code>0</code>，也就是說在我們儲存快取的那一刻起就不新鮮了，因此每一次從快取拿資料時都會從背景去抓取最新的資料。</p>
+<p>不太懂的話可以來看個範例，我們把 staleTime 設為 15 秒：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useQuery(<span class="hljs-string">'super-hero'</span>, getHeros, { <span class="hljs-attr">staleTime</span>: <span class="hljs-number">15</span> * <span class="hljs-number">1000</span> }) <span class="hljs-comment">// 快取的新鮮度有 15 秒</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="cache-3.gif" alt="cache-3"></p>
+<p>從圖中可以發現幾件事：</p>
+<ol>
+<li>第一次進入頁面時因為還沒有快取，所以會發出一個請求去拿資料，接著再快取起來。</li>
+<li>下次再進入同一個頁面時，沒有像前面一樣除了拿快取資料以外，還會在背景去發請求拿出最新的資料，而是先看這個快取<strong>是否還新鮮</strong>？如果是，就不會再額外發請求去拿資料。</li>
+</ol>
+<p>所以我們可以透過這種方式決定<strong>多久後該去拿最新的資料</strong>，這個就是 <code>staleTime</code> 的用途。</p>
+<h2 id="refetchOnWindowFocus"><a href="#refetchOnWindowFocus" class="headerlink" title="refetchOnWindowFocus"></a>refetchOnWindowFocus</h2><p>React Query 有一個很厲害的功能是「當你從別的視窗或分頁切回來時，會自動觸發 refetch 的動作」，參考下圖：</p>
+<p><img src="refetch-1.gif" alt="refetch-1"></p>
+<p>能看到每次切回來的時候都會在背景發請求去拿最新的資料。</p>
+<p>這個功能叫 <code>refetchOnWindowFocus</code>，預設值為 <code>true</code>。如果不喜歡的話一樣可以透過 config 來設定：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useQuery(<span class="hljs-string">'super-hero'</span>, getHeros, { <span class="hljs-attr">refetchOnWindowFocus</span>: <span class="hljs-literal">false</span> }) <span class="hljs-comment">// 關閉 refetch 的功能</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="refetchInterval"><a href="#refetchInterval" class="headerlink" title="refetchInterval"></a>refetchInterval</h2><p>這個就比較直覺一點了，看到 <code>Interval</code> 應該就能大該猜到是「多久後要自動 refetch」。</p>
+<p>這個功能預設是沒有打開的，所以我們要透過 config 來設定：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useQuery(<span class="hljs-string">'super-hero'</span>, getHeros, { <span class="hljs-attr">refetchInterval</span>: <span class="hljs-number">1000</span> }) <span class="hljs-comment">// 設定為 1 秒</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>所以現在<strong>每過一秒鐘</strong>就會去抓一次最新資料：</p>
+<p><img src="refetch-2.gif" alt="refetch-2"></p>
+<p>如果你想做的更徹底一點，讓 user 在不在目前頁面時也會執行 refetch 的話（預設不會），可以加上 <code>refetchIntervalInBackground</code> 這個設定：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">useQuery(<span class="hljs-string">'super-hero'</span>, getHeros, {</span><br><span class="line">  <span class="hljs-attr">refetchInterval</span>: <span class="hljs-number">1000</span>,</span><br><span class="line">  <span class="hljs-attr">refetchIntervalInBackground</span>: <span class="hljs-literal">true</span> <span class="hljs-comment">// &lt;- 加上這個</span></span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣你的頁面就會變得非常 real time，我覺得在某些情境下可能會很有幫助。</p>
+<h2 id="想在事件發生時才去呼叫-API：enabled"><a href="#想在事件發生時才去呼叫-API：enabled" class="headerlink" title="想在事件發生時才去呼叫 API：enabled"></a>想在事件發生時才去呼叫 API：enabled</h2><p>前面介紹的都是在元件 <code>onMount</code> 的時候自動去呼叫 API 拿資料，不過有些時候我們可能不想在一開始就抓資料，而是在特定事件發生時才去呼叫，例如：按下按鈕的時候。</p>
+<p>這個時候可以這樣做：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> { refetch } = useQuery(<span class="hljs-string">'super-hero'</span>, getHeros, { <span class="hljs-attr">enabled</span>: <span class="hljs-literal">false</span> })</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{refetch}</span>&gt;</span>Fetch Data<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊做了兩件事，第一是先把 <code>enabled</code> 設為 <code>false</code>，避免在元件 <code>onMount</code> 時去呼叫 API，接著再把 <code>useQuery</code> 回傳的 <code>refetch</code> 跟按鈕的 <code>onClick</code> 事件做綁定，就可以做出這樣的效果：</p>
+<p><img src="event-1.gif" alt="event-1"></p>
+<p>能看到現在進入頁面時不會直接去呼叫 API，而是要等到我們「按下按鈕」以後才會去呼叫，完美！</p>
+<p>不過要注意這個方法一樣會保留快取機制（前面有介紹，忘記的話拉回去看），所以如果你的 Loading 狀態是用 <code>isLoading</code> 來控制的話，在按下第二次按鈕時就不會出現 Loading 畫面，因為 <code>isLoading</code> 只會在<strong>沒有快取資料</strong>的情況下才有機會出現 <code>true</code>。</p>
+<p>以這個例子來看的話，在<strong>每一次按下按鈕</strong>的時候都顯示 Loading 會比較合理，所以我們這時候要拿的 flag 應該要是 <code>isFetching</code>，而不是 <code>isLoading</code>。</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> RQSuperHeroesPage = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// ✅</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (isFetching) {</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Loading<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-comment">// ❌</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (isLoading) {</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Loading<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>只是想提醒一下，注意不要寫錯了！</p>
+<h3 id="注意事項"><a href="#注意事項" class="headerlink" title="注意事項"></a>注意事項</h3><p>雖然前面說把 <code>enabled</code> 設為 <code>false</code> 的話可以避免 <code>onMount</code> 時去打 API 這件事，但其實它並不單純只是這樣而已，它還會：</p>
+<ul>
+<li>取消 refetch 的功能</li>
+<li>取消 refetch 的功能</li>
+<li>取消 refetch 的功能</li>
+</ul>
+<p>也就是說所有跟 <code>refetch</code> 相關的功能都會失效，例如：<code>refetchOnWindowFocus</code>、<code>refetchInterval</code> 等等之類的。</p>
+<p>在這種情況下想要做 refetch 的話就只能透過 <code>useQuery</code> 回傳的 <code>refetch</code> 來處理。你必須<strong>自己去觸發</strong>這個 function 才會觸發 refetch 的行為。</p>
+<p>所以這邊想釐清 <code>enabled</code> 的實際用途，也順手留一段官方文件對這個 config 的敘述：</p>
+<blockquote>
+<p>Set this to false to disable automatic refetching when the query mounts or changes query keys. To refetch the query, use the refetch method returned from the useQuery instance. Defaults to true.</p>
+</blockquote>
+<h2 id="side-effect-的好朋友：onSuccess-onError"><a href="#side-effect-的好朋友：onSuccess-onError" class="headerlink" title="side effect 的好朋友：onSuccess / onError"></a>side effect 的好朋友：onSuccess / onError</h2><p>打 API 的時候除了確保我們有拿到資料以外，我們可能還會想做一些 side effect，例如說：錯誤發生時自動導回首頁、列表更新時自動更新滾軸位置等等。</p>
+<p>在沒有 React Query 之前你應該都會透過 <code>useEffect</code> 來做這些事，不過現在你可以透過 <code>onSuccess</code> 和 <code>onError</code> 來處理。</p>
+<p>來看個例子，我自己還蠻常做的一種 effect 是發生錯誤時自動導回首頁，所以在 React Query 裡可以這樣做：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> RQSuperHeroesPage = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> history = useHistory()</span><br><span class="line">  <span class="hljs-keyword">const</span> onError = <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error'</span>, error)</span><br><span class="line">    history.push(<span class="hljs-string">'/'</span>) <span class="hljs-comment">// 導回首頁</span></span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-keyword">const</span> { isFetching, data, isError, error } = useQuery(<span class="hljs-string">'super-hero'</span>, getHeros, { onSuccess })</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>實際效果：</p>
+<p><img src="effect-1.gif" alt="effect-1"></p>
+<p>這邊先提醒一下，因為我沒有特別調整設定，所以預設會在失敗後嘗試四次，直到四次都失敗的話才會進入 <code>onError</code> 處理，所以才會看到 console 噴了四次 GET 錯誤。</p>
+<p>但總之能看到我們成功運用了 <code>onError</code> 來處理重新導向的 side effect。</p>
+<p>最後再提醒一件小事，就是 <code>onSuccess</code> 和 <code>onError</code> 都會自動接收一個參數，所以有需要的話可以拿出來用：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> onError = <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error'</span>, error)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">const</span> onSuccess = <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'data'</span>, data)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="後端的資料太髒了，讓我-select-一下"><a href="#後端的資料太髒了，讓我-select-一下" class="headerlink" title="後端的資料太髒了，讓我 select 一下"></a>後端的資料太髒了，讓我 select 一下</h2><p>這應該是 90% 的前端都會碰到的問題，如果是寫 <code>useEffect</code> 的話你通常會在 <code>setState</code> 以前<strong>先把資料整理好</strong>在寫進去。</p>
+<p>那在 React Query 怎麼做呢？你可以用 <code>select</code> 這個 config 來處理，來看個範例。</p>
+<p>假設原本回傳的資料長這樣：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">;[</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>,</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'Batman HoHoHo'</span>,</span><br><span class="line">    <span class="hljs-attr">alterEgo</span>: <span class="hljs-string">'Bruce Wayne'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>,</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'Superman'</span>,</span><br><span class="line">    <span class="hljs-attr">alterEgo</span>: <span class="hljs-string">'Clark Kent'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">id</span>: <span class="hljs-number">3</span>,</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'Wonder Woman'</span>,</span><br><span class="line">    <span class="hljs-attr">alterEgo</span>: <span class="hljs-string">'Princess Diana'</span></span><br><span class="line">  }</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果我只需要由 <code>name</code> 組成的 Array，我可以這樣寫：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> { data } = useQuery(<span class="hljs-string">'super-hero'</span>, getHeros, {</span><br><span class="line">  <span class="hljs-attr">select</span>: <span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">const</span> heroNames = response.data.map(<span class="hljs-function">(<span class="hljs-params">hero</span>) =&gt;</span> hero.name)</span><br><span class="line">    <span class="hljs-keyword">return</span> heroNames</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>寫成這樣以後 <code>data</code> 值就會變成這邊的 <code>heroNames</code>，而不是原本 axios 的 response。（假設你是用 axios 的話）</p>
+<h2 id="你的-key-設對了嗎？抓取-Detail-資料時可能會犯的錯"><a href="#你的-key-設對了嗎？抓取-Detail-資料時可能會犯的錯" class="headerlink" title="你的 key 設對了嗎？抓取 Detail 資料時可能會犯的錯"></a>你的 key 設對了嗎？抓取 Detail 資料時可能會犯的錯</h2><p>其實這邊主要是想提醒 <code>useQuery</code> 中的 <code>key</code> 的意義，但我覺得這個錯誤應該最常發生在抓 Detail 資料的時候，所以才用這個來當標題。</p>
+<p>想像一下你有一個列表，每一個列表點進去以後可以看到細節資訊，那你會怎麼實作 detail 的頁面？應該不外乎都是像這樣吧：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">'axios'</span></span><br><span class="line"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useQuery } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-query'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useHistory, useParams } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-router-dom/cjs/react-router-dom.min'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> RQSuperHeroDetail = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// 透過路由資訊取得 id</span></span><br><span class="line">  <span class="hljs-keyword">const</span> { id } = useParams()</span><br><span class="line">  <span class="hljs-keyword">const</span> history = useHistory()</span><br><span class="line">  <span class="hljs-keyword">const</span> getHeroDetail = <span class="hljs-function">() =&gt;</span> axios.get(<span class="hljs-string">'http://localhost:4000/superheroes/'</span> + id)</span><br><span class="line">  <span class="hljs-comment">// 用 useQuery 抓資料</span></span><br><span class="line">  <span class="hljs-keyword">const</span> { data, isLoading, isFetching } = useQuery(<span class="hljs-string">'super-hero-detail'</span>, getHeroDetail, {</span><br><span class="line">    <span class="hljs-comment">// 整理資料</span></span><br><span class="line">    <span class="hljs-attr">select</span>: <span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> {</span><br><span class="line">      <span class="hljs-keyword">if</span> (response.data) {</span><br><span class="line">        <span class="hljs-keyword">return</span> response.data</span><br><span class="line">      }</span><br><span class="line">      <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span></span><br><span class="line">    },</span><br><span class="line">    <span class="hljs-comment">// 錯誤處理</span></span><br><span class="line">    <span class="hljs-attr">onError</span>: <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {</span><br><span class="line">      history.goBack()</span><br><span class="line">    }</span><br><span class="line">  })</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">if</span> (isLoading) {</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">if</span> (data) {</span><br><span class="line">    <span class="hljs-keyword">return</span> (</span><br><span class="line">      <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Id: {data.id}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Name: {data.name}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Alter Ego: {data.alterEgo}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>看起來挺合理的吧？但其實這樣寫會有一個問題，注意這一段：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">useQuery(<span class="hljs-string">'super-hero-detail'</span>, getHeroDetail, {</span><br><span class="line">  <span class="hljs-comment">/* 略 */</span></span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊就先直接說了，問題在於 key。不過為什麼呢？我們可以先思考一個問題：</p>
+<ul>
+<li><code>/superheroes/1</code></li>
+<li><code>/superheroes/2</code></li>
+<li><code>/superheroes/3</code></li>
+<li>…</li>
+</ul>
+<p>這幾個 request 拿到的回傳值會相同嗎？當然不會吧！那如果都存同一個 key 會發生什麼事？我們直接來看看：</p>
+<p><img src="key-1.gif" alt="key-1"></p>
+<p>可以看到第一次點進去的時候會 React Query 會建立一個快取，並且用 <code>["super-hero-detail"]</code> 來當作 key 儲存。接著第二次進去的時候因為也是用同一個 key 來發請求，所以 React Query 就會先從之前的快取中拿資料，再利用背景 <code>refetch</code> 的方式來更新資料。</p>
+<p>也因為這樣，才會出現到明明點的是第二個，結果畫面上卻先顯示第一個的資訊，最後才刷新成正確的內容。</p>
+<p>這個就是沒正確設定好 key 的話會碰到的問題。我們明明知道每一筆頁面的 detail 資料一定會不一樣，既然如此，怎麼可以拿其他頁面的 detail 資料來用呢？這樣不合理，所以每一個 detail 應該要<strong>有自己的獨立的快取</strong>才對。</p>
+<p>那要怎麼解決呢？其實很簡單，就是幫每個 detail 建立各自的 key 就好了嘛！如果眼睛夠尖的話應該會注意到其實 key 的值是用 <strong>Array</strong> 來存的，所以我們只要改用陣列的方式來設定就好了，像這樣：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">useQuery([<span class="hljs-string">'super-hero-detail'</span>, id], getHeroDetail, {</span><br><span class="line">  <span class="hljs-comment">/* 略 */</span></span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣子 React Query 就會把每一個不同 id 的請求用不同的 key 來儲存，就不會再出現<strong>拿錯快取</strong>的問題：</p>
+<p><img src="key-2.gif" alt="key-2"></p>
+<p>能看到現在每一個 detail 頁面都有自己獨立的 key，所以就不會再出現拿錯快取的問題，只有在進到相同頁面的時候才會（因為相同頁面的 key 會一樣）。</p>
+<h2 id="Dynamic-Parallel-fetch"><a href="#Dynamic-Parallel-fetch" class="headerlink" title="Dynamic Parallel fetch"></a>Dynamic Parallel fetch</h2><p>簡單來說，有一種情境是妳想在一個頁面<strong>同時發出多個請求</strong>，但你又<strong>不知道實際上會需要幾個</strong>的時候就叫做「Dynamic Parallel fetch」。</p>
+<p>如果碰到這種情況的話可以參考 <code>useQueries</code> 這個 hook，雖然我個人更偏好用 <code>Promise.all</code> 來處理這種 case，但還是能認識一下這個 hook。</p>
+<p>這邊先直接看 code：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">'axios'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useQueries } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-query'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> getHeroData = <span class="hljs-function">(<span class="hljs-params">id</span>) =&gt;</span> axios.get(<span class="hljs-string">'http://localhost:4000/superheroes/'</span> + id)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 假設 props 會接收到一個由 id 組成的陣列</span></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> RQDynamicParallel = <span class="hljs-function">(<span class="hljs-params">{ ids }</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> queryResult = useQueries(</span><br><span class="line">    ids.map(<span class="hljs-function">(<span class="hljs-params">id</span>) =&gt;</span> {</span><br><span class="line">      <span class="hljs-keyword">return</span> {</span><br><span class="line">        <span class="hljs-attr">queryKey</span>: [<span class="hljs-string">'heros'</span>, id],</span><br><span class="line">        <span class="hljs-attr">queryFn</span>: <span class="hljs-function">() =&gt;</span> getHeroData(id),</span><br><span class="line">        <span class="hljs-comment">// focus 時不 refetch</span></span><br><span class="line">        <span class="hljs-attr">refetchOnWindowFocus</span>: <span class="hljs-literal">false</span>,</span><br><span class="line">        <span class="hljs-comment">// 整理資料格式</span></span><br><span class="line">        <span class="hljs-attr">select</span>: <span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> {</span><br><span class="line">          <span class="hljs-keyword">if</span> (response.data) {</span><br><span class="line">            <span class="hljs-keyword">return</span> response.data</span><br><span class="line">          }</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    })</span><br><span class="line">  )</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>DynamicParallel<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>useQueries</code> 只會接收一個參數，這個參數會是一個 Array，裡面的每一個元素都是一個物件。這些物件可以想成是用來代表 <code>useQuery</code> 的內容，所以 <code>key</code>、<code>function</code>、<code>config</code> 等等的設定都會放在這裡面。</p>
+<p>至於回傳的結果會是一個 Array 裝著每個 <code>useQuery</code> 的資料，像這樣：</p>
+<figure class="highlight json hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">"status"</span>: <span class="hljs-string">"success"</span>,</span><br><span class="line">    <span class="hljs-attr">"isLoading"</span>: <span class="hljs-literal">false</span>,</span><br><span class="line">    <span class="hljs-attr">"isSuccess"</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">    <span class="hljs-attr">"isError"</span>: <span class="hljs-literal">false</span>,</span><br><span class="line">    <span class="hljs-attr">"isIdle"</span>: <span class="hljs-literal">false</span>,</span><br><span class="line">    <span class="hljs-attr">"data"</span>: {</span><br><span class="line">      <span class="hljs-attr">"id"</span>: <span class="hljs-number">1</span>,</span><br><span class="line">      <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Batman HoHoHo"</span>,</span><br><span class="line">      <span class="hljs-attr">"alterEgo"</span>: <span class="hljs-string">"Bruce Wayne"</span></span><br><span class="line">    },</span><br><span class="line">    <span class="hljs-attr">"dataUpdatedAt"</span>: <span class="hljs-number">1688996274677</span>,</span><br><span class="line">    <span class="hljs-attr">"error"</span>: <span class="hljs-literal">null</span>,</span><br><span class="line">    <span class="hljs-attr">"errorUpdatedAt"</span>: <span class="hljs-number">1688996252855</span>,</span><br><span class="line">    <span class="hljs-attr">"failureCount"</span>: <span class="hljs-number">0</span>,</span><br><span class="line">    <span class="hljs-attr">"isFetched"</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">    <span class="hljs-attr">"isFetchedAfterMount"</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">    <span class="hljs-attr">"isFetching"</span>: <span class="hljs-literal">false</span>,</span><br><span class="line">    <span class="hljs-attr">"isLoadingError"</span>: <span class="hljs-literal">false</span>,</span><br><span class="line">    <span class="hljs-attr">"isPlaceholderData"</span>: <span class="hljs-literal">false</span>,</span><br><span class="line">    <span class="hljs-attr">"isPreviousData"</span>: <span class="hljs-literal">false</span>,</span><br><span class="line">    <span class="hljs-attr">"isRefetchError"</span>: <span class="hljs-literal">false</span>,</span><br><span class="line">    <span class="hljs-attr">"isStale"</span>: <span class="hljs-literal">true</span></span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-comment">// ...略</span></span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>常用到的 <code>data</code>、<code>error</code> 等有用的資訊都會儲存裡面，所以就能透過這個來做處理。</p>
+<h2 id="有相依性的請求"><a href="#有相依性的請求" class="headerlink" title="有相依性的請求"></a>有相依性的請求</h2><p>相依性的請求是指假設你有 A、B 兩個 API 要打，但可能 B 需要拿 A 回傳的資料來呼叫，所以你必須<strong>等 A 打完後才接著去打 B</strong>，這個就叫做相依，因為 B 必須依賴 A。</p>
+<p>如果是寫 <code>useEffect</code> 的話我們通常會用 <code>async / await</code> 來處理，例如：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">callAPI</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">const</span> userData = <span class="hljs-keyword">await</span> api.getUserData() <span class="hljs-comment">// 取得 user 資料</span></span><br><span class="line">    <span class="hljs-keyword">const</span> channelData = <span class="hljs-keyword">await</span> api.getChannel(userData.id) <span class="hljs-comment">// 拿 id 抓出頻道</span></span><br><span class="line">  }</span><br><span class="line">  callAPI()</span><br><span class="line">}, [])</span><br></pre></td></tr></tbody></table></figure>
+
+<p>說實話我覺得這種 case 在 <code>useEffect</code> 的情境下寫起來還蠻直覺的，因為就是單純的 JS 概念而已嘛，不過既然都用套件了就得照套件的規矩來，所以接著來看在 React Query 要怎麼做一樣的事吧！</p>
+<p>在 React Query 的話你必須這樣做：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">'axios'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useQuery } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-query'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> getUserData = <span class="hljs-function">(<span class="hljs-params">email</span>) =&gt;</span> axios.get(<span class="hljs-string">'http://localhost:4000/users/'</span> + email)</span><br><span class="line"><span class="hljs-keyword">const</span> getUserChannel = <span class="hljs-function">(<span class="hljs-params">channelId</span>) =&gt;</span> axios.get(<span class="hljs-string">'http://localhost:4000/channels/'</span> + channelId)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> RQDependent = <span class="hljs-function">(<span class="hljs-params">{ email }</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// 取得 user 資料</span></span><br><span class="line">  <span class="hljs-keyword">const</span> { <span class="hljs-attr">data</span>: userData } = useQuery([<span class="hljs-string">'email'</span>, email], <span class="hljs-function">() =&gt;</span> getUserData(email))</span><br><span class="line">  <span class="hljs-keyword">const</span> channelId = userData?.data.channelId</span><br><span class="line">  <span class="hljs-comment">// 拿 id 抓出頻道</span></span><br><span class="line">  <span class="hljs-keyword">const</span> { <span class="hljs-attr">data</span>: channelData } = useQuery([<span class="hljs-string">'channel'</span>, channelId], <span class="hljs-function">() =&gt;</span> getUserChannel(channelId), {</span><br><span class="line">    <span class="hljs-attr">enabled</span>: <span class="hljs-built_in">Boolean</span>(channelId) <span class="hljs-comment">// &lt;- 關鍵點</span></span><br><span class="line">  })</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>RQDependent<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>其實概念上差不多，只是因為現在是 hook 所以沒辦法寫什麼 <code>async / await</code>，因此得改用 <code>enabled</code> 這個 flag 來處理，流程大概會像下面這樣：</p>
+<ul>
+<li>剛進入頁面時，會先打 user 的 API（因為它的 enabled 預設是 <code>true</code>）</li>
+<li>拿到 user 資料後，<code>Boolean(channelId)</code> 會從 <code>false</code> 轉成 <code>true</code></li>
+<li>呼叫取得頻道資訊的 API，結束。</li>
+</ul>
+<p>所以就是一個用 <code>enabled</code> 來控制什麼時候要發出請求的概念，我覺得相較起來比較沒那麼直覺，但也不失為一種做法就是了！</p>
+<h2 id="不想要一直看到-Loading？也許可以試試-initialData"><a href="#不想要一直看到-Loading？也許可以試試-initialData" class="headerlink" title="不想要一直看到 Loading？也許可以試試 initialData"></a>不想要一直看到 Loading？也許可以試試 initialData</h2><p>這個情境是這樣子，我們先來看圖說故事：</p>
+<p><img src="initial-data-1.gif" alt="initial-data-1"></p>
+<p>這是一個從 List 進入 Detail 頁面的示範。在我們還沒有 Cache 之前進入一個 Detail 頁面都<strong>必須先 Loading</strong>，接著等拿到資料後再顯示畫面。</p>
+<p>這時候就有一個想法冒出來了：</p>
+<blockquote>
+<p>如果 List 的資料本身就包含一些 Detail 資訊的話，是不是可以拿來當作 Detail 頁面的初始資料，接著再透過背景 refetch 的方式去更新完整內容就好？這樣就不需要每一次都看到 Loading 了。</p>
+</blockquote>
+<p>答案當然是可以。只是雖然不用等 Loading 是件好事，但我覺得用<strong>背景刷新</strong>的這種方式在有些情境下可能反而是種反效果，所以用之前還是要想一下是不是真的適合在用會比較好。</p>
+<p>要實現這件事很簡單，思路是這樣：</p>
+<ul>
+<li>在 Detail 頁面的 <code>useQuery</code> 加上 <code>initialData</code> 的 config</li>
+<li>利用 <code>useQueryClient</code> 拿到 List 頁面的快取資料，寫入 <code>initialData</code></li>
+</ul>
+<p>實際的 code 會長這樣：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">'axios'</span></span><br><span class="line"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useQuery, useQueryClient } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-query'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useParams } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-router-dom/cjs/react-router-dom.min'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> getHeroDetail = <span class="hljs-function">(<span class="hljs-params">id</span>) =&gt;</span> axios.get(<span class="hljs-string">'http://localhost:4000/superheroes/'</span> + id)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> RQSuperHeroDetail = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> { id } = useParams()</span><br><span class="line">  <span class="hljs-comment">// 拿到 reaact query instance</span></span><br><span class="line">  <span class="hljs-keyword">const</span> queryClient = useQueryClient()</span><br><span class="line">  <span class="hljs-keyword">const</span> { data, isLoading } = useQuery([<span class="hljs-string">'super-hero-detail'</span>, id], <span class="hljs-function">() =&gt;</span> getHeroDetail(id), {</span><br><span class="line">    <span class="hljs-comment">// 加上 config</span></span><br><span class="line">    <span class="hljs-attr">initialData</span>: <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">      <span class="hljs-keyword">const</span> queryKeyOfListing = <span class="hljs-string">'super-hero'</span></span><br><span class="line">      <span class="hljs-comment">// 透過 key 去找出對應的快取，再從快取中找出對應的資料</span></span><br><span class="line">      <span class="hljs-keyword">const</span> hero = queryClient.getQueryData(queryKeyOfListing)?.data?.find(<span class="hljs-function">(<span class="hljs-params">hero</span>) =&gt;</span> hero.id === <span class="hljs-built_in">Number</span>(id))</span><br><span class="line">      <span class="hljs-keyword">if</span> (hero) {</span><br><span class="line">        <span class="hljs-keyword">return</span> {</span><br><span class="line">          <span class="hljs-attr">data</span>: hero</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">      <span class="hljs-keyword">return</span> <span class="hljs-literal">undefined</span></span><br><span class="line">    }</span><br><span class="line">  })</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">if</span> (isLoading) {</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">if</span> (data.data) {</span><br><span class="line">    <span class="hljs-keyword">return</span> (</span><br><span class="line">      <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Id: {data.data.id}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Name: {data.data.name}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Alter Ego: {data.data.alterEgo}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>改寫成這樣後，第一次進入 Detail 頁面時就會先拿 <code>initialData</code> 來顯示，接著再透過背景 refetch 來更新資料，效果會像這樣：</p>
+<p><img src="initial-data-2.gif" alt="initial-data-2"></p>
+<p>這樣子就不會再有 Loading 畫面了，然後等拿到資料的時候再更新到畫面上。</p>
+<p>不過就像一開始說的，有些時候加上必要的 Loading 其實是比較好的，所以我覺得還是要看時機來使用。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop is-hidden-mobile article-nav-prev">
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2023/06/10/windows-terminal-set-up/">Windows 終端配置 懶人包</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

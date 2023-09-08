@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Ant Design－Table - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="看起來複雜了點，不過理解後就還好了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ant Design－Table">
+<meta property="og:url" content="https://jubeatt.github.io/2022/05/15/antd-table/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="看起來複雜了點，不過理解後就還好了。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/05/15/antd-table/ant-table-basic.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/05/15/antd-table/ant-table-event.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/05/15/antd-table/ant-table-scroll.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/05/15/antd-table/ant-table-scroll-y.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/05/15/antd-table/ant-table-scroll-x.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/05/15/antd-table/ant-table-sort.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/05/15/antd-table/ant-table-filter.png">
+<meta property="article:published_time" content="2022-05-15T09:55:47.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.221Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/05/15/antd-table/ant-table-basic.png">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#基本用法">1&nbsp;&nbsp;<b>基本用法</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#重新設定-key-的值">2&nbsp;&nbsp;<b>重新設定 key 的值</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#巢狀的資料結構">3&nbsp;&nbsp;<b>巢狀的資料結構</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#重新設定輸出到畫面的值">4&nbsp;&nbsp;<b>重新設定輸出到畫面的值</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#加上事件處理">5&nbsp;&nbsp;<b>加上事件處理</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#加上滾軸">6&nbsp;&nbsp;<b>加上滾軸</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#加上排序和過濾">7&nbsp;&nbsp;<b>加上排序和過濾</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#結尾">8&nbsp;&nbsp;<b>結尾</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Ant Design－Table
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>5月 15 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Antd/">Antd</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>看起來複雜了點，不過理解後就還好了。</p>
+<span id="more"></span>
+
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>表格會用 <code>&lt;Table /&gt;</code> 來表示，並且接收 <code>dataSource</code> 跟 <code>columns</code> 這兩個 props。</p>
+<p><code>dataSource</code> 跟 <code>columns</code> 的值都是 Array，來看 code：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> dataSource = [</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">key</span>: <span class="hljs-string">'1'</span>,</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>,</span><br><span class="line">    <span class="hljs-attr">age</span>: <span class="hljs-number">23</span>,</span><br><span class="line">    <span class="hljs-attr">address</span>: <span class="hljs-string">'高雄市'</span></span><br><span class="line">  }</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> columns = [</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'姓名'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'name'</span>,</span><br><span class="line">    <span class="hljs-attr">key</span>: <span class="hljs-string">'name'</span></span><br><span class="line">  }</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：<code>key</code> 是用來給 React 渲染列表用的，預設是用 <code>key</code> 來表示，但你也可以用 <code>rowKey</code> 來重新定義，後面會再解釋。</p>
+<p>首先 <code>dataSource</code> 裡面會放我們要呈現的資料，等一下會跟 <code>columns</code> 來做映射。</p>
+<p>而 <code>columns</code> 中最重要的欄位是 <code>dataIndex</code>，填入的東西就代表 <code>dataSource</code> 中的哪個 key？像上面填了 <code>name</code>，所以就會到 <code>dataSource</code> 找到 <code>name: 'PeaNu'</code> 然後顯示到畫面上；至於 <code>title</code> 的話是表格的欄位名稱。</p>
+<p>上面的輸出結果如下：</p>
+<p><img src="ant-table-basic.png" alt="ant-table-basic"></p>
+<h2 id="重新設定-key-的值"><a href="#重新設定-key-的值" class="headerlink" title="重新設定 key 的值"></a>重新設定 key 的值</h2><p>前面有說 <code>key</code> 這個值是用來給 React 渲染列表用的，不過如果資料是透過 API 取得的話，通常不會有 <code>key</code> 這個欄位，那怎麼辦？</p>
+<p>這時候就要在 <code>&lt;Table /&gt;</code> 加上 <code>rowKey</code> 這個屬性，告訴他「我要拿哪個欄位來當做 <code>key</code>」。</p>
+<p>舉例來說，假設 API 拿到的資料如下：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> dataSource = [</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">userId</span>: <span class="hljs-string">'1'</span>,</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>,</span><br><span class="line">    <span class="hljs-attr">gender</span>: <span class="hljs-string">'M'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">userId</span>: <span class="hljs-string">'2'</span>,</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'PPB'</span>,</span><br><span class="line">    <span class="hljs-attr">gender</span>: <span class="hljs-string">'F'</span></span><br><span class="line">  }</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>那 <code>&lt;Table /&gt;</code> 就會長這樣：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Table rowKey=<span class="hljs-string">'userId'</span> dataSource={dataSource} columns={columns} /&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣就可以解決 key 的問題了。</p>
+<h2 id="巢狀的資料結構"><a href="#巢狀的資料結構" class="headerlink" title="巢狀的資料結構"></a>巢狀的資料結構</h2><p>如果現在資料變成這樣：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> dataSource = [</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>,</span><br><span class="line">    <span class="hljs-attr">age</span>: <span class="hljs-number">23</span>,</span><br><span class="line">    <span class="hljs-attr">address</span>: <span class="hljs-string">'高雄市'</span>,</span><br><span class="line">    <span class="hljs-attr">family</span>: {</span><br><span class="line">      <span class="hljs-attr">wife</span>: <span class="hljs-string">'PPB'</span></span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>那 <code>columns</code> 就得這樣寫：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> columns = [</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'Wife'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: [<span class="hljs-string">'family'</span>, <span class="hljs-string">'wife'</span>]</span><br><span class="line">  }</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果現在又變成這樣：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> dataSource = [</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>,</span><br><span class="line">    <span class="hljs-attr">age</span>: <span class="hljs-number">23</span>,</span><br><span class="line">    <span class="hljs-attr">address</span>: <span class="hljs-string">'高雄市'</span>,</span><br><span class="line">    <span class="hljs-attr">family</span>: [</span><br><span class="line">      {</span><br><span class="line">        <span class="hljs-attr">wife</span>: <span class="hljs-string">'PPB'</span></span><br><span class="line">      }</span><br><span class="line">    ]</span><br><span class="line">  }</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>那 <code>columns</code> 就得這樣寫：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> columns = [</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'Wife'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: [<span class="hljs-string">'family'</span>, <span class="hljs-string">'0'</span>, <span class="hljs-string">'wife'</span>]</span><br><span class="line">  }</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="重新設定輸出到畫面的值"><a href="#重新設定輸出到畫面的值" class="headerlink" title="重新設定輸出到畫面的值"></a>重新設定輸出到畫面的值</h2><p>有時候我們從 API 拿到的值不會想直接放到畫面上，例如：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> dataSource = [</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>,</span><br><span class="line">    <span class="hljs-attr">gender</span>: <span class="hljs-string">'M'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'PPB'</span>,</span><br><span class="line">    <span class="hljs-attr">gender</span>: <span class="hljs-string">'F'</span></span><br><span class="line">  }</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這時候就可以用 <code>render</code> 這個屬性來處理：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> columns = [</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'Name'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'name'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'Gender'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'gender'</span>,</span><br><span class="line">    <span class="hljs-attr">render</span>: (typeChar: <span class="hljs-built_in">string</span>): <span class="hljs-function"><span class="hljs-params">string</span> =&gt;</span> {</span><br><span class="line">      <span class="hljs-keyword">return</span> typeChar === <span class="hljs-string">'F'</span> ? <span class="hljs-string">'女'</span> : <span class="hljs-string">'男'</span></span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>也可以用縮寫的方式來寫：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> columns = [</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'Name'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'name'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'Gender'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'gender'</span>,</span><br><span class="line">    render(value: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">string</span> {</span><br><span class="line">      <span class="hljs-keyword">return</span> value === <span class="hljs-string">'F'</span> ? <span class="hljs-string">'女'</span> : <span class="hljs-string">'男'</span></span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>想再任性一點嗎？你甚至可以直接回傳一個 JSX：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> columns = [</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'Name'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'name'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'Gender'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'gender'</span>,</span><br><span class="line">    render(value: <span class="hljs-built_in">string</span>): React.ReactElement {</span><br><span class="line">      <span class="hljs-keyword">return</span> typeChar === <span class="hljs-string">'M'</span> ? <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>女<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span> : <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>男<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span></span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="加上事件處理"><a href="#加上事件處理" class="headerlink" title="加上事件處理"></a>加上事件處理</h2><p>除了 <code>dataSource</code> 跟 <code>columns</code> 以外，還有一個 <code>onRow</code> 屬性可以用，用起來會像這樣子：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;Table</span><br><span class="line">  dataSource={testData}</span><br><span class="line">  columns={testColumns}</span><br><span class="line">  onRow={<span class="hljs-function">(<span class="hljs-params">record: <span class="hljs-built_in">any</span></span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">return</span> {</span><br><span class="line">      <span class="hljs-attr">onClick</span>: <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'record'</span>, record)</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'click'</span>)</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }}</span><br><span class="line">/&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>onRow</code> 會放一個 function，這個 function 會回傳一個物件，裡面就可以放 event 跟 handler。</p>
+<p>至於 <code>record</code> 的值會是觸發事件的「那個欄位」的 <code>dataSource</code> 值。</p>
+<p>我知道聽起來講超級無敵難懂，所以一步一步來解釋吧。</p>
+<p>假設 <code>dataSource</code> 長這樣：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> dataSource = [</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>,</span><br><span class="line">    <span class="hljs-attr">gender</span>: <span class="hljs-string">'M'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'PPB'</span>,</span><br><span class="line">    <span class="hljs-attr">gender</span>: <span class="hljs-string">'F'</span></span><br><span class="line">  }</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>然後我點了 PeaNu 那一排：</p>
+<p><img src="ant-table-event.png" alt="ant-table-event"></p>
+<p>那 <code>record</code> 的值就會是：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>,</span><br><span class="line">  <span class="hljs-attr">gender</span>: <span class="hljs-string">'M'</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="加上滾軸"><a href="#加上滾軸" class="headerlink" title="加上滾軸"></a>加上滾軸</h2><p>如果沒有做額外設定的話，預設的 <code>&lt;Table /&gt;</code> 會「自適應」做縮放，直到放不下時，會在視窗產生滾軸，像這樣：</p>
+<p><img src="ant-table-scroll.png" alt="ant-table-scroll"></p>
+<p>有沒有辦法讓滾軸產生在「表格中」就好？還真的有，就是加上 <code>scroll</code> 屬性：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;Table</span><br><span class="line">  rowKey=<span class="hljs-string">'id'</span></span><br><span class="line">  dataSource={testData}</span><br><span class="line">  columns={testColumns}</span><br><span class="line">  scroll={{</span><br><span class="line">    <span class="hljs-attr">x</span>: <span class="hljs-number">1000</span>,</span><br><span class="line">    <span class="hljs-attr">y</span>: <span class="hljs-number">150</span></span><br><span class="line">  }}</span><br><span class="line">/&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>裡面要傳一個物件，然後指定 x 軸和 y 軸的「寬度」。這兩個的行為不太一樣，要分清楚。</p>
+<p>y 軸的概念比較簡單，想成是總高度就好。例如我設為 <code>150</code>，那表格的高度就會固定成 <code>150px</code>，當資料超過 <code>150px</code> 的話就會產生滾軸。</p>
+<p><img src="ant-table-scroll-y.png" alt="ant-table-scroll-y"></p>
+<p>至於 x 軸的部分，你可以這樣記「當視窗小於 x 時，我希望表格的寬度有多寬」。所以我設為 <code>1000</code> 時，就代表當視窗寬度低於 1000 時表格的寬度會固定在 <code>1000px</code>，然後產生滾軸。</p>
+<p><img src="ant-table-scroll-x.png" alt="ant-table-scroll-x"></p>
+<p>這樣會好記一點，所以這樣記就好。</p>
+<h2 id="加上排序和過濾"><a href="#加上排序和過濾" class="headerlink" title="加上排序和過濾"></a>加上排序和過濾</h2><p>如果我有這樣的表格：</p>
+<p><img src="ant-table-sort.png" alt="ant-table-sort"></p>
+<p>我希望可以加上升冪跟降冪排序的選項，那我可以在 columns 加上這樣的設定：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> columns = useRef([</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'User id'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'id'</span>,</span><br><span class="line">    <span class="hljs-comment">// 這個就跟 array.sort 的用法一樣</span></span><br><span class="line">    <span class="hljs-attr">sorter</span>: <span class="hljs-function">(<span class="hljs-params">a: <span class="hljs-built_in">any</span>, b: <span class="hljs-built_in">any</span></span>) =&gt;</span> a.id - b.id</span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'First name'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'first_name'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'Last name'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'last_name'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'Email'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'email'</span></span><br><span class="line">  }</span><br><span class="line">])</span><br></pre></td></tr></tbody></table></figure>
+
+<p>也可以加上預設值，不過要注意一下 type 的問題，沒設定好的話會出錯：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 記得指定 type，否則會出錯</span></span><br><span class="line"><span class="hljs-keyword">const</span> columns = useRef&lt;<span class="hljs-built_in">any</span>[]&gt;([</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'User id'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'id'</span>,</span><br><span class="line">    <span class="hljs-attr">sorter</span>: <span class="hljs-function">(<span class="hljs-params">a: <span class="hljs-built_in">any</span>, b: <span class="hljs-built_in">any</span></span>) =&gt;</span> a.id - b.id,</span><br><span class="line">    <span class="hljs-comment">// ascend | descend</span></span><br><span class="line">    <span class="hljs-attr">defaultSortOrder</span>: <span class="hljs-string">'ascend'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'First name'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'first_name'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'Last name'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'last_name'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'Email'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'email'</span></span><br><span class="line">  }</span><br><span class="line">])</span><br></pre></td></tr></tbody></table></figure>
+
+<p>接著，如果我希望加上過濾的功能，像這樣：</p>
+<p><img src="ant-table-filter.png" alt="ant-table-filter"></p>
+<p>那就要在 <code>columns</code> 上加上兩個東西：</p>
+<ol>
+<li><code>filters</code>，一個 Array</li>
+<li><code>onFilter</code>，一個 function</li>
+</ol>
+<p>一樣來看 code 解釋：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> columns = useRef&lt;<span class="hljs-built_in">any</span>[]&gt;([</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'User id'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'id'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'First name'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'first_name'</span>,</span><br><span class="line">    <span class="hljs-comment">// 用來顯示下拉選單的「顯示文字」跟「資料值」</span></span><br><span class="line">    <span class="hljs-attr">filters</span>: [</span><br><span class="line">      {</span><br><span class="line">        <span class="hljs-attr">text</span>: <span class="hljs-string">'George'</span>,</span><br><span class="line">        <span class="hljs-attr">value</span>: <span class="hljs-string">'George'</span></span><br><span class="line">      },</span><br><span class="line">      {</span><br><span class="line">        <span class="hljs-attr">text</span>: <span class="hljs-string">'Janet'</span>,</span><br><span class="line">        <span class="hljs-attr">value</span>: <span class="hljs-string">'Janet'</span></span><br><span class="line">      },</span><br><span class="line">      {</span><br><span class="line">        <span class="hljs-attr">text</span>: <span class="hljs-string">'Emma'</span>,</span><br><span class="line">        <span class="hljs-attr">value</span>: <span class="hljs-string">'Emma'</span></span><br><span class="line">      }</span><br><span class="line">    ],</span><br><span class="line">    <span class="hljs-attr">onFilter</span>: <span class="hljs-function">(<span class="hljs-params">value: <span class="hljs-built_in">any</span>, record: <span class="hljs-built_in">any</span></span>) =&gt;</span> {</span><br><span class="line">      <span class="hljs-comment">// record 會遍歷 dataSource 的每一筆資料</span></span><br><span class="line">      <span class="hljs-comment">// value = filters 中設定的值</span></span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'value'</span>, value)</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'record'</span>, record)</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'filter'</span>, record.first_name === value)</span><br><span class="line">      <span class="hljs-comment">// 這邊想成是 Array.filter 的邏輯就好</span></span><br><span class="line">      <span class="hljs-keyword">return</span> record.first_name === value</span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'Last name'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'last_name'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">title</span>: <span class="hljs-string">'Email'</span>,</span><br><span class="line">    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">'email'</span></span><br><span class="line">  }</span><br><span class="line">])</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣就可以實現過濾的功能了。</p>
+<h2 id="結尾"><a href="#結尾" class="headerlink" title="結尾"></a>結尾</h2><p>最後綜合以上所學，我做了一個簡單的<a target="_blank" rel="noopener" href="https://codesandbox.io/s/ant-design-table-dxduh3?file=/src/App.tsx">範例</a>，有需要的話可以去參考看看。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/05/16/antd-breadcrumb/">Ant Design－Breadcrumb</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/05/14/mobx-another-way-to-set-up/">再探 mobx，換個口味的寫法</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

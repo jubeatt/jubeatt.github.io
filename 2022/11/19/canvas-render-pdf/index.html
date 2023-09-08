@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Canvas－渲染 PDF 的方法 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="講白話一點就是把 PDF 變成 Cavas。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Canvas－渲染 PDF 的方法">
+<meta property="og:url" content="https://jubeatt.github.io/2022/11/19/canvas-render-pdf/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="講白話一點就是把 PDF 變成 Cavas。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/19/canvas-render-pdf/example1-read-pdf-from-local.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/19/canvas-render-pdf/example2-read-pdf-from-upload.gif">
+<meta property="article:published_time" content="2022-11-19T03:57:16.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.243Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/11/19/canvas-render-pdf/example1-read-pdf-from-local.gif">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#環境配置">1&nbsp;&nbsp;<b>環境配置</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#讀取本機檔案">2&nbsp;&nbsp;<b>讀取本機檔案</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#讀取使用者上傳的檔案">3&nbsp;&nbsp;<b>讀取使用者上傳的檔案</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Canvas－渲染 PDF 的方法
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>11月 19 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/HTML/">HTML</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>講白話一點就是把 PDF 變成 Cavas。</p>
+<span id="more"></span>
+
+<h2 id="環境配置"><a href="#環境配置" class="headerlink" title="環境配置"></a>環境配置</h2><p>由於我當初在研究時踩到了一些地雷，所以還是說明一下環境配置的方式。這邊要安裝的套件是 <a target="_blank" rel="noopener" href="https://github.com/mozilla/pdf.js">pdf.js</a>。不過因為是用 React 來實作，所以會用 npm 來安裝 <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/pdfjs-dist">pdfjs-dist</a> 這個套件。</p>
+<p>裝好套件後，必須再透過 <code>GlobalWorkerOptions</code> 來做配置：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { GlobalWorkerOptions } <span class="hljs-keyword">from</span> <span class="hljs-string">'pdfjs-dist'</span></span><br><span class="line"><span class="hljs-keyword">import</span> pdf <span class="hljs-keyword">from</span> <span class="hljs-string">'./assets/sample.pdf'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> src = <span class="hljs-string">'https://cdn.jsdelivr.net/npm/pdfjs-dist@&lt;your_pack_version&gt;/build/pdf.worker.js'</span></span><br><span class="line">GlobalWorkerOptions.workerSrc = src</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>請務必把 <code>&lt;your_pack_version&gt;</code> 填入和 <code>pdfjs-dist</code> 相同的版號</li>
+<li>請務必把 <code>&lt;your_pack_version&gt;</code> 填入和 <code>pdfjs-dist</code> 相同的版號</li>
+<li>請務必把 <code>&lt;your_pack_version&gt;</code> 填入和 <code>pdfjs-dist</code> 相同的版號</li>
+</ul>
+<p>如果沒有做這段配置或是你填錯版號，等一下在使用的時候就會出錯，所以請務必先做好這段配置。</p>
+<h2 id="讀取本機檔案"><a href="#讀取本機檔案" class="headerlink" title="讀取本機檔案"></a>讀取本機檔案</h2><p>這段主要是介紹怎麼用套件提供的 methods 來讀取和渲染，要特別注意的是這段期間是「非同步」執行的。</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 引入專案中的 pdf 檔</span></span><br><span class="line"><span class="hljs-keyword">import</span> pdf <span class="hljs-keyword">from</span> <span class="hljs-string">'./assets/sample.pdf'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  GlobalWorkerOptions.workerSrc = workerSrc</span><br><span class="line">  <span class="hljs-keyword">const</span> canvas = useRef&lt;HTMLCanvasElement&gt;(<span class="hljs-literal">null</span>)</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    renderPDF(pdf, <span class="hljs-number">1</span>).catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {</span><br><span class="line">      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error'</span>, error)</span><br><span class="line">    })</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 讀取檔案的 function</span></span><br><span class="line">  <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">renderPDF</span>(<span class="hljs-params">src: <span class="hljs-built_in">string</span>, page: <span class="hljs-built_in">number</span></span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">const</span> ctx = canvas.current!.getContext(<span class="hljs-string">'2d'</span>)!</span><br><span class="line">    <span class="hljs-comment">// 利用 getDocument 來讀取檔案</span></span><br><span class="line">    <span class="hljs-keyword">const</span> doc = <span class="hljs-keyword">await</span> getDocument(src).promise</span><br><span class="line">    <span class="hljs-comment">// 拿到檔案後，利用 getPage 來取得頁面資訊</span></span><br><span class="line">    doc.getPage(page).then(<span class="hljs-function">(<span class="hljs-params">page</span>) =&gt;</span> {</span><br><span class="line">      <span class="hljs-comment">// 設定縮放比例</span></span><br><span class="line">      <span class="hljs-keyword">const</span> viewport = page.getViewport({ <span class="hljs-attr">scale</span>: <span class="hljs-number">1</span> })</span><br><span class="line">      <span class="hljs-comment">// 設定 cavas 的寬高</span></span><br><span class="line">      canvas.current!.width = viewport.width</span><br><span class="line">      canvas.current!.height = viewport.height</span><br><span class="line">      <span class="hljs-comment">// 渲染到 canvas 中</span></span><br><span class="line">      page.render({</span><br><span class="line">        <span class="hljs-attr">canvasContext</span>: ctx,</span><br><span class="line">        viewport</span><br><span class="line">      })</span><br><span class="line">    })</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'App'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'canvas-wrapper'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">canvas</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">{canvas}</span> <span class="hljs-attr">id</span>=<span class="hljs-string">'canvas'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">canvas</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml"></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'btns'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> {</span></span><br><span class="line"><span class="hljs-xml">            // 切到第一頁</span></span><br><span class="line"><span class="hljs-xml">            renderPDF(pdf, 1).catch((error) =&gt; {</span></span><br><span class="line"><span class="hljs-xml">              console.log('error', error)</span></span><br><span class="line"><span class="hljs-xml">            })</span></span><br><span class="line"><span class="hljs-xml">          }}</span></span><br><span class="line"><span class="hljs-xml">        &gt;</span></span><br><span class="line"><span class="hljs-xml">          Prev</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> {</span></span><br><span class="line"><span class="hljs-xml">            // 切到第二頁</span></span><br><span class="line"><span class="hljs-xml">            renderPDF(pdf, 2).catch((error) =&gt; {</span></span><br><span class="line"><span class="hljs-xml">              console.log('error', error)</span></span><br><span class="line"><span class="hljs-xml">            })</span></span><br><span class="line"><span class="hljs-xml">          }}</span></span><br><span class="line"><span class="hljs-xml">        &gt;</span></span><br><span class="line"><span class="hljs-xml">          Next</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="example1-read-pdf-from-local.gif" alt="example1-read-pdf-from-local"></p>
+<p>實際範例可以到 <a target="_blank" rel="noopener" href="https://codesandbox.io/s/pdfjs-du-dang-an-4l1dtx?file=/src/App.tsx">codesandbox</a> 上參考，不過我實在不知道為什麼 codesandbox 上沒辦法讀取到 pdfjs 的包…，所以在範例中是透過 cdn 的方式來引入的，這一點還請見諒。</p>
+<h2 id="讀取使用者上傳的檔案"><a href="#讀取使用者上傳的檔案" class="headerlink" title="讀取使用者上傳的檔案"></a>讀取使用者上傳的檔案</h2><p>在多數情況下，我們想做的通常是讓使用者自己上傳檔案並顯示到畫面上。其實主要的邏輯都跟剛剛差不多，就是把檔案內容丟給 pdfjs 來處理並且渲染到 canvas 上，但現在要多做的一件事情是：</p>
+<blockquote>
+<p>先把使用者上傳的檔案做格式轉換後，再丟給 pdfjs 來處理</p>
+</blockquote>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> canvas = useRef&lt;HTMLCanvasElement&gt;(<span class="hljs-literal">null</span>)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 讀取檔案的 function</span></span><br><span class="line">  <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">renderPDF</span>(<span class="hljs-params">src: <span class="hljs-built_in">ArrayBuffer</span>, pageIndex: <span class="hljs-built_in">number</span></span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">const</span> ctx = canvas.current!.getContext(<span class="hljs-string">'2d'</span>)!</span><br><span class="line">    <span class="hljs-comment">// 利用 getDocument 來讀取檔案</span></span><br><span class="line">    <span class="hljs-keyword">const</span> doc = <span class="hljs-keyword">await</span> getDocument(src).promise</span><br><span class="line">    <span class="hljs-comment">// 拿到檔案後，利用 getPage 來取得頁面資訊</span></span><br><span class="line">    doc.getPage(pageIndex).then(<span class="hljs-function">(<span class="hljs-params">page</span>) =&gt;</span> {</span><br><span class="line">      <span class="hljs-comment">// 設定縮放比例</span></span><br><span class="line">      <span class="hljs-keyword">const</span> viewport = page.getViewport({ <span class="hljs-attr">scale</span>: <span class="hljs-number">1</span> })</span><br><span class="line">      <span class="hljs-comment">// 設定 cavas 的寬高</span></span><br><span class="line">      canvas.current!.width = viewport.width</span><br><span class="line">      canvas.current!.height = viewport.height</span><br><span class="line">      <span class="hljs-comment">// 渲染到 canvas 中</span></span><br><span class="line">      <span class="hljs-keyword">const</span> renderTask = page.render({</span><br><span class="line">        <span class="hljs-attr">canvasContext</span>: ctx,</span><br><span class="line">        viewport</span><br><span class="line">      })</span><br><span class="line"></span><br><span class="line">      renderTask.promise.catch(<span class="hljs-function">() =&gt;</span> alert(<span class="hljs-string">'render error'</span>))</span><br><span class="line">    })</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onFileSelect</span>(<span class="hljs-params">event: React.ChangeEvent&lt;HTMLInputElement&gt;</span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">const</span> files = event.target.files!</span><br><span class="line">    <span class="hljs-comment">// 確認有選擇檔案才做事</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (files.length &gt; <span class="hljs-number">0</span>) {</span><br><span class="line">      <span class="hljs-comment">// new 一個 FileReader</span></span><br><span class="line">      <span class="hljs-keyword">const</span> fileReader = <span class="hljs-keyword">new</span> FileReader()</span><br><span class="line">      <span class="hljs-comment">// 用 FileReader 來讀取 blob</span></span><br><span class="line">      fileReader.readAsArrayBuffer(files[<span class="hljs-number">0</span>])</span><br><span class="line">      fileReader.onload = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">        <span class="hljs-comment">// 下面這兩段會在文中解釋，這邊先看個概念就好了</span></span><br><span class="line">        <span class="hljs-comment">// new 一個 Uint8Array 的 視圖（view）出來</span></span><br><span class="line">        <span class="hljs-keyword">const</span> typedArray = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint8Array</span>(fileReader.result <span class="hljs-keyword">as</span> <span class="hljs-built_in">ArrayBuffer</span>)</span><br><span class="line">        <span class="hljs-comment">// 把 Uint8Array 丟給 pdfjs 來處理，並渲染到 canvas 上</span></span><br><span class="line">        renderPDF(typedArray, <span class="hljs-number">1</span>).catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(error.message))</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'App'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'btns'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">'file'</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">{onFileSelect}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'canvas-wrapper'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">canvas</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">{canvas}</span> <span class="hljs-attr">id</span>=<span class="hljs-string">'canvas'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">canvas</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="example2-read-pdf-from-upload.gif" alt="example2-read-pdf-from-upload"></p>
+<p>附註：<a target="_blank" rel="noopener" href="https://codesandbox.io/s/pdfjs-shang-chuan-dang-an-5ob625?file=/src/App.tsx">codesandbox</a></p>
+<p>關於讀檔案的部分其實會牽扯到蠻多東西的，所以我不打算解釋太深，你只要知道每一步大概在做什麼就好了：</p>
+<ol>
+<li>使用者上傳檔案後，用 <code>event.target.files</code> 拿到的會是「blob」格式的物件，我們不能直接把這個丟給 pdfjs 來解析，所以要先做一些處理。</li>
+<li>利用 <code>FileReader.readAsArrayBuffer</code> 來讀取 blob 後，會拿到一個「ArrayBuffer」的資料。ArrayBuffer 是一種比較特別的物件，他的內容會指向某個記憶體位址（類似 C 的 Pointer），但重點是<strong>只能讀不能寫</strong>，所以必須在透過一個叫做「View」的一種資料型態來操作 ArrayBuffer（這一段真的比較抽象，所以可能要多在自己參考其他文章來想想看，像 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10246326">這篇</a> 我覺得解釋得還蠻好理解的）。</li>
+<li>為了透過 View 來操作 ArrayBuffer，必須用 <code>new Uint8Array(fileReader.result as ArrayBuffer)</code> 來產生一個 View，而 View 在 JavaScript 中是屬於一種叫做「<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Typed_arrays">TypedArray</a>」的資料型態，所以才會以此來當作變數名稱。</li>
+<li>最後把這個「可操作的資料」丟給 pdfjs 後，就可以順利的讀取並渲染到 canvas 上。</li>
+</ol>
+<p>雖然以這邊的例子來說，就算你直接把 ArrayBuffer 丟給 pdfjs 也可以正常渲染，但官方建議透過這種方式來減少「memory leak」 的問題。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/11/29/canvas-fabric/">Canvas－利用 fabric 打造更好的 Canvas</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/11/18/canvas-basic-draw-and-export-image/">Canvas－基本繪製與輸出圖片</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

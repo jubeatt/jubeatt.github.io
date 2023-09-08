@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Echarts Note - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="第一次嘗試圖表應用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Echarts Note">
+<meta property="og:url" content="https://jubeatt.github.io/2022/11/02/echarts-note/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="第一次嘗試圖表應用。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/02/echarts-note/data-structure.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/02/echarts-note/style.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/02/echarts-note/dataset.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/02/echarts-note/axis.jpeg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/02/echarts-note/axis-tick.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/02/echarts-note/legend.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/02/echarts-note/legend-position.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/02/echarts-note/legend-icon.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/11/02/echarts-note/legend-default-selected.png">
+<meta property="article:published_time" content="2022-11-02T04:49:26.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.393Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/11/02/echarts-note/data-structure.png">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#基本資料結構與觀念">1&nbsp;&nbsp;<b>基本資料結構與觀念</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#觀念">1.1&nbsp;&nbsp;觀念</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#基本配置範例">1.2&nbsp;&nbsp;基本配置範例</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#圖表尺寸">2&nbsp;&nbsp;<b>圖表尺寸</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#自動調整大小">2.1&nbsp;&nbsp;自動調整大小</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#圖表樣式">3&nbsp;&nbsp;<b>圖表樣式</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Dataset">4&nbsp;&nbsp;<b>Dataset</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#座標軸（Axis）">5&nbsp;&nbsp;<b>座標軸（Axis）</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#圖例（legend）">6&nbsp;&nbsp;<b>圖例（legend）</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#設定圖例的位置">6.1&nbsp;&nbsp;設定圖例的位置</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#設定不同的圖例">6.2&nbsp;&nbsp;設定不同的圖例</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#設定預設隱藏-顯示">6.3&nbsp;&nbsp;設定預設隱藏 / 顯示</a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Echarts Note
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>11月 2 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Plug-in/">Plug-in</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>第一次嘗試圖表應用。</p>
+<span id="more"></span>
+
+<h2 id="基本資料結構與觀念"><a href="#基本資料結構與觀念" class="headerlink" title="基本資料結構與觀念"></a>基本資料結構與觀念</h2><h3 id="觀念"><a href="#觀念" class="headerlink" title="觀念"></a>觀念</h3><p>echarts 其實就是一個幫你處理「圖表實現（implement）」 的套件，你只要依照文件上的 <a target="_blank" rel="noopener" href="https://echarts.apache.org/zh/option.html#title">配置</a> 來做設定就會自動幫你產生對應的圖表，所以你不需要花心思在「如何建立圖表」這件事情上（一個實際案例是 <a target="_blank" rel="noopener" href="https://d3js.org/">D3.js</a>）。</p>
+<h3 id="基本配置範例"><a href="#基本配置範例" class="headerlink" title="基本配置範例"></a>基本配置範例</h3><figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> option = {</span><br><span class="line">  <span class="hljs-attr">title</span>: {</span><br><span class="line">    <span class="hljs-attr">text</span>: <span class="hljs-string">'圖表的標題'</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">tooltip</span>: {},</span><br><span class="line">  <span class="hljs-attr">legend</span>: {</span><br><span class="line">    <span class="hljs-attr">data</span>: [<span class="hljs-string">'销量'</span>]</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">xAxis</span>: {</span><br><span class="line">    <span class="hljs-attr">data</span>: [<span class="hljs-string">'衬衫'</span>, <span class="hljs-string">'羊毛衫'</span>, <span class="hljs-string">'雪纺衫'</span>, <span class="hljs-string">'裤子'</span>, <span class="hljs-string">'高跟鞋'</span>, <span class="hljs-string">'袜子'</span>]</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">yAxis</span>: {},</span><br><span class="line">  <span class="hljs-attr">series</span>: [</span><br><span class="line">    {</span><br><span class="line">      <span class="hljs-attr">name</span>: <span class="hljs-string">'销量'</span>,</span><br><span class="line">      <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span>,</span><br><span class="line">      <span class="hljs-attr">data</span>: [<span class="hljs-number">5</span>, <span class="hljs-number">20</span>, <span class="hljs-number">36</span>, <span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">20</span>]</span><br><span class="line">    }</span><br><span class="line">  ]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊的配置你搭配下圖一起看以後大概就能理解兩者之間的對應關係：</p>
+<p><img src="data-structure.png" alt="data-structure"></p>
+<p>補充：</p>
+<ul>
+<li><code>tooltip</code> hover 時會有 popup 顯示訊息</li>
+<li><code>legend</code> 是用來過切換單一圖表的顯示 or 隱藏（需在 <code>series.name</code> 設置對應名稱 ）</li>
+<li><code>series</code> 主要是用來代表「資料」。也包含其他的設定，像是 <code>type: bar</code> 代表以柱狀圖呈現，而 <code>name</code> 則代表該資料的名稱，以此類推此。</li>
+</ul>
+<p>最基本的配置其實就大概包含以上這些，其他的都只是往後延伸而已。當你碰到任何疑惑時，請務必參考 <a target="_blank" rel="noopener" href="https://echarts.apache.org/zh/option.html#title">API Spec</a> 來學習與練習。不需要死記硬背，當你用的多時就會慢慢記住了。</p>
+<h2 id="圖表尺寸"><a href="#圖表尺寸" class="headerlink" title="圖表尺寸"></a>圖表尺寸</h2><p>圖表預設會填滿<strong>容器</strong>的寬與高，例如：</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.wrapper</span> {</span><br><span class="line">  <span class="hljs-attribute">width</span>: <span class="hljs-number">400px</span>;</span><br><span class="line">  <span class="hljs-attribute">height</span>: <span class="hljs-number">400px</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> echarts <span class="hljs-keyword">from</span> <span class="hljs-string">'echarts'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useEffect, useRef } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> option = {</span><br><span class="line">  <span class="hljs-attr">title</span>: {</span><br><span class="line">    <span class="hljs-attr">text</span>: <span class="hljs-string">'圖表的標題'</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">tooltip</span>: {},</span><br><span class="line">  <span class="hljs-attr">legend</span>: {</span><br><span class="line">    <span class="hljs-attr">data</span>: [<span class="hljs-string">'銷量'</span>]</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">xAxis</span>: {</span><br><span class="line">    <span class="hljs-attr">data</span>: [<span class="hljs-string">'衬衫'</span>, <span class="hljs-string">'羊毛衫'</span>, <span class="hljs-string">'雪纺衫'</span>, <span class="hljs-string">'裤子'</span>, <span class="hljs-string">'高跟鞋'</span>, <span class="hljs-string">'袜子'</span>]</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">yAxis</span>: {},</span><br><span class="line">  <span class="hljs-attr">series</span>: [</span><br><span class="line">    {</span><br><span class="line">      <span class="hljs-attr">name</span>: <span class="hljs-string">'銷量'</span>,</span><br><span class="line">      <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span>,</span><br><span class="line">      <span class="hljs-attr">data</span>: [<span class="hljs-number">5</span>, <span class="hljs-number">50</span>, <span class="hljs-number">36</span>, <span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">20</span>]</span><br><span class="line">    }</span><br><span class="line">  ]</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> chartWrapper = useRef(<span class="hljs-literal">null</span>)</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">const</span> myChart = echarts.init(chartWrapper.current)</span><br><span class="line">    myChart.setOption(<span class="hljs-built_in">JSON</span>.parse(<span class="hljs-built_in">JSON</span>.stringify(option)))</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">{chartWrapper}</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'chat-wrapper'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣子圖表就會是 400x400 的大小。</p>
+<h3 id="自動調整大小"><a href="#自動調整大小" class="headerlink" title="自動調整大小"></a>自動調整大小</h3><p>如果要手動調整圖表大小的話，可以用在 <code>init</code> 時加上 config：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> myChart = echarts.init(chartWrapper.current, <span class="hljs-literal">null</span>, {</span><br><span class="line">  <span class="hljs-attr">width</span>: <span class="hljs-number">600</span>,</span><br><span class="line">  <span class="hljs-attr">height</span>: <span class="hljs-number">600</span></span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果要隨視窗改變時調整大小的話，可以用在 <code>window.onResize</code> 時呼叫<code>chart.resize()</code> 來改變圖表大小：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">window</span>.onresize = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> myChart = echarts.init(chartWrapper.current)</span><br><span class="line">  myChart.setOption(<span class="hljs-built_in">JSON</span>.parse(<span class="hljs-built_in">JSON</span>.stringify(option)))</span><br><span class="line">  <span class="hljs-comment">// 根據 body 的寬高來調整大小</span></span><br><span class="line">  myChart.resize({</span><br><span class="line">    <span class="hljs-attr">width</span>: <span class="hljs-built_in">document</span>.body.clientWidth - <span class="hljs-number">20</span>,</span><br><span class="line">    <span class="hljs-attr">height</span>: <span class="hljs-built_in">document</span>.body.clientHeight - <span class="hljs-number">20</span></span><br><span class="line">  })</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="圖表樣式"><a href="#圖表樣式" class="headerlink" title="圖表樣式"></a>圖表樣式</h2><p>設定樣式的方法是透過在 option 中做設定，可以設定在「global」或「series」身上。</p>
+<p><img src="style.png" alt="style"></p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> option = {</span><br><span class="line">  <span class="hljs-comment">// global</span></span><br><span class="line">  <span class="hljs-attr">color</span>: [<span class="hljs-string">'#003366'</span>, <span class="hljs-string">'#006699'</span>, <span class="hljs-string">'#4cabce'</span>],</span><br><span class="line">  <span class="hljs-attr">legend</span>: {</span><br><span class="line">    <span class="hljs-attr">orient</span>: <span class="hljs-string">'vertical'</span>,</span><br><span class="line">    <span class="hljs-attr">top</span>: <span class="hljs-string">'center'</span>,</span><br><span class="line">    <span class="hljs-attr">right</span>: <span class="hljs-number">0</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">dataset</span>: {</span><br><span class="line">    <span class="hljs-attr">source</span>: [</span><br><span class="line">      [<span class="hljs-string">'product'</span>, <span class="hljs-string">'2015'</span>, <span class="hljs-string">'2016'</span>, <span class="hljs-string">'2017'</span>],</span><br><span class="line">      [<span class="hljs-string">'Matcha Latte'</span>, <span class="hljs-number">43.3</span>, <span class="hljs-number">85.8</span>, <span class="hljs-number">93.7</span>],</span><br><span class="line">      [<span class="hljs-string">'Milk Tea'</span>, <span class="hljs-number">83.1</span>, <span class="hljs-number">73.4</span>, <span class="hljs-number">55.1</span>],</span><br><span class="line">      [<span class="hljs-string">'Cheese Cocoa'</span>, <span class="hljs-number">86.4</span>, <span class="hljs-number">65.2</span>, <span class="hljs-number">82.5</span>],</span><br><span class="line">      [<span class="hljs-string">'Walnut Brownie'</span>, <span class="hljs-number">72.4</span>, <span class="hljs-number">53.9</span>, <span class="hljs-number">39.1</span>]</span><br><span class="line">    ]</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">xAxis</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'category'</span> },</span><br><span class="line">  <span class="hljs-attr">yAxis</span>: {},</span><br><span class="line">  <span class="hljs-attr">series</span>: [</span><br><span class="line">    { <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> },</span><br><span class="line">    { <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> },</span><br><span class="line">    <span class="hljs-comment">// series 會覆蓋掉 global 的設定</span></span><br><span class="line">    { <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span>, <span class="hljs-attr">color</span>: <span class="hljs-string">'red'</span> }</span><br><span class="line">  ]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h2><p>Dataset 是一種「設定資料」的方式，官方沒有規定你一定要這樣子做，不過這樣子做會為你帶來一些好處，像是提高可重用性、資料格式會更好閱讀等等。</p>
+<p>先來看一下原本的寫法：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> option = {</span><br><span class="line">  <span class="hljs-attr">xAxis</span>: {</span><br><span class="line">    <span class="hljs-attr">type</span>: <span class="hljs-string">'category'</span>,</span><br><span class="line">    <span class="hljs-attr">data</span>: [<span class="hljs-string">'Matcha Latte'</span>, <span class="hljs-string">'Milk Tea'</span>, <span class="hljs-string">'Cheese Cocoa'</span>, <span class="hljs-string">'Walnut Brownie'</span>]</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">yAxis</span>: {</span><br><span class="line">    <span class="hljs-attr">type</span>: <span class="hljs-string">'value'</span>,</span><br><span class="line">    <span class="hljs-attr">position</span>: <span class="hljs-string">'right'</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">series</span>: [</span><br><span class="line">    {</span><br><span class="line">      <span class="hljs-attr">name</span>: <span class="hljs-string">'2015'</span>,</span><br><span class="line">      <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span>,</span><br><span class="line">      <span class="hljs-attr">data</span>: [<span class="hljs-number">89.3</span>, <span class="hljs-number">92.1</span>, <span class="hljs-number">94.4</span>, <span class="hljs-number">85.4</span>]</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">      <span class="hljs-attr">name</span>: <span class="hljs-string">'2016'</span>,</span><br><span class="line">      <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span>,</span><br><span class="line">      <span class="hljs-attr">data</span>: [<span class="hljs-number">95.8</span>, <span class="hljs-number">89.4</span>, <span class="hljs-number">91.2</span>, <span class="hljs-number">76.9</span>]</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">      <span class="hljs-attr">name</span>: <span class="hljs-string">'2017'</span>,</span><br><span class="line">      <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span>,</span><br><span class="line">      <span class="hljs-attr">data</span>: [<span class="hljs-number">97.7</span>, <span class="hljs-number">83.1</span>, <span class="hljs-number">92.5</span>, <span class="hljs-number">78.1</span>]</span><br><span class="line">    }</span><br><span class="line">  ]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>改用 Dataset 的形式來寫會變這樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> option = {</span><br><span class="line">  <span class="hljs-attr">tooltip</span>: {},</span><br><span class="line">  <span class="hljs-attr">xAxis</span>: {</span><br><span class="line">    <span class="hljs-attr">type</span>: <span class="hljs-string">'category'</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">yAxis</span>: {</span><br><span class="line">    <span class="hljs-attr">type</span>: <span class="hljs-string">'value'</span>,</span><br><span class="line">    <span class="hljs-attr">position</span>: <span class="hljs-string">'right'</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-comment">// 可以 "直排" 的方式來看會更好理解</span></span><br><span class="line">  <span class="hljs-attr">dataset</span>: {</span><br><span class="line">    <span class="hljs-attr">source</span>: [</span><br><span class="line">      [<span class="hljs-string">'product'</span>, <span class="hljs-string">'2015'</span>, <span class="hljs-string">'2016'</span>, <span class="hljs-string">'2017'</span>],</span><br><span class="line">      [<span class="hljs-string">'Matcha Latte'</span>, <span class="hljs-number">89.3</span>, <span class="hljs-number">92.1</span>, <span class="hljs-number">94.4</span>, <span class="hljs-number">85.4</span>],</span><br><span class="line">      [<span class="hljs-string">'Milk Tea'</span>, <span class="hljs-number">95.8</span>, <span class="hljs-number">89.4</span>, <span class="hljs-number">91.2</span>, <span class="hljs-number">76.9</span>],</span><br><span class="line">      [<span class="hljs-string">'Cheese Cocoa'</span>, <span class="hljs-number">97.7</span>, <span class="hljs-number">83.1</span>, <span class="hljs-number">92.5</span>, <span class="hljs-number">78.1</span>],</span><br><span class="line">      [<span class="hljs-string">'Walnut Brownie'</span>, <span class="hljs-number">66.7</span>, <span class="hljs-number">75.1</span>, <span class="hljs-number">88.5</span>, <span class="hljs-number">69.1</span>]</span><br><span class="line">    ]</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">series</span>: [{ <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }, { <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }, { <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>我覺得這樣寫的另一個好處是「把資料抽離」，現在所有跟<strong>資料</strong>有關的東西都只放在 <code>dataset.source</code> 裡，而 <code>series</code> 的職責只剩下呈現方式。換句話說就有點像是把資料從畫面上抽離出去的感覺。</p>
+<p>總之這兩種的輸出結果都會一樣：</p>
+<p><img src="dataset.png" alt="dataset"></p>
+<h2 id="座標軸（Axis）"><a href="#座標軸（Axis）" class="headerlink" title="座標軸（Axis）"></a>座標軸（Axis）</h2><p>這邊是想讓你理解底下的配置項目分別代表什麼：</p>
+<ul>
+<li><code>xAxis</code> X 軸</li>
+<li><code>yAxis</code> Y 軸</li>
+<li><code>axisLine</code> 座標軸的「線」</li>
+<li><code>axisTick</code> 座標軸的「刻度」</li>
+</ul>
+<p><img src="axis.jpeg" alt="axis"></p>
+<p>搭配官方的這張圖我覺得應該就很好懂了。</p>
+<p>現在如果我想調 X 軸的「刻度」顏色，我可以這樣配置：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> option = {</span><br><span class="line">  <span class="hljs-attr">xAxis</span>: {</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'products'</span>,</span><br><span class="line">    <span class="hljs-attr">type</span>: <span class="hljs-string">'category'</span>,</span><br><span class="line">    <span class="hljs-attr">axisTick</span>: {</span><br><span class="line">      <span class="hljs-attr">length</span>: <span class="hljs-number">10</span>,</span><br><span class="line">      <span class="hljs-attr">lineStyle</span>: {</span><br><span class="line">        <span class="hljs-attr">color</span>: <span class="hljs-string">'red'</span></span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">yAxis</span>: {</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'sales'</span>,</span><br><span class="line">    <span class="hljs-attr">type</span>: <span class="hljs-string">'value'</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">dataset</span>: {</span><br><span class="line">    <span class="hljs-attr">source</span>: [</span><br><span class="line">      [<span class="hljs-string">'product'</span>, <span class="hljs-string">'2015'</span>, <span class="hljs-string">'2016'</span>, <span class="hljs-string">'2017'</span>],</span><br><span class="line">      [<span class="hljs-string">'Matcha Latte'</span>, <span class="hljs-number">89.3</span>, <span class="hljs-number">92.1</span>, <span class="hljs-number">94.4</span>, <span class="hljs-number">85.4</span>],</span><br><span class="line">      [<span class="hljs-string">'Milk Tea'</span>, <span class="hljs-number">95.8</span>, <span class="hljs-number">89.4</span>, <span class="hljs-number">91.2</span>, <span class="hljs-number">76.9</span>],</span><br><span class="line">      [<span class="hljs-string">'Cheese Cocoa'</span>, <span class="hljs-number">97.7</span>, <span class="hljs-number">83.1</span>, <span class="hljs-number">92.5</span>, <span class="hljs-number">78.1</span>],</span><br><span class="line">      [<span class="hljs-string">'Walnut Brownie'</span>, <span class="hljs-number">66.7</span>, <span class="hljs-number">75.1</span>, <span class="hljs-number">88.5</span>, <span class="hljs-number">69.1</span>]</span><br><span class="line">    ]</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">series</span>: [{ <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }, { <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }, { <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="axis-tick.png" alt="axis-tick"></p>
+<p>其他像「軸線標題」、「軸線文字」和「軸線標籤」的改法也是以此類推。</p>
+<h2 id="圖例（legend）"><a href="#圖例（legend）" class="headerlink" title="圖例（legend）"></a>圖例（legend）</h2><p>圖例可以想成是每一筆資料的標題，常見的用途是拿來切換顯示 / 隱藏某筆資料：</p>
+<p><img src="legend.gif" alt="legend"></p>
+<p>底下會介紹幾個我覺得開發上可能會用到的設定。</p>
+<h3 id="設定圖例的位置"><a href="#設定圖例的位置" class="headerlink" title="設定圖例的位置"></a>設定圖例的位置</h3><p><img src="legend-position.png" alt="legend-position"></p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> option = {</span><br><span class="line">  <span class="hljs-attr">legend</span>: {</span><br><span class="line">    <span class="hljs-attr">orient</span>: <span class="hljs-string">'vertical'</span>,</span><br><span class="line">    <span class="hljs-attr">top</span>: <span class="hljs-string">'center'</span>,</span><br><span class="line">    <span class="hljs-attr">right</span>: <span class="hljs-number">0</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">dataset</span>: {</span><br><span class="line">    <span class="hljs-attr">source</span>: [</span><br><span class="line">      [<span class="hljs-string">'product'</span>, <span class="hljs-string">'2015'</span>, <span class="hljs-string">'2016'</span>, <span class="hljs-string">'2017'</span>],</span><br><span class="line">      [<span class="hljs-string">'Matcha Latte'</span>, <span class="hljs-number">43.3</span>, <span class="hljs-number">85.8</span>, <span class="hljs-number">93.7</span>],</span><br><span class="line">      [<span class="hljs-string">'Milk Tea'</span>, <span class="hljs-number">83.1</span>, <span class="hljs-number">73.4</span>, <span class="hljs-number">55.1</span>],</span><br><span class="line">      [<span class="hljs-string">'Cheese Cocoa'</span>, <span class="hljs-number">86.4</span>, <span class="hljs-number">65.2</span>, <span class="hljs-number">82.5</span>],</span><br><span class="line">      [<span class="hljs-string">'Walnut Brownie'</span>, <span class="hljs-number">72.4</span>, <span class="hljs-number">53.9</span>, <span class="hljs-number">39.1</span>]</span><br><span class="line">    ]</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">xAxis</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'category'</span> },</span><br><span class="line">  <span class="hljs-attr">yAxis</span>: {},</span><br><span class="line">  <span class="hljs-attr">series</span>: [{ <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }, { <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }, { <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }, { <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="設定不同的圖例"><a href="#設定不同的圖例" class="headerlink" title="設定不同的圖例"></a>設定不同的圖例</h3><p><img src="legend-icon.png" alt="legend-icon"></p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> option = {</span><br><span class="line">  <span class="hljs-attr">legend</span>: {</span><br><span class="line">    <span class="hljs-attr">data</span>: [</span><br><span class="line">      {</span><br><span class="line">        <span class="hljs-attr">name</span>: <span class="hljs-string">'2015'</span>,</span><br><span class="line">        <span class="hljs-attr">icon</span>: <span class="hljs-string">'rect'</span> <span class="hljs-comment">// 第一個</span></span><br><span class="line">      },</span><br><span class="line">      {</span><br><span class="line">        <span class="hljs-attr">name</span>: <span class="hljs-string">'2016'</span>,</span><br><span class="line">        <span class="hljs-attr">icon</span>: <span class="hljs-string">'circle'</span> <span class="hljs-comment">// 第二個</span></span><br><span class="line">      },</span><br><span class="line"></span><br><span class="line">      {</span><br><span class="line">        <span class="hljs-attr">name</span>: <span class="hljs-string">'2017'</span>,</span><br><span class="line">        <span class="hljs-attr">icon</span>: <span class="hljs-string">'diamond'</span> <span class="hljs-comment">// 第三個</span></span><br><span class="line">      }</span><br><span class="line">    ]</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">dataset</span>: {</span><br><span class="line">    <span class="hljs-attr">source</span>: [</span><br><span class="line">      [<span class="hljs-string">'product'</span>, <span class="hljs-string">'2015'</span>, <span class="hljs-string">'2016'</span>, <span class="hljs-string">'2017'</span>],</span><br><span class="line">      [<span class="hljs-string">'Matcha Latte'</span>, <span class="hljs-number">43.3</span>, <span class="hljs-number">85.8</span>, <span class="hljs-number">93.7</span>],</span><br><span class="line">      [<span class="hljs-string">'Milk Tea'</span>, <span class="hljs-number">83.1</span>, <span class="hljs-number">73.4</span>, <span class="hljs-number">55.1</span>],</span><br><span class="line">      [<span class="hljs-string">'Cheese Cocoa'</span>, <span class="hljs-number">86.4</span>, <span class="hljs-number">65.2</span>, <span class="hljs-number">82.5</span>],</span><br><span class="line">      [<span class="hljs-string">'Walnut Brownie'</span>, <span class="hljs-number">72.4</span>, <span class="hljs-number">53.9</span>, <span class="hljs-number">39.1</span>]</span><br><span class="line">    ]</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">xAxis</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'category'</span> },</span><br><span class="line">  <span class="hljs-attr">yAxis</span>: {},</span><br><span class="line">  <span class="hljs-attr">series</span>: [{ <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }, { <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }, { <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }, { <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="設定預設隱藏-顯示"><a href="#設定預設隱藏-顯示" class="headerlink" title="設定預設隱藏 / 顯示"></a>設定預設隱藏 / 顯示</h3><p><img src="legend-default-selected.png" alt="legend-default-selected"></p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> option = {</span><br><span class="line">  <span class="hljs-attr">legend</span>: {</span><br><span class="line">    <span class="hljs-attr">selected</span>: {</span><br><span class="line">      <span class="hljs-number">2015</span>: <span class="hljs-literal">false</span>,</span><br><span class="line">      <span class="hljs-number">2016</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">      <span class="hljs-number">2017</span>: <span class="hljs-literal">true</span></span><br><span class="line">    }</span><br><span class="line">  },,</span><br><span class="line">  dataset: {</span><br><span class="line">    <span class="hljs-attr">source</span>: [</span><br><span class="line">      [<span class="hljs-string">'product'</span>, <span class="hljs-string">'2015'</span>, <span class="hljs-string">'2016'</span>, <span class="hljs-string">'2017'</span>],</span><br><span class="line">      [<span class="hljs-string">'Matcha Latte'</span>, <span class="hljs-number">43.3</span>, <span class="hljs-number">85.8</span>, <span class="hljs-number">93.7</span>],</span><br><span class="line">      [<span class="hljs-string">'Milk Tea'</span>, <span class="hljs-number">83.1</span>, <span class="hljs-number">73.4</span>, <span class="hljs-number">55.1</span>],</span><br><span class="line">      [<span class="hljs-string">'Cheese Cocoa'</span>, <span class="hljs-number">86.4</span>, <span class="hljs-number">65.2</span>, <span class="hljs-number">82.5</span>],</span><br><span class="line">      [<span class="hljs-string">'Walnut Brownie'</span>, <span class="hljs-number">72.4</span>, <span class="hljs-number">53.9</span>, <span class="hljs-number">39.1</span>]</span><br><span class="line">    ]</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">xAxis</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'category'</span> },</span><br><span class="line">  <span class="hljs-attr">yAxis</span>: {},</span><br><span class="line">  <span class="hljs-attr">series</span>: [{ <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }, { <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }, { <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }, { <span class="hljs-attr">type</span>: <span class="hljs-string">'bar'</span> }]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/11/10/gsap-react-basic/">Gsap－context 與 revert（寫 React 的必備知識）</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/10/26/react-environment-variable/">React-Environment-Variable</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

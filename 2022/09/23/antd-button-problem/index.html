@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Ant Design－使用 Button 時可能會碰到的地雷 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="埋藏玄機的地雷。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ant Design－使用 Button 時可能會碰到的地雷">
+<meta property="og:url" content="https://jubeatt.github.io/2022/09/23/antd-button-problem/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="埋藏玄機的地雷。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/23/antd-button-problem/situation.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/23/antd-button-problem/problem.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/23/antd-button-problem/button-active-state.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/23/antd-button-problem/solution.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/23/antd-button-problem/situation.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/23/antd-button-problem/default-action.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/23/antd-button-problem/add-key.gif">
+<meta property="article:published_time" content="2022-09-23T02:32:44.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.197Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/09/23/antd-button-problem/situation.gif">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡述">1&nbsp;&nbsp;<b>簡述</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#發現問題">2&nbsp;&nbsp;<b>發現問題</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#解決問題">3&nbsp;&nbsp;<b>解決問題</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#回歸到最開始的範例">4&nbsp;&nbsp;<b>回歸到最開始的範例</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Ant Design－使用 Button 時可能會碰到的地雷
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>9月 23 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Antd/">Antd</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>埋藏玄機的地雷。</p>
+<span id="more"></span>
+
+<h2 id="簡述"><a href="#簡述" class="headerlink" title="簡述"></a>簡述</h2><p>這是我自己在工作上踩到的一個地雷，原先在 debug 的過程中以為是 Antd 設計上的問題，一直到最後找出答案時才發現這似乎跟 React 的渲染機制有點相關，總之讓我們來重現一下當時的情境吧。</p>
+<p>這邊要做的是這樣的功能：</p>
+<p><img src="situation.gif" alt="situation"></p>
+<p>簡單來說就是一個能切換編輯和閱讀的表單而已，然後在編輯時會出現「Reset」這個按鈕。</p>
+<p>實作的原始碼如下：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> React, { useState } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> <span class="hljs-string">'antd/dist/antd.css'</span></span><br><span class="line"><span class="hljs-keyword">import</span> <span class="hljs-string">'./index.css'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { Button, Input, Form } <span class="hljs-keyword">from</span> <span class="hljs-string">'antd'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> App = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> [isEdit, setIsEdit] = useState(<span class="hljs-literal">false</span>)</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Form</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'demo-form-options'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        {isEdit ? (</span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">'reset'</span>&gt;</span>Reset<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsEdit(false)}&gt;Cancel<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">'submit'</span>&gt;</span>Save<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;/&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        ) : (</span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsEdit(true)}&gt;Edit<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        )}</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">      <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">'username'</span> <span class="hljs-attr">label</span>=<span class="hljs-string">'Username'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Input</span> <span class="hljs-attr">disabled</span>=<span class="hljs-string">{!isEdit}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line">    &lt;/Form&gt;</span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：<a target="_blank" rel="noopener" href="https://codesandbox.io/s/antd-shi-yong-button-hui-peng-dao-de-wen-ti-qing-jing-chong-xian-u81x24?file=/demo.js">CodeSandbox</a></p>
+<h2 id="發現問題"><a href="#發現問題" class="headerlink" title="發現問題"></a>發現問題</h2><p>剛剛的範例如果仔細使用的話會發現一個問題，那就是「每當我按下 Edit 時內容會自動被 reset」：</p>
+<p><img src="problem.gif" alt="problem"></p>
+<p>看起來就像是自動被執行了 reset 一樣？為了找出問題我們可以在 <code>&lt;Form&gt;</code> 加上 <code>onReset</code> 來檢查看看：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 加上 log 來確認是否被執行</span></span><br><span class="line">&lt;Form onReset={<span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'onReset'</span>)}&gt;</span><br><span class="line">  <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'demo-form-options'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    {isEdit ? (</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">'reset'</span>&gt;</span>Reset<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsEdit(false)}&gt;Cancel<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">'submit'</span>&gt;</span>Save<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/&gt;</span></span></span><br><span class="line">    ) : (</span><br><span class="line">      <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsEdit(true)}&gt;Edit<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line">    )}</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">'username'</span> <span class="hljs-attr">label</span>=<span class="hljs-string">'Username'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">Input</span> <span class="hljs-attr">disabled</span>=<span class="hljs-string">{!isEdit}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line">&lt;/Form&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>果然不出所料，每當我們按下 Edit 按鈕時 <code>onReset</code> 都會印出訊息，也就是說<strong>每次按下 Edit 時都會重新 reset 內容</strong>。</p>
+<p>不過這是為什麼呢？當時我第一個懷疑的點是 <strong>reset 這個按鈕</strong>：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Button htmlType=<span class="hljs-string">'reset'</span>&gt;Reset&lt;/Button&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>所以我試著把按鈕拿掉來測試看看，果真沒有出現再出現 reset 的情形。</p>
+<p>雖然問題解決了，但我還是覺得很奇怪，為什麼只是切換而已就會觸發 reset？於是我後來又多做了幾項測試，才發現了一個關鍵點，這是從 Antd 的按鈕中發現的。</p>
+<p>我們先來看段範例，再來解釋一下我發現了什麼。</p>
+<p>底下是一個切換按鈕的範例，簡單來說就是根據 state 來顯示不同的按鈕而已，非常簡單：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [isEdit, setIsEdit] = useState(<span class="hljs-literal">false</span>)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'wrapper'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {isEdit ? (</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsEdit(false)}&gt;Cancel<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      ) : (</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsEdit(true)}&gt;Edit<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      )}</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App</span><br></pre></td></tr></tbody></table></figure>
+
+<p>用看的就大概知道會發生什麼了對吧？不過請<strong>仔細看看</strong>下面的演示，看能不能從中發現什麼：</p>
+<p><img src="button-active-state.gif" alt="button-active-state"></p>
+<p>想好的話再往下看吧。</p>
+<p>我是防雷線…</p>
+<p>我是防雷線…</p>
+<p>我是防雷線…</p>
+<p>我是防雷線…</p>
+<p>我是防雷線…</p>
+<p>按鈕確實有依照我們想的去做切換，不過你有沒有發現到 <strong>按鈕的 active 狀態（樣式）</strong> 也被保留下來了呢？這個就是關鍵點。</p>
+<p>當我們把按鈕從 <code>Edit</code> 切換成 <code>Cancel</code> 時，照理來說應該要是一個「全新的按鈕」，換句話說就是沒有被點擊過，所以不該有 active 的狀態。</p>
+<p>不過 React 為了節省一些開銷，所以在重新渲染時的實際流程是這樣：</p>
+<ol>
+<li>把新的跟舊的按鈕做比對</li>
+<li>把真正需要更新的內容給替換掉</li>
+</ol>
+<p>這樣子的機制就有機率出現像上面這種「按鈕被更新了，但卻保留了原本的內容（active 狀態）」的問題。</p>
+<p>附註：在 Vue 裡面其實也會出現類似的問題，可以參考這個<a target="_blank" rel="noopener" href="https://book.vue.tw/CH1/1-6-conditions-and-flow-control.html#v-if-%E8%88%87-key-%E5%B1%AC%E6%80%A7">範例</a>。</p>
+<p>總之最後繞了一大圈才發現原來整個問題的原因跟 React 渲染機制有關，真的是恍然大悟啊~</p>
+<h2 id="解決問題"><a href="#解決問題" class="headerlink" title="解決問題"></a>解決問題</h2><p>既然知道問題是出在渲染上的話，那解法自然也很清楚了。</p>
+<p>要避免 React 重用原本的 DOM 元素的話，只要在該元素上加上 <code>key</code> 就行了：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [isEdit, setIsEdit] = useState(<span class="hljs-literal">false</span>)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'wrapper'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {isEdit ? (</span></span><br><span class="line"><span class="hljs-xml">        // 加上 key</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">'cancel'</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsEdit(false)}&gt;</span></span><br><span class="line"><span class="hljs-xml">          Cancel</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      ) : (</span></span><br><span class="line"><span class="hljs-xml">        // 加上 key</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">'edit'</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsEdit(true)}&gt;</span></span><br><span class="line"><span class="hljs-xml">          Edit</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      )}</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣子就會強制讓 React 不要用「更改內容」的方式來重新渲染，而是直接「重新渲染這個 DOM 元素」，換句話說就是「我每一次都要重新產生這個按鈕，就算有其他類似的按鈕我也不要拿來用，我就是要完完全全是全新的一個啦（任性？）」。</p>
+<p>修改完後再測一次，就不會再出現 active 的樣式了：</p>
+<p><img src="solution.gif" alt="solution"></p>
+<p>因為每一次都是一個全新的按鈕，所以不會在這個按鈕身上看到任何其他按鈕的影子，他永遠會是他自己而已。</p>
+<h2 id="回歸到最開始的範例"><a href="#回歸到最開始的範例" class="headerlink" title="回歸到最開始的範例"></a>回歸到最開始的範例</h2><p>複習一下最原本的範例，之所以會發生那樣的問題就是因為「按鈕被重複使用」的關係，複習一下這張圖：</p>
+<p><img src="situation.gif" alt="situation"></p>
+<p>有注意到 <code>Edit</code> 按下以後切換到新的按鈕時，<code>Reset</code> 也保留了 active 的樣式嗎？這樣代表 <code>Reset</code> 就是拿 <code>Edit</code> 來改的意思。</p>
+<p>這個時候呢，因為 Reset 按鈕有 <code>htmlType="reset"</code> 這個 props，所以就會觸發「把表單重置」的預設行為，所以表單就被重置了。</p>
+<p>所以如果你把 <code>Reset</code> 跟 <code>Save</code> 的位置交換的話，就會發現變成觸發 <code>htmlType="submit"</code> 的預設行為：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> App = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> [isEdit, setIsEdit] = useState(<span class="hljs-literal">false</span>)</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Form</span> <span class="hljs-attr">onReset</span>=<span class="hljs-string">{()</span> =&gt;</span> console.log('reset')} onFinish={() =&gt; console.log('submit')}&gt;</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'demo-form-options'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        {isEdit ? (</span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            {/* 把 Save 放到最前面 */}</span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">'submit'</span>&gt;</span>Save<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsEdit(false)}&gt;Cancel<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">'reset'</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> console.log('click')}&gt;</span></span><br><span class="line"><span class="hljs-xml">              Reset</span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;/&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        ) : (</span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsEdit(true)}&gt;Edit<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        )}</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">      <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">'username'</span> <span class="hljs-attr">label</span>=<span class="hljs-string">'Username'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Input</span> <span class="hljs-attr">disabled</span>=<span class="hljs-string">{!isEdit}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line">    &lt;/Form&gt;</span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="default-action.gif" alt="default-action"></p>
+<p>所以就跟前面說的一樣，只要把該重新渲染的元素加上 key 就可以解決了：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> App = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> [isEdit, setIsEdit] = useState(<span class="hljs-literal">false</span>)</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Form</span> <span class="hljs-attr">onReset</span>=<span class="hljs-string">{()</span> =&gt;</span> console.log('reset')} onFinish={() =&gt; console.log('submit')}&gt;</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'demo-form-options'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        {isEdit ? (</span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            {/* 加上 key */}</span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">'submit'</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">'submit'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">              Save</span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsEdit(false)}&gt;Cancel<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">'reset'</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> console.log('click')}&gt;</span></span><br><span class="line"><span class="hljs-xml">              Reset</span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;/&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        ) : (</span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsEdit(true)}&gt;Edit<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        )}</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">      <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">'username'</span> <span class="hljs-attr">label</span>=<span class="hljs-string">'Username'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Input</span> <span class="hljs-attr">disabled</span>=<span class="hljs-string">{!isEdit}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line">    &lt;/Form&gt;</span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="add-key.gif" alt="add-key"></p>
+<p>附註：<a target="_blank" rel="noopener" href="https://codesandbox.io/s/antd-shi-yong-button-hui-peng-dao-de-wen-ti-jie-fa-oxfkg7?file=/index.js">CodeSandbox</a></p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/09/24/antd-form-item/">Ant Design－Form.Item</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/09/22/antd-layout/">Ant Design－Layout</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

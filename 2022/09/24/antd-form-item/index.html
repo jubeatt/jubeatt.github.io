@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Ant Design－Form.Item - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="很多好用的都藏在這。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ant Design－Form.Item">
+<meta property="og:url" content="https://jubeatt.github.io/2022/09/24/antd-form-item/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="很多好用的都藏在這。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/24/antd-form-item/validate-log.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/24/antd-form-item/validate.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/24/antd-form-item/missing-validate.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/24/antd-form-item/use-dependencies.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/24/antd-form-item/feature.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/24/antd-form-item/render-test.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/24/antd-form-item/update-each-time.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/24/antd-form-item/update-centain-time.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/24/antd-form-item/check-warning.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/24/antd-form-item/get-value-props-problem.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/09/24/antd-form-item/get-value-from-event.gif">
+<meta property="article:published_time" content="2022-09-24T11:18:03.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.203Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/09/24/antd-form-item/validate-log.png">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#常犯錯誤">1&nbsp;&nbsp;<b>常犯錯誤</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#validate">2&nbsp;&nbsp;<b>validate</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#dependencies">3&nbsp;&nbsp;<b>dependencies</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#shouldUpdate">4&nbsp;&nbsp;<b>shouldUpdate</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#再來點優化">4.1&nbsp;&nbsp;再來點優化</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#搭配-CheckBox-使用">5&nbsp;&nbsp;<b>搭配 CheckBox 使用</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#背後的原理">5.1&nbsp;&nbsp;背後的原理</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#getValueProps-amp-getValueFromEvent">6&nbsp;&nbsp;<b>getValueProps &amp;amp; getValueFromEvent</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#getValueProps">6.1&nbsp;&nbsp;getValueProps</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#getValueFromEvent">6.2&nbsp;&nbsp;getValueFromEvent</a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Ant Design－Form.Item
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>9月 24 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Antd/">Antd</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>很多好用的都藏在這。</p>
+<span id="more"></span>
+
+<h2 id="常犯錯誤"><a href="#常犯錯誤" class="headerlink" title="常犯錯誤"></a>常犯錯誤</h2><ul>
+<li>當 Form.Item 設置 <code>name</code> 以後就無法再對表單獨自設定 <code>value</code> 值</li>
+<li>當 Form.Item 被 re-render 時 <code>onReset</code>（<code>&lt;Form&gt;</code> 的 props） 也會被觸發</li>
+<li><code>rules</code> 只能在 Form.item 有設置 <code>name</code> 時才有效。</li>
+</ul>
+<h2 id="validate"><a href="#validate" class="headerlink" title="validate"></a>validate</h2><p><code>&lt;Form.Item&gt;</code> 中有一個的 <code>rule</code> 的 props 可以傳，最常見的用法是這樣子：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;Form form={form} labelCol={{ <span class="hljs-attr">span</span>: <span class="hljs-number">24</span> }} wrapperCol={{ <span class="hljs-attr">span</span>: <span class="hljs-number">24</span> }}&gt;</span><br><span class="line">  <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    <span class="hljs-attr">name</span>=<span class="hljs-string">'phone'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    <span class="hljs-attr">label</span>=<span class="hljs-string">'Phone'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    <span class="hljs-attr">rules</span>=<span class="hljs-string">{[</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      {</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">required:</span> <span class="hljs-attr">true</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">message:</span> '<span class="hljs-attr">Phone</span> <span class="hljs-attr">number</span> <span class="hljs-attr">cannot</span> <span class="hljs-attr">be</span> <span class="hljs-attr">blank.</span>'</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      }</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    ]}</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">  &gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">Input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">'tel'</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line">  <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">'submit'</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line">&lt;/Form&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>沒什麼，就只是一個必填項目的驗證而已。</p>
+<p>不過當你碰到比較複雜的邏輯時，可能會想寫一些「驗證函式」來做自定義驗證，這個就是 <code>validate</code> 的適用時機。</p>
+<p>他的寫法會長這樣：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;Form form={form} labelCol={{ <span class="hljs-attr">span</span>: <span class="hljs-number">24</span> }} wrapperCol={{ <span class="hljs-attr">span</span>: <span class="hljs-number">24</span> }}&gt;</span><br><span class="line">  <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    <span class="hljs-attr">name</span>=<span class="hljs-string">'phone'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    <span class="hljs-attr">label</span>=<span class="hljs-string">'Phone'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    <span class="hljs-attr">rules</span>=<span class="hljs-string">{[</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      // 陣列值是一個 <span class="hljs-attr">function</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      (<span class="hljs-attr">form</span>) =&gt;</span> {</span></span><br><span class="line"><span class="hljs-xml">        // 這個 function 中可以拿到 form instance</span></span><br><span class="line"><span class="hljs-xml">        console.log('form instance', form)</span></span><br><span class="line"><span class="hljs-xml">        // 回傳一個物件，值為 validator（驗證函式）</span></span><br><span class="line"><span class="hljs-xml">        return {</span></span><br><span class="line"><span class="hljs-xml">          validator: (rule, value) =&gt; {</span></span><br><span class="line"><span class="hljs-xml">            console.log('rule', rule)</span></span><br><span class="line"><span class="hljs-xml">            console.log('value', value)</span></span><br><span class="line"><span class="hljs-xml">            // 回傳 Promise.resolve() / Promise.reject() 表示通過或未通過</span></span><br><span class="line"><span class="hljs-xml">            return Promise.resolve()</span></span><br><span class="line"><span class="hljs-xml">          }</span></span><br><span class="line"><span class="hljs-xml">        }</span></span><br><span class="line"><span class="hljs-xml">      }</span></span><br><span class="line"><span class="hljs-xml">    ]}</span></span><br><span class="line"><span class="hljs-xml">  &gt;</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">Input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">'tel'</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">'submit'</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line">&lt;/Form&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：雖然是回傳 <code>Promise</code> 但並不是「非同步」執行哦，你試著在裡面用 <code>while</code> 去跑「同步」延遲的話就能看到 blocking 的現象了。</p>
+<p>寫法會比剛剛複雜一點，但主要是為了給你一些用來<strong>取得資訊的參數</strong>，所以才會看起來會寫很多層。</p>
+<p>不過照著上面的註解來看應該就能理解了，例如我現在輸入 <code>1</code> 的話，就會印出這樣的結果：</p>
+<p><img src="validate-log.png" alt="validate-log"></p>
+<p>所以現在如果我想驗證「電話號碼格式」的話就可以這樣子寫：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;Form</span><br><span class="line">  form={form}</span><br><span class="line">  labelCol={{ <span class="hljs-attr">span</span>: <span class="hljs-number">24</span> }}</span><br><span class="line">  wrapperCol={{ <span class="hljs-attr">span</span>: <span class="hljs-number">24</span> }}</span><br><span class="line">  onFinish={<span class="hljs-function">(<span class="hljs-params">values</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'values'</span>, values)</span><br><span class="line">  }}</span><br><span class="line">&gt;</span><br><span class="line">  <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    <span class="hljs-attr">name</span>=<span class="hljs-string">'phone'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    <span class="hljs-attr">label</span>=<span class="hljs-string">'Phone'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    <span class="hljs-attr">rules</span>=<span class="hljs-string">{[</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      (<span class="hljs-attr">form</span>) =&gt;</span> {</span></span><br><span class="line"><span class="hljs-xml">        return {</span></span><br><span class="line"><span class="hljs-xml">          validator: (rule, value) =&gt; {</span></span><br><span class="line"><span class="hljs-xml">            const pattern = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/</span></span><br><span class="line"><span class="hljs-xml">            if (pattern.test(value)) {</span></span><br><span class="line"><span class="hljs-xml">              return Promise.resolve()</span></span><br><span class="line"><span class="hljs-xml">            } else {</span></span><br><span class="line"><span class="hljs-xml">              return Promise.reject()</span></span><br><span class="line"><span class="hljs-xml">            }</span></span><br><span class="line"><span class="hljs-xml">          },</span></span><br><span class="line"><span class="hljs-xml">          message: 'Does not match the phone format.'</span></span><br><span class="line"><span class="hljs-xml">        }</span></span><br><span class="line"><span class="hljs-xml">      }</span></span><br><span class="line"><span class="hljs-xml">    ]}</span></span><br><span class="line"><span class="hljs-xml">  &gt;</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">Input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">'tel'</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">'submit'</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line">&lt;/Form&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>此處範例：<a target="_blank" rel="noopener" href="https://codesandbox.io/s/form-item-validator-0414k4?file=/demo.js">CodeSandbox</a></p>
+<p><img src="validate.gif" alt="validate"></p>
+<h2 id="dependencies"><a href="#dependencies" class="headerlink" title="dependencies"></a>dependencies</h2><p>簡單來說這個是拿來設定「當某個欄位更新時，我想重新驗證」的用途。</p>
+<p>舉例來說，一般如果要做「確認密碼」的欄位時，你可能會這樣寫：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'wrapper'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Form</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">'password'</span> <span class="hljs-attr">label</span>=<span class="hljs-string">'Password'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">Input.Password</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">name</span>=<span class="hljs-string">'confirmPassword'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">label</span>=<span class="hljs-string">'Confirm Password'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">rules</span>=<span class="hljs-string">{[</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">            (<span class="hljs-attr">form</span>) =&gt;</span> {</span></span><br><span class="line"><span class="hljs-xml">              return {</span></span><br><span class="line"><span class="hljs-xml">                // onChange 時會驗證是否跟原密碼相同</span></span><br><span class="line"><span class="hljs-xml">                validator: (_, value) =&gt; {</span></span><br><span class="line"><span class="hljs-xml">                  if (form.getFieldValue('password') === value) {</span></span><br><span class="line"><span class="hljs-xml">                    return Promise.resolve()</span></span><br><span class="line"><span class="hljs-xml">                  } else {</span></span><br><span class="line"><span class="hljs-xml">                    return Promise.reject('does not match the password.')</span></span><br><span class="line"><span class="hljs-xml">                  }</span></span><br><span class="line"><span class="hljs-xml">                }</span></span><br><span class="line"><span class="hljs-xml">              }</span></span><br><span class="line"><span class="hljs-xml">            }</span></span><br><span class="line"><span class="hljs-xml">          ]}</span></span><br><span class="line"><span class="hljs-xml">        &gt;</span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">Input.Password</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Form</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣子確實會在不相等時顯示錯誤訊息，不過如果是下面這種情形呢？</p>
+<p><img src="missing-validate.gif" alt="missing-validate"></p>
+<p>預設的行為是 <code>Confirm Password</code> 改變時會做驗證，可是在那之後如果又改變 <code>Password</code> 的話就不會觸發驗證了。</p>
+<p>如果希望在這個時候也做驗證的話，可以對 <code>Confirm Password</code> 加上 <code>dependencies</code> 來處理：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'wrapper'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Form</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">'password'</span> <span class="hljs-attr">label</span>=<span class="hljs-string">'Password'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">Input.Password</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">name</span>=<span class="hljs-string">'confirmPassword'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">label</span>=<span class="hljs-string">'Confirm Password'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">dependencies</span>=<span class="hljs-string">{[</span>'<span class="hljs-attr">password</span>']} // 加上 <span class="hljs-attr">dependencies</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">rules</span>=<span class="hljs-string">{[</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">            (<span class="hljs-attr">form</span>) =&gt;</span> {</span></span><br><span class="line"><span class="hljs-xml">              return {</span></span><br><span class="line"><span class="hljs-xml">                validator: (_, value) =&gt; {</span></span><br><span class="line"><span class="hljs-xml">                  console.log('validate')</span></span><br><span class="line"><span class="hljs-xml">                  if (form.getFieldValue('password') === value) {</span></span><br><span class="line"><span class="hljs-xml">                    return Promise.resolve()</span></span><br><span class="line"><span class="hljs-xml">                  } else {</span></span><br><span class="line"><span class="hljs-xml">                    return Promise.reject('does not match the password.')</span></span><br><span class="line"><span class="hljs-xml">                  }</span></span><br><span class="line"><span class="hljs-xml">                }</span></span><br><span class="line"><span class="hljs-xml">              }</span></span><br><span class="line"><span class="hljs-xml">            }</span></span><br><span class="line"><span class="hljs-xml">          ]}</span></span><br><span class="line"><span class="hljs-xml">        &gt;</span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">Input.Password</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Form</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣就可以達成預期的效果了：</p>
+<p><img src="use-dependencies.gif" alt="use-dependencies"></p>
+<h2 id="shouldUpdate"><a href="#shouldUpdate" class="headerlink" title="shouldUpdate"></a>shouldUpdate</h2><p>它比較主要的用途有兩個：</p>
+<ol>
+<li>優化效能（不需要利用 state 來重新渲染整個元件）</li>
+<li>某個區塊是在特定情境下才會秀出來的</li>
+</ol>
+<p>這邊來舉一個例子，假設我希望做出這樣的效果：</p>
+<p><img src="feature.gif" alt="feature"></p>
+<p>簡單來說就是表單能根據我目前選的產品來秀出不同項目給使用者選取，先附上這段的原始碼及 <a target="_blank" rel="noopener" href="https://codesandbox.io/s/form-item-shouldupdate-vholk7?file=/demo.js">CodeSandbox</a>：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [form] = Form.useForm()</span><br><span class="line">  <span class="hljs-keyword">const</span> menu = [</span><br><span class="line">    { <span class="hljs-attr">label</span>: <span class="hljs-string">'奶茶'</span>, <span class="hljs-attr">value</span>: <span class="hljs-string">'奶茶'</span> },</span><br><span class="line">    { <span class="hljs-attr">label</span>: <span class="hljs-string">'牛肉麵'</span>, <span class="hljs-attr">value</span>: <span class="hljs-string">'牛肉麵'</span> },</span><br><span class="line">    { <span class="hljs-attr">label</span>: <span class="hljs-string">'雞排'</span>, <span class="hljs-attr">value</span>: <span class="hljs-string">'雞排'</span> }</span><br><span class="line">  ]</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> initValues = {</span><br><span class="line">    甜度: <span class="hljs-string">'無糖'</span>,</span><br><span class="line">    份量: <span class="hljs-string">'小碗'</span>,</span><br><span class="line">    酸菜: <span class="hljs-string">'不要'</span>,</span><br><span class="line">    辣度: <span class="hljs-string">'小辣'</span>,</span><br><span class="line">    切不切: <span class="hljs-string">'不要'</span></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'wrapper'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Form</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">form</span>=<span class="hljs-string">{form}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">initialValues</span>=<span class="hljs-string">{initValues}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">onFinish</span>=<span class="hljs-string">{(values)</span> =&gt;</span> {</span></span><br><span class="line"><span class="hljs-xml">          console.log(values)</span></span><br><span class="line"><span class="hljs-xml">        }}</span></span><br><span class="line"><span class="hljs-xml">      &gt;</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">'產品'</span> <span class="hljs-attr">label</span>=<span class="hljs-string">'產品'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">Select</span> <span class="hljs-attr">options</span>=<span class="hljs-string">{menu}</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">{()</span> =&gt;</span> form.setFieldsValue({ ...initValues })} /&gt;</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        {/* 選項區塊 */}</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span> <span class="hljs-attr">shouldUpdate</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          {/* 自動接收到 form instance 參數 */}</span></span><br><span class="line"><span class="hljs-xml">          {(form) =&gt; {</span></span><br><span class="line"><span class="hljs-xml">            const selectedValue = form.getFieldValue('產品')</span></span><br><span class="line"><span class="hljs-xml">            return selectedValue === '奶茶' ? (</span></span><br><span class="line"><span class="hljs-xml">              <span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span> <span class="hljs-attr">label</span>=<span class="hljs-string">'甜度'</span> <span class="hljs-attr">name</span>=<span class="hljs-string">'甜度'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">Radio.Group</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                  <span class="hljs-tag">&lt;<span class="hljs-name">Radio</span> <span class="hljs-attr">value</span>=<span class="hljs-string">'無糖'</span>&gt;</span>無糖<span class="hljs-tag">&lt;/<span class="hljs-name">Radio</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                  <span class="hljs-tag">&lt;<span class="hljs-name">Radio</span> <span class="hljs-attr">value</span>=<span class="hljs-string">'少糖'</span>&gt;</span>少糖<span class="hljs-tag">&lt;/<span class="hljs-name">Radio</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                  <span class="hljs-tag">&lt;<span class="hljs-name">Radio</span> <span class="hljs-attr">value</span>=<span class="hljs-string">'半糖'</span>&gt;</span>半糖<span class="hljs-tag">&lt;/<span class="hljs-name">Radio</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                  <span class="hljs-tag">&lt;<span class="hljs-name">Radio</span> <span class="hljs-attr">value</span>=<span class="hljs-string">'多糖'</span>&gt;</span>多糖<span class="hljs-tag">&lt;/<span class="hljs-name">Radio</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                  <span class="hljs-tag">&lt;<span class="hljs-name">Radio</span> <span class="hljs-attr">value</span>=<span class="hljs-string">'全糖'</span>&gt;</span>全糖<span class="hljs-tag">&lt;/<span class="hljs-name">Radio</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                <span class="hljs-tag">&lt;/<span class="hljs-name">Radio.Group</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">              <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            ) : selectedValue === '牛肉麵' ? (</span></span><br><span class="line"><span class="hljs-xml">              <span class="hljs-tag">&lt;&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span> <span class="hljs-attr">label</span>=<span class="hljs-string">'份量'</span> <span class="hljs-attr">name</span>=<span class="hljs-string">'份量'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                  <span class="hljs-tag">&lt;<span class="hljs-name">Radio.Group</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                    <span class="hljs-tag">&lt;<span class="hljs-name">Radio</span> <span class="hljs-attr">value</span>=<span class="hljs-string">'小碗'</span>&gt;</span>小碗<span class="hljs-tag">&lt;/<span class="hljs-name">Radio</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                    <span class="hljs-tag">&lt;<span class="hljs-name">Radio</span> <span class="hljs-attr">value</span>=<span class="hljs-string">'大碗'</span>&gt;</span>大碗<span class="hljs-tag">&lt;/<span class="hljs-name">Radio</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                  <span class="hljs-tag">&lt;/<span class="hljs-name">Radio.Group</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span> <span class="hljs-attr">label</span>=<span class="hljs-string">'酸菜'</span> <span class="hljs-attr">name</span>=<span class="hljs-string">'酸菜'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                  <span class="hljs-tag">&lt;<span class="hljs-name">Radio.Group</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                    <span class="hljs-tag">&lt;<span class="hljs-name">Radio</span> <span class="hljs-attr">value</span>=<span class="hljs-string">'不要'</span>&gt;</span>不要<span class="hljs-tag">&lt;/<span class="hljs-name">Radio</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                    <span class="hljs-tag">&lt;<span class="hljs-name">Radio</span> <span class="hljs-attr">value</span>=<span class="hljs-string">'要'</span>&gt;</span>要<span class="hljs-tag">&lt;/<span class="hljs-name">Radio</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                  <span class="hljs-tag">&lt;/<span class="hljs-name">Radio.Group</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">              <span class="hljs-tag">&lt;/&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            ) : selectedValue === '雞排' ? (</span></span><br><span class="line"><span class="hljs-xml">              <span class="hljs-tag">&lt;&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span> <span class="hljs-attr">label</span>=<span class="hljs-string">'辣度'</span> <span class="hljs-attr">name</span>=<span class="hljs-string">'辣度'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                  <span class="hljs-tag">&lt;<span class="hljs-name">Radio.Group</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                    <span class="hljs-tag">&lt;<span class="hljs-name">Radio</span> <span class="hljs-attr">value</span>=<span class="hljs-string">'不辣'</span>&gt;</span>不辣<span class="hljs-tag">&lt;/<span class="hljs-name">Radio</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                    <span class="hljs-tag">&lt;<span class="hljs-name">Radio</span> <span class="hljs-attr">value</span>=<span class="hljs-string">'小辣'</span>&gt;</span>小辣<span class="hljs-tag">&lt;/<span class="hljs-name">Radio</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                    <span class="hljs-tag">&lt;<span class="hljs-name">Radio</span> <span class="hljs-attr">value</span>=<span class="hljs-string">'大辣'</span>&gt;</span>大辣<span class="hljs-tag">&lt;/<span class="hljs-name">Radio</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                    <span class="hljs-tag">&lt;<span class="hljs-name">Radio</span> <span class="hljs-attr">value</span>=<span class="hljs-string">'中辣'</span>&gt;</span>中辣<span class="hljs-tag">&lt;/<span class="hljs-name">Radio</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                  <span class="hljs-tag">&lt;/<span class="hljs-name">Radio.Group</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span> <span class="hljs-attr">label</span>=<span class="hljs-string">'切不切'</span> <span class="hljs-attr">name</span>=<span class="hljs-string">'切不切'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                  <span class="hljs-tag">&lt;<span class="hljs-name">Radio.Group</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                    <span class="hljs-tag">&lt;<span class="hljs-name">Radio</span> <span class="hljs-attr">value</span>=<span class="hljs-string">'不要'</span>&gt;</span>不要<span class="hljs-tag">&lt;/<span class="hljs-name">Radio</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                    <span class="hljs-tag">&lt;<span class="hljs-name">Radio</span> <span class="hljs-attr">value</span>=<span class="hljs-string">'要'</span>&gt;</span>要<span class="hljs-tag">&lt;/<span class="hljs-name">Radio</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                  <span class="hljs-tag">&lt;/<span class="hljs-name">Radio.Group</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">              <span class="hljs-tag">&lt;/&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            ) : null</span></span><br><span class="line"><span class="hljs-xml">          }}</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line">        <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">'submit'</span>&gt;</span>送出<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line">      &lt;/Form&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣子做的好處是不會把整個元件重新渲染，Antd 會自動幫你重新渲染「這個區塊」，想驗證的話可以加上 <code>useEffect</code> 跑跑看：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'render'</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> timer = <span class="hljs-built_in">setInterval</span>(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    setCounter(counter + <span class="hljs-number">1</span>)</span><br><span class="line">  }, <span class="hljs-number">1000</span>)</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-built_in">clearInterval</span>(timer)</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="render-test.gif" alt="render-test"></p>
+<p>（只有更新 <code>counter</code> 時才會讓元件重新渲染）</p>
+<h3 id="再來點優化"><a href="#再來點優化" class="headerlink" title="再來點優化"></a>再來點優化</h3><p>雖然 <code>shouldUpdate</code> 只會重新渲染指定區塊，但有另外一個問題是「每一次 form 的<strong>任何</strong>資料改變時都會重新渲染」，因為這是預設行為。</p>
+<p>假設現在加上一個購買人的欄位，然後在 <code>shouldUpdate</code> 加上 log，就會發現每次我們每次輸入時都會觸發 <code>shouldUpdate</code> 的重新渲染（或是任何欄位值改變）：</p>
+<p><img src="update-each-time.gif" alt="update-each-time"></p>
+<p>以這個範例來說我們應該只需要在「產品」改變時去重新渲染「選項」的區塊就好，不需要每一次都做更新，所以可以改寫成這種形式：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Form.Item</span><br><span class="line">  shouldUpdate={<span class="hljs-function">(<span class="hljs-params">prevValues, currentValues</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">return</span> prevValues[<span class="hljs-string">'產品'</span>] !== currentValues[<span class="hljs-string">'產品'</span>]</span><br><span class="line">  }}</span><br><span class="line">&gt;</span><br><span class="line">  {<span class="hljs-comment">/* ... */</span>}</span><br><span class="line">&lt;/Form.Item&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>shouldUpdate</code> 可以傳入一個 function 並接收到「舊 / 新」的值，接著利用這個來判斷「產品」有沒有被改變即可，當產品一樣時會回傳 <code>false</code>，不會觸發更新，而當產品不一樣時則回傳 <code>true</code>，所以觸發更新。</p>
+<p>這樣子就能確保只有在產品改變時才去更新選項的欄位了：</p>
+<p><img src="update-centain-time.gif" alt="update-centain-time"></p>
+<h2 id="搭配-CheckBox-使用"><a href="#搭配-CheckBox-使用" class="headerlink" title="搭配 CheckBox 使用"></a>搭配 CheckBox 使用</h2><p>當搭配 <code>&lt;Form.Item&gt;</code> 來使用 checkbox 時，你可能沒辦法在 <code>onFinish</code> 時取出正確的值：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> App = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Form</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">onFinish</span>=<span class="hljs-string">{(values)</span> =&gt;</span> {</span></span><br><span class="line"><span class="hljs-xml">        console.log(values) //</span></span><br><span class="line"><span class="hljs-xml">      }}</span></span><br><span class="line"><span class="hljs-xml">    &gt;</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">'isJunior'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Checkbox</span>&gt;</span>Is Junior?<span class="hljs-tag">&lt;/<span class="hljs-name">Checkbox</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">'submit'</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Form</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>不管我有沒有勾選，最後的結果都會是 <code>{ isJunior: undefined }</code>。</p>
+<p>解決方式是在 <code>Form.Item</code> 上新增 <code>valuePropName='checked'</code>：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> App = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Form</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">onFinish</span>=<span class="hljs-string">{(values)</span> =&gt;</span> {</span></span><br><span class="line"><span class="hljs-xml">        console.log(values)</span></span><br><span class="line"><span class="hljs-xml">      }}</span></span><br><span class="line"><span class="hljs-xml">    &gt;</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">'isJunior'</span> <span class="hljs-attr">valuePropName</span>=<span class="hljs-string">'checked'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Checkbox</span>&gt;</span>Is Junior?<span class="hljs-tag">&lt;/<span class="hljs-name">Checkbox</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">'submit'</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Form</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣就可以正確的取出 <code>{ isJunior: true }</code> 或 <code>{ isJunior: false }</code>。</p>
+<h3 id="背後的原理"><a href="#背後的原理" class="headerlink" title="背後的原理"></a>背後的原理</h3><p>其實是用 <code>getValueProps</code> 和 <code>getValueFromEvent</code> 來實作的，不懂的話建議先看滑去下面理解一下這兩個的用法再拉回來看。</p>
+<p>簡單來說就是用 <code>getValueProps</code> 設定表單元件的 <code>value</code> 屬性，接著再用 <code>getValueFromEvent</code>來處理當值改變時該「如何對值做轉換」，直接來看範例：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;Form onFinish={<span class="hljs-function">(<span class="hljs-params">values</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(values)} initialValues={{ <span class="hljs-attr">isJunior</span>: <span class="hljs-literal">true</span> }}&gt;</span><br><span class="line">  <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    <span class="hljs-attr">name</span>=<span class="hljs-string">'isJunior'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    <span class="hljs-attr">getValueFromEvent</span>=<span class="hljs-string">{(event)</span> =&gt;</span> {</span></span><br><span class="line"><span class="hljs-xml">      // onChange 時把 checked 的值取出並回傳</span></span><br><span class="line"><span class="hljs-xml">      // 這裡回傳的東西就會變成 getValueProps 中的 value</span></span><br><span class="line"><span class="hljs-xml">      return event.target.checked</span></span><br><span class="line"><span class="hljs-xml">    }}</span></span><br><span class="line"><span class="hljs-xml">    getValueProps={(value) =&gt; {</span></span><br><span class="line"><span class="hljs-xml">      // 回傳 "checked" 與 "value" 的物件</span></span><br><span class="line"><span class="hljs-xml">      return {</span></span><br><span class="line"><span class="hljs-xml">        checked: value,</span></span><br><span class="line"><span class="hljs-xml">        value</span></span><br><span class="line"><span class="hljs-xml">      }</span></span><br><span class="line"><span class="hljs-xml">    }}</span></span><br><span class="line"><span class="hljs-xml">  &gt;</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">Checkbox</span>&gt;</span>Is Junior?<span class="hljs-tag">&lt;/<span class="hljs-name">Checkbox</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line">  <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">'submit'</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line">&lt;/Form&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：<a target="_blank" rel="noopener" href="https://codesandbox.io/s/da-pei-form-item-shi-yong-checkbox-bei-hou-yuan-li-kmu5l0?file=/index.js">CodeSandbox</a></p>
+<p>這就跟你自己在寫「Controlled Component」的時候有點類似：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [isJunior, setIsJunior] = useState(<span class="hljs-literal">false</span>)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      isJunior</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">input</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">type</span>=<span class="hljs-string">'checkbox'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">checked</span>=<span class="hljs-string">{isJunior}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(event)</span> =&gt;</span> setIsJunior(event.target.checked)}</span></span><br><span class="line"><span class="hljs-xml">      /&gt;</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>只不過因為這邊的 <code>&lt;Chekbox&gt;</code> 是放在 <code>&lt;Form.Item&gt;</code> 裡，所以依照 Antd 的規則來說 <code>&lt;Form.Item&gt;</code> 中的元件必須用 <code>value</code> 來控制，而不是 <code>checked</code>。</p>
+<p>不過既使是透過 <code>value</code> 來控制，你一樣得傳 <code>checked</code> 屬性給 <code>&lt;Checkbox&gt;</code>，因為他<strong>本身還是得有這個屬性</strong>，否則可能會看到這段 warning：</p>
+<p><img src="check-warning.png" alt="check-warning"></p>
+<p>總之這背後就是對值做轉換而已，知道原理以後你甚至能這樣子玩：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> App = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Form</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">onFinish</span>=<span class="hljs-string">{(values)</span> =&gt;</span> {</span></span><br><span class="line"><span class="hljs-xml">        // {isJunior: "Y"} or {isJunior: "N"}</span></span><br><span class="line"><span class="hljs-xml">        console.log(values)</span></span><br><span class="line"><span class="hljs-xml">      }}</span></span><br><span class="line"><span class="hljs-xml">      initialValues={{</span></span><br><span class="line"><span class="hljs-xml">        // 用自定義的值來表示</span></span><br><span class="line"><span class="hljs-xml">        isJunior: 'Y'</span></span><br><span class="line"><span class="hljs-xml">      }}</span></span><br><span class="line"><span class="hljs-xml">    &gt;</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">name</span>=<span class="hljs-string">'isJunior'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">getValueFromEvent</span>=<span class="hljs-string">{(event)</span> =&gt;</span> {</span></span><br><span class="line"><span class="hljs-xml">          // 把值從 true / false 轉換成自定義的值</span></span><br><span class="line"><span class="hljs-xml">          return event.target.checked ? 'Y' : 'N'</span></span><br><span class="line"><span class="hljs-xml">        }}</span></span><br><span class="line"><span class="hljs-xml">        getValueProps={(value) =&gt; {</span></span><br><span class="line"><span class="hljs-xml">          // 把自定義的值來轉換成元件看得懂的值（true /false）</span></span><br><span class="line"><span class="hljs-xml">          return {</span></span><br><span class="line"><span class="hljs-xml">            checked: value === 'Y',</span></span><br><span class="line"><span class="hljs-xml">            value: value === 'Y'</span></span><br><span class="line"><span class="hljs-xml">          }</span></span><br><span class="line"><span class="hljs-xml">        }}</span></span><br><span class="line"><span class="hljs-xml">      &gt;</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Checkbox</span>&gt;</span>Is Junior?<span class="hljs-tag">&lt;/<span class="hljs-name">Checkbox</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">'submit'</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Form</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：<a target="_blank" rel="noopener" href="https://codesandbox.io/s/da-pei-form-item-shi-yong-checkbox-zi-ding-yi-de-zhi-dp7skn?file=/demo.js">CodeSandbox</a></p>
+<p>這樣子的好處是你可以在按下「Submit」時就直接拿到你想要的值 <code>Y / N</code>，不用再自己對 <code>true / false</code> 來做轉換，因為你在 <code>&lt;Form.Item&gt;</code> 那一層就先做好轉換的動作了。</p>
+<h2 id="getValueProps-amp-getValueFromEvent"><a href="#getValueProps-amp-getValueFromEvent" class="headerlink" title="getValueProps &amp; getValueFromEvent"></a>getValueProps &amp; getValueFromEvent</h2><h3 id="getValueProps"><a href="#getValueProps" class="headerlink" title="getValueProps"></a>getValueProps</h3><p>簡單來說 <code>getValueProps</code> 是用來讓你重新設定 <code>value</code> 屬性的值（也許可以設定別的屬性，但我想次數真的不多）。</p>
+<p>實際可以用在 <code>&lt;Form.Item&gt;</code> 底下的 <code>&lt;DatePicker&gt;</code>：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> App = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Form</span> <span class="hljs-attr">initialValues</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">date:</span> '<span class="hljs-attr">08</span>/<span class="hljs-attr">08</span>/<span class="hljs-attr">2022</span>' }}&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Form.Item</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">label</span>=<span class="hljs-string">'date'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">name</span>=<span class="hljs-string">'date'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">getValueProps</span>=<span class="hljs-string">{(value)</span> =&gt;</span> {</span></span><br><span class="line"><span class="hljs-xml">          // 08/08/2022</span></span><br><span class="line"><span class="hljs-xml">          console.log('value', value)</span></span><br><span class="line"><span class="hljs-xml">          // 根據初始值設定為空字串 or 新的 moment 物件</span></span><br><span class="line"><span class="hljs-xml">          return {</span></span><br><span class="line"><span class="hljs-xml">            value: moment(value, 'DD/MM/YYYY', true).isValid() ? moment(value, 'DD/MM/YYYY') : ''</span></span><br><span class="line"><span class="hljs-xml">          }</span></span><br><span class="line"><span class="hljs-xml">        }}</span></span><br><span class="line"><span class="hljs-xml">      &gt;</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">DatePicker</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Form.Item</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">htmlType</span>=<span class="hljs-string">'submit'</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Form</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>會這樣設定是因為 <code>&lt;Form.Item&gt;</code> 預設會自動幫底下的表單元件設定 <code>value</code> 值，官方文件有提到這點：</p>
+<blockquote>
+<p>被设置了 name 属性的 Form.Item 包装的控件，表单控件会自动添加 value（或 valuePropName 指定的其他属性） onChange（或 trigger 指定的其他属性）</p>
+</blockquote>
+<p>可以想成它會自動幫 <code>&lt;DatePicker&gt;</code> 加上 <code>value</code> 和 <code>onChange</code> 事件，像這樣子：<code>&lt;DatePicker value="08/08/2022"/&gt;</code></p>
+<p>但這樣子會有問題，因為 <code>&lt;DatePicker&gt;</code> 是透過 <code>moment</code> 格式的物件來運作的，代表 <code>value</code> <strong>必須</strong>是一個 <code>moment</code> 物件，否則的話會直接壞掉（可能會看到 <code>date.clone is not a function</code> 的錯誤）</p>
+<p>總而言之透過 <code>getValueProps</code> 我們就能在這一層先對 <code>value</code> 做處理，看是要把它轉換成空字串（這是合法的值） 還是 moment 物件，接著傳給 <code>&lt;DatePicker&gt;</code>，就能避免格式上的問題。</p>
+<h3 id="getValueFromEvent"><a href="#getValueFromEvent" class="headerlink" title="getValueFromEvent"></a>getValueFromEvent</h3><p>剛剛的範例其實會有另外一個問題，就是當我「重新選了一個日期」時，拿到的 <code>value</code> 會變成 moment 物件而不是原本的 <code>08/08/2022</code>：</p>
+<p><img src="get-value-props-problem.gif" alt="get-value-props-problem"></p>
+<p>這邊會有兩個問題：</p>
+<p>1. 基於我們一開始寫的判斷可能會產生非預期結果</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;Form.Item</span><br><span class="line">  label=<span class="hljs-string">"date"</span></span><br><span class="line">  name=<span class="hljs-string">"date"</span></span><br><span class="line">  getValueProps={<span class="hljs-function">(<span class="hljs-params">value</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 如果拿到 moment 物件</span></span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'value'</span>, value)</span><br><span class="line">    <span class="hljs-comment">// 等於又把 moment 丟進去 moment() 當作值</span></span><br><span class="line">    <span class="hljs-keyword">return</span> {</span><br><span class="line">      <span class="hljs-attr">value</span>: moment(value, <span class="hljs-string">"DD/MM/YYYY"</span>, <span class="hljs-literal">true</span>).isValid()</span><br><span class="line">        ? moment(value, <span class="hljs-string">"DD/MM/YYYY"</span>)</span><br><span class="line">        : <span class="hljs-string">""</span></span><br><span class="line">    };</span><br><span class="line">  }}</span><br><span class="line">&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>2. 表單 Submit 後拿到的是 moment 物件而不是 <code>08/08/2022</code></p>
+<p>要解決這個問題的辦法就是 <code>getValueFromEvent</code>。</p>
+<p>人如其名，它的用途就是「在 onChange 時把 event 丟給你，讓你重新設定 value 的值應該要長怎樣？」。也許表達的不是很正確，但我覺得這樣子比較好理解就是了。</p>
+<p>附註：對於 DatePicker 來說 <code>getValueFromEvent</code> 會拿到的是 moment，但一般的 <code>&lt;Input&gt;</code> 或是 <code>&lt;Checkbox&gt;</code> 這類的表單元件則會拿到 event 物件。</p>
+<p>所以上面的範例可以改寫成這樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;Form.Item</span><br><span class="line">  label=<span class="hljs-string">'date'</span></span><br><span class="line">  name=<span class="hljs-string">'date'</span></span><br><span class="line">  getValueFromEvent={<span class="hljs-function">(<span class="hljs-params">moment</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 這裡回傳什麼，下面的 value 就會拿到什麼</span></span><br><span class="line">    <span class="hljs-comment">// 所以不需要寫成 `{ value: ... }` 的形式</span></span><br><span class="line">    <span class="hljs-keyword">return</span> moment.format(<span class="hljs-string">'DD/MM/YYYY'</span>)</span><br><span class="line">  }}</span><br><span class="line">  getValueProps={<span class="hljs-function">(<span class="hljs-params">value</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">return</span> {</span><br><span class="line">      <span class="hljs-attr">value</span>: moment(value, <span class="hljs-string">'DD/MM/YYYY'</span>, <span class="hljs-literal">true</span>).isValid() ? moment(value, <span class="hljs-string">'DD/MM/YYYY'</span>) : <span class="hljs-string">''</span></span><br><span class="line">    }</span><br><span class="line">  }}</span><br><span class="line">&gt;</span><br><span class="line">  <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">DatePicker</span> /&gt;</span></span></span><br><span class="line">&lt;/Form.Item&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="get-value-from-event.gif" alt="get-value-from-event"></p>
+<p>附註：<a target="_blank" rel="noopener" href="https://codesandbox.io/s/antd-getvalueprops-and-getvaluefromevent-p4f0ee?file=/demo.js">CodeSandBox 連結</a></p>
+<p>所以這兩個東西搭配使用的話就可以解決 <code>&lt;DatePicker&gt;</code> 的格式問題囉。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/09/25/moment-js/">Moment.js 筆記</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/09/23/antd-button-problem/">Ant Design－使用 Button 時可能會碰到的地雷</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

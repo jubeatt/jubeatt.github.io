@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>JavaScript－如何操作可拖曳的元素 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="新的酷東東。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript－如何操作可拖曳的元素">
+<meta property="og:url" content="https://jubeatt.github.io/2022/08/26/javascript-drag-and-drop/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="新的酷東東。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/08/26/javascript-drag-and-drop/basic-example.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/08/26/javascript-drag-and-drop/allow-drop.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/08/26/javascript-drag-and-drop/draggable-list.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/08/26/javascript-drag-and-drop/draggable-file.gif">
+<meta property="article:published_time" content="2022-08-26T01:20:09.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.522Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/08/26/javascript-drag-and-drop/basic-example.gif">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡述">1&nbsp;&nbsp;<b>簡述</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#dragstart">1.1&nbsp;&nbsp;dragstart</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#dragover">1.2&nbsp;&nbsp;dragover</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#drop">1.3&nbsp;&nbsp;drop</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#製作可拖曳的列表">2&nbsp;&nbsp;<b>製作可拖曳的列表</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#JavaScript-jQuery">2.1&nbsp;&nbsp;JavaScript + jQuery</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#React">2.2&nbsp;&nbsp;React</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#可拖曳檔案（React）">2.3&nbsp;&nbsp;可拖曳檔案（React）</a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            JavaScript－如何操作可拖曳的元素
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>8月 26 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>新的酷東東。</p>
+<span id="more"></span>
+
+<h2 id="簡述"><a href="#簡述" class="headerlink" title="簡述"></a>簡述</h2><p>拖曳可以應用的場景有很多，像是：</p>
+<ul>
+<li>用拖拉的方式來上傳檔案</li>
+<li>用拖拉的方式來交換元素位置</li>
+<li>把東西從 A 拖拉到 B 點（例如驗證 or 圖形介面）</li>
+</ul>
+<p>所以覺得這還蠻值得學的，可以運用的地方有很多。</p>
+<p>首先來一個 MDN 的範例，我們要做的是像這樣的效果：</p>
+<p><img src="basic-example.gif" alt="basic-example"></p>
+<p>如果你想直接看原始碼的話可以到 <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/RwMQmpE?editors=1100">Codepen</a> 上看，接下來會逐步介紹相關的 API 和思路。</p>
+<p>這邊先補充一個概念，如果要讓一個元素是「draggable（可拖曳）」 的話，要加上 <code>draggable="true"</code> 這個屬性：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ball"</span> <span class="hljs-attr">draggable</span>=<span class="hljs-string">"true"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果沒有加的話預設都是<strong>無法拖曳</strong>的，所以一定要記得哦。</p>
+<p>接著來解釋這邊用到的 API，總共有三個：</p>
+<ul>
+<li><code>dragstart</code></li>
+<li><code>dragover</code></li>
+<li><code>drop</code></li>
+</ul>
+<h3 id="dragstart"><a href="#dragstart" class="headerlink" title="dragstart"></a>dragstart</h3><blockquote>
+<p>當元素開始被拖曳的時候會觸發。</p>
+</blockquote>
+<p>這邊是利用了這個 function 來取得「目前拖曳的元素是誰」：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> dragItem = <span class="hljs-literal">null</span></span><br><span class="line"><span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">'dragstart'</span>, <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {</span><br><span class="line">  dragItem = e.target</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>之所以要存起來是因為我們希望在「某個時機點」把它插到其他 DOM 元素上，所以才需要這個 reference。</p>
+<h3 id="dragover"><a href="#dragover" class="headerlink" title="dragover"></a>dragover</h3><blockquote>
+<p>當有「draggable（元素 / 檔案）」的東西被拖曳進來時觸發，而且是<strong>連續觸發。</strong></p>
+</blockquote>
+<p>這邊通常可以做 dragging 的醒目效果，不過更重要的是 <code>e.preventDefault</code>，因為它可以：</p>
+<ul>
+<li>讓元素從「不能被 drop」變成「可以被 drop」的狀態。</li>
+<li>讓元素從「不能被 drop」變成「可以被 drop」的狀態。</li>
+<li>讓元素從「不能被 drop」變成「可以被 drop」的狀態。</li>
+</ul>
+<p>以目前的範例來說不是很好懂，所以這邊會用另一個範例解釋。</p>
+<p>要看一個元素是否能 drop 可以從 <strong>cursor 有沒有顯示 + 號</strong> 來判斷，像這樣：</p>
+<p><img src="allow-drop.gif" alt="allow-drop"></p>
+<p>灰色區塊因為有加上 <code>e.preventDefault</code>，所以當它被紅球 <code>dragover</code> 時就會顯示 + 號，代表<strong>這裡是可以 drop 的。</strong></p>
+<p>詳細可以自己到 <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/rNdJgPp?editors=1111">Codepen</a> 上玩玩看。</p>
+<h3 id="drop"><a href="#drop" class="headerlink" title="drop"></a>drop</h3><blockquote>
+<p>當「draggable（元素 / 檔案）」的東西放掉的時候觸發。</p>
+</blockquote>
+<p>回到原本的例子，我們希望在「紅球放掉的時候」來更新他的位置，所以寫了這樣的判斷：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">'drop'</span>, <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// 停用預設的 download 行為（重要）</span></span><br><span class="line">  e.preventDefault()</span><br><span class="line">  <span class="hljs-comment">// drop 到的那個元素</span></span><br><span class="line">  <span class="hljs-keyword">const</span> targetElement = e.target</span><br><span class="line">  <span class="hljs-comment">// 判斷 target 是否正確</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (targetElement.classList.contains(<span class="hljs-string">'dropzone'</span>)) {</span><br><span class="line">    <span class="hljs-comment">// 移除</span></span><br><span class="line">    dragItem.parentNode.removeChild(dragItem)</span><br><span class="line">    <span class="hljs-comment">// 插入</span></span><br><span class="line">    e.target.append(dragItem)</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>簡單來說只要紅球 drop 的元素有 <code>dropzone</code> 這個 calss 就會「更新位置」，所以大致的思路就是這樣。</p>
+<p>不過這邊想特別提一件事情，就是要注意「 <code>addEventListener</code> 是綁在誰身上？」</p>
+<p>會提這個是因為當「綁定的對象不同時思路也會不同」。以剛剛的範例來看都都是綁在 <code>document</code> 身上，所以像是 <code>drop</code> 不管是在哪裡發生的都會被觸發。</p>
+<p>可是如果現在 <code>addEventListener</code> 是掛在 <code>.target</code> 身上的話就不一樣了，這樣就只有在「東西被 drop 到它身上時」才會觸發這個事件（有點像是第一人稱跟第三人稱的差別），這一段如果不懂的話建議自己多寫幾個範例來玩玩看，應該比較能體會我想表達的意思。</p>
+<h2 id="製作可拖曳的列表"><a href="#製作可拖曳的列表" class="headerlink" title="製作可拖曳的列表"></a>製作可拖曳的列表</h2><p><img src="draggable-list.gif" alt="draggable-list"></p>
+<p>這個算是蠻常見的需求，所以能練習一下。至於思路都寫在註解中了，不懂的話試著自己做做看就懂了。</p>
+<p>可能會比較有疑問的地方應該是 <code>e.dataTransfer</code> 的部分，這裡稍微解釋一下。簡單來說就是讓你「幫被拖曳的元素儲存資訊」，這樣子在做判斷時才有相關的 reference，詳細的用法可以參考 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/DataTransfer/setData">MDN</a>，或這篇 <a target="_blank" rel="noopener" href="https://www.muji.dev/2020/03/07/web-dnd-2/">文章</a></p>
+<h3 id="JavaScript-jQuery"><a href="#JavaScript-jQuery" class="headerlink" title="JavaScript + jQuery"></a>JavaScript + jQuery</h3><figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"list"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>One<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>Two<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>Three<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>Four<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">    <span class="hljs-comment">// 取得所有 li</span></span></span><br><span class="line"><span class="hljs-javascript">    <span class="hljs-keyword">const</span> items = <span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'li'</span>)</span></span><br><span class="line"><span class="hljs-javascript">    <span class="hljs-comment">// 設定 property 和 listener</span></span></span><br><span class="line"><span class="hljs-javascript">    items.forEach(<span class="hljs-function">(<span class="hljs-params">li</span>) =&gt;</span> {</span></span><br><span class="line"><span class="hljs-javascript">      $(li).prop(<span class="hljs-string">'draggable'</span>, <span class="hljs-literal">true</span>)</span></span><br><span class="line"><span class="hljs-javascript">      li.addEventListener(<span class="hljs-string">'dragstart'</span>, dragStart)</span></span><br><span class="line"><span class="hljs-javascript">      li.addEventListener(<span class="hljs-string">'drop'</span>, dropped)</span></span><br><span class="line"><span class="hljs-javascript">      li.addEventListener(<span class="hljs-string">'dragover'</span>, <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> e.preventDefault())</span></span><br><span class="line"><span class="hljs-javascript">    })</span></span><br><span class="line"><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">dragStart</span>(<span class="hljs-params">e</span>) </span>{</span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-comment">// 取得 index</span></span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-keyword">const</span> index = $(e.target).index()</span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-comment">// 設定被拖曳元素的資訊，之後可透過 getData() 來取得</span></span></span><br><span class="line"><span class="hljs-javascript">      e.dataTransfer.setData(<span class="hljs-string">'text/plain'</span>, index)</span></span><br><span class="line"><span class="hljs-javascript">    }</span></span><br><span class="line"><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">dropped</span>(<span class="hljs-params">e</span>) </span>{</span></span><br><span class="line"><span class="hljs-javascript">      e.preventDefault()</span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-comment">// 記得轉成數字</span></span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-keyword">const</span> oldIndex = <span class="hljs-built_in">parseInt</span>(e.dataTransfer.getData(<span class="hljs-string">'text/plain'</span>), <span class="hljs-number">10</span>)</span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-keyword">const</span> target = $(e.target)</span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-keyword">const</span> newIndex = $(e.target).index()</span></span><br><span class="line"><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-comment">// remove orignal element</span></span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-comment">// 1. 找到 parent</span></span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-comment">// 2. 把第 oldIndex 個 child 給移除</span></span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-comment">// 3. 把回傳值儲存（被刪除的元素）</span></span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-keyword">const</span> dropped = $(<span class="hljs-built_in">this</span>).parent().children().eq(oldIndex).remove()</span></span><br><span class="line"><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-comment">// 新位置（目標）比原本還後面就插到他（新位置）後面，以此類推</span></span></span><br><span class="line"><span class="hljs-javascript">      oldIndex &lt; newIndex ? target.after(dropped) : target.before(dropped)</span></span><br><span class="line"><span class="hljs-javascript">    }</span></span><br><span class="line"><span class="hljs-javascript">  </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>原始碼可到 <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/GRxxJbK">CodePen</a> 參考。</p>
+<p>其實最關鍵的地方就是 <code>dragStart</code> 時儲存「原始位置」，接著 <code>dropped</code> 時取得「新的位置」，最後再根據「新 / 舊位置」來判斷要放到那個位置，簡單來說就是這樣吧。</p>
+<h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [items, setItems] = useState([<span class="hljs-string">'One'</span>, <span class="hljs-string">'Two'</span>, <span class="hljs-string">'Three'</span>, <span class="hljs-string">'Four'</span>])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'list'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {items.map((item, index) =&gt; (</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">li</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">draggable</span>=<span class="hljs-string">'true'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">key</span>=<span class="hljs-string">{item}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">onDragOver</span>=<span class="hljs-string">{(e)</span> =&gt;</span> e.preventDefault()}</span></span><br><span class="line"><span class="hljs-xml">          onDragStart={(e) =&gt; {</span></span><br><span class="line"><span class="hljs-xml">            // 儲存 drag 時的位置</span></span><br><span class="line"><span class="hljs-xml">            e.dataTransfer.setData('text/plain', index)</span></span><br><span class="line"><span class="hljs-xml">          }}</span></span><br><span class="line"><span class="hljs-xml">          onDrop={(e) =&gt; {</span></span><br><span class="line"><span class="hljs-xml">            const oldIndex = parseInt(e.dataTransfer.getData('text/plain'), 10)</span></span><br><span class="line"><span class="hljs-xml">            // drop 的位置</span></span><br><span class="line"><span class="hljs-xml">            let targetIndex = index</span></span><br><span class="line"><span class="hljs-xml">            const newItems = [...items]</span></span><br><span class="line"><span class="hljs-xml">            // remove the old one</span></span><br><span class="line"><span class="hljs-xml">            const removedItem = newItems.splice(oldIndex, 1)</span></span><br><span class="line"><span class="hljs-xml">            // insert to target index</span></span><br><span class="line"><span class="hljs-xml">            newItems.splice(targetIndex, 0, ...removedItem)</span></span><br><span class="line"><span class="hljs-xml">            setItems(newItems)</span></span><br><span class="line"><span class="hljs-xml">          }}</span></span><br><span class="line"><span class="hljs-xml">        &gt;</span></span><br><span class="line"><span class="hljs-xml">          {item}</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      ))}</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>原始碼可到 <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/OJvvVZL">CodePen</a> 來看。</p>
+<p>React 相對來說會直覺一些，畢竟只要專注在「資料」就好，不過要留意一下 <code>splice</code> 的部分。第一個參數可以想成是「我希望元素放到的位置」，這樣子會比較好理解一點。</p>
+<p>例如說我想把某個元素放到第一個位置，那就會用 <code>splice(0, 0, item)</code>，第二個的話就是 <code>splice(1, 0, item)</code>，以此類推。就不用像寫 jQuery 時還要多判斷「插到前面還是後面」的這一步。</p>
+<h3 id="可拖曳檔案（React）"><a href="#可拖曳檔案（React）" class="headerlink" title="可拖曳檔案（React）"></a>可拖曳檔案（React）</h3><p>做完上面的練習後應該就能做出這樣的功能：</p>
+<p><img src="draggable-file.gif" alt="draggable-file"></p>
+<p>原始碼可到 <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/LYddjvL">CodePen</a> 參考</p>
+<p>主要只是多了「上傳檔案」的功能，背後的拖曳邏輯其實都跟剛剛差不多，所以這邊就直接附上 code 不解釋太多了，可以參考註解邊練習看看：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [uploadFiles, setUploadFiles] = useState([])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'upload'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'upload-title'</span>&gt;</span>Link path<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">className</span>=<span class="hljs-string">'upload-area'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          // <span class="hljs-attr">allow</span> <span class="hljs-attr">drop</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">          <span class="hljs-attr">onDragOver</span>=<span class="hljs-string">{(e)</span> =&gt;</span> e.preventDefault()}</span></span><br><span class="line"><span class="hljs-xml">          // receive file (拖曳進來的檔案)</span></span><br><span class="line"><span class="hljs-xml">          onDrop={(e) =&gt; {</span></span><br><span class="line"><span class="hljs-xml">            // prevent dowload</span></span><br><span class="line"><span class="hljs-xml">            e.preventDefault()</span></span><br><span class="line"><span class="hljs-xml">            if (e.dataTransfer.files.length &gt; 0) {</span></span><br><span class="line"><span class="hljs-xml">              setUploadFiles(Array.from(e.dataTransfer.files))</span></span><br><span class="line"><span class="hljs-xml">            }</span></span><br><span class="line"><span class="hljs-xml">          }}</span></span><br><span class="line"><span class="hljs-xml">        &gt;</span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'upload-area-list'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'list'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">              {uploadFiles.map((file, index) =&gt; (</span></span><br><span class="line"><span class="hljs-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">li</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">                  <span class="hljs-attr">draggable</span>=<span class="hljs-string">'true'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">                  <span class="hljs-attr">key</span>=<span class="hljs-string">{file.name}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">                  <span class="hljs-attr">onDragOver</span>=<span class="hljs-string">{(e)</span> =&gt;</span> {</span></span><br><span class="line"><span class="hljs-xml">                    // allow drop</span></span><br><span class="line"><span class="hljs-xml">                    e.preventDefault()</span></span><br><span class="line"><span class="hljs-xml">                    // stop bubbling to parent (.upload-area)</span></span><br><span class="line"><span class="hljs-xml">                    e.stopPropagation()</span></span><br><span class="line"><span class="hljs-xml">                  }}</span></span><br><span class="line"><span class="hljs-xml">                  onDragStart={(e) =&gt; e.dataTransfer.setData('text/plain', index)}</span></span><br><span class="line"><span class="hljs-xml">                  onDrop={(e) =&gt; {</span></span><br><span class="line"><span class="hljs-xml">                    // prevent dowload</span></span><br><span class="line"><span class="hljs-xml">                    e.preventDefault()</span></span><br><span class="line"><span class="hljs-xml">                    // stop bubbling to parent (.upload-area)</span></span><br><span class="line"><span class="hljs-xml">                    e.stopPropagation()</span></span><br><span class="line"><span class="hljs-xml">                    const oldIndex = parseInt(e.dataTransfer.getData('text/plain'), 10)</span></span><br><span class="line"><span class="hljs-xml"></span></span><br><span class="line"><span class="hljs-xml">                    // 避免從桌面拖曳檔案到 li 上的情況</span></span><br><span class="line"><span class="hljs-xml">                    if (!isNaN(oldIndex)) {</span></span><br><span class="line"><span class="hljs-xml">                      let targetIndex = index</span></span><br><span class="line"><span class="hljs-xml">                      // 因為是 blob 所以得用這種方式 copy</span></span><br><span class="line"><span class="hljs-xml">                      const newFiles = uploadFiles.map((file) =&gt; new File([file], file.name))</span></span><br><span class="line"><span class="hljs-xml">                      const removedBackup = newFiles[oldIndex]</span></span><br><span class="line"><span class="hljs-xml">                      // remove the old one</span></span><br><span class="line"><span class="hljs-xml">                      newFiles.splice(oldIndex, 1)</span></span><br><span class="line"><span class="hljs-xml">                      // insert to target index</span></span><br><span class="line"><span class="hljs-xml">                      newFiles.splice(targetIndex, 0, removedBackup)</span></span><br><span class="line"><span class="hljs-xml">                      setUploadFiles(newFiles)</span></span><br><span class="line"><span class="hljs-xml">                    }</span></span><br><span class="line"><span class="hljs-xml">                  }}</span></span><br><span class="line"><span class="hljs-xml">                &gt;</span></span><br><span class="line"><span class="hljs-xml">                  <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'file-name'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                    0{index + 1}. {file.name}</span></span><br><span class="line"><span class="hljs-xml">                  <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                  <span class="hljs-tag">&lt;<span class="hljs-name">span</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">                    <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                      setUploadFiles((prev) =&gt; prev.filter((f) =&gt; f.name !== file.name))</span></span><br><span class="line"><span class="hljs-xml">                    }</span></span><br><span class="line"><span class="hljs-xml">                    className='material-icons material-icons-close'</span></span><br><span class="line"><span class="hljs-xml">                  &gt;</span></span><br><span class="line"><span class="hljs-xml">                    close</span></span><br><span class="line"><span class="hljs-xml">                  <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">                <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">              ))}</span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'upload-area-button'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'material-icons'</span>&gt;</span>file_upload<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">input</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">              <span class="hljs-attr">type</span>=<span class="hljs-string">'file'</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">              <span class="hljs-attr">multiple</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">              <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(e)</span> =&gt;</span> setUploadFiles(Array.from(e.target.files))}</span></span><br><span class="line"><span class="hljs-xml">            /&gt;</span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'btn-save'</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> console.log(uploadFiles)}&gt;</span></span><br><span class="line"><span class="hljs-xml">        Save</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊要特別注意 <code>e.stopPropagation</code> 的功能，如果沒有在該加的地方加上的話就有可能遇到「事件從 children 冒泡到 parent」的問題。</p>
+<p>像是假設我在 <code>&lt;li&gt;</code> 觸發了 <code>drop</code> 事件，沒有取消傳遞的話就會冒泡到 <code>.upload-area</code> 的位置上，所以就會變成這樣：</p>
+<ul>
+<li>執行 <code>li</code> 的 event callback，把位置交換</li>
+<li>執行 <code>.upload-area</code> 的 event callback，更新 state</li>
+</ul>
+<p>這就跟我們預期的不一樣了，我們只希望<code>li</code> 的 callback 被執行而已。</p>
+<p>所以這邊要特別留意事件傳遞機制的問題，不熟的話可以參考我寫的 <a href="https://jubeatt.github.io/2022/01/19/event-stop-propagation/">阻止事件傳遞 stopPropagation</a>。</p>
+<p>雖然你也可以暴力解，通通加上 <code>stopPropagation</code> 和 <code>preventDefault</code>，但我覺得去理解他們實際到底在「預防什麼」會更好。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/08/28/antd-upload-props/">Ant Design－Upload 相關的 Props</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/08/25/vue-router-guard/">Vue－Router Guard</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

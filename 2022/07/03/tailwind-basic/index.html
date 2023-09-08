@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Tailwind 雜記 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="來點不一樣的 CSS。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tailwind 雜記">
+<meta property="og:url" content="https://jubeatt.github.io/2022/07/03/tailwind-basic/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="來點不一樣的 CSS。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/07/03/tailwind-basic/config-warning.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/07/03/tailwind-basic/solution.gif">
+<meta property="article:published_time" content="2022-07-03T06:23:37.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.656Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/07/03/tailwind-basic/config-warning.png">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡述">1&nbsp;&nbsp;<b>簡述</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#前置作業">2&nbsp;&nbsp;<b>前置作業</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#初始化">2.1&nbsp;&nbsp;初始化</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#編譯">2.2&nbsp;&nbsp;編譯</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#新增自己的-utils">3&nbsp;&nbsp;<b>新增自己的 utils</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#新增顏色">4&nbsp;&nbsp;<b>新增顏色</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#根據父層的狀態來改變-style">5&nbsp;&nbsp;<b>根據父層的狀態來改變 style</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#first-child-odd-even-之類的類選取器">6&nbsp;&nbsp;<b>first-child / odd /even 之類的類選取器</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#動態-class">7&nbsp;&nbsp;<b>動態 class</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#多行文字換行">8&nbsp;&nbsp;<b>多行文字換行</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#回到熟悉的-class（-apply）">9&nbsp;&nbsp;<b>回到熟悉的 class（@apply）</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#一次性的屬性值">10&nbsp;&nbsp;<b>一次性的屬性值</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#BreakPoint（斷點）">11&nbsp;&nbsp;<b>BreakPoint（斷點）</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Tailwind 雜記
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>7月 3 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/CSS/">CSS</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>來點不一樣的 CSS。</p>
+<span id="more"></span>
+
+<h2 id="簡述"><a href="#簡述" class="headerlink" title="簡述"></a>簡述</h2><p>Tailwind 從以前給我的印象就是個麻煩的東西，但並不是因為 HTML 很難看的關係，而是當習慣了 CSS Selector 的概念後，就會覺得 Tailwind 這種全部綁在 class 中的寫法用起來各種障礙。</p>
+<p>但自從學了 React 後，逐漸體會到 Component 跟 Tailwind 結合起來用的效益，慢慢的改變了以前的觀點。</p>
+<p>總之這篇會把我想記的一些觀念給寫下來，如果想知道更多的話推薦參考這份 <a target="_blank" rel="noopener" href="https://tailwindcss.com/docs/hover-focus-and-other-states#pseudo-classes">官方文件</a>。</p>
+<h2 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h2><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>簡單來說就是建立 <code>tailwind.config.js</code>，可以用底下的指令來產生：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx tailwind init</span><br></pre></td></tr></tbody></table></figure>
+
+<p>初始化的設定會長這樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/** <span class="hljs-doctag">@type <span class="hljs-type">{import('tailwindcss').Config}</span> </span>*/</span></span><br><span class="line"><span class="hljs-built_in">module</span>.exports = {</span><br><span class="line">  <span class="hljs-attr">content</span>: [],</span><br><span class="line">  <span class="hljs-attr">theme</span>: {</span><br><span class="line">    <span class="hljs-attr">extend</span>: {}</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">plugins</span>: []</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="編譯"><a href="#編譯" class="headerlink" title="編譯"></a>編譯</h3><p>如果剛剛初始化以後沒有設定 <code>content</code> 就直接執行編譯的話，可能會看到這段訊息：</p>
+<p><img src="config-warning.png" alt="config-warning"></p>
+<p>簡單來說這邊是要你設定「所有會使用到 tailwind class 名稱」的檔案路徑，例如說我在 <code>./public/index.html</code> 中有用到這些 class，那我就會這樣設定：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/** <span class="hljs-doctag">@type <span class="hljs-type">{import('tailwindcss').Config}</span> </span>*/</span></span><br><span class="line"><span class="hljs-built_in">module</span>.exports = {</span><br><span class="line">  <span class="hljs-attr">content</span>: [<span class="hljs-string">'./src/**/*.{html,js}'</span>], <span class="hljs-comment">// src 底下所有的 .html 或 .js 檔案</span></span><br><span class="line">  <span class="hljs-attr">theme</span>: {</span><br><span class="line">    <span class="hljs-attr">extend</span>: {}</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">plugins</span>: []</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：glob pattern 可以參考這份 <a target="_blank" rel="noopener" href="https://github.com/jubeatt/minimatch-cheat-sheet">cheat-sheet</a></p>
+<p>設定完再跑一次編譯時，Tailwind 就會自動根據我設定的路徑來產出所有用到的 class，就可以正常使用囉！更多細節請參考 <a target="_blank" rel="noopener" href="https://tailwindcss.com/docs/content-configuration">官方文件</a></p>
+<h2 id="新增自己的-utils"><a href="#新增自己的-utils" class="headerlink" title="新增自己的 utils"></a>新增自己的 utils</h2><ol>
+<li>先引入 plugin</li>
+<li>執行 plugin 時會拿到 addUtilities 這個參數，用它來加就對了</li>
+</ol>
+<p>附註：記得要加上 <code>.</code>（有被雷到過）</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/** <span class="hljs-doctag">@type <span class="hljs-type">{import('tailwindcss').Config}</span> </span>*/</span></span><br><span class="line"><span class="hljs-keyword">const</span> plugin = <span class="hljs-built_in">require</span>(<span class="hljs-string">'tailwindcss/plugin'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">module</span>.exports = {</span><br><span class="line">  <span class="hljs-attr">content</span>: [<span class="hljs-string">'./src/**/*.{js,jsx,ts,tsx}'</span>],</span><br><span class="line">  <span class="hljs-attr">theme</span>: {</span><br><span class="line">    <span class="hljs-attr">extend</span>: {}</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">plugins</span>: [</span><br><span class="line">    plugin(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">{ addUtilities }</span>) </span>{</span><br><span class="line">      addUtilities({</span><br><span class="line">        <span class="hljs-string">'.rotateY-90'</span>: {</span><br><span class="line">          <span class="hljs-attr">transform</span>: <span class="hljs-string">'rotateY(90deg)'</span></span><br><span class="line">        },</span><br><span class="line">        <span class="hljs-string">'.rotateY-0'</span>: {</span><br><span class="line">          <span class="hljs-attr">transform</span>: <span class="hljs-string">'rotateY(0deg)'</span></span><br><span class="line">        }</span><br><span class="line">      })</span><br><span class="line">    })</span><br><span class="line">  ]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="新增顏色"><a href="#新增顏色" class="headerlink" title="新增顏色"></a>新增顏色</h2><p>可以在 <code>extend</code> 中新增項目。</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">module</span>.exports = {</span><br><span class="line">  <span class="hljs-attr">content</span>: [<span class="hljs-string">'./src/**/*.{js,jsx,ts,tsx}'</span>],</span><br><span class="line">  <span class="hljs-attr">theme</span>: {</span><br><span class="line">    <span class="hljs-attr">extend</span>: {</span><br><span class="line">      <span class="hljs-attr">colors</span>: {</span><br><span class="line">        <span class="hljs-attr">primary</span>: <span class="hljs-string">'#F97C7C'</span>,</span><br><span class="line">        <span class="hljs-attr">secondary</span>: {</span><br><span class="line">          <span class="hljs-number">100</span>: <span class="hljs-string">'#3a97d4'</span>,</span><br><span class="line">          <span class="hljs-number">200</span>: <span class="hljs-string">'#1a2037'</span></span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">plugins</span>: []</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>補充一下這背後的運作方式，如果你用 <code>tailwind init --full</code> 來做初始化的話可以看到 config 預設值。接著你滑到 <code>colors</code> 段落應該能看到這樣的內容：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/** <span class="hljs-doctag">@type <span class="hljs-type">{import('tailwindcss').Config}</span> </span>*/</span></span><br><span class="line"><span class="hljs-built_in">module</span>.exports = {</span><br><span class="line">  <span class="hljs-comment">// 略...</span></span><br><span class="line">  <span class="hljs-attr">theme</span>: {</span><br><span class="line">    <span class="hljs-attr">screens</span>: {</span><br><span class="line">      <span class="hljs-attr">sm</span>: <span class="hljs-string">'640px'</span>,</span><br><span class="line">      <span class="hljs-attr">md</span>: <span class="hljs-string">'768px'</span>,</span><br><span class="line">      <span class="hljs-attr">lg</span>: <span class="hljs-string">'1024px'</span>,</span><br><span class="line">      <span class="hljs-attr">xl</span>: <span class="hljs-string">'1280px'</span>,</span><br><span class="line">      <span class="hljs-string">'2xl'</span>: <span class="hljs-string">'1536px'</span></span><br><span class="line">    },</span><br><span class="line">    <span class="hljs-comment">// colors 初始值</span></span><br><span class="line">    <span class="hljs-attr">colors</span>: <span class="hljs-function">(<span class="hljs-params">{ colors }</span>) =&gt;</span> ({</span><br><span class="line">      <span class="hljs-attr">inherit</span>: colors.inherit,</span><br><span class="line">      <span class="hljs-attr">current</span>: colors.current,</span><br><span class="line">      <span class="hljs-attr">transparent</span>: colors.transparent,</span><br><span class="line">      <span class="hljs-attr">black</span>: colors.black,</span><br><span class="line">      <span class="hljs-attr">white</span>: colors.white,</span><br><span class="line">      <span class="hljs-attr">slate</span>: colors.slate,</span><br><span class="line">      <span class="hljs-attr">gray</span>: colors.gray</span><br><span class="line">      <span class="hljs-comment">// 略...</span></span><br><span class="line">    })</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>簡單來說 <code>colors</code> 就只是一個物件（function 的回傳值）而已，所以當你添增一些新的屬性到 <code>colors</code> 身上以後，tailwind 就可以依據這個物件來產生對應的 class 與 css 內容，其實就只是這樣而已。</p>
+<h2 id="根據父層的狀態來改變-style"><a href="#根據父層的狀態來改變-style" class="headerlink" title="根據父層的狀態來改變 style"></a>根據父層的狀態來改變 style</h2><p>舉例來說，如果我希望父層 <code>hover</code> 的時候改變子層的樣式，那可以用 <code>group</code> 這個方式來做：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"group"</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!-- 父層 hover 時套用 bg-rose-400 --&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"group-hover:bg-rose-400 w-1/2 mx-auto my-10 p-4 bg-blue-300 rounded duration-300"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text-white text-center text-2xl"</span>&gt;</span>Hello<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="first-child-odd-even-之類的類選取器"><a href="#first-child-odd-even-之類的類選取器" class="headerlink" title="first-child / odd /even 之類的類選取器"></a>first-child / odd /even 之類的類選取器</h2><p>要用的話可以用 <code>odd:*</code>、<code>even:*</code> 或 <code>first:*</code> 之類的 class 來做：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"w-1/2 mx-auto py-10"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mb-2 p-4 rounded odd:bg-sky-300 even:bg-rose-300"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text-white text-center text-2xl"</span>&gt;</span>Hello<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mb-2 p-4 rounded odd:bg-sky-300 even:bg-rose-300"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text-white text-center text-2xl"</span>&gt;</span>Hello<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>我當時還蠻疑惑的問題是，如果我有 10 列的話不就得寫 10 次？而且這跟我直接用人工把奇數偶數的樣式套用不同的 class 有什麼差？</p>
+<p>但後來仔細想想，當我們真的在顯示資料時不太可能這樣 hard code，以 React 來說的話，我們可能會這樣寫：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> arr = [<span class="hljs-string">'Hello'</span>, <span class="hljs-string">'Hello'</span>, <span class="hljs-string">'Hello'</span>, <span class="hljs-string">'Hello'</span>, <span class="hljs-string">'Hello'</span>, <span class="hljs-string">'Hello'</span>]</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> List = <span class="hljs-function">(<span class="hljs-params">{ text }</span>) =&gt;</span> (</span><br><span class="line">  <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">'mb-2 p-4 rounded odd:bg-sky-300 even:bg-rose-300'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">'text-white text-center text-2xl'</span>&gt;</span>{text}<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Com1</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">'w-1/2 mx-auto py-10'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {arr.map((item) =&gt; (</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">List</span> <span class="hljs-attr">text</span>=<span class="hljs-string">{item}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      ))}</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>總之這是拿來讓你搭配渲染用的，跟原本 CSS 寫在父層的概念有點不同，要習慣一下。</p>
+<h2 id="動態-class"><a href="#動態-class" class="headerlink" title="動態 class"></a>動態 class</h2><p>簡單來說，如果你要動態產生 class 的話：</p>
+<ul>
+<li><strong>請務必用全名，不要用字串拼接</strong></li>
+<li><strong>請務必用全名，不要用字串拼接</strong></li>
+<li><strong>請務必用全名，不要用字串拼接</strong></li>
+</ul>
+<p>詳細的原因可以參考<a target="_blank" rel="noopener" href="https://tailwindcss.com/docs/content-configuration#dynamic-class-names">官方文件</a>，但簡單來說就是透過字串拼接的 class 沒辦法被編譯出來，下面來舉個例子。</p>
+<p>當時我想做一個按鈕元件，並根據 props 的內容來決定背景顏色，所以就寫了這樣的東西：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> Button = <span class="hljs-function">(<span class="hljs-params">{ color, onClick }</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> palette = {</span><br><span class="line">    <span class="hljs-attr">purple</span>: <span class="hljs-string">'violet'</span>,</span><br><span class="line">    <span class="hljs-attr">green</span>: <span class="hljs-string">'green'</span>,</span><br><span class="line">    <span class="hljs-attr">red</span>: <span class="hljs-string">'red'</span></span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">className</span>=<span class="hljs-string">{</span>`<span class="hljs-attr">w-5</span> <span class="hljs-attr">h-5</span> <span class="hljs-attr">rounded-full</span> <span class="hljs-attr">border-0</span> <span class="hljs-attr">bg-</span>${<span class="hljs-attr">palette</span>[<span class="hljs-attr">color</span>]}<span class="hljs-attr">-700</span>`}</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">onClick</span>=<span class="hljs-string">{onClick}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這裡的想法就是透過字串拼接 <code>bg-{props}-700</code> 來產出想要的 class，但是出來的結果並不如預期。</p>
+<p>儘管 class 會輸出正確的字串，例如 <code>props: red</code> -&gt; <code>bg-red-700</code>，可是這時後並不會顯示正確的背景顏色，這個就是用字串拼接時會產生的問題。</p>
+<p>如果想動態產生 class 的話，必須用<strong>全名</strong>來套用，像這樣：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> Button = <span class="hljs-function">(<span class="hljs-params">{ color, onClick }</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// 全名</span></span><br><span class="line">  <span class="hljs-keyword">const</span> palette = {</span><br><span class="line">    <span class="hljs-attr">purple</span>: <span class="hljs-string">'bg-violet-700'</span>,</span><br><span class="line">    <span class="hljs-attr">green</span>: <span class="hljs-string">'bg-green-700'</span>,</span><br><span class="line">    <span class="hljs-attr">red</span>: <span class="hljs-string">'bg-red-700'</span></span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">className</span>=<span class="hljs-string">{</span>`<span class="hljs-attr">w-5</span> <span class="hljs-attr">h-5</span> <span class="hljs-attr">rounded-full</span> <span class="hljs-attr">border-0</span> ${<span class="hljs-attr">palette</span>[<span class="hljs-attr">color</span>]}`}</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">onClick</span>=<span class="hljs-string">{onClick}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="多行文字換行"><a href="#多行文字換行" class="headerlink" title="多行文字換行"></a>多行文字換行</h2><p>雖然用我之前有寫一篇 <a href="https://jubeatt.github.io/2022/02/13/multiple-line-ellipsis/">CSS 多行文字顯示 … 的效果</a>，但要在 tailwind 上自己實作的話有點麻煩，所以建議改用下面的方式。</p>
+<p>詳細可以參考 <a target="_blank" rel="noopener" href="https://tailwindcss.com/blog/multi-line-truncation-with-tailwindcss-line-clamp">官方文件</a> 說明，這邊只列方法。</p>
+<p>安裝套件：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @tailwindcss/line-clamp</span><br></pre></td></tr></tbody></table></figure>
+
+<p>設定 config：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">module</span>.exports = {</span><br><span class="line">  <span class="hljs-comment">// ...</span></span><br><span class="line">  <span class="hljs-attr">plugins</span>: [</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">    <span class="hljs-built_in">require</span>(<span class="hljs-string">'@tailwindcss/line-clamp'</span>)</span><br><span class="line">  ]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>加上 class：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"line-clamp-3"</span>&gt;</span></span><br><span class="line">  Here's a block of text from a blog post that isn't conveniently three lines long like you designed</span><br><span class="line">  for originally. It's probably like 6 lines on mobile or even on desktop depending on how you have</span><br><span class="line">  things laid out. Truly a big pain in the derriere, and not the sort of thing you expected to be</span><br><span class="line">  wasting your time trying to deal with at 4:45pm on a Friday am I right? You've got tickets to</span><br><span class="line">  SmackDown and you heard there's gonna be a dark match with that local guy from two towns over that</span><br><span class="line">  your cousin went to high school with before the show starts, and you're gonna miss it if you're</span><br><span class="line">  not there early.</span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果你把 devtool 打開來看的話就會發現其實跟 <a href="https://jubeatt.github.io/2022/02/13/multiple-line-ellipsis/">CSS 多行文字顯示 … 的效果</a> 寫的內容一樣，只是包裝成 utility 而已。</p>
+<h2 id="回到熟悉的-class（-apply）"><a href="#回到熟悉的-class（-apply）" class="headerlink" title="回到熟悉的 class（@apply）"></a>回到熟悉的 class（@apply）</h2><p>在 tailwind 裡面如果想要幫每個元素套用同樣的樣式，你可能得這樣寫：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">button</span></span></span><br><span class="line"><span class="hljs-tag">  <span class="hljs-attr">class</span>=<span class="hljs-string">"py-2 px-4 bg-blue-500 text-white</span></span></span><br><span class="line"><span class="hljs-string"><span class="hljs-tag">  font-semibold rounded-lg shadow-md hover:bg-blue-700</span></span></span><br><span class="line"><span class="hljs-string"><span class="hljs-tag">  focus:outline-none focus:ring-2 focus:ring-blue-400</span></span></span><br><span class="line"><span class="hljs-string"><span class="hljs-tag">  focus:ring-opacity-75"</span></span></span><br><span class="line"><span class="hljs-tag">&gt;</span></span><br><span class="line">  click1</span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">button</span></span></span><br><span class="line"><span class="hljs-tag">  <span class="hljs-attr">class</span>=<span class="hljs-string">"py-2 px-4 bg-blue-500 text-white</span></span></span><br><span class="line"><span class="hljs-string"><span class="hljs-tag">  font-semibold rounded-lg shadow-md hover:bg-blue-700</span></span></span><br><span class="line"><span class="hljs-string"><span class="hljs-tag">  focus:outline-none focus:ring-2 focus:ring-blue-400</span></span></span><br><span class="line"><span class="hljs-string"><span class="hljs-tag">  focus:ring-opacity-75"</span></span></span><br><span class="line"><span class="hljs-tag">&gt;</span></span><br><span class="line">  click2</span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">... ...</span><br></pre></td></tr></tbody></table></figure>
+
+<p>只是套用的話這樣寫是沒差，重點是如果要改呢？我們來看看 <a target="_blank" rel="noopener" href="https://tailwindcss.com/docs/reusing-styles#multi-cursor-editing">官方文件</a> 怎麼做的：</p>
+<p><img src="solution.gif" alt="solution"></p>
+<p>官網還順便吐槽了一下：</p>
+<blockquote>
+<p>If you can quickly edit all of the duplicated class lists simultaneously, there’s no benefit to introducing any additional abstraction.</p>
+</blockquote>
+<p>總之如果你能接受的話就這樣子做就好，但如果真的不行就繼續看下去吧。</p>
+<p>tailwind 提供了一個叫做 <code>@apply</code> 的東西，可以讓你把一坨 utilty 包裝成一個 class，用法是長這樣：</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/* index.css */</span></span><br><span class="line"><span class="hljs-keyword">@tailwind</span> base;</span><br><span class="line"><span class="hljs-keyword">@tailwind</span> components;</span><br><span class="line"><span class="hljs-keyword">@tailwind</span> utilities;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">@layer</span> components {</span><br><span class="line">  <span class="hljs-selector-class">.label</span> {</span><br><span class="line">    <span class="hljs-keyword">@apply</span> text-slate-<span class="hljs-number">500</span> mb-<span class="hljs-number">2</span>;</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-selector-class">.label-dark</span> {</span><br><span class="line">    <span class="hljs-keyword">@apply</span> text-white mb-<span class="hljs-number">2</span>;</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-selector-class">.input-field</span> {</span><br><span class="line">    <span class="hljs-keyword">@apply</span> w-full border-<span class="hljs-number">0</span> text-slate-<span class="hljs-number">700</span> <span class="hljs-attribute">focus</span>:outline-slate-<span class="hljs-number">700</span> p-<span class="hljs-number">2</span> rounded;</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>順道一提，你甚至能直接在裡面加上原生的 CSS：</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">@layer</span> components {</span><br><span class="line">  <span class="hljs-selector-class">.label</span> {</span><br><span class="line">    <span class="hljs-keyword">@apply</span> text-slate-<span class="hljs-number">500</span> mb-<span class="hljs-number">2</span>;</span><br><span class="line">    <span class="hljs-attribute">background-color</span>: dodgerblue;</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>雖然不確定這是不是合法的寫法，不過我覺得還蠻方便的就是了 XD</p>
+<h2 id="一次性的屬性值"><a href="#一次性的屬性值" class="headerlink" title="一次性的屬性值"></a>一次性的屬性值</h2><p>雖然透過 <code>tailwind.config.js</code> 可以添加一些客製化的項目，但是有時會碰到那種只會出現在「特定一兩個地方」的樣式，這時候你通常就不會想把它加進 <code>theme</code> 的設定中，畢竟用到的場合真的不多？</p>
+<p>這時候就可以考慮用 <code>xxx-[value]</code> 的方式來填入「一次性」的值，像這樣：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text- font-body bg-[#bada55] text-[24px] p-[20px]"</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>只要這樣子就完成囉，是不是省事很多啊！</p>
+<p>除此之外，如果想要帶入「變數」也是 OK 的，不過使用時要加上「屬性」來表明這個變數是用來代表什麼的？例如 <code>color</code>（顏色） 或 <code>length</code>（尺寸）之類的，詳細可以參考 <a target="_blank" rel="noopener" href="https://tailwindcss.com/docs/adding-custom-styles#resolving-ambiguities">官方文件</a> 的說明，這邊做個簡單的示範：</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">@tailwind</span> base;</span><br><span class="line"><span class="hljs-keyword">@tailwind</span> components;</span><br><span class="line"><span class="hljs-keyword">@tailwind</span> utilities;</span><br><span class="line"></span><br><span class="line"><span class="hljs-selector-pseudo">:root</span> {</span><br><span class="line">  --primary: <span class="hljs-number">#f00099</span>;</span><br><span class="line">  --large: <span class="hljs-number">24px</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!-- 把變數放在 [] 裡面並指定為 color 這個屬性 --&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"bg-[color:var(--primary)] text-white p-2 rounded"</span>&gt;</span>Click Me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!-- 把變數放在 [] 裡面並指定為 length 這個屬性 --&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"font-bold text-[length:var(--large)]"</span>&gt;</span></span><br><span class="line">    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi alias, hic voluptatem quo unde</span><br><span class="line">    reiciendis magni accusamus quos illum corrupti veniam voluptatum voluptas voluptate harum</span><br><span class="line">    necessitatibus dolorem cumque nulla saepe.</span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>主要就是要記得加上「屬性」就好，不然其實就跟一般的用法差不多。</p>
+<h2 id="BreakPoint（斷點）"><a href="#BreakPoint（斷點）" class="headerlink" title="BreakPoint（斷點）"></a>BreakPoint（斷點）</h2><p>在寫 CSS 時要做 RWD 的話都會用 <code>@media</code> 來對不同的斷點設定不同樣式，這個在 Tailwind 中也有提供對應的 utility：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/** <span class="hljs-doctag">@type <span class="hljs-type">{import('tailwindcss').Config}</span> </span>*/</span></span><br><span class="line"><span class="hljs-built_in">module</span>.exports = {</span><br><span class="line">  <span class="hljs-attr">content</span>: [],</span><br><span class="line">  <span class="hljs-attr">presets</span>: [],</span><br><span class="line">  <span class="hljs-attr">darkMode</span>: <span class="hljs-string">'media'</span>, <span class="hljs-comment">// or 'class'</span></span><br><span class="line">  <span class="hljs-attr">theme</span>: {</span><br><span class="line">    <span class="hljs-attr">screens</span>: {</span><br><span class="line">      <span class="hljs-attr">sm</span>: <span class="hljs-string">'640px'</span>,</span><br><span class="line">      <span class="hljs-attr">md</span>: <span class="hljs-string">'768px'</span>,</span><br><span class="line">      <span class="hljs-attr">lg</span>: <span class="hljs-string">'1024px'</span>,</span><br><span class="line">      <span class="hljs-attr">xl</span>: <span class="hljs-string">'1280px'</span>,</span><br><span class="line">      <span class="hljs-string">'2xl'</span>: <span class="hljs-string">'1536px'</span></span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>sm</code> 會對應到 <code>@media (min-width: 640px)</code>，<code>md</code> 會對應到 <code>@media (min-width: 768px)</code> 以此類推。</p>
+<p>要套用的話只要加上「前綴」就行了：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"bg-red-500 sm:bg-green-500 md:bg-sky-500 lg:bg-pink-500 xl:bg-teal-500 "</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>也是很方便的功能。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/07/04/firebase-basic/">Firebase 基礎</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/07/01/cra-source-map-problem/">CRA－解決 source map 載入問題的 Warning</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

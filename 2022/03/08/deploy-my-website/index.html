@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>一刀未剪的 AWS 部署紀錄 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="想把自己的部署過程紀錄下來。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一刀未剪的 AWS 部署紀錄">
+<meta property="og:url" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="想把自己的部署過程紀錄下來。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/error.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/question.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/machine.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/instance-type.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/instance-details.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/add-storage.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/add-tag.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/security-group.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/review-and-launch.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/key-pair.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/lanch-success.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/instance-console.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/conn.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/conn-02.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/conn-03.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/dowload-lamp-server.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/server-born.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/set-apache2.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/phpmyadmin-configuration.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/phpmyadmin-passowrd.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/phpmyadmin-passowrd-again.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/phpmyadmin-login-error.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/root-password.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/root-password-options.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/root-password-done.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/move.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/touch-file.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/vim.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/hello.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/domain-01.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/domain-02.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/domain-03.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/domain-04.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/domain-05.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/lanch-failed.jpg">
+<meta property="article:published_time" content="2022-03-08T07:09:32.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.353Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/03/08/deploy-my-website/error.jpg">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡述">1&nbsp;&nbsp;<b>簡述</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#第一步：開通-AWS-虛擬主機">2&nbsp;&nbsp;<b>第一步：開通 AWS 虛擬主機</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#註冊-AWS-帳號">2.1&nbsp;&nbsp;註冊 AWS 帳號</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#選虛擬機器">2.2&nbsp;&nbsp;選虛擬機器</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#選擇方案">2.3&nbsp;&nbsp;選擇方案</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#細節設定">2.4&nbsp;&nbsp;細節設定</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#添加-Storage">2.5&nbsp;&nbsp;添加 Storage</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#添加-tag">2.6&nbsp;&nbsp;添加 tag</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#設定安全群組">2.7&nbsp;&nbsp;設定安全群組</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#最後檢查">2.8&nbsp;&nbsp;最後檢查</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#設定金鑰（key-pair）">2.9&nbsp;&nbsp;設定金鑰（key pair）</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#建立成功">2.10&nbsp;&nbsp;建立成功</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#取得-IP-位址">2.11&nbsp;&nbsp;取得 IP 位址</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#第二步：連到虛擬主機和設定環境（LAMP）">3&nbsp;&nbsp;<b>第二步：連到虛擬主機和設定環境（LAMP）</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#用-SSH-來連線">3.1&nbsp;&nbsp;用 SSH 來連線</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#設定-LAMP">3.2&nbsp;&nbsp;設定 LAMP</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#設定-phpmyadmin">3.3&nbsp;&nbsp;設定 phpmyadmin</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#登入-phpmyadmin">3.4&nbsp;&nbsp;登入 phpmyadmin</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#測試檔案">3.5&nbsp;&nbsp;測試檔案</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#第三步：購買域名">4&nbsp;&nbsp;<b>第三步：購買域名</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#文末">5&nbsp;&nbsp;<b>文末</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#最後是一些錯誤紀錄">6&nbsp;&nbsp;<b>最後是一些錯誤紀錄</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            一刀未剪的 AWS 部署紀錄
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>3月 8 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Network/">Network</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>想把自己的部署過程紀錄下來。</p>
+<span id="more"></span>
+
+<h2 id="簡述"><a href="#簡述" class="headerlink" title="簡述"></a>簡述</h2><p>我參考的文章是這篇：<a target="_blank" rel="noopener" href="https://mtr04-note.coderbridge.io/2020/09/15/-%E7%B4%80%E9%8C%84-%08-%E9%83%A8%E5%B1%AC-aws-ec2-%E9%9B%B2%E7%AB%AF%E4%B8%BB%E6%A9%9F-/">[ 紀錄 ] 部屬 AWS EC2 雲端主機 + LAMP Server + phpMyAdmin</a>。這是我覺得寫的最清楚的一篇，如果看不懂我的可以看它的就好。</p>
+<p>至於這篇記錄可以簡單分成以下幾個重點：</p>
+<ol>
+<li>開啟 AWS 的虛擬主機服務</li>
+<li>連線到虛擬主機，並設定作業環境（LAMP）</li>
+<li>買網域，然後把網域和 IP 位址串起來</li>
+<li>過程中碰到的錯誤處理</li>
+</ol>
+<p>另外標題也說了，這篇主要是以紀錄性質為主，所以我不會著墨太多在一些細節上，不懂的部分你還是得靠自己上網查資料，總之加油囉！</p>
+<h2 id="第一步：開通-AWS-虛擬主機"><a href="#第一步：開通-AWS-虛擬主機" class="headerlink" title="第一步：開通 AWS 虛擬主機"></a>第一步：開通 AWS 虛擬主機</h2><h3 id="註冊-AWS-帳號"><a href="#註冊-AWS-帳號" class="headerlink" title="註冊 AWS 帳號"></a>註冊 AWS 帳號</h3><p>沒錯，我在一開始就卡關了，因為手機驗證一直收不到驗證碼。另外還因為一直重新發送驗證碼太多次，害自己的帳號被 ban 掉：</p>
+<p><img src="error.jpg" alt="error"></p>
+<p>後來聯繫客服，但等了 2 天都沒得到回應：</p>
+<p><img src="question.jpg" alt="question"></p>
+<p>簡單來說，這個問題出在「電信行」的關係，因為我的手機是台灣之星所以才收不到。</p>
+<p>總之最後決定重新辦一個新的帳號，並且跟家人借手機（台哥大），最後不到幾分鐘就解決這問題了。</p>
+<p>所以呢，如果你的手機電信是<strong>台灣之星</strong>：</p>
+<ul>
+<li>建議直接換一支手機來取得驗證碼</li>
+<li>建議直接換一支手機來取得驗證碼</li>
+<li>建議直接換一支手機來取得驗證碼</li>
+</ul>
+<p>不然真的會被搞很久。</p>
+<p>推薦閱讀：<a target="_blank" rel="noopener" href="https://noble-red-alpaca-686.medium.com/aws-amazon-web-services-%E8%A8%BB%E5%86%8A%E9%9B%BB%E8%A9%B1%E9%A9%97%E8%AD%89%E7%A2%BC%E9%81%B2%E9%81%B2%E6%9C%AA%E6%94%B6%E5%88%B0-8ac753ba4a95">AWS Startups AWS Identity aws「Amazon web services」註冊電話驗證碼遲遲未收到？！</a></p>
+<h3 id="選虛擬機器"><a href="#選虛擬機器" class="headerlink" title="選虛擬機器"></a>選虛擬機器</h3><p>這邊就按照教學選擇 「Ubuntu Server 20.04 LTS (HVM), SSD Volume Type」</p>
+<p><img src="machine.jpg" alt="machine"></p>
+<p>還蠻有趣的，真的好像在選主機一樣。</p>
+<h3 id="選擇方案"><a href="#選擇方案" class="headerlink" title="選擇方案"></a>選擇方案</h3><p>一樣按照教學選擇有「綠色標章」的免費方案：</p>
+<p><img src="instance-type.jpg" alt="instance-type"></p>
+<h3 id="細節設定"><a href="#細節設定" class="headerlink" title="細節設定"></a>細節設定</h3><p>直接下一步</p>
+<p><img src="instance-details.jpg" alt="instance-details"></p>
+<h3 id="添加-Storage"><a href="#添加-Storage" class="headerlink" title="添加 Storage"></a>添加 Storage</h3><p>直接下一步</p>
+<p><img src="add-storage.jpg" alt="add-storage"></p>
+<h3 id="添加-tag"><a href="#添加-tag" class="headerlink" title="添加 tag"></a>添加 tag</h3><p>直接下一步</p>
+<p><img src="add-tag.jpg" alt="add-tag"></p>
+<h3 id="設定安全群組"><a href="#設定安全群組" class="headerlink" title="設定安全群組"></a>設定安全群組</h3><p><img src="security-group.jpg" alt="security-group"></p>
+<p>附註：仔細看會發現我這邊選成兩個 HTTP 了，這樣會有問題，所以選的時候要記得再確認一下。</p>
+<blockquote>
+<p>if you want to set up a web server and allow Internet traffic to reach your instance, add rules that allow unrestricted access to the HTTP and HTTPS ports</p>
+</blockquote>
+<p>簡單來說這邊是要設定「你想怎麼連到這台機器」。預設只有 SSH，所以你必須自己加上 HTTP 和 HTTPS 這兩個，這樣之後才有辦法用瀏覽器來連。</p>
+<p>有趣的是這邊可以順便複習一下網路的知識，像圖片裡有出現 TCP 協議 和 port 這些專有名詞。雖然這邊的值是自動帶入而且不能改，但至少你能大概看懂這邊在設定什麼。</p>
+<h3 id="最後檢查"><a href="#最後檢查" class="headerlink" title="最後檢查"></a>最後檢查</h3><p>就跟你網購買東西結帳的概念一樣，最後都會讓你確認一下你剛剛的選擇和設定：</p>
+<p><img src="review-and-launch.jpg" alt="review-and-launch"></p>
+<h3 id="設定金鑰（key-pair）"><a href="#設定金鑰（key-pair）" class="headerlink" title="設定金鑰（key pair）"></a>設定金鑰（key pair）</h3><p>要連到這台機器的話必須透過 AWS 的公鑰（public key）和自己手上的私鑰（private key）。所以這邊要做設定。</p>
+<p><img src="key-pair.jpg" alt="key-pair"></p>
+<p>下面有提醒你，設定好之後記得<strong>把私鑰下載到電腦裡保存</strong>，不然之後就沒辦法下載了。另外這邊也看到以前學的東西「RSA」，一種非對稱式加密的方法。 </p>
+<p>總之呢，確保私鑰下載完後就可以進到下一步了。</p>
+<h3 id="建立成功"><a href="#建立成功" class="headerlink" title="建立成功"></a>建立成功</h3><p>看到這畫面就代表成功了：</p>
+<p><img src="lanch-success.jpg" alt="lanch-success"></p>
+<p>接著案右下角的「View Instance」。（這邊截圖截不到，但你滾軸往下滑就會看到了）</p>
+<h3 id="取得-IP-位址"><a href="#取得-IP-位址" class="headerlink" title="取得 IP 位址"></a>取得 IP 位址</h3><p>到這裡就已經完成主機的啟動囉！</p>
+<p>回主控台可以看到自己 server 的 Public IPv4 位址，記起來就對了。</p>
+<p><img src="instance-console.jpg" alt="instance-console"></p>
+<h2 id="第二步：連到虛擬主機和設定環境（LAMP）"><a href="#第二步：連到虛擬主機和設定環境（LAMP）" class="headerlink" title="第二步：連到虛擬主機和設定環境（LAMP）"></a>第二步：連到虛擬主機和設定環境（LAMP）</h2><h3 id="用-SSH-來連線"><a href="#用-SSH-來連線" class="headerlink" title="用 SSH 來連線"></a>用 SSH 來連線</h3><p><img src="conn.jpg" alt="conn"></p>
+<p>按下 conn，接著會跳出這畫面：</p>
+<p><img src="conn-02.jpg" alt="conn-02"></p>
+<p>這邊有提供不同的選項來連線，但這邊會用 SSH 的方式來做。所以接下來打開你的 CLI，然後按照圖片的指示一步一步來。</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 400 <span class="hljs-string">"&lt;私鑰檔案路徑&gt;"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>chmod</code>（change mode）是 Linux 的指令，用來設定一個「檔案權限」，像是誰可以 read 啦、write 啦等等之類的。</p>
+<p>所以簡單來說這邊是在設定「只有 user 可以 READ」這個私鑰檔案。詳細可以參考<a target="_blank" rel="noopener" href="https://www.quora.com/What-does-chmod-400-mean">這個網站</a></p>
+<p>接著：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -i <span class="hljs-string">"&lt;私鑰檔案路徑&gt;"</span>  ubuntu@ec2-&lt; IPv4 位置&gt;.compute-1.amazonaws.com</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：<code>-i</code> 是 identity_file 的意思，所以後面才接私鑰檔案。</p>
+<p>看到 welcome… 就代表連線成功了：</p>
+<p><img src="conn-03.jpg" alt="conn-03"></p>
+<h3 id="設定-LAMP"><a href="#設定-LAMP" class="headerlink" title="設定 LAMP"></a>設定 LAMP</h3><p>接下來要來對這台主機設定伺服器環境：LAMP（Linux + Apache + MySQL + PHP）</p>
+<p>附註：注意現在的主機是 Ubuntu，也就是 Linux 的環境，所以指令會跟一般你在 windows 上用的不一樣。（這邊也能明顯感受到你真的在操作遠端的主機，輸入指令都會卡卡的）</p>
+<ol>
+<li>更新 Ubuntu 系統</li>
+</ol>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update &amp;&amp; sudo apt upgrade &amp;&amp; sudo apt dist-upgrade</span><br></pre></td></tr></tbody></table></figure>
+
+<p>跑到一半時會跳出需要多少空間的訊息，問你要不要繼續？輸入 y 就好。</p>
+<ol start="2">
+<li>安裝 tasksel</li>
+</ol>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install tasksel</span><br></pre></td></tr></tbody></table></figure>
+
+<p>一樣跟你說要多少空間，要不要繼續？輸入 y 就好。</p>
+<ol start="3">
+<li>用 tasksel 下載 lamp-server</li>
+</ol>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tasksel install lamp-server</span><br></pre></td></tr></tbody></table></figure>
+
+<p>下載中的畫面：</p>
+<p><img src="dowload-lamp-server.jpg" alt="dowload-lamp-server"></p>
+<p>下載完後就可以打開瀏覽器輸入 ip 位址來看看剛誕生的伺服器：</p>
+<p><img src="server-born.jpg" alt="server-born"></p>
+<h3 id="設定-phpmyadmin"><a href="#設定-phpmyadmin" class="headerlink" title="設定 phpmyadmin"></a>設定 phpmyadmin</h3><p>接著要來設定一些跟 PHP 和 MySQL 有關的東西。</p>
+<ol>
+<li>下載 phpmyadmin</li>
+</ol>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install phpmyadmin</span><br></pre></td></tr></tbody></table></figure>
+
+<p>一樣跟你說要多少空間，要不要繼續？輸入 y 就好。</p>
+<ol start="2">
+<li>連接 apache2</li>
+</ol>
+<p><img src="set-apache2.jpg" alt="set-apache2"></p>
+<ul>
+<li>先按空白鍵</li>
+<li>出現星號 *</li>
+<li>按下 Enter</li>
+</ul>
+<ol start="3">
+<li>設定 configuration</li>
+</ol>
+<p><img src="phpmyadmin-configuration.jpg" alt="phpmyadmin-configuration"></p>
+<p>這邊跟你說 phpmyadmin 必須先安裝 database 跟設定 configuration，如果你沒有要手動設定的話，直接按下 yes 就好。</p>
+<ol start="4">
+<li>設定密碼</li>
+</ol>
+<p><img src="phpmyadmin-passowrd.jpg" alt="phpmyadmin-passowrd"></p>
+<p>填完之後用 tab 聚焦到 <code>&lt;OK&gt;</code> 再按下 Enter，如果沒填的話會隨機產生（這真是我看過最厲害的恐嚇方式），所以最好乖乖填。</p>
+<ol start="5">
+<li>確認密碼</li>
+</ol>
+<p>再確認一次囉。</p>
+<p><img src="phpmyadmin-passowrd-again.jpg" alt="phpmyadmin-passowrd-again"></p>
+<h3 id="登入-phpmyadmin"><a href="#登入-phpmyadmin" class="headerlink" title="登入 phpmyadmin"></a>登入 phpmyadmin</h3><p>接著就可以到瀏覽器網址輸入 <code>IPv4/phpmyadmin</code> 進到登入畫面。但你會發現明明輸入正確卻無法登入：</p>
+<p><img src="phpmyadmin-login-error.jpg" alt="phpmyadmin-login-error"></p>
+<p>簡單來說，剛剛設的密碼不是 root 這個使用者，而 root 預設的權限是沒辦法直接用密碼來登入的。</p>
+<p>所以這邊要先修改 phpmyadmin 的設定，設定成 root 可以用密碼登入。</p>
+<ol>
+<li>進入 mySQL</li>
+</ol>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mysql -u root mysql</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="2">
+<li>下 SQL 指令</li>
+</ol>
+<figure class="highlight sql hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE <span class="hljs-keyword">user</span> <span class="hljs-keyword">SET</span> plugin<span class="hljs-operator">=</span><span class="hljs-string">'mysql_native_password'</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">User</span><span class="hljs-operator">=</span><span class="hljs-string">'root'</span>; FLUSH PRIVILEGES;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>看到有影響 1 個欄位就代表成功了：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Query OK, 1 row affected (0.01 sec) <span class="hljs-comment"># 影響一個欄位</span></span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 0</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="3">
+<li>離開 mySQL</li>
+</ol>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">exit</span></span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="4">
+<li>設定 root 的密碼</li>
+</ol>
+<p>再提醒一次，剛剛設定的密碼不是給 root 用的，所以這邊要再重新設定一次。</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mysql_secure_installation</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="root-password.jpg" alt="root-password"></p>
+<p>是否設定密碼？(y)</p>
+<p><img src="root-password-options.jpg" alt="root-password-options"></p>
+<p>密碼強度設定：</p>
+<ul>
+<li>Low (0) = 長度 &gt;= 8 </li>
+<li>Medium (1) = 長度 &gt;= 8，要有大小寫和特殊字元</li>
+<li>Strong (2) = 長度 &gt;= 8，要有大小寫，特殊字元和 dictionary file（字典檔？反正應該就是一種文字檔吧）</li>
+</ul>
+<p>怕麻煩的話選 0 就好，除非你真的很注重安全性。</p>
+<p>輸入密碼：</p>
+<p><img src="root-password-done.jpg" alt="root-password-done"></p>
+<p>這邊輸入時發現<strong>沒有東西是正常的</strong>，不是你鍵盤壞掉。</p>
+<p>總之呢，相信你的感覺就對了，接下來會連續問一些問題，可以都輸入 y，最後看到 All done! 就 OK 了。</p>
+<p>做到這邊後，就可以回瀏覽器到 phpmyadmin 重新登入了。</p>
+<h3 id="測試檔案"><a href="#測試檔案" class="headerlink" title="測試檔案"></a>測試檔案</h3><p>環境設定好後，可以來試著放檔案上去看看。</p>
+<p>接下來就是考驗你對 CLI 的熟練度了，試著用 cd 和 ls 來找到 <code>var</code> 這個資料夾吧。</p>
+<p><img src="move.jpg" alt="move"></p>
+<p>接著進到裡面</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">cd</span> var/www/html</span><br></pre></td></tr></tbody></table></figure>
+
+<p>嘗試建立一個新檔案</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch index.php</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這時候會跟你說權限不足（Permission denied），所以要來設定一下。（跟 chmod 是差不多的概念）</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown ubuntu /var/www/html</span><br></pre></td></tr></tbody></table></figure>
+
+<p>設定完後應該就能建立檔案囉。</p>
+<p><img src="touch-file.jpg" alt="touch-file"></p>
+<p>接著用 vim 來寫一些東西：</p>
+<p><img src="vim.jpg" alt="vim"></p>
+<p>回到瀏覽器的網址輸入 <code>IPv4/index.php</code> 看看有沒有 work!</p>
+<p><img src="hello.jpg" alt="hello"></p>
+<p>大功告成！到這邊為止，你已經把虛擬主機的環境都設定好囉。</p>
+<h2 id="第三步：購買域名"><a href="#第三步：購買域名" class="headerlink" title="第三步：購買域名"></a>第三步：購買域名</h2><p>先到 <a target="_blank" rel="noopener" href="https://www.gandi.net/zh-Hant">gandi</a> 買一個自己喜歡的域名。（或去其他地方買也行）</p>
+<p><img src="domain-01.jpg" alt="domain-01"></p>
+<p><img src="domain-02.jpg" alt="domain-02"></p>
+<p>附註：後來結帳才發現 <code>.com</code> 是公司或集團才可以用的域名，哈哈！</p>
+<p><img src="domain-03.jpg" alt="domain-03"></p>
+<p>接著是一些基本的結帳流程，就不特別貼了，因為要一直把個資馬掉有點麻煩。</p>
+<p>最後結帳完的結果：</p>
+<p><img src="domain-04.jpg" alt="domain-04"></p>
+<p>接著要來把 Domain 和 IP 串起來，先回到首頁登入，會自動進入主控台。接著點選域名 &gt; peanu.tw（你買的域名） &gt; DNS 紀錄：</p>
+<p><img src="domain-05.jpg" alt="domain-05"></p>
+<p>把 A 的值改成 AWS 的 Ipv4 就可以了。</p>
+<p>最後你就可以用網域來連啦～</p>
+<h2 id="文末"><a href="#文末" class="headerlink" title="文末"></a>文末</h2><p>以上就是部署的整個過程，很開心自己把這個流程給跑完了。</p>
+<h2 id="最後是一些錯誤紀錄"><a href="#最後是一些錯誤紀錄" class="headerlink" title="最後是一些錯誤紀錄"></a>最後是一些錯誤紀錄</h2><ol>
+<li>選到同樣的協定</li>
+</ol>
+<p><img src="lanch-failed.jpg" alt="lanch-failed"></p>
+<blockquote>
+<p>The same permission must not appear multiple times</p>
+</blockquote>
+<p>簡單來說就是我眼殘，選到兩個 HTTP。應該要選擇 HTTP 和 HTTPS 才對。</p>
+<ol start="2">
+<li>ssh 連主機時發生錯誤</li>
+</ol>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">The authenticity of host <span class="hljs-string">'ec2-3-93-242-234.compute-1.amazonaws.com (Ipv4)'</span> can<span class="hljs-string">'t be established.</span></span><br><span class="line"><span class="hljs-string">ED25519 key fingerprint is SHA256:&lt;key-value&gt;.</span></span><br><span class="line"><span class="hljs-string">This key is not known by any other names</span></span><br><span class="line"><span class="hljs-string">Are you sure you want to continue connecting (yes/no/[fingerprint])?</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>參考 <a target="_blank" rel="noopener" href="https://caloskao.org/ssh-warning-remote-host-identification-has-changed/">這篇文章</a> 後得知，原來是透過 SSH 連到某個主機時，會先比對雙方的 key（防止中間人攻擊）。但是我們是第一次連線，電腦裡面沒有之前的 public key 紀錄，所以才會跳上面那個警告，確保你是否信任這個主機。</p>
+<p>總之呢，輸入 yes 就可以了。這個動作自動會把 public key 儲存到 <code>~/.ssh/known_hosts</code> 檔案裡，這樣下次在比對 key 的時候就能查到紀錄了。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/03/08/why-filezilla/">為什麼要用 FileZilla？</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/03/08/mentor-program-day84/">mentor-program-day84</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

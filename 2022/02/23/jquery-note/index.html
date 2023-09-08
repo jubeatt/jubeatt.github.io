@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>jQuery 隨筆記 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="隨筆記。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery 隨筆記">
+<meta property="og:url" content="https://jubeatt.github.io/2022/02/23/jquery-note/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="隨筆記。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/02/23/jquery-note/move.gif">
+<meta property="article:published_time" content="2022-02-23T09:35:40.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.530Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/02/23/jquery-note/move.gif">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#一些常用或容易忘的-API">1&nbsp;&nbsp;<b>一些常用或容易忘的 API</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#怎麼設定-button-為-disabled">2&nbsp;&nbsp;<b>怎麼設定 button 為 disabled</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#怎麼用-ajax-的-POST-送表單格式資料">3&nbsp;&nbsp;<b>怎麼用 $.ajax 的 POST 送表單格式資料</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#建立-DOM-元素，並插入">4&nbsp;&nbsp;<b>建立 DOM 元素，並插入</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#append-的另外一種用途">5&nbsp;&nbsp;<b>append 的另外一種用途</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            jQuery 隨筆記
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>2月 23 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/jQuery/">jQuery</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>隨筆記。</p>
+<span id="more"></span>
+
+<h2 id="一些常用或容易忘的-API"><a href="#一些常用或容易忘的-API" class="headerlink" title="一些常用或容易忘的 API"></a>一些常用或容易忘的 API</h2><ul>
+<li><code>$('selector1, selector2, selectorN')</code> 選取多個元素（就跟 CSS 的概念相同）</li>
+</ul>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"parent"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"p1"</span>&gt;</span>P1<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>P2<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"child"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>P3<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>P4<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">section</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// S.fn.init(2)&nbsp;[div.parent, p.p1]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log($(<span class="hljs-string">'.parent, .p1'</span>))</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>get()</code> 把 jQuery 物件變成 DOM 元素（陣列）：</li>
+</ul>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"parent"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// S.fn.init&nbsp;[div.parent] -&gt; Object</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log($(<span class="hljs-string">'.parent'</span>))</span><br><span class="line"><span class="hljs-comment">// [div.parent] -&gt; Array</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log($(<span class="hljs-string">'.parent'</span>).get())</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>find('selector')</code> 選到所有子孫元素（<strong>多層</strong>）</li>
+</ul>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"parent"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>P1<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>P2<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"child"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>P3<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>P4<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 白話來說 = 選到 .parent 底下所有的 p</span></span><br><span class="line"><span class="hljs-comment">// 接著把每個 p 都設為紅色</span></span><br><span class="line">$(<span class="hljs-string">'.parent'</span>).find(<span class="hljs-string">'p'</span>).css(<span class="hljs-string">'background-color'</span>, <span class="hljs-string">'red'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>children(['selector'])</code> 選到所有子元素（<strong>一層</strong>）</li>
+</ul>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"parent"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>P1<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>P2<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"child"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>P3<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>P4<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// &lt;p&gt; &lt;p&gt; &lt;div&gt;</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log($(<span class="hljs-string">'.parent'</span>).children())</span><br></pre></td></tr></tbody></table></figure>
+
+<p>裡面也可以再塞新的 selector：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> tagNames = $(<span class="hljs-string">'.parent'</span>)</span><br><span class="line">  .children(<span class="hljs-string">'p'</span>)</span><br><span class="line">  <span class="hljs-comment">// 從 jQuery 物件轉成 DDM 元素</span></span><br><span class="line">  .get()</span><br><span class="line">  .map(<span class="hljs-function">(<span class="hljs-params">elem</span>) =&gt;</span> elem.tagName)</span><br><span class="line"><span class="hljs-comment">// &nbsp;['P', 'P']</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(tagNames)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>JavaScript：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// &lt;p&gt; &lt;p&gt; &lt;div&gt;</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'.parent'</span>).children)</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>contents()</code> 選出所有子元素（包含文字節點）</li>
+</ul>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"parent"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>P1<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>P2<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"child"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>P3<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>P4<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>jQuery：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// S.fn.init(7)&nbsp;[text, p, text, p, text, div.child, text]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log($(<span class="hljs-string">'.parent'</span>).contents())</span><br></pre></td></tr></tbody></table></figure>
+
+<p>JavaScript：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// [text, p, text, p, text, div.child, text]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'.parent'</span>).childNodes)</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>attr('attrName', 'attrValue')</code> 設定屬性</li>
+</ul>
+<p>jQuery：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// &lt;div tooltip="請輸入內容"&gt;&lt;/div&gt;</span></span><br><span class="line">$(<span class="hljs-string">'div'</span>).attr(<span class="hljs-string">'tooltip'</span>, <span class="hljs-string">'請輸入內容'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>JavaScript：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// &lt;div tooltip="請輸入內容"&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'div'</span>).setAttribute(<span class="hljs-string">'tooltip'</span>, <span class="hljs-string">'請輸入內容'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>removeAttr('attrName')</code> 刪除屬性</li>
+</ul>
+<p>jQuery：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-string">'div'</span>).removeAttr(<span class="hljs-string">'tooltip'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>JavaScript：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'div'</span>).removeAttribute(<span class="hljs-string">'tooltip'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>$('parent').append()</code> 把東西放到父元素裡（最後面）</li>
+</ul>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-string">'.container'</span>).append(</span><br><span class="line">  $(<span class="hljs-string">'&lt;button&gt;'</span>, {</span><br><span class="line">    <span class="hljs-attr">id</span>: <span class="hljs-string">'myId'</span>,</span><br><span class="line">    <span class="hljs-attr">class</span>: <span class="hljs-string">'myClass'</span>,</span><br><span class="line">    <span class="hljs-attr">text</span>: <span class="hljs-string">'click Me'</span>,</span><br><span class="line">    <span class="hljs-attr">on</span>: {</span><br><span class="line">      <span class="hljs-attr">click</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'click'</span>)</span><br><span class="line">    }</span><br><span class="line">  })</span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>$('child').appendTo()</code> 把自己放到父元素裡（最後面）</li>
+</ul>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-string">'&lt;button&gt;'</span>, {</span><br><span class="line">  <span class="hljs-attr">id</span>: <span class="hljs-string">'myId'</span>,</span><br><span class="line">  <span class="hljs-attr">class</span>: <span class="hljs-string">'myClass'</span>,</span><br><span class="line">  <span class="hljs-attr">text</span>: <span class="hljs-string">'click Me'</span>,</span><br><span class="line">  <span class="hljs-attr">on</span>: {</span><br><span class="line">    <span class="hljs-attr">click</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'click'</span>)</span><br><span class="line">  }</span><br><span class="line">}).appendTo(<span class="hljs-string">'.container'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>$('child').prependTo()</code> 把自己放到父元素裡（最前面）</li>
+</ul>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-string">'&lt;button&gt;'</span>, {</span><br><span class="line">  <span class="hljs-attr">id</span>: <span class="hljs-string">'myId'</span>,</span><br><span class="line">  <span class="hljs-attr">class</span>: <span class="hljs-string">'myClass'</span>,</span><br><span class="line">  <span class="hljs-attr">text</span>: <span class="hljs-string">'click Me'</span>,</span><br><span class="line">  <span class="hljs-attr">on</span>: {</span><br><span class="line">    <span class="hljs-attr">click</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'click'</span>)</span><br><span class="line">  }</span><br><span class="line">}).prependTo(<span class="hljs-string">'.container'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>$('parent').prepend()</code> 把東西放到父元素裡（最前面）</li>
+</ul>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-string">'.container'</span>).prepend(</span><br><span class="line">  $(<span class="hljs-string">'&lt;button&gt;'</span>, {</span><br><span class="line">    <span class="hljs-attr">id</span>: <span class="hljs-string">'myId'</span>,</span><br><span class="line">    <span class="hljs-attr">class</span>: <span class="hljs-string">'myClass'</span>,</span><br><span class="line">    <span class="hljs-attr">text</span>: <span class="hljs-string">'click Me'</span>,</span><br><span class="line">    <span class="hljs-attr">on</span>: {</span><br><span class="line">      <span class="hljs-attr">click</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'click'</span>)</span><br><span class="line">    }</span><br><span class="line">  })</span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>after()</code> 放到旁邊（後面）</li>
+</ul>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"sibling"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-string">'.sibling'</span>).after($(<span class="hljs-string">'&lt;div&gt;after&lt;/div&gt;'</span>))</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>before()</code> 放到旁邊（前面）</li>
+</ul>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"sibling"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-string">'.sibling'</span>).before($(<span class="hljs-string">'&lt;div&gt;before&lt;/div&gt;'</span>))</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>siblings()</code> 選出所有的兄弟元素（但不包含自己）</li>
+</ul>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"brother"</span>&gt;</span>兄弟一<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>兄弟二<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>兄弟三<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>兄弟四<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">    兄弟五</span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>不是兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// [button, button, button, div]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log($(<span class="hljs-string">'.brother'</span>).siblings())</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>next()</code> 下一個兄弟元素</li>
+</ul>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"brother"</span>&gt;</span>兄弟一<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// [a]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log($(<span class="hljs-string">'.brother'</span>).next())</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>nextAll()</code> 後面所有的兄弟元素</li>
+</ul>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"brother"</span>&gt;</span>兄弟一<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">section</span>&gt;</span>兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">article</span>&gt;</span>兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">article</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// [a, section, article]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log($(<span class="hljs-string">'.brother'</span>).nextAll())</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>prev()</code> 前一個兄弟元素</li>
+</ul>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"brother"</span>&gt;</span>兄弟一<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// [div]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log($(<span class="hljs-string">'.brother'</span>).prev())</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>prevAll()</code> 前面所有的兄弟元素</li>
+</ul>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">section</span>&gt;</span>兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">article</span>&gt;</span>兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">article</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"brother"</span>&gt;</span>兄弟一<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// [article, section, a]</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log($(<span class="hljs-string">'.brother'</span>).prevAll())</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>hasClass(className)</code> 有沒有包含這個 class</li>
+</ul>
+<p>jQuery：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// true / false</span></span><br><span class="line">$(<span class="hljs-string">'el'</span>).hasClass(<span class="hljs-string">'classNmae'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>JavaScript：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">element.classList.contains(<span class="hljs-string">'className'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>closest(selector)</code> 找出第一個符合選取器的父元素</li>
+</ul>
+<p>jQuery：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 這個會回傳 jQuery 物件</span></span><br><span class="line">$(element).closest(<span class="hljs-string">'parent'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>JavaScript：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 這個回傳 DOM 節點</span></span><br><span class="line">element.closest(<span class="hljs-string">'parent'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>val()</code> 讀取或設定表單元素的 value</li>
+</ul>
+<p>jQuery：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 取得 input 的值</span></span><br><span class="line">$(<span class="hljs-string">'input'</span>).val();</span><br><span class="line"><span class="hljs-comment">// 設定 input 的值</span></span><br><span class="line">$(<span class="hljs-string">'input'</span>)val(<span class="hljs-string">''</span>);</span><br></pre></td></tr></tbody></table></figure>
+
+<p>JavaScript：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 取得 input 的值</span></span><br><span class="line"><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'input'</span>).value</span><br><span class="line"><span class="hljs-comment">// 設定 input 的值</span></span><br><span class="line"><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'input'</span>).value = <span class="hljs-string">''</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>remove()</code> 刪除元素（包含自己）</p>
+<p>和 JavaScrip 幾乎一樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-string">'element'</span>).remove()</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>on('event', 'selector', function)</code> 事件監聽器，重點是 delegate 比較方便：</li>
+</ul>
+<p>jQuery：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 直接用第二個 selector 過濾</span></span><br><span class="line">$(<span class="hljs-string">'element'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-string">'child'</span>, <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'click'</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>JavaScript：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'element'</span>).addEventListener(<span class="hljs-string">'click'</span>, <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// 用 class 判定</span></span><br><span class="line">  <span class="hljs-keyword">if</span> (e.classList.contains(<span class="hljs-string">'className'</span>)) {</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'click'</span>)</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>empty()</code> 清空所有子元素（內容）</li>
+</ul>
+<p>jQuery：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-string">'parent'</span>).empty()</span><br></pre></td></tr></tbody></table></figure>
+
+<p>JavaScript：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'parent'</span>).innerHTML = <span class="hljs-string">''</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>或參考：<a href="https://jubeatt.github.io/2022/01/28/dom-remove-all-child/">DOM 清除所有的子元素</a></p>
+<ul>
+<li><code>serialize()</code> 把表單欄位值轉成 url 字串，通常用在用 $.ajax 傳送資料：</li>
+</ul>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$form = $(<span class="hljs-string">'.form'</span>)</span><br><span class="line">$form.on(<span class="hljs-string">'submit'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> formData = $(<span class="hljs-string">'.form'</span>).serialize()</span><br><span class="line">  <span class="hljs-comment">// 這邊只是示意，輸出結果為空字串是正常的</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(formData)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="怎麼設定-button-為-disabled"><a href="#怎麼設定-button-為-disabled" class="headerlink" title="怎麼設定 button 為 disabled"></a>怎麼設定 button 為 disabled</h2><ol>
+<li>用 <code>attr</code></li>
+</ol>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-string">'.btn'</span>).attr(<span class="hljs-string">'disabled'</span>, <span class="hljs-string">'disabled'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="2">
+<li>用 <code>prop</code>（property 推薦）</li>
+</ol>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-string">'.btn'</span>).prop(<span class="hljs-string">'disabled'</span>, ture)</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="怎麼用-ajax-的-POST-送表單格式資料"><a href="#怎麼用-ajax-的-POST-送表單格式資料" class="headerlink" title="怎麼用 $.ajax 的 POST 送表單格式資料"></a>怎麼用 $.ajax 的 POST 送表單格式資料</h2><p>詳細可參考 <a href="https://jubeatt.github.io/2022/02/23/jquery-ajax/">用 jQuery 發 AJAX</a></p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 取得表單的內容</span></span><br><span class="line"><span class="hljs-keyword">const</span> formData = <span class="hljs-keyword">new</span> FormData($(<span class="hljs-string">'form'</span>))</span><br><span class="line">$.ajax({</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`https://api.com`</span>,</span><br><span class="line">  <span class="hljs-attr">type</span>: <span class="hljs-string">'POST'</span>,</span><br><span class="line">  <span class="hljs-attr">data</span>: formData,</span><br><span class="line">  <span class="hljs-attr">contentType</span>: <span class="hljs-literal">false</span>, <span class="hljs-comment">// required</span></span><br><span class="line">  <span class="hljs-attr">processData</span>: <span class="hljs-literal">false</span>, <span class="hljs-comment">// required</span></span><br><span class="line">  <span class="hljs-attr">success</span>: <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> callback(<span class="hljs-literal">null</span>, data),</span><br><span class="line">  <span class="hljs-attr">error</span>: <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> callback(err)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="建立-DOM-元素，並插入"><a href="#建立-DOM-元素，並插入" class="headerlink" title="建立 DOM 元素，並插入"></a>建立 DOM 元素，並插入</h2><p>jQuery 不用像 JavaScript 還要 <code>createElement</code>，而是直接 <code>$(&lt;div&gt;&lt;/div&gt;)</code> 來產生：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-string">`&lt;div&gt;</span></span><br><span class="line"><span class="hljs-string">    &lt;p&gt;yoyoyo&lt;/p&gt;</span></span><br><span class="line"><span class="hljs-string">  &lt;/div&gt;`</span>).appendTo(<span class="hljs-string">'.container'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>甚至還可以設定屬性、監聽器：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-string">'&lt;button&gt;'</span>, {</span><br><span class="line">  <span class="hljs-attr">id</span>: <span class="hljs-string">'myId'</span>,</span><br><span class="line">  <span class="hljs-attr">class</span>: <span class="hljs-string">'myClass'</span>,</span><br><span class="line">  <span class="hljs-attr">title</span>: <span class="hljs-string">'myTitle'</span>,</span><br><span class="line">  <span class="hljs-attr">tooltip</span>: <span class="hljs-string">'請輸入訊息'</span>,</span><br><span class="line">  <span class="hljs-attr">text</span>: <span class="hljs-string">'Click Me'</span>, <span class="hljs-comment">// 不可 HTML，會被當純字串</span></span><br><span class="line">  <span class="hljs-attr">on</span>: {</span><br><span class="line">    <span class="hljs-attr">click</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'click'</span>)</span><br><span class="line">  }</span><br><span class="line">}).appendTo(<span class="hljs-string">'.conainer'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="append-的另外一種用途"><a href="#append-的另外一種用途" class="headerlink" title="append 的另外一種用途"></a>append 的另外一種用途</h2><p>可以拿來「移動元素」，簡單來說就是先 select 畫面上的元素，再把它 append 到別的地方。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="hljs-css"></span></span><br><span class="line"><span class="hljs-css">  <span class="hljs-selector-tag">body</span> {</span></span><br><span class="line"><span class="hljs-css">    <span class="hljs-attribute">display</span>: flex;</span></span><br><span class="line"><span class="hljs-css">    <span class="hljs-attribute">justify-content</span>: center;</span></span><br><span class="line"><span class="hljs-css">    <span class="hljs-attribute">align-items</span>: center;</span></span><br><span class="line"><span class="hljs-css">    <span class="hljs-attribute">padding-top</span>: <span class="hljs-number">60px</span>;</span></span><br><span class="line"><span class="hljs-css">  }</span></span><br><span class="line"><span class="hljs-css">  <span class="hljs-selector-tag">div</span> {</span></span><br><span class="line"><span class="hljs-css">    <span class="hljs-attribute">padding</span>: <span class="hljs-number">20px</span>;</span></span><br><span class="line"><span class="hljs-css">    <span class="hljs-attribute">margin</span>: <span class="hljs-number">20px</span>;</span></span><br><span class="line"><span class="hljs-css">  }</span></span><br><span class="line"><span class="hljs-css">  <span class="hljs-selector-tag">div</span><span class="hljs-selector-class">.box-red</span> {</span></span><br><span class="line"><span class="hljs-css">    <span class="hljs-attribute">border</span>: <span class="hljs-number">2px</span> solid red;</span></span><br><span class="line"><span class="hljs-css">  }</span></span><br><span class="line"><span class="hljs-css">  <span class="hljs-selector-tag">div</span><span class="hljs-selector-class">.box-blue</span> {</span></span><br><span class="line"><span class="hljs-css">    <span class="hljs-attribute">border</span>: <span class="hljs-number">2px</span> solid slateblue;</span></span><br><span class="line"><span class="hljs-css">  }</span></span><br><span class="line"><span class="hljs-css"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box-red"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>item<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>item<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>item<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box-blue"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>Move it.<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="hljs-built_in">document</span>).ready(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">  $(<span class="hljs-string">'button'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">if</span> ($(<span class="hljs-string">'ul'</span>).parent().hasClass(<span class="hljs-string">'box-red'</span>)) {</span><br><span class="line">      $(<span class="hljs-string">'ul'</span>).appendTo($(<span class="hljs-string">'.box-blue'</span>))</span><br><span class="line">    } <span class="hljs-keyword">else</span> {</span><br><span class="line">      $(<span class="hljs-string">'ul'</span>).appendTo($(<span class="hljs-string">'.box-red'</span>))</span><br><span class="line">    }</span><br><span class="line">  })</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="move.gif" alt="move"></p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/02/23/loading-overlay-usage/">Loading-overlay 懶人包</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/02/23/mentor-program-day71/">mentor-program-day71</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

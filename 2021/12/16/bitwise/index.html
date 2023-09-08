@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>很有趣的位移運算子與位元運算 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="原來寫程式還可以這樣子操作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="很有趣的位移運算子與位元運算">
+<meta property="og:url" content="https://jubeatt.github.io/2021/12/16/bitwise/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="原來寫程式還可以這樣子操作。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2021/12/16/bitwise/bitwise-and.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/12/16/bitwise/bitwise-xor.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/12/16/bitwise/bitwise-ex.jpg">
+<meta property="article:published_time" content="2021-12-16T08:54:05.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.232Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2021/12/16/bitwise/bitwise-and.jpg">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#位元的概念">1&nbsp;&nbsp;<b>位元的概念</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#位移運算子">2&nbsp;&nbsp;<b>位移運算子</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#位元運算">3&nbsp;&nbsp;<b>位元運算</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#用位元運算來判斷偶數奇數">4&nbsp;&nbsp;<b>用位元運算來判斷偶數奇數</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#用位元運算來當作遮罩">5&nbsp;&nbsp;<b>用位元運算來當作遮罩</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#當位元運算碰到奇怪的資料型態">6&nbsp;&nbsp;<b>當位元運算碰到奇怪的資料型態</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#位元運算的執行順序">7&nbsp;&nbsp;<b>位元運算的執行順序</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            很有趣的位移運算子與位元運算
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>12月 16 2021</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>原來寫程式還可以這樣子操作。</p>
+<span id="more"></span>
+
+<h2 id="位元的概念"><a href="#位元的概念" class="headerlink" title="位元的概念"></a>位元的概念</h2><p>首先，電腦是用「位元」來當作單位，也就是二進位的 0 跟 1，所以這裡提的位元，就是指「二進位」數字的意思。</p>
+<h2 id="位移運算子"><a href="#位移運算子" class="headerlink" title="位移運算子"></a>位移運算子</h2><p>位移運算子是對「位元」來做位移，在效能上會比你直接用加減乘除那些來的好（畢竟電腦的最底層就是一堆 0101），所以這是一個很值得學的東西。</p>
+<p>如果忘記二進位怎麼轉換的話先幫你複習一下：</p>
+<p>假設有一個數字是 100</p>
+<p>用數學來寫的話會是：2^0 x 0 + 2^1 x 0 + 2^2 x 1 = 4</p>
+<p>但因為如果是 0 的話就等於 2^n x 0，所以你看的時候可以直接忽略，直接思考「有值的那一個位數」是多少次方就好，這樣比較快：</p>
+<p>0100 = 2^2 = 4<br>1000 = 2^3 = 8<br>10000 = 2^4 = 16</p>
+<p>位移運算的意思是就是「先把這個數字轉換成二進位」，接著把每一位往「左或右」位移，後面補 0：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">4</span> &lt;&lt; <span class="hljs-number">1</span> </span><br><span class="line"><span class="hljs-number">8</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>上面的過程可以想成是這樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">4</span> =&gt; <span class="hljs-number">0100</span>  轉成二進位</span><br><span class="line"><span class="hljs-number">0100</span> &lt;&lt; <span class="hljs-number">1</span>  每一位往左移一位</span><br><span class="line"><span class="hljs-number">1000</span>       接著轉回十進位</span><br><span class="line"><span class="hljs-number">8</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>因為在二進位裡，每進一位就代表 x2，所以 4 往左位移一位，就等於 4 x 2，得到 8。</p>
+<p>如果 4 往左移兩位，就等於 4 x 2 x 2，得到 16，以此類推。</p>
+<p>所以有一個很直覺又簡單的記法：</p>
+<p><code>2 &lt;&lt; 1</code> 看成是 2 x <code>2^1</code> = 4<br><code>2 &lt;&lt; 2</code> 看成是 2 x <code>2^2</code> = 8<br><code>2 &lt;&lt; 3</code> 看成是 2 x <code>2^3</code> = 16</p>
+<p>總而言之，位移幾次 2 就乘幾次，接著在乘上原本的數字，以此類推。</p>
+<p>如果是往右移的話就反過來，變成「除法」的意思，每往右移一位，就除以 2 一次，但要注意的是右移運算會省略掉「浮點數」：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">3</span>/<span class="hljs-number">2</span></span><br><span class="line"><span class="hljs-number">1.5</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-number">3</span> &gt;&gt; <span class="hljs-number">1</span></span><br><span class="line"><span class="hljs-number">1</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+<h2 id="位元運算"><a href="#位元運算" class="headerlink" title="位元運算"></a>位元運算</h2><p>位元運算子：</p>
+<ul>
+<li><code>&amp;</code>（AND）</li>
+<li><code>|</code>（OR）</li>
+<li><code>^</code>（XOR）</li>
+<li><code>~</code>（NOT）</li>
+</ul>
+<p>位元運算指的就是用「二進位來做運算」，參考這個圖：</p>
+<p><img src="bitwise-and.jpg" alt="bitwise-AND"></p>
+<p>意思是對 10 跟 15 做 <code>&amp;</code> 位元運算（AND），1 代表 true，0 代表 false。</p>
+<p>所以最後的結果是 <code>1010</code>，也就是 <code>10</code></p>
+<p>用 JavaScript 寫的結果：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">10</span> &amp; <span class="hljs-number">15</span></span><br><span class="line"><span class="hljs-number">10</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>|</code>（OR）也是一樣的道理：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">10</span> | <span class="hljs-number">15</span></span><br><span class="line"><span class="hljs-number">15</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>比較特別的是 XOR 跟 NOT。</p>
+<p><code>^</code>（XOR）是只有在 <code>01</code> 跟 <code>10</code> 的時候是 true，其他皆 false：</p>
+<p><img src="bitwise-xor.jpg" alt="bitwise-XOR"></p>
+<p>所以用 JavaScript 寫的結果是：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">10</span> ^ <span class="hljs-number">15</span></span><br><span class="line"><span class="hljs-number">5</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>~</code>（NOT）是把每個位元都做反向處理。</p>
+<p>不過要注意一下，以剛剛的例子 <code>15(1111)</code> 你可能以為做完會變成 <code>0(0000)</code>，但並不是這樣子：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~<span class="hljs-number">15</span> </span><br><span class="line">-<span class="hljs-number">16</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這是因為 NOT 是對「所有位元」都做反轉，所以不能只看 <code>1111</code> 這四個位元，因為可能還有其他位元（假設有 32 位元好了）也跟著被反轉，所以最後才會得到 <code>-16</code>。</p>
+<h2 id="用位元運算來判斷偶數奇數"><a href="#用位元運算來判斷偶數奇數" class="headerlink" title="用位元運算來判斷偶數奇數"></a>用位元運算來判斷偶數奇數</h2><p>先思考這張圖的意思：</p>
+<p><img src="bitwise-ex.jpg" alt="bitwise-Ex"></p>
+<p>意思是說我們只想知道最後一個數字是 <code>0</code> 還是 <code>1</code>。</p>
+<p>這樣子做有什麼用途？仔細想想看，在二進位的世界裡，只有「最後一個位元」能決定一個數字是奇數還是偶數，其他位元只會有可能是 <code>0</code> 或 <code>2</code> 的倍數，換句話說就是「其他位元只會產出偶數」。</p>
+<p>但是最後一個位元不一樣，他會有 <code>0</code> 或 <code>1</code> 這兩個可能。所以重點來了，當結果是 <code>0</code> 的時候，最後的結果一定會是 <strong>偶數</strong>，因為「偶數 + 偶數」永遠都只會是偶數；反過來，當結果是 <code>1</code> 的時候，最後的結果一定會是 <strong>奇數</strong>，因為「偶數 + 奇數」永遠都會是奇數。</p>
+<p>所以我可以直接驗證：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">10</span>&amp;<span class="hljs-number">1</span></span><br><span class="line"><span class="hljs-number">0</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-number">11</span>&amp;<span class="hljs-number">1</span></span><br><span class="line"><span class="hljs-number">1</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="用位元運算來當作遮罩"><a href="#用位元運算來當作遮罩" class="headerlink" title="用位元運算來當作遮罩"></a>用位元運算來當作遮罩</h2><p>我還不太懂這能怎麼運用，但就先記下來，看以後會不會想到。</p>
+<p>簡單來說，前面是用： <code>A &amp; 1</code> 來判斷最後一位數是不是 <code>1</code>。</p>
+<p>你也可以換個想法，假設我想看第四個位元是不是 <code>1</code>，就可以用 <code>A &amp; 8</code>（8=1000）來做判斷。</p>
+<p><code>0</code> 就代表第四位不是 <code>1</code>，<code>1</code> 就代表第四位是 <code>1</code>。 </p>
+<h2 id="當位元運算碰到奇怪的資料型態"><a href="#當位元運算碰到奇怪的資料型態" class="headerlink" title="當位元運算碰到奇怪的資料型態"></a>當位元運算碰到奇怪的資料型態</h2><p>我做題目時發生的經驗，想留個紀錄。</p>
+<p>我在用「變數」來做位元運算時，因為不確定這個變數值都跟我預期中的一樣，所以引發了一些非預期的結果，例如：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="hljs-literal">undefined</span></span><br><span class="line">n = <span class="hljs-literal">NaN</span></span><br><span class="line">n = <span class="hljs-literal">null</span></span><br><span class="line">n = <span class="hljs-string">'String'</span></span><br><span class="line">n = <span class="hljs-literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-number">1</span> &lt;&lt; n</span><br></pre></td></tr></tbody></table></figure>
+
+<p>不管 <code>n</code> 的值是哪個，最後的輸出都會是 <code>1</code>，所以在做位元運算時要特別注意「變數值」的是否正確問題，要不然直接帶「數字」來做會比較安全一點。</p>
+<p>另外如果 <code>n = true</code> 的情況比較特別一點：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="hljs-literal">true</span></span><br><span class="line"><span class="hljs-number">1</span> &lt;&lt; n </span><br></pre></td></tr></tbody></table></figure>
+
+<p>結果會是 <code>4</code>。</p>
+<p>這是因為 <code>true</code> 代表 <code>1</code>，所以想成是這樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="hljs-literal">true</span></span><br><span class="line"><span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">1</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>甚至要這樣玩也可以：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">1</span> &lt;&lt; <span class="hljs-literal">true</span> + <span class="hljs-literal">true</span> + <span class="hljs-literal">true</span> </span><br></pre></td></tr></tbody></table></figure>
+
+<p>最後就會輸出 <code>1 &lt;&lt; 3</code> 的結果。</p>
+<h2 id="位元運算的執行順序"><a href="#位元運算的執行順序" class="headerlink" title="位元運算的執行順序"></a>位元運算的執行順序</h2><p>就跟一般的加減乘除一樣，所以不用特別在用括號括起來：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">1</span> &gt;&gt; <span class="hljs-number">2</span> &gt; <span class="hljs-number">3</span>  <span class="hljs-comment">// true</span></span><br><span class="line"><span class="hljs-number">1</span> + <span class="hljs-number">1</span> &gt; <span class="hljs-number">3</span>   <span class="hljs-comment">// false</span></span><br><span class="line"><span class="hljs-number">1</span> ** <span class="hljs-number">2</span> &gt; <span class="hljs-number">2</span>  <span class="hljs-comment">//false</span></span><br></pre></td></tr></tbody></table></figure></body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/12/16/understand-variable-from-object/">從 Object 的等號來真正理解變數</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/12/16/first-shell-script/">我的第一個 Shell Script</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

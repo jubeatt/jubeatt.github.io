@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>在學響應式設計前，你應該先知道這些。 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="其實寫這篇文章的理由很單純，因為自己以前在學 CSS 的時候，撞過不少次牆壁。直到現在，我也不敢保證說自己已經完全掌握 CSS 這個讓人又愛又恨的東西。為什麼說 CSS 讓人又愛又恨？因為當完成一個版面時，那份成就感是讓人感到很舒服的，不過跑版的時候就是另外一回事了… 總而言之，最近因為準備作品的關係，得回來重新回溫一些 CSS 的知識。 特別是在響應式這一塊。我想各位應該都很清楚在這個時代，響應">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在學響應式設計前，你應該先知道這些。">
+<meta property="og:url" content="https://jubeatt.github.io/2021/07/19/layout-types/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="其實寫這篇文章的理由很單純，因為自己以前在學 CSS 的時候，撞過不少次牆壁。直到現在，我也不敢保證說自己已經完全掌握 CSS 這個讓人又愛又恨的東西。為什麼說 CSS 讓人又愛又恨？因為當完成一個版面時，那份成就感是讓人感到很舒服的，不過跑版的時候就是另外一回事了… 總而言之，最近因為準備作品的關係，得回來重新回溫一些 CSS 的知識。 特別是在響應式這一塊。我想各位應該都很清楚在這個時代，響應">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/19/layout-types/fixed.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/19/layout-types/liquid.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/19/layout-types/flexible.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/19/layout-types/fluid_grid_01.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/19/layout-types/fluid_grid_02.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/19/layout-types/single_page.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/19/layout-types/multi_page.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/19/layout-types/grid.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/19/layout-types/free.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/19/layout-types/RWD.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/19/layout-types/AWD.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/19/layout-types/RWD_vs_AWD.gif">
+<meta property="article:published_time" content="2021-07-19T05:13:20.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.533Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2021/07/19/layout-types/fixed.jpg">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#導覽">1&nbsp;&nbsp;<b>導覽</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#固定式版面">2&nbsp;&nbsp;<b>固定式版面</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#流動式版面">3&nbsp;&nbsp;<b>流動式版面</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#液態式版面">3.1&nbsp;&nbsp;液態式版面</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#彈性式版面">3.2&nbsp;&nbsp;彈性式版面</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#流動式格線版面">3.3&nbsp;&nbsp;流動式格線版面</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#分欄式版面">4&nbsp;&nbsp;<b>分欄式版面</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#單欄式版面">4.1&nbsp;&nbsp;單欄式版面</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#多欄式版面">4.2&nbsp;&nbsp;多欄式版面</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#格線版面">5&nbsp;&nbsp;<b>格線版面</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#格線式版面">5.1&nbsp;&nbsp;格線式版面</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#所以要怎麼做出網格呢？">5.1.1&nbsp;&nbsp;所以要怎麼做出網格呢？</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#給萌新的一些小提醒">5.1.2&nbsp;&nbsp;給萌新的一些小提醒</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#無格線式版面">5.2&nbsp;&nbsp;無格線式版面</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#複合式版面">6&nbsp;&nbsp;<b>複合式版面</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#什麼是響應式網頁（Response-Web-Design）？">6.1&nbsp;&nbsp;什麼是響應式網頁（Response Web Design）？</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#那什麼又是適應式網頁？（Adaptive-Web-Design）">6.2&nbsp;&nbsp;那什麼又是適應式網頁？（Adaptive Web Design）</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#實作響應式版面">6.3&nbsp;&nbsp;實作響應式版面</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#實作適應式版面">6.4&nbsp;&nbsp;實作適應式版面</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#文末">7&nbsp;&nbsp;<b>文末</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#參考資料">8&nbsp;&nbsp;<b>參考資料</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            在學響應式設計前，你應該先知道這些。
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>7月 19 2021</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/CSS/">CSS</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>其實寫這篇文章的理由很單純，因為自己以前在學 CSS 的時候，撞過不少次牆壁。<br>直到現在，我也不敢保證說自己已經完全掌握 CSS 這個讓人又愛又恨的東西。<br>為什麼說 CSS 讓人又愛又恨？因為當完成一個版面時，那份成就感是讓人感到很舒服的，不過跑版的時候就是另外一回事了…</p>
+<p>總而言之，最近因為準備作品的關係，得回來重新回溫一些 CSS 的知識。 特別是在響應式這一塊。<br>我想各位應該都很清楚在這個時代，響應式是個不可或缺的條件吧。<br>所以就讓我們從最基本的佈局（Layout）來一個個介紹吧。</p>
+<span id="more"></span>
+
+<h2 id="導覽"><a href="#導覽" class="headerlink" title="導覽"></a>導覽</h2><p>雖然不保證這裡介紹的版面能夠含括所有種類，但我想這些應該都能稱的上是比較廣泛跟常見的類型。<br>這次會介紹的版面有這些：</p>
+<ul>
+<li><a href="#%E5%9B%BA%E5%AE%9A%E5%BC%8F%E7%89%88%E9%9D%A2">固定式版面</a></li>
+<li><a href="#%E6%B5%81%E5%8B%95%E5%BC%8F%E7%89%88%E9%9D%A2">流動式版面</a><ul>
+<li><a href="#%E6%B6%B2%E6%85%8B%E5%BC%8F%E7%89%88%E9%9D%A2">液態式版面</a></li>
+<li><a href="#%E5%BD%88%E6%80%A7%E5%BC%8F%E7%89%88%E9%9D%A2">彈性式版面</a></li>
+<li><a href="#%E6%B5%81%E5%8B%95%E5%BC%8F%E7%89%88%E9%9D%A2">流動式格線版面</a></li>
+</ul>
+</li>
+<li><a href="#%E5%88%86%E6%AC%84%E5%BC%8F%E7%89%88%E9%9D%A2">分欄式版面</a><ul>
+<li><a href="#%E5%96%AE%E6%AC%84%E5%BC%8F%E7%89%88%E9%9D%A2">單欄式版面</a></li>
+<li><a href="#%E5%A4%9A%E6%AC%84%E5%BC%8F%E7%89%88%E9%9D%A2">多欄式版面</a></li>
+</ul>
+</li>
+<li><a href="#%E6%A0%BC%E7%B7%9A%E7%89%88%E9%9D%A2">格線版面</a><ul>
+<li><a href="#%E6%A0%BC%E7%B7%9A%E5%BC%8F%E7%89%88%E9%9D%A2">格線式版面</a></li>
+<li><a href="#%E7%84%A1%E6%A0%BC%E7%B7%9A%E5%BC%8F%E7%89%88%E9%9D%A2">無格線式版面</a></li>
+</ul>
+</li>
+<li><a href="#%E8%A4%87%E5%90%88%E5%BC%8F%E7%89%88%E9%9D%A2">複合式版面</a><ul>
+<li><a href="#%E9%9F%BF%E6%87%89%E5%BC%8F%E7%89%88%E9%9D%A2">響應式版面</a></li>
+<li><a href="#%E9%81%A9%E6%87%89%E5%BC%8F%E7%89%88%E9%9D%A2">適應式版面</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="固定式版面"><a href="#固定式版面" class="headerlink" title="固定式版面"></a>固定式版面</h2><p><img src="fixed.jpg" alt="fiexed-layout"></p>
+<p>顧名思義，整個網頁的寬度都會是固定的，並且以 <strong>「px」</strong> 來作為單位。<br>這是最好理解也是最簡單的方式，不過大部分只有在一開始切出版面時，才會暫時先這樣使用。</p>
+<p>Codepen：</p>
+<p class="codepen" data-height="288" data-theme-id="dark" data-default-tab="html,result" data-slug-hash="qBmjXym" data-editable="true" data-user="jubeatt" style="height: 288px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/qBmjXym">
+  固定式版面</a> by jim (<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt">@jubeatt</a>)
+  on <a target="_blank" rel="noopener" href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async="" src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+<center>（如果你很懶得開新視窗，麻煩 0.25x 給他點下去）</center>
+
+<h2 id="流動式版面"><a href="#流動式版面" class="headerlink" title="流動式版面"></a>流動式版面</h2><p>流動式版面最大的特點就是，一個區塊會有 <strong>「伸縮（流動）」</strong> 的效果，所以會改以 <strong>「%」（也有人用「em」）</strong> 來作為單位。</p>
+<p>而流動式版面又可以在分成：</p>
+<ul>
+<li>液態式版面（全程都使用%）</li>
+<li>彈性式版面（除了 % 以外，再加上 <code>min-width</code> / <code>max-width</code> 來控制最大與最小範圍）</li>
+<li>流動式格線版面（% 混合 px）</li>
+</ul>
+<h3 id="液態式版面"><a href="#液態式版面" class="headerlink" title="液態式版面"></a>液態式版面</h3><p><img src="liquid.jpg" alt="liquid-layout"></p>
+<p>整個版面就像水一樣非常流動，這樣的好處是能夠隨著視窗來做伸縮，不會有出現滾軸的情況發生。</p>
+<p>但有一個問題是，當 <strong>「視窗很大 / 很小」</strong> 時，畫面就會變得太緊繃或太寬敞，導致整個網頁看起來怪怪的。</p>
+<p>Codepen：</p>
+<p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="html,result" data-slug-hash="dyWRZLM" data-editable="true" data-user="jubeatt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/dyWRZLM">
+  液態式版面</a> by jim (<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt">@jubeatt</a>)
+  on <a target="_blank" rel="noopener" href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async="" src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+<center>（你可以到Codepaen裡去調整式視窗，來觀察"流動"的效果！）</center>
+
+<h3 id="彈性式版面"><a href="#彈性式版面" class="headerlink" title="彈性式版面"></a>彈性式版面</h3><p><img src="flexible.jpg" alt="flexible-layout"></p>
+<p>這個版面是為了解決液態式版面中「視窗很大 / 很小」的問題，這裡利用了兩個 CSS 屬性：</p>
+<ul>
+<li><code>min-width</code>（最小寬度）</li>
+<li><code>max-width</code>（最大寬度）</li>
+</ul>
+<p>簡單來說：</p>
+<p>當一個區塊的寬度 &lt; <code>min-width</code>時，寬度會固定在<code>min-width</code>設定的值，<br>當一個區塊的寬度 &gt; <code>max-width</code>時，寬度會固定在<code>max-width</code>設定的值。</p>
+<p>當這樣子設定後，就能確保版面在<strong>限制的範圍中伸縮</strong>，避免極端值的狀況。</p>
+<p>Codepen：</p>
+<p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="html,result" data-slug-hash="RwVgxPV" data-editable="true" data-user="jubeatt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/RwVgxPV">
+  彈性版面</a> by jim (<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt">@jubeatt</a>)
+  on <a target="_blank" rel="noopener" href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async="" src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+<center>（這裡建議搭配開發者工具中的box-modal來觀察width的值，會更清楚！）</center>
+
+<h3 id="流動式格線版面"><a href="#流動式格線版面" class="headerlink" title="流動式格線版面"></a>流動式格線版面</h3><p><img src="fluid_grid_01.jpg" alt="fluid &amp; grid layout_01"><br><img src="fluid_grid_02.jpg" alt="fluid &amp; grid layout_02"></p>
+<p>你可以把這種版面當作是一種「混合」的概念。<br>這種類型的版面會讓外層容器 <strong>「流動（%）」</strong>，內容區塊 <strong>「固定（px）」</strong>。<br>將這兩者混合，再透過 CSS 的排版設計，就能做出 <strong>「隨著寬度產生不同數量的欄位區塊」</strong> 這種效果！</p>
+<p>Codepen：</p>
+<p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="html,result" data-slug-hash="PomjRap" data-editable="true" data-user="jubeatt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/PomjRap">
+  流動式格線版面</a> by jim (<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt">@jubeatt</a>)
+  on <a target="_blank" rel="noopener" href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async="" src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+<center>（懶得開新分頁的話就按個 1x 0.5x 0.25x 吧）</center>
+
+<h2 id="分欄式版面"><a href="#分欄式版面" class="headerlink" title="分欄式版面"></a>分欄式版面</h2><p>了解上面的概念後，你就能利用它們做出一個簡單的版型囉！<br>不用想的太複雜，主要就只是的「單欄 / 多欄」的差別而已。<br>而大多數會使用單欄的情況是為了「手機版面」的需求（畢竟手機的寬度有限嘛！），<br>至於多欄大部分是給「電腦版 / 平板」的需求囉！</p>
+<p>不過這只是大部分，不代表一定是照著這個規則。<br>總而言之，還是要看一個網頁的風格取向與使用需求來決定該怎麼分割。</p>
+<h3 id="單欄式版面"><a href="#單欄式版面" class="headerlink" title="單欄式版面"></a>單欄式版面</h3><p><img src="single_page.jpg" alt="single_page"></p>
+<p>痾…其實就是一個你用手機去大部分的網站都能看到的單欄版面這樣。<br>絕對沒有私藏什麼撇步！都是前面講過的概念，有興趣的人也可以自己試試看。</p>
+<p>Codepen：</p>
+<p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="html,result" data-slug-hash="RwVgJbB" data-editable="true" data-user="jubeatt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/RwVgJbB">
+  單欄式版面</a> by jim (<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt">@jubeatt</a>)
+  on <a target="_blank" rel="noopener" href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async="" src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+<h3 id="多欄式版面"><a href="#多欄式版面" class="headerlink" title="多欄式版面"></a>多欄式版面</h3><p><img src="multi_page.jpg" alt="multi_page"></p>
+<p>一樣是一個基本的兩欄版面，使用了會暴露年齡的「float」來排版。（喂<br>只要你會兩欄的話，那三欄、四欄、<del>八十七欄</del>，應該都不會有什麼太大的問題，所以這裡就不再多做示範了。</p>
+<p>Codepen：</p>
+<p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="html,result" data-slug-hash="ExmXRRQ" data-editable="true" data-user="jubeatt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/ExmXRRQ">
+  兩欄式版面</a> by jim (<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt">@jubeatt</a>)
+  on <a target="_blank" rel="noopener" href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async="" src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+<h2 id="格線版面"><a href="#格線版面" class="headerlink" title="格線版面"></a>格線版面</h2><h3 id="格線式版面"><a href="#格線式版面" class="headerlink" title="格線式版面"></a>格線式版面</h3><p><img src="grid.jpg" alt="grid_layout"></p>
+<p>如果要用一句簡單來說明什麼是格線，我會說是 <strong>「排格子」</strong>。<br>因為這種版面其實就是用很多的格子一個個排好、放好，弄成你想要的畫面。</p>
+<p>而網格系統基本上會先設定好初始數值，像是：</p>
+<ul>
+<li>總共有幾個欄？（直排）</li>
+<li>一行有多寬？（橫排）</li>
+<li>一欄有多寬？（直排）</li>
+<li>欄與欄之間的間距要多少？</li>
+</ul>
+<p>如果以上面的圖片來看的話：</p>
+<ul>
+<li>總共有 12 欄</li>
+<li>一行的寬度為: 940px</li>
+<li>一欄的寬度 : 60px</li>
+<li>欄與欄之間的間距 : 20px</li>
+</ul>
+<p>所以假設我希望切出<strong>兩個區塊</strong>，那就會是：</p>
+<p><strong>「第一個區塊要佔 6 欄、第二個區塊要佔 6 欄」</strong></p>
+<p>所以兩個區塊會各自佔據 460px 的寬度<small>（六個欄寬: 60 x 6 + 五個間距: 20 x 5）</small></p>
+<p>如果還是不太清楚的話你可以對照著上面的圖來看，應該會比較好理解。</p>
+<h4 id="所以要怎麼做出網格呢？"><a href="#所以要怎麼做出網格呢？" class="headerlink" title="所以要怎麼做出網格呢？"></a>所以要怎麼做出網格呢？</h4><p>根據目前我所知道，你可以用以下的方式：</p>
+<ul>
+<li>使用 CSS 中的 <code>grid</code> 屬性</li>
+<li>使用現成的網格框架（例如：<a target="_blank" rel="noopener" href="https://960.gs/">960 grid system</a>）</li>
+</ul>
+<p>如果你對<code>grid</code>有興趣的話，可以在自行搜索一些相關資訊，<br>不過這邊為了方便起見，是使用現成的框架來做示範。</p>
+<p>Codepen：</p>
+<p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="html,result" data-slug-hash="NWjvVzK" data-editable="true" data-user="jubeatt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/NWjvVzK">
+  格線式版面</a> by jim (<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt">@jubeatt</a>)
+  on <a target="_blank" rel="noopener" href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async="" src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+<h4 id="給萌新的一些小提醒"><a href="#給萌新的一些小提醒" class="headerlink" title="給萌新的一些小提醒"></a>給萌新的一些小提醒</h4><p>示範中是使用 <a target="_blank" rel="noopener" href="https://960.gs/">960 grid system</a> 這個框架來操作，所以可能對於第一次接觸框架的人會看不懂我在寫什麼。<br>但別擔心，其實這一樣是用上面所說的規則在操作的，所以你只要先理解上面的意思，之後再慢慢去補這方面的相關知識即可。</p>
+<h3 id="無格線式版面"><a href="#無格線式版面" class="headerlink" title="無格線式版面"></a>無格線式版面</h3><p><img src="free.jpg" alt="free_layout"></p>
+<p>很明顯就是一個<del>秀技術</del>的版面！</p>
+<p>這種版型的概念是把整個頁面當作是一個 <strong>「畫布」</strong>，你想放什麼？放在哪裡？都任君挑選。<br>要實現這個版面，基本上會需要依賴大量的 <code>position</code> 屬性來達成。</p>
+<p>雖然看起來很酷炫，不過除非你有追求視覺效果的特殊需求，否則我個人不推薦使用這種版型。</p>
+<ul>
+<li>實用度比較低</li>
+<li>考慮到響應式與相容性的問題時，整個 CSS 也會變得相對複雜許多。</li>
+</ul>
+<p>換句話說，除非你有很高超的技術，不然這不是你該隨便亂碰的版型。（不要玩版型）</p>
+<p>Codepen：</p>
+<p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="html,result" data-slug-hash="NWjvQVE" data-editable="true" data-user="jubeatt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/NWjvQVE">
+  無格線式版面</a> by jim (<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt">@jubeatt</a>)
+  on <a target="_blank" rel="noopener" href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async="" src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+<p><em></em></p><center><em>（他好像永遠對著你笑，笑得你心裡發寒。）</em></center><p></p>
+<h2 id="複合式版面"><a href="#複合式版面" class="headerlink" title="複合式版面"></a>複合式版面</h2><p>主角總是到最後才登場。<br>沒有錯，這篇文章的重點就在於這個部分了。</p>
+<p>粗略一點來說，就是我們很常聽到的的響應式版面。<br>不過如果你上網查詢一些相關資料的話，會發現響應式大致上可以在分成以下兩種：</p>
+<ul>
+<li>響應式版面（Response Web Design，以下簡稱 RWD）</li>
+<li>適應式版面（Adaptive Web Design，以下簡稱 AWD）</li>
+</ul>
+<blockquote>
+<p><em>百花齊放，百家爭鳴。</em></p>
+</blockquote>
+<p>對於這兩種版面的實際差異，每個人有不同的看法，所以我這裡會用我自己的想法來解釋。</p>
+<h3 id="什麼是響應式網頁（Response-Web-Design）？"><a href="#什麼是響應式網頁（Response-Web-Design）？" class="headerlink" title="什麼是響應式網頁（Response Web Design）？"></a>什麼是響應式網頁（Response Web Design）？</h3><p>響應式網頁最初是由 <strong>“Ethan Marcotte”</strong> 在<a target="_blank" rel="noopener" href="https://alistapart.com/article/responsive-web-design/">A List Apart</a> 2010 年 5 月的一篇文章中提出的一種想法。<br>（這裡只會大略的講一些大意，有興趣的人可以點進去看更完整的內容。）</p>
+<p>作者首先在文章中點出了當時網頁設計佈局所面臨到的問題：</p>
+<blockquote>
+<p><em>Can we really continue to commit to supporting each new user agent with its own bespoke experience? At some point, this starts to feel like a zero sum game. But how can we—and our designs—adapt?</em></p>
+</blockquote>
+<blockquote>
+<p><em>我們真的要持續的為每一個新的使用者客製化一套專屬於他們的體驗嗎？從某些點來說，這開始讓人感覺像是場永遠通不了關的遊戲。但是我們又要如何讓網頁設計能夠做到 “適應” 這件事？</em></p>
+</blockquote>
+<p>隨著各式各樣的裝置誕生，我們不能永遠停留在過去的思維，為每一個裝置來設計專屬的網頁佈局。<br>而是要轉變成「能夠響應到每個裝置」的這種設計思維。</p>
+<p>為了實現這個理念，作者就和我們前面所講的一樣，讓網頁的區塊變成是「流動的」，這樣確實就能夠做出具有彈性的佈局。</p>
+<p>但儘管如此，要真正實現響應式這個想法還是不夠的。如果我們只是單純的讓每個區塊變成是流動的，還是會引發一些問題。<small>（譬如說：解析度特大或特小的裝置）</small></p>
+<p>為此，<code>media queries</code>的存在就很重要了。</p>
+<p><code>media queries</code>可以做到我們原本做不到的事，像是：</p>
+<ul>
+<li>在視窗寬度小於 xxx 時… <small>(<code>min-width</code>)</small></li>
+<li>在手機畫面顯示為 xxx 時… <small>(<code>orientation: landscape</code>)</small></li>
+<li>顯示區域的長寬比為 xxx 時 <small>(<code>aspect-ratio</code>)</small></li>
+<li>螢幕的長寬比為 xxx 時 <small>(<code>device-aspect-ratio</code>)</small></li>
+<li>畫面的像素密度為 xxx 時 <small>(<code>resolution</code>)</small></li>
+</ul>
+<p>所以只要能夠善用<code>media queries</code>，基本上就能實現響應式這個概念。</p>
+<p><strong>這也是為什麼每當提到響應式，就會跟<code>media queries</code>扯上關係的原因。</strong></p>
+<h3 id="那什麼又是適應式網頁？（Adaptive-Web-Design）"><a href="#那什麼又是適應式網頁？（Adaptive-Web-Design）" class="headerlink" title="那什麼又是適應式網頁？（Adaptive Web Design）"></a>那什麼又是適應式網頁？（Adaptive Web Design）</h3><p>適應式網頁是從 2011 年 <strong>“Aaron Gustafson”</strong> 在他的著作 <em>Adaptive Web Design: Crafting Rich Experiences With Progressive Enhancement</em> 提出的另外一種思維。</p>
+<p>所以就時間點來說， AWD 是在 RWD 出現一段時間後， 才被提出的一種設計思維。這也暗示了 RWD 所遭遇的一些問題。</p>
+<p>你可以想想看，如果 RWD 是以「在每個裝置都顯示相同的內容」為前提來設計的，<br>那現在假設有個網頁的內容非常多，而且有大筆的資料要載入時，使用手機的人可能會碰到什麼問題？<br>你第一個會直覺想到的可能是<strong>載入速度</strong>，其次為 <strong>使用者體驗(UX)</strong> ，而這也是最主要的兩個問題。</p>
+<p>為了改善這個問題，AWD 的想法就浮現出來了。<br>所以這裡簡單的介紹一下，AWD 到底是什麼？</p>
+<p>首先 AWD 的設計思維是，預先對每個裝置設定好 <strong>斷點(breakpoint)</strong> 。<br>譬如最主流的六個：320, 480, 760, 960, 1200 1600 <small>(pixels)</small><br>接著在為每一個斷點來設計專屬的 <strong>固定尺寸</strong><small>（例如：px）</small> 頁面。</p>
+<p>所以簡單來說，每一個裝置都會有一個專屬自己的佈局。每當載入這個網頁時，網頁伺服器就會去偵測裝置，並且回應一個最適合這個裝置的頁面給它。</p>
+<p><strong>要怎麼區分一個網站是 RWD 還是 AWD？</strong></p>
+<p>其實很簡單，因為不久前我們說過 AWD 的網頁佈局是採用 <strong>「固定尺寸」</strong>。<br>所以你只要試著去調整瀏覽器的視窗，看看畫面是否會有流動（伸縮）的反應就可以判斷。</p>
+<ul>
+<li>如果有伸縮的效果 → RWD</li>
+<li>如果沒有伸縮的效果 → AWD</li>
+</ul>
+<p>為了方便理解，這裡也提供了一些範例給各位：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.amazon.com/">Amazon</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.gamer.com.tw/">巴哈姆特</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.usatoday.com/">USA TODAY</a></li>
+</ul>
+<p>同樣的網站，你用手機跟電腦點進去，會得到不一樣的結果。<br>除了整體的排版明顯不同之外，內容上也不太一樣。<br>不知道你有沒有一種回到過去<strong>手機版、電腦版</strong>的既視感，不過這並不是，這是 AWD。<br>（如果是手機板，網址通常會有一個前墜字 <strong>m</strong>）</p>
+<p>這裡我也畫了圖來讓大家更好理解這個概念：</p>
+<p><img src="RWD.jpg" alt="RWD_layout"><br><img src="AWD.jpg" alt="AWD_layout"></p>
+<p>或者你也能參考這張圖：<br><img src="RWD_vs_AWD.gif" alt="RWD_vs_AWD"></p>
+<p>除了以上這些以外，不管是 RWD，還是 AWD，又或是 RWD 與 AWD 之間的差異。<br>其實都還有很多可以探討的細節，但如果要全部講完的話，這篇文章可能會非常非常的長～<br>所以目前就先點到這裡，希望你能對這兩個東西都能有一些概念就好了！<br>這裡也做一個簡單的整理。</p>
+<table>
+<thead>
+<tr>
+<th align="center">響應式(RWD)</th>
+<th align="center">適應式(AWD)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">由瀏覽器決定頁面（用戶端）</td>
+<td align="center">由伺服器決定回傳頁面（伺服器端）</td>
+</tr>
+<tr>
+<td align="center">流動區塊</td>
+<td align="center">固定區塊</td>
+</tr>
+<tr>
+<td align="center">隨寬度改變做調整</td>
+<td align="center">載入時偵測並回傳對應網頁</td>
+</tr>
+<tr>
+<td align="center">穩定性較差（一個掛 = 全掛）</td>
+<td align="center">穩定性較高（各種裝置的網頁間互不影響）</td>
+</tr>
+<tr>
+<td align="center">不具有特徵偵測功能</td>
+<td align="center">具有特徵偵測功能 （利於商業廣告）</td>
+</tr>
+<tr>
+<td align="center">所有裝置採用一種佈局</td>
+<td align="center">一個裝置一種佈局</td>
+</tr>
+<tr>
+<td align="center">接受相同網頁的資料</td>
+<td align="center">根據回傳頁面決定資料量</td>
+</tr>
+<tr>
+<td align="center">載入效能較差</td>
+<td align="center">載入效能較優</td>
+</tr>
+<tr>
+<td align="center">設計範圍較受侷限</td>
+<td align="center">可對裝置客製化</td>
+</tr>
+<tr>
+<td align="center">成本低、較簡易、快速</td>
+<td align="center">製作成本高、耗時、複雜</td>
+</tr>
+</tbody></table>
+<p>至於其於的部分，就留給各位去自行探討了。</p>
+<h3 id="實作響應式版面"><a href="#實作響應式版面" class="headerlink" title="實作響應式版面"></a>實作響應式版面</h3><p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="html,result" data-slug-hash="eYWeQGv" data-editable="true" data-user="jubeatt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/eYWeQGv">
+  響應式版面(flex)</a> by jim (<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt">@jubeatt</a>)
+  on <a target="_blank" rel="noopener" href="https://codepen.io">CodePen</a>.</span>  
+</p>
+<br>
+<script async="" src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+<p>這裡使用 <code>flex</code> 實作，我個人認為以這個範例來說， <code>flex</code> 會比較容易達成，也比較好理解。<br>當然，如果你想看<code>float</code>版本，可以參考<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/XWReXNG">這裡</a></p>
+<h3 id="實作適應式版面"><a href="#實作適應式版面" class="headerlink" title="實作適應式版面"></a>實作適應式版面</h3><p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="html,result" data-slug-hash="VwbrVWG" data-editable="true" data-user="jubeatt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/VwbrVWG">
+  適應式版面</a> by jim (<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt">@jubeatt</a>)
+  on <a target="_blank" rel="noopener" href="https://codepen.io">CodePen</a>.</span>
+</p>
+<br>
+<script async="" src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+<p><strong>注意：</strong></p>
+<p>這裡只是做一個演示，主要是呈現「固定版面」的效果。</p>
+<p>實際上 AWD 並不是這個樣子哦，據我所知，除了搭配<code>mediq queries</code>以外，真正的 AWD 還需要搭配一系列的 JavaScript 操作來達成。（若有說錯請在糾正我）</p>
+<p>所以這裡的範例僅供參考，請不要當成是真的 AWD 哦！</p>
+<h2 id="文末"><a href="#文末" class="headerlink" title="文末"></a>文末</h2><p>我想在這個滿大街都是響應式的時代，響應式設計是一個前端工程師不得不學習的一項技能。<br>儘管現在有各種框架，但再方便的框架終究還是會有它的限制與極限。<br>所以有些時候，我們還是得具備一些手刻的能力。</p>
+<p>響應式設計看似複雜，但它其實也是從最開始的固定版面，一步一步演化過來的產物。<br>我認為響應式的背後其實就是把這些各式各樣的版型，一個個堆疊起來的一種版型。</p>
+<p>身為一個學習 CSS 約兩年多的人，我相信試著去理解這些東西，應該會對你在設計版面能有一些幫助。<br>當然，這篇文章也許有很多該提的東西沒有提到，這是因為不希望弄得太複雜，所以才簡化了不少內容。<br>如果你發現文中有錯誤的地方，或是你有其他的疑問或建議，都歡迎你<a href="mailto:jimdevelopesite@gmail.com">寄信</a>給我。<br>你的回應，對我而言就是最大的支持。</p>
+<p>最後，非常謝謝看完這篇文章的各位！</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://www.uxpin.com/studio/blog/responsive-vs-adaptive-design-whats-best-choice-designers/">STUDIO_by_UXPin</a><br><a target="_blank" rel="noopener" href="https://www.interaction-design.org/literature/article/adaptive-vs-responsive-design">interaction-design</a><br><a target="_blank" rel="noopener" href="http://meebox.blogspot.com/2014/02/rwd-vs-awd-vs-fluid-web-layout.html">meebox_blog</a><br><a target="_blank" rel="noopener" href="http://iki0723.blogspot.com/2012/11/combining-responsive-and-adaptive.html">iki0723_blog</a><br><a target="_blank" rel="noopener" href="https://www.giantfocal.com/blog/the-beginners-guide-to-adaptive-web-design">The Beginner’s Guide to Adaptive Web Design</a><br><a target="_blank" rel="noopener" href="https://960.gs/">960 grid sysyem</a><br><a target="_blank" rel="noopener" href="https://www.tenlong.com.tw/products/9789863123538">HTML5 ‧ CSS3 最強圖解實戰講座</a><br><a target="_blank" rel="noopener" href="https://www.bookdepository.com/HTML-and-CSS-Jon-Duckett/9781118008188?redirected=true&amp;utm_medium=Google&amp;utm_campaign=Base1&amp;utm_source=TW&amp;utm_content=HTML-and-CSS&amp;selectCurrency=TWD&amp;w=AFDGAU9SYV2NS4A8VRYZ&amp;gclid=Cj0KCQjw9O6HBhCrARIsADx5qCQFDSw2mFnffneKcKnUi0lJQQKQ3OslYF7ezRe4ol1HRCm2UrtjGXYaAgsYEALw_wcB">HTML and CSS : Design and Build Websites</a></p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/07/26/grid-system/">一步一步認識Grid</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/07/18/english-note/">基礎英文文法</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

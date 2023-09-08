@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>平面距離計算 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="來自 LIOJ 上的題目，這一題最難的地方在於「讀取資料」的方式，所以想記錄下來。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="平面距離計算">
+<meta property="og:url" content="https://jubeatt.github.io/2021/12/28/calculate-distance/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="來自 LIOJ 上的題目，這一題最難的地方在於「讀取資料」的方式，所以想記錄下來。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-12-28T07:23:00.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.239Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#大方向">1&nbsp;&nbsp;<b>大方向</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#總共有幾組座標資料">1.1&nbsp;&nbsp;總共有幾組座標資料</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#怎麼取得想要的資料">1.2&nbsp;&nbsp;怎麼取得想要的資料</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#解題">2&nbsp;&nbsp;<b>解題</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Bonus-我原本的解法">3&nbsp;&nbsp;<b>Bonus 我原本的解法</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Bonus-更簡潔的寫法">4&nbsp;&nbsp;<b>Bonus 更簡潔的寫法</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            平面距離計算
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>12月 28 2021</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Example/">Example</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>來自 <a target="_blank" rel="noopener" href="https://oj.lidemy.com/problem/1032">LIOJ</a> 上的題目，這一題最難的地方在於「讀取資料」的方式，所以想記錄下來。</p>
+<span id="more"></span>
+
+<h2 id="大方向"><a href="#大方向" class="headerlink" title="大方向"></a>大方向</h2><ol>
+<li>總共有幾組座標資料（每組有 4 個值）</li>
+<li>怎麼取得想要的資料</li>
+</ol>
+<h3 id="總共有幾組座標資料"><a href="#總共有幾組座標資料" class="headerlink" title="總共有幾組座標資料"></a>總共有幾組座標資料</h3><p>可以從 <code>lines[0]</code> 得知迴圈要跑幾圈，所以最外層的結構會是：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-built_in">Number</span>(lines[<span class="hljs-number">0</span>]); i++) {</span><br><span class="line">  ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="怎麼取得想要的資料"><a href="#怎麼取得想要的資料" class="headerlink" title="怎麼取得想要的資料"></a>怎麼取得想要的資料</h3><p>接著就是最麻煩的地方了，要怎麼在每一圈裡面去取得對應的 4 個座標？</p>
+<p>關於這點你可以先做個假設，把每一圈你希望取得的資料寫出來：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">i=<span class="hljs-number">0</span> <span class="hljs-comment">// 第一組</span></span><br><span class="line">lines[<span class="hljs-number">1</span>]</span><br><span class="line">lines[<span class="hljs-number">2</span>]</span><br><span class="line">lines[<span class="hljs-number">3</span>]</span><br><span class="line">lines[<span class="hljs-number">4</span>]</span><br><span class="line"></span><br><span class="line">i=<span class="hljs-number">1</span> <span class="hljs-comment">// 第二組</span></span><br><span class="line">lines[<span class="hljs-number">5</span>]</span><br><span class="line">lines[<span class="hljs-number">6</span>]</span><br><span class="line">lines[<span class="hljs-number">7</span>]</span><br><span class="line">lines[<span class="hljs-number">8</span>]</span><br><span class="line"></span><br><span class="line">i=<span class="hljs-number">2</span> <span class="hljs-comment">// 第三組</span></span><br><span class="line">lines[<span class="hljs-number">9</span>]</span><br><span class="line">lines[<span class="hljs-number">10</span>]</span><br><span class="line">lines[<span class="hljs-number">11</span>]</span><br><span class="line">lines[<span class="hljs-number">12</span>]</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></tbody></table></figure>
+
+<p>可以先注意到，每一圈都會固定是 4 筆資料，所以只要專注在第一個 <code>lines</code> 的值就好，其他的可以用 <code>+1 +2 +3</code> 的方式來取得，所以：</p>
+<ul>
+<li> <code>i=0</code> 的時候，第一個 <code>lines</code> 值要是 <code>1</code></li>
+<li> <code>i=1</code> 的時候，第一個 <code>lines</code> 值要是 <code>5</code></li>
+<li> <code>i=2</code> 的時候，第一個 <code>lines</code> 值要是 <code>9</code></li>
+</ul>
+<p>接著這部分可以參考 <a href="https://jubeatt.github.io/2021/12/23/print-stars/#:~:text=f(i)%20%3D%20%E5%B0%8D%20i%20%E5%81%9A%E6%9F%90%E5%80%8B%E7%AE%97%E5%BC%8F%20%3D%20%E8%BC%B8%E5%87%BA%E5%80%BC">印出星星（金字塔）</a> 裡面提到的方法，用「數學函數」的方式來求出公式：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f(i) = f(<span class="hljs-number">0</span>) = <span class="hljs-number">1</span></span><br><span class="line">f(i) = f(<span class="hljs-number">1</span>) = <span class="hljs-number">5</span></span><br><span class="line">f(i) = f(<span class="hljs-number">2</span>) = <span class="hljs-number">9</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>從這裡可以發現規律是 <strong>「每一圈都會增加 4」</strong>，也就是說，每一圈都要 <code>x4</code>：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f(i) = i * <span class="hljs-number">4</span></span><br><span class="line">f(<span class="hljs-number">0</span>) = <span class="hljs-number">0</span></span><br><span class="line">f(<span class="hljs-number">1</span>) = <span class="hljs-number">4</span></span><br><span class="line">f(<span class="hljs-number">2</span>) = <span class="hljs-number">8</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>當寫到這裡後你應該也能發現，只要在 <code>+1</code> 就可以實現我們的目標：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f(i) = i * <span class="hljs-number">4</span> + <span class="hljs-number">1</span></span><br><span class="line">f(<span class="hljs-number">0</span>) = <span class="hljs-number">1</span></span><br><span class="line">f(<span class="hljs-number">1</span>) = <span class="hljs-number">5</span></span><br><span class="line">f(<span class="hljs-number">2</span>) = <span class="hljs-number">9</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<p>如果真的沒有頭緒，那妳可以用最笨的方法，就是一個一個試：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">f(i) = i * <span class="hljs-number">1</span></span><br><span class="line">f(<span class="hljs-number">0</span>) = <span class="hljs-number">0</span></span><br><span class="line">f(<span class="hljs-number">1</span>) = <span class="hljs-number">1</span></span><br><span class="line">f(<span class="hljs-number">2</span>) = <span class="hljs-number">2</span></span><br><span class="line"></span><br><span class="line">f(i) = i * <span class="hljs-number">2</span></span><br><span class="line">f(<span class="hljs-number">0</span>) = <span class="hljs-number">0</span></span><br><span class="line">f(<span class="hljs-number">1</span>) = <span class="hljs-number">2</span></span><br><span class="line">f(<span class="hljs-number">2</span>) = <span class="hljs-number">4</span></span><br><span class="line"></span><br><span class="line">f(i) = i * <span class="hljs-number">3</span></span><br><span class="line">f(<span class="hljs-number">0</span>) = <span class="hljs-number">0</span></span><br><span class="line">f(<span class="hljs-number">1</span>) = <span class="hljs-number">3</span></span><br><span class="line">f(<span class="hljs-number">2</span>) = <span class="hljs-number">6</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 在這邊的時候，你就會發現只要每一項在 + 1 就能符合規律</span></span><br><span class="line">f(i) = i * <span class="hljs-number">4</span> + <span class="hljs-number">1</span></span><br><span class="line">f(<span class="hljs-number">0</span>) = <span class="hljs-number">0</span> + <span class="hljs-number">1</span> =&gt; <span class="hljs-number">1</span></span><br><span class="line">f(<span class="hljs-number">1</span>) = <span class="hljs-number">4</span> + <span class="hljs-number">1</span> =&gt; <span class="hljs-number">5</span></span><br><span class="line">f(<span class="hljs-number">2</span>) = <span class="hljs-number">5</span> + <span class="hljs-number">1</span> =&gt; <span class="hljs-number">9</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 這邊雖然看起來可以把第三項 -1，但是第一個 0 跟第二個 5 的部分會不符合，所以沒有辦法</span></span><br><span class="line">f(i) = i * <span class="hljs-number">5</span></span><br><span class="line">f(<span class="hljs-number">0</span>) = <span class="hljs-number">0</span></span><br><span class="line">f(<span class="hljs-number">1</span>) = <span class="hljs-number">5</span></span><br><span class="line">f(<span class="hljs-number">2</span>) = <span class="hljs-number">10</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 之後就更不可能了，所以不會再往下做</span></span><br><span class="line">f(i) = i * <span class="hljs-number">6</span></span><br><span class="line">f(<span class="hljs-number">0</span>) = <span class="hljs-number">0</span></span><br><span class="line">f(<span class="hljs-number">1</span>) = <span class="hljs-number">6</span></span><br><span class="line">f(<span class="hljs-number">2</span>) = <span class="hljs-number">12</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>所以最後求出的公式就是 <code>i * 4 + 1</code>。</p>
+<h2 id="解題"><a href="#解題" class="headerlink" title="解題"></a>解題</h2><p>在求出規律後，要解出這題就不困難了，所以這裡直接附上原始碼：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">solve</span>(<span class="hljs-params">lines</span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 轉成數字</span></span><br><span class="line">  <span class="hljs-keyword">const</span> arr = lines.map(<span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> value * <span class="hljs-number">1</span>)</span><br><span class="line">  <span class="hljs-comment">// 總共有幾組</span></span><br><span class="line">  <span class="hljs-keyword">const</span> total = arr[<span class="hljs-number">0</span>]</span><br><span class="line">  <span class="hljs-comment">// from 0 to 1</span></span><br><span class="line">  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;total; i++) {</span><br><span class="line">    <span class="hljs-comment">// i=0，start=1</span></span><br><span class="line">    <span class="hljs-comment">// i=1，start=5</span></span><br><span class="line">    <span class="hljs-comment">// i=2，start=9</span></span><br><span class="line">    <span class="hljs-keyword">const</span> start = i*<span class="hljs-number">4</span> + <span class="hljs-number">1</span></span><br><span class="line">    <span class="hljs-keyword">const</span> x1 = arr[start] * <span class="hljs-number">1</span>   <span class="hljs-comment">// lines[1]</span></span><br><span class="line">    <span class="hljs-keyword">const</span> y1 = arr[start+<span class="hljs-number">1</span>] * <span class="hljs-number">1</span> <span class="hljs-comment">// lines[2]</span></span><br><span class="line">    <span class="hljs-keyword">const</span> x2 = arr[start+<span class="hljs-number">2</span>] * <span class="hljs-number">1</span> <span class="hljs-comment">// lines[3]</span></span><br><span class="line">    <span class="hljs-keyword">const</span> y2 = arr[start+<span class="hljs-number">3</span>] * <span class="hljs-number">1</span> <span class="hljs-comment">// lines[4]</span></span><br><span class="line">    <span class="hljs-built_in">console</span>.log(calculateDistance(x1, y1, x2, y2)) <span class="hljs-comment">// 1.41</span></span><br><span class="line">  } </span><br><span class="line">}</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">calculateDistance</span>(<span class="hljs-params">x1, y1, x2, y2</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> x = (x1-x2) ** <span class="hljs-number">2</span></span><br><span class="line">  <span class="hljs-keyword">const</span> y = (y1-y2) ** <span class="hljs-number">2</span></span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.sqrt(x + y).toFixed(<span class="hljs-number">2</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="Bonus-我原本的解法"><a href="#Bonus-我原本的解法" class="headerlink" title="Bonus 我原本的解法"></a>Bonus 我原本的解法</h2><p>我原本的想法比較單純，我希望：</p>
+<ol>
+<li><code>calculateDistance</code> 會接收一個陣列當作參數，並計算距離</li>
+<li>建立一個巢狀陣列，裡面儲存每一組的座標陣列，例如說 <code>[[1, 1, 2, 2], [3, 3, 4, 4]]</code></li>
+<li>遍歷巢狀陣列，把一組陣列都丟給 <code>calculateDistance</code> 計算出距離</li>
+</ol>
+<p>簡單來說大概就是這樣的架構：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> nestedArray = [[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>]]</span><br><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;nestedArray; i++) {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(calculateDistance(nestedArray[i]))</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>所以只要實作出一個可以把 <code>[1, 1, 2, 2, 3, 3, 4, 4]</code> 轉成巢狀陣列的 function 就可以了。</p>
+<p>這裡就不細說怎麼實作，直接參考原始碼中的註解裡應該就能理解：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createNestedArray</span>(<span class="hljs-params">arr, unit=<span class="hljs-number">4</span></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 拷貝原陣列</span></span><br><span class="line">  <span class="hljs-keyword">const</span> copyArr = [...arr]</span><br><span class="line">  <span class="hljs-comment">// 儲存最後的結果</span></span><br><span class="line">  <span class="hljs-keyword">const</span> result = []</span><br><span class="line">  <span class="hljs-comment">// 建立群組</span></span><br><span class="line">  <span class="hljs-keyword">while</span>(copyArr.length !== <span class="hljs-number">0</span>) {</span><br><span class="line">    <span class="hljs-comment">// 暫存陣列</span></span><br><span class="line">    <span class="hljs-keyword">const</span> tempArr = []</span><br><span class="line">    <span class="hljs-comment">// unit 是多少就會推多少個元素到 tempArr</span></span><br><span class="line">    <span class="hljs-comment">// ( 預設是 4 個 )</span></span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;unit; i++) {</span><br><span class="line">      tempArr.push(copyArr[i])</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-comment">// 推回群組陣列</span></span><br><span class="line">    result.push(tempArr)</span><br><span class="line">    <span class="hljs-comment">// 更新陣列內容</span></span><br><span class="line">    copyArr.splice(<span class="hljs-number">0</span>, unit)</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-keyword">return</span> result</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>最後只要把整個架構組合起來就完成了，這裡一樣附上原始碼：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">solve</span>(<span class="hljs-params">lines</span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 轉成數字</span></span><br><span class="line">  <span class="hljs-keyword">const</span> temp = lines.map(<span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> value * <span class="hljs-number">1</span>)</span><br><span class="line">  <span class="hljs-comment">// 移除第一個元素</span></span><br><span class="line">  temp.splice(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)</span><br><span class="line">  <span class="hljs-comment">// 建立群組陣列 =&gt; [[1, 1, 2, 2], [3, 3, 4, 4]]</span></span><br><span class="line">  <span class="hljs-keyword">const</span> group = createNestedArray(temp)</span><br><span class="line">  <span class="hljs-comment">// 計算每一組的距離</span></span><br><span class="line">  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;group.length; i++) {</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(calculateDistance(group[i]))</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createNestedArray</span>(<span class="hljs-params">arr, unit=<span class="hljs-number">4</span></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 拷貝原陣列</span></span><br><span class="line">  <span class="hljs-keyword">const</span> copyArr = [...arr]</span><br><span class="line">  <span class="hljs-comment">// 儲存最後的結果</span></span><br><span class="line">  <span class="hljs-keyword">const</span> result = []</span><br><span class="line">  <span class="hljs-comment">// 建立群組</span></span><br><span class="line">  <span class="hljs-keyword">while</span>(copyArr.length !== <span class="hljs-number">0</span>) {</span><br><span class="line">    <span class="hljs-comment">// 暫存陣列</span></span><br><span class="line">    <span class="hljs-keyword">const</span> tempArr = []</span><br><span class="line">    <span class="hljs-comment">// 儲存元素</span></span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;unit; i++) {</span><br><span class="line">      tempArr.push(copyArr[i])</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-comment">// 推回群組陣列</span></span><br><span class="line">    result.push(tempArr)</span><br><span class="line">    <span class="hljs-comment">// 更新陣列內容</span></span><br><span class="line">    copyArr.splice(<span class="hljs-number">0</span>, unit)</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-keyword">return</span> result</span><br><span class="line">}</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">calculateDistance</span>(<span class="hljs-params">arr</span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// x 軸</span></span><br><span class="line">  <span class="hljs-keyword">const</span> x = (arr[<span class="hljs-number">0</span>]-arr[<span class="hljs-number">2</span>]) ** <span class="hljs-number">2</span></span><br><span class="line">  <span class="hljs-comment">// y 軸</span></span><br><span class="line">  <span class="hljs-keyword">const</span> y = (arr[<span class="hljs-number">1</span>]-arr[<span class="hljs-number">3</span>]) ** <span class="hljs-number">2</span></span><br><span class="line">  <span class="hljs-comment">// 開根號，取小數第二位</span></span><br><span class="line">  <span class="hljs-keyword">const</span> result = <span class="hljs-built_in">Math</span>.sqrt(x+y).toFixed(<span class="hljs-number">2</span>)</span><br><span class="line">  <span class="hljs-comment">// 回傳結果</span></span><br><span class="line">  <span class="hljs-keyword">return</span> result</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="Bonus-更簡潔的寫法"><a href="#Bonus-更簡潔的寫法" class="headerlink" title="Bonus 更簡潔的寫法"></a>Bonus 更簡潔的寫法</h2><p>只要找出規律，並搭配陣列的內建函式以及解構賦值，可以寫得超簡潔：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">solve</span>(<span class="hljs-params">lines</span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 轉成數字</span></span><br><span class="line">  <span class="hljs-keyword">const</span> temp = lines.map(<span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> value * <span class="hljs-number">1</span>)</span><br><span class="line">  <span class="hljs-comment">// 全部有幾組</span></span><br><span class="line">  <span class="hljs-keyword">const</span> total = temp[<span class="hljs-number">0</span>]</span><br><span class="line">  <span class="hljs-comment">// 計算每一組的距離</span></span><br><span class="line">  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;total; i++) {</span><br><span class="line">    <span class="hljs-comment">// i=0 =&gt; start=1</span></span><br><span class="line">    <span class="hljs-comment">// i=1 =&gt; start=5</span></span><br><span class="line">    <span class="hljs-comment">// i=2 =&gt; start=9</span></span><br><span class="line">    <span class="hljs-comment">// ... </span></span><br><span class="line">    <span class="hljs-keyword">let</span> start = i*<span class="hljs-number">4</span>+<span class="hljs-number">1</span></span><br><span class="line">    <span class="hljs-comment">// i=0 =&gt; slice(1, 5) [1, 1, 2, 2]</span></span><br><span class="line">    <span class="hljs-comment">// i=1 =&gt; slice(5, 9) [3, 3, 4, 4]</span></span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">    <span class="hljs-comment">// 搭配解構賦值取出每一點</span></span><br><span class="line">    <span class="hljs-keyword">const</span> [x1, y1, x2, y2] = temp.slice(start, start+<span class="hljs-number">4</span>)</span><br><span class="line">    <span class="hljs-keyword">const</span> distance = calculateDistance(x1, y1, x2, y2)</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(distance)</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">calculateDistance</span>(<span class="hljs-params">x1, y1, x2, y2</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> x = <span class="hljs-built_in">Math</span>.pow(x1-x2, <span class="hljs-number">2</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> y = <span class="hljs-built_in">Math</span>.pow(y1-y2, <span class="hljs-number">2</span>)</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.sqrt(x+y).toFixed(<span class="hljs-number">2</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/12/28/caesar-cipher/">凱薩加密</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/12/28/mentor-program-day17/">mentor-program-day17</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

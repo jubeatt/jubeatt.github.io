@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Vue－Composition API（Ref &amp; Reactive） - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="很重要的東西。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue－Composition API（Ref &amp; Reactive）">
+<meta property="og:url" content="https://jubeatt.github.io/2022/08/12/vue-ref-and-reactive/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="很重要的東西。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-08-12T01:23:43.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.747Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#比較不一樣的-ref">1&nbsp;&nbsp;<b>比較不一樣的 ref</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#ref-更大的用途（Reactive）">1.1&nbsp;&nbsp;ref 更大的用途（Reactive）</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#另一種作法：reactive">2&nbsp;&nbsp;<b>另一種作法：reactive</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#reactive-的好夥伴：toRefs">2.1&nbsp;&nbsp;reactive 的好夥伴：toRefs</a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Vue－Composition API（Ref &amp; Reactive）
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>8月 12 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Vue/">Vue</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>很重要的東西。</p>
+<span id="more"></span>
+
+<h2 id="比較不一樣的-ref"><a href="#比較不一樣的-ref" class="headerlink" title="比較不一樣的 ref"></a>比較不一樣的 ref</h2><p>過去在 Options API 裡要存取 DOM 元素的話，我們通常會這樣寫：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"home"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"p"</span>&gt;</span>Hello Composition API<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"logRef"</span>&gt;</span>Click Me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {</span></span><br><span class="line"><span class="hljs-javascript">    <span class="hljs-attr">methods</span>: {</span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-function"><span class="hljs-title">logRef</span>(<span class="hljs-params"></span>)</span> {</span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-comment">// 印出 DOM 節點資訊</span></span></span><br><span class="line"><span class="hljs-javascript">        <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.$refs.p)</span></span><br><span class="line"><span class="hljs-javascript">      }</span></span><br><span class="line"><span class="hljs-javascript">    }</span></span><br><span class="line"><span class="hljs-javascript">  }</span></span><br><span class="line"><span class="hljs-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>之所以能夠這樣子做是因為我們有 <code>this</code>，這個 <code>this</code> 代表的是 Vue 這個實體，而 Vue 實體上會自帶 <code>$ref</code> 來儲存 DOM 元素的資訊。</p>
+<p>可是在 Composition API 中有一個很重要的區別，那就是：</p>
+<ul>
+<li><code>setup</code> 沒有 <code>this</code> 值</li>
+<li><code>setup</code> 沒有 <code>this</code> 值</li>
+<li><code>setup</code> 沒有 <code>this</code> 值</li>
+</ul>
+<p>如果我試著在 <code>setup</code> 中存取 <code>this</code> 值，那只會得到 <code>undefined</code>：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {</span><br><span class="line">  <span class="hljs-function"><span class="hljs-title">setup</span>(<span class="hljs-params"></span>)</span> {</span><br><span class="line">    <span class="hljs-comment">// undefined</span></span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>)</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>所以正確的作法會變成這樣：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"home"</span>&gt;</span></span><br><span class="line">    <span class="hljs-comment">&lt;!-- bind ref --&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"pTag"</span>&gt;</span>Hello Composition API<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"logRef"</span>&gt;</span>Click Me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-comment">// 把 ref 從 Vue 的實體中取出</span></span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">import</span> { ref } <span class="hljs-keyword">from</span> <span class="hljs-string">'vue'</span></span></span><br><span class="line"><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {</span></span><br><span class="line"><span class="hljs-javascript">    <span class="hljs-function"><span class="hljs-title">setup</span>(<span class="hljs-params"></span>)</span> {</span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-comment">// 初始值為 null</span></span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-keyword">const</span> pTag = ref(<span class="hljs-literal">null</span>)</span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-comment">// reference Object &amp; Node &lt;p&gt;</span></span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-keyword">const</span> logRef = <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">console</span>.log(pTag, pTag.value)</span></span><br><span class="line"><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-keyword">return</span> { pTag, logRef }</span></span><br><span class="line"><span class="hljs-javascript">    }</span></span><br><span class="line"><span class="hljs-javascript">  }</span></span><br><span class="line"><span class="hljs-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：<code>ref</code> 儲存的值是一個 Object，其中 <code>value</code> 屬性就是我們儲存的值</p>
+<p>這樣子我們就能在按下按鈕時拿到 <code>&lt;p&gt;</code> 的 DOM 節點。</p>
+<p>這裡你可能會想說 ref 的初始值為什麼要設成 <code>null</code>？難道沒辦法直接設為 <code>&lt;p&gt;</code> 嗎？</p>
+<p><strong>答案是沒有辦法。</strong></p>
+<p>我們先回憶一下 <code>setup</code> 的觸發時機。前面有說過 <code>setup</code> 是跑在最一開始的 hook，既然如此，在這個時機點有可能存取到 DOM 元素嗎？當然不可能，所以才需要透過這樣的方式來做：</p>
+<ol>
+<li>把 <code>pTag</code> return 到外面讓它跟 template 做繫結</li>
+<li>透過 <code>logRef</code> 這種 callback 的形式來印出 <code>pTag</code> 的值</li>
+</ol>
+<p>所以要在 <code>setup</code> 中去操作 DOM 元素也是不可能的，因為 <code>setup</code> 執行的當下並沒有任何 DOM 的存在。</p>
+<p>總之這個觀念要一定要銘記在心。</p>
+<h3 id="ref-更大的用途（Reactive）"><a href="#ref-更大的用途（Reactive）" class="headerlink" title="ref 更大的用途（Reactive）"></a>ref 更大的用途（Reactive）</h3><p><code>ref</code> 除了拿來存取 DOM 元素以外，更常被用來設置「Reactive」 的值。</p>
+<p>前面我們有說過在 <code>setup</code> 中建立的變數在預設下沒有辦法「隨著更新反應到畫面上」，但是如果改用 <code>ref</code> 就可以改變這件事情，像這樣：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"home"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Hello, my name is {{ name }}, and I'm {{ age }} years old<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"changeName"</span>&gt;</span>Click Me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"age++"</span>&gt;</span>Add 1 to age<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">import</span> { ref } <span class="hljs-keyword">from</span> <span class="hljs-string">'vue'</span></span></span><br><span class="line"><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {</span></span><br><span class="line"><span class="hljs-javascript">    <span class="hljs-function"><span class="hljs-title">setup</span>(<span class="hljs-params"></span>)</span> {</span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-keyword">const</span> name = ref(<span class="hljs-string">'PeaNu'</span>)</span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-keyword">const</span> age = ref(<span class="hljs-number">24</span>)</span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-keyword">const</span> changeName = <span class="hljs-function">() =&gt;</span> {</span></span><br><span class="line"><span class="hljs-javascript">        name.value = <span class="hljs-string">'PPB'</span></span></span><br><span class="line"><span class="hljs-javascript">      }</span></span><br><span class="line"><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-keyword">return</span> { name, age, changeName }</span></span><br><span class="line"><span class="hljs-javascript">    }</span></span><br><span class="line"><span class="hljs-javascript">  }</span></span><br><span class="line"><span class="hljs-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>ref(...)</code> 會建立一個物件，並且把我們儲存的值放在 <code>value</code> 屬性上，就跟 React 的 <code>useRef</code> 會儲存在 <code>current</code> 屬性上是一樣的概念。</p>
+<p>接著當我們透過 <code>changeName</code> 來更新值的時候，神奇的事情就發生了，畫面上的 <code>name</code> 會確實會被同步更新為 <code>PPB</code>，因為現在這個 <code>name</code> 是「Reactive」的。</p>
+<h2 id="另一種作法：reactive"><a href="#另一種作法：reactive" class="headerlink" title="另一種作法：reactive"></a>另一種作法：reactive</h2><p>要讓一個變數變成 Reactive 還有另一個方法，就是改用 <code>reactive</code> 來建立，像這樣：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"home"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Hello, my name is {{ user.name }}, and I'm {{ user.age }} years old<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"changeName"</span>&gt;</span>Click Me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">"user.age++"</span>&gt;</span>Add 1 to age<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">import</span> { reactive } <span class="hljs-keyword">from</span> <span class="hljs-string">'vue'</span></span></span><br><span class="line"><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {</span></span><br><span class="line"><span class="hljs-javascript">    <span class="hljs-function"><span class="hljs-title">setup</span>(<span class="hljs-params"></span>)</span> {</span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-comment">// 建立 reactive 物件</span></span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-keyword">const</span> user = reactive({ <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>, <span class="hljs-attr">age</span>: <span class="hljs-number">24</span> })</span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-keyword">const</span> changeName = <span class="hljs-function">() =&gt;</span> {</span></span><br><span class="line"><span class="hljs-javascript">        user.name = <span class="hljs-string">'PPB'</span></span></span><br><span class="line"><span class="hljs-javascript">      }</span></span><br><span class="line"><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-keyword">return</span> { user, changeName }</span></span><br><span class="line"><span class="hljs-javascript">    }</span></span><br><span class="line"><span class="hljs-javascript">  }</span></span><br><span class="line"><span class="hljs-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣子也可以達到一樣的效果，不過要注意 <code>reactive</code> 的值<strong>必須是一個「Object」</strong>，它沒辦法存「Primitive」的值。</p>
+<p>所以我才會改成用 <code>user</code> 來建立物件，而不是像 <code>ref</code> 一樣用「純值」來儲存。</p>
+<p>總之兩種方法都是 OK 的，不過你應該會比較常看到 <code>reactive</code> 的作法。</p>
+<h3 id="reactive-的好夥伴：toRefs"><a href="#reactive-的好夥伴：toRefs" class="headerlink" title="reactive 的好夥伴：toRefs"></a>reactive 的好夥伴：toRefs</h3><p>剛剛建立的 <code>reactive</code> 範例中有一個麻煩的點是「必須透過存取屬性的方式來取值」，像是</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"home"</span>&gt;</span></span><br><span class="line">    <span class="hljs-comment">&lt;!-- 得透過 user 來取得 name --&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Hello, my name is {{ user.name }}, and I'm {{ user.age }} years old<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果能夠像 <code>ref</code> 一樣直接填 <code>name</code> 的話就更好了對吧！所以 Vue 提供了 <code>toRefs</code>（注意有 s）這個方法，用途就是把 <code>reactive</code> 的每個屬性轉成 <code>ref</code>，像這樣：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">import</span> { reactive, toRefs } <span class="hljs-keyword">from</span> <span class="hljs-string">'vue'</span></span></span><br><span class="line"><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {</span></span><br><span class="line"><span class="hljs-javascript">    <span class="hljs-function"><span class="hljs-title">setup</span>(<span class="hljs-params"></span>)</span> {</span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-keyword">const</span> user = reactive({ <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>, <span class="hljs-attr">age</span>: <span class="hljs-number">24</span> })</span></span><br><span class="line"><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-comment">// toRefs 會回傳 { ref1: ..., ref2: ... }，所以這邊可以解構</span></span></span><br><span class="line"><span class="hljs-javascript">      <span class="hljs-keyword">return</span> { ...toRefs(user) }</span></span><br><span class="line"><span class="hljs-javascript">    }</span></span><br><span class="line"><span class="hljs-javascript">  }</span></span><br><span class="line"><span class="hljs-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>我私心覺得這樣是最方便的作法，因為：</p>
+<ol>
+<li>在 template 中不用再透過 <code>obj.property</code> 來存取</li>
+<li>在 script 中不用再透過 <code>ref.value</code> 來存取資料</li>
+</ol>
+<p>總結來說就是一舉兩得，真的是很棒的功能。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/08/13/javascript-immutable-js/">JavaScript－Immutable.JS</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/08/10/vue-composition-api-basic/">Vue－Composition API 前言</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Sequelize-CLI 基本使用 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="寫起來才不會忘。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sequelize-CLI 基本使用">
+<meta property="og:url" content="https://jubeatt.github.io/2022/03/25/sequelize-cli-basic/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="寫起來才不會忘。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-03-25T15:16:09.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.642Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#懶人包">1&nbsp;&nbsp;<b>懶人包</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#初始化">2&nbsp;&nbsp;<b>初始化</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#建立-Model">3&nbsp;&nbsp;<b>建立 Model</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#執行-Migration">4&nbsp;&nbsp;<b>執行 Migration</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#最後">5&nbsp;&nbsp;<b>最後</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#附註：想要改-Schema-的話要怎麼改">6&nbsp;&nbsp;<b>附註：想要改 Schema 的話要怎麼改</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Sequelize-CLI 基本使用
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>3月 25 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/ORM/">ORM</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>寫起來才不會忘。</p>
+<span id="more"></span>
+
+
+<h2 id="懶人包"><a href="#懶人包" class="headerlink" title="懶人包"></a>懶人包</h2><p>第一步當然是先安裝起來：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev sequelize-cli</span><br></pre></td></tr></tbody></table></figure>
+
+<p>接下來的步驟：</p>
+<ol>
+<li>初始化 <code>npx sequelize-cli init</code></li>
+<li>產生 model <code>model:generate</code></li>
+<li>執行 migration <code>db:migate</code></li>
+</ol>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>使用 <code>npx sequelize-cli init</code> 來初始化 ORM，不過其實也能 <code> node_modules/.bin/sequelize init</code>，速度上可能會快一點。</p>
+<p>總之這一步會產生幾個資料夾：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">├───config</span><br><span class="line">│       config.json 連到資料庫的設定檔</span><br><span class="line">│</span><br><span class="line">├───migrations 管理資料庫的狀態（新建 or 刪除） </span><br><span class="line">├───models</span><br><span class="line">│       index.js 用來自動產生 model</span><br><span class="line">│</span><br><span class="line">└───seeders 用來放種子檔案</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊最重要的是先去 config.json 把資料庫連線給設定好，接著就能進到下一步了。</p>
+<p>至於 migrations 的部分做個解釋，可以把它想成是「用來改變資料庫狀態」的東西，裡面會有兩個 function：<code>up</code> 和 <code>down</code>。</p>
+<p><code>up</code> 的作用就是「當要進入下一個狀態時，<code>create</code> 一個新的 table」，而 <code>down</code> 則是「當要返回到前一個狀態時，<code>drop</code> 掉原本的 table。</p>
+<p>所以：</p>
+<ul>
+<li>進入下個狀態：<code>db:migrate</code></li>
+<li>返回上個狀態：<code>db:migrate:undo</code></li>
+</ul>
+<h2 id="建立-Model"><a href="#建立-Model" class="headerlink" title="建立 Model"></a>建立 Model</h2><p>建立 Model 的指令：<code>model:generate</code></p>
+<ul>
+<li><code>name</code> 代表 Model 名稱</li>
+<li><code>attribute</code> 代表結構的設定</li>
+</ul>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string</span><br></pre></td></tr></tbody></table></figure>
+
+<p>其實就跟這個一樣，只是改成用 CLI 來處理而已：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 定義一個 User 的 table</span></span><br><span class="line"><span class="hljs-keyword">const</span> User = sequelize.define(<span class="hljs-string">'User'</span>, {</span><br><span class="line">  <span class="hljs-comment">// 設定欄位資訊</span></span><br><span class="line">  <span class="hljs-attr">firstName</span>: {</span><br><span class="line">    <span class="hljs-attr">type</span>: DataTypes.STRING,</span><br><span class="line">    <span class="hljs-attr">allowNull</span>: <span class="hljs-literal">false</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">lastName</span>: {</span><br><span class="line">    <span class="hljs-attr">type</span>: DataTypes.STRING</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p>執行完後就會產生一個新的 Model 和 Migration：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">├───migrations</span><br><span class="line">│       20220325094327-create-user.js // 新增的檔案</span><br><span class="line">├───models</span><br><span class="line">│       index.js </span><br><span class="line">│       user.js 新產生的 model</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<p>接著可以注意一下 Model 的部分：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">'use strict'</span>;</span><br><span class="line"><span class="hljs-keyword">const</span> {</span><br><span class="line">  Model</span><br><span class="line">} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'sequelize'</span>);</span><br><span class="line"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function">(<span class="hljs-params">sequelize, DataTypes</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Model</span> </span>{</span><br><span class="line">    <span class="hljs-keyword">static</span> <span class="hljs-function"><span class="hljs-title">associate</span>(<span class="hljs-params">models</span>)</span> {</span><br><span class="line">      <span class="hljs-comment">// 要關聯的 table 寫在這裡</span></span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  User.init({</span><br><span class="line">    <span class="hljs-comment">// 根據剛剛下的指令產生的 Schema</span></span><br><span class="line">    <span class="hljs-attr">firstName</span>: DataTypes.STRING,</span><br><span class="line">    <span class="hljs-attr">lastName</span>: DataTypes.STRING,</span><br><span class="line">    <span class="hljs-attr">email</span>: DataTypes.STRING</span><br><span class="line">  }, {</span><br><span class="line">    sequelize,</span><br><span class="line">    <span class="hljs-attr">modelName</span>: <span class="hljs-string">'User'</span>,</span><br><span class="line">  });</span><br><span class="line">  <span class="hljs-keyword">return</span> User;</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果你對產出來的結果不滿意，都可以在這裡做修改。</p>
+<h2 id="執行-Migration"><a href="#執行-Migration" class="headerlink" title="執行 Migration"></a>執行 Migration</h2><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx sequelize-cli db:migrate</span><br></pre></td></tr></tbody></table></figure>
+
+<p>簡單來說，這一步就跟 <code>sync</code> 在做的事情一樣，到這裡才是<strong>真正到資料庫建立 table</strong></p>
+<h2 id="最後"><a href="#最後" class="headerlink" title="最後"></a>最後</h2><p>上面都做好以後，就可以直接在你的 JS 裡面使用 ORM 了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 所有 model 都會被綁在 db 上</span></span><br><span class="line"><span class="hljs-keyword">const</span> { User, Comment } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./models'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 建立新的資料</span></span><br><span class="line">User.create({</span><br><span class="line">  <span class="hljs-attr">firstName</span>: <span class="hljs-string">'PeaNu'</span>,</span><br><span class="line">  <span class="hljs-attr">lastName</span>: <span class="hljs-string">'yoyo'</span></span><br><span class="line">}).then(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'done'</span>);</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>就這麼簡單囉。</p>
+<h2 id="附註：想要改-Schema-的話要怎麼改"><a href="#附註：想要改-Schema-的話要怎麼改" class="headerlink" title="附註：想要改 Schema 的話要怎麼改"></a>附註：想要改 Schema 的話要怎麼改</h2><p><strong>補更：改了 Migration 後一樣要改 Model，不然後來的操作會有 Bug（找不到對應欄位，變成空值）</strong></p>
+<p>如果是透過 <code>db:migrate</code> 的方式來同步資料庫，那就要去改 migration 裡面的資料，強調一下：</p>
+<ul>
+<li>不是改 Model</li>
+<li>不是改 Model</li>
+<li>不是改 Model</li>
+</ul>
+<p>改 Model 只適用在 <code>sync</code> 的情況，這點要特別注意。</p>
+<p>接著流程是這樣：</p>
+<ol>
+<li>先去改 migration 中的內容</li>
+<li><code>db:migate:undo</code> 先回到上一層狀態</li>
+<li><code>db:migate</code> 建立新的 migration</li>
+</ol>
+<p>就這麼簡單囉！</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/03/26/mentor-program-day102/">mentor-program-day102</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/03/25/sequelize-relation/">Sequelize 建立關聯</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>什麼是正向代理與反向代理 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="一個很人性化的設計。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什麼是正向代理與反向代理">
+<meta property="og:url" content="https://jubeatt.github.io/2022/03/28/what-is-proxy-and-revers-proxy/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="一個很人性化的設計。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/28/what-is-proxy-and-revers-proxy/proxy-01.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/28/what-is-proxy-and-revers-proxy/proxy-02.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/28/what-is-proxy-and-revers-proxy/reverse-proxy-01.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/28/what-is-proxy-and-revers-proxy/reverse-proxy-02.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/28/what-is-proxy-and-revers-proxy/reverse-proxy-03.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/03/28/what-is-proxy-and-revers-proxy/reverse-proxy-04.jpg">
+<meta property="article:published_time" content="2022-03-28T11:51:34.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.813Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/03/28/what-is-proxy-and-revers-proxy/proxy-01.jpg">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#正向代理">1&nbsp;&nbsp;<b>正向代理</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#用-proxy-的好處">1.1&nbsp;&nbsp;用 proxy 的好處</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#反向代理">2&nbsp;&nbsp;<b>反向代理</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            什麼是正向代理與反向代理
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>3月 28 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Network/">Network</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>一個很人性化的設計。</p>
+<span id="more"></span>
+
+
+<h2 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h2><p>其實不複雜，只要你能理解正向代理的意思，那反向代理馬上就能懂，因為真的只是「反過來」而已。</p>
+<p>先來看一下什麼是正向代理：</p>
+<p><img src="proxy-01.jpg" alt="proxy-01"></p>
+<p>簡單來說，有些時候你想造訪的網站會「擋 IP」，例如一些中國的網站，只要你不是用中國 IP 連的話都會被擋，沒辦法連上去。</p>
+<p>這個時候就可以透過「Proxy」來幫你處理這個問題，他的流程就跟上面的圖一樣：</p>
+<ol>
+<li>從 client 發一個 request 到 proxy</li>
+<li>proxy 再根據內容對 server 發出 request</li>
+<li>server 看到 proxy 以為是中國的 IP，就把 response 回傳給 proxy</li>
+<li>proxy 再把拿到的東西傳回給 client</li>
+</ol>
+<p>你可能會想說「那 server 不會知道是 proxy 發過來的嗎？」，這時候<strong>換位思考</strong>的重要性就來了：</p>
+<p><img src="proxy-02.jpg" alt="proxy-02"></p>
+<p>剛剛第一張圖是<strong>從 client 的角度來看</strong>，所以你當然會知道「我是透過 proxy 來發 request」的這件事。可是對 server 來說不是這樣，它只會知道有人發了一個 request 過來，但是不是透過 proxy？它基本上不會知道（還是有一些特例啦），而且也<strong>不會知道是哪個 client 發過來的</strong>（這個很重要很重要）。</p>
+<p>所以呢，這就是為什麼 proxy 可以運作的原理。</p>
+<h3 id="用-proxy-的好處"><a href="#用-proxy-的好處" class="headerlink" title="用 proxy 的好處"></a>用 proxy 的好處</h3><p>從上面例子來看會發現兩個好處：</p>
+<ol>
+<li>加強隱私：client 可以把自己的資訊隱藏不讓 server 知道</li>
+<li>解除限制：就算會擋 IP 的網站我還是可以連上去</li>
+</ol>
+<p>除了這兩個以外，proxy 還有另外一個好處是「Cache 機制」。</p>
+<p>在有些情況下，proxy 可以<strong>把很常出現的 request 給 cache 起來</strong>，當下次有人再發同樣的 request 時，直接把 cache 的東西回傳就好，不用再特地對 server 發一次 request。</p>
+<h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><p>上面有聽懂的話這個就好講了，跟剛剛幾乎一樣，只是身分對調過來而已：</p>
+<p><img src="reverse-proxy-01.jpg" alt="reverse-proxy-01"></p>
+<p>既然 client 可以透過 proxy 來發 request，那 server 也同理，可以<strong>透過 proxy 來處理 request。</strong></p>
+<p>你可能會想說「確實如此，不過這要幹嘛阿？」</p>
+<p>要知道原因就得先了解一些網路基礎概念。</p>
+<p>首先當我們架了一台 server 跑 HTTP 服務時，通常會讓它跑在 80 port（端口），聽起來蠻合理的。可是其實有個問題，假設 server 也有其他服務要跑的話，就得再加開其他的 port 來跑，畢竟你不可能為了加開一項服務再去買一台主機吧（錢太多可以分我 QQ）。</p>
+<p>總而言之，這樣做的問題是「網址會變得很難看」：</p>
+<p><img src="reverse-proxy-02.jpg" alt="reverse-proxy-02"></p>
+<p>附註：預設是跑 80 port，所以第一個才不用加上 <code>:80</code></p>
+<p>簡單來說，你應該從來不會用什麼 <code>https:facebook.com:3001</code> 或 <code>https://google.com:8001</code> 來連到 FB 或 Google 吧？我說的很醜就是這個意思，搞不好你連 port 是什麼東西都不知道，<strong>怎麼可能還指望你來我的網站時還要加上端口號？</strong></p>
+<p>但這時候有 proxy 就不一樣了，這個技巧是「80 port 拿來跑 proxy，proxy 在透過子網域來判斷要把 request 交給哪個 server」</p>
+<p><img src="reverse-proxy-03.jpg" alt="reverse-proxy-03"></p>
+<p>這樣子做以後，就不用在輸入端口號這麼麻煩了，因為 proxy 都幫你設定好了。這也是為什麼有些人會推薦用 Nginx 來架伺服器的原因，因為 Nginx 有提供 prxoy 的功能，而 Apache 沒有。</p>
+<p>不過還是要注意剛剛提到的換位思考：</p>
+<p><img src="reverse-proxy-04.jpg" alt="reverse-proxy-04"></p>
+<p>對 client 而言也一樣，它不會知道發出去的 request 是真的 server 還是 proxy，這點很重要。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/03/29/mentor-program-day105/">mentor-program-day105</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/03/28/heroku-cleardb/">Heroko 設定資料庫 cleardb</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

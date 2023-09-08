@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>BEM隨筆記 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="紀錄一些 BEM 在使用時可能會碰到的問題。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BEM隨筆記">
+<meta property="og:url" content="https://jubeatt.github.io/2021/07/28/bem-note/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="紀錄一些 BEM 在使用時可能會碰到的問題。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/28/bem-note/card.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/07/28/bem-note/card-feature.jpg">
+<meta property="article:published_time" content="2021-07-28T08:43:21.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.231Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2021/07/28/bem-note/card.jpg">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#對-Modifier-下的-Element-定義新的規則">1&nbsp;&nbsp;<b>對 Modifier 下的 Element 定義新的規則</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#什麼時候不該寫成-BEM">2&nbsp;&nbsp;<b>什麼時候不該寫成 BEM</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#適合模組化的時機">3&nbsp;&nbsp;<b>適合模組化的時機</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#一個-Block-下最多只會連接一個-Element">4&nbsp;&nbsp;<b>一個 Block 下最多只會連接一個 Element</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#有些元素不需要綁在-Block-上">5&nbsp;&nbsp;<b>有些元素不需要綁在 Block 上</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#參考資料">6&nbsp;&nbsp;<b>參考資料</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            BEM隨筆記
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>7月 28 2021</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/CSS/">CSS</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>紀錄一些 BEM 在使用時可能會碰到的問題。</p>
+<span id="more"></span>
+
+<h2 id="對-Modifier-下的-Element-定義新的規則"><a href="#對-Modifier-下的-Element-定義新的規則" class="headerlink" title="對 Modifier 下的 Element 定義新的規則"></a>對 Modifier 下的 Element 定義新的規則</h2><p>假使我們有一個卡片組件如下：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">article</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card__title"</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card__text"</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card__text card__text--secondary"</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"card__button"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">article</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="card.jpg" alt="card"></p>
+<p>現在我們想要定義一個新的 Modiefier， <code>card--feature</code>，會長這樣子。</p>
+<p><img src="card-feature.jpg" alt="card-feature"></p>
+<p>除了 <code>card--feature</code> 的背景顏色會改變之外， 其下的 <code>card__title</code>, <code>card__text</code>, <code>card__button</code> 也都要做修改，這種時候該怎麼寫才好？</p>
+<p>有些人會這樣子寫：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.card</span> {</span><br><span class="line">  <span class="hljs-comment">// ...</span></span><br><span class="line">  &amp;__title {</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">  }</span><br><span class="line">  &amp;__text {</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">  }</span><br><span class="line">  &amp;__button {</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">    --feature 跟 .card 都是指到同個元素</span></span><br><span class="line"><span class="hljs-comment">    所以下面的 Element 都是同樣的：</span></span><br><span class="line"><span class="hljs-comment">    (.card &gt; card__title) === (.card--feature &gt; card--feature__title)</span></span><br><span class="line"><span class="hljs-comment">  */</span></span><br><span class="line">  &amp;--feature {</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">    <span class="hljs-selector-class">.card__title</span> {</span><br><span class="line">      <span class="hljs-comment">// ...</span></span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-selector-class">.card__text</span> {</span><br><span class="line">      <span class="hljs-comment">// ...</span></span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-selector-class">.card__button</span> {</span><br><span class="line">      <span class="hljs-comment">// ...</span></span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>但如果今天要改 class 名稱的時候，要修改的地方就會變很多。</p>
+<p>所以建議你可以這樣子寫：</p>
+<figure class="highlight scss hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.card</span> {</span><br><span class="line">  <span class="hljs-comment">// ...</span></span><br><span class="line">  &amp;__title {</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">  }</span><br><span class="line">  &amp;__text {</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">  }</span><br><span class="line">  &amp;__button {</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">    --feature 跟 .card 都是指到同個元素</span></span><br><span class="line"><span class="hljs-comment">    所以下面的 Element 都是同樣的：</span></span><br><span class="line"><span class="hljs-comment">    (.card &gt; card__title) === (.card--feature &gt; card--feature__title)</span></span><br><span class="line"><span class="hljs-comment">  */</span></span><br><span class="line">  &amp;--feature {</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">  }</span><br><span class="line">  &amp;--feature &amp;__title {</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">  }</span><br><span class="line">  &amp;--feature &amp;__text {</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">  }</span><br><span class="line">  &amp;--feature &amp;__button {</span><br><span class="line">    <span class="hljs-comment">// ...</span></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣子要改 class 名稱時，只要改最外層那個 <code>card</code> 就解決囉。</p>
+<p><font size="2">🚀 Codepen：<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/NWgRxPY">點這裡</a></font></p>
+<h2 id="什麼時候不該寫成-BEM"><a href="#什麼時候不該寫成-BEM" class="headerlink" title="什麼時候不該寫成 BEM"></a>什麼時候不該寫成 BEM</h2><p><strong>當有一個 class 是可以獨立存在的時候</strong></p>
+<p>例如：</p>
+<figure class="highlight css hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-selector-class">.clearfix</span> {</span><br><span class="line">  <span class="hljs-attribute">clear</span>: both;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>雖然按照 BEM 的規則，你可以把它歸類成<code>Modifier</code>。<br>但它其實是一個可以獨自存在的 class，而且可以用在網頁的各種地方。<br>所以比起寫成<code>modifier</code>，把它歸類為一個單獨存在的 class，或許會更適合。</p>
+<h2 id="適合模組化的時機"><a href="#適合模組化的時機" class="headerlink" title="適合模組化的時機"></a>適合模組化的時機</h2><p>假設你的 HTML 結構長這樣：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"menu"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item"</span>&gt;</span>menu1<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item"</span>&gt;</span>menu2<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"item"</span>&gt;</span>menu3<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>你可能會很直覺的寫成<code>content__menu</code>這種結構。<br>但是如果你這樣子寫，意思就會是，<code>menu</code> 跟 <code>content</code> 區塊綁在一起。</p>
+<p>那如果網頁中有其他的地方也會有選單的話呢？<br>你就沒辦法直接拿<code>menu</code>這個模組來用了，因為它跟<code>content</code>綁在一起了。</p>
+<p>所以我們透過 BEM 來建立每個模組的時候要思考一件事：<br><strong>「這個區塊有沒有可能會在網頁的其他地方出現」</strong></p>
+<p>所以回到上面的例子。<br>比起讓<code>menu</code>作為<code>content</code>下的<code>Element</code>，<code>menu</code>更適合當作是一個<code>Block</code>，<br>這樣子<code>menu</code>會成為一個模組，也就有更高的靈活性。</p>
+<h2 id="一個-Block-下最多只會連接一個-Element"><a href="#一個-Block-下最多只會連接一個-Element" class="headerlink" title="一個 Block 下最多只會連接一個 Element"></a>一個 Block 下最多只會連接一個 Element</h2><p>這裡引用來自<a target="_blank" rel="noopener" href="https://sparkbox.com/foundry/bem_by_example">BEM by Example</a>的一段敘述：</p>
+<blockquote>
+<p>If your component has child elements several levels deep, don’t try to represent each level in the class name. BEM is not intended to communicate structural depth. A BEM class name representing a child element in the component should only include the base/block name and the one element name.</p>
+</blockquote>
+<p>意思是說，假使一個 component 下有多個層級的子元素，我們也不必在 BEM 把每一層的結構寫出來，譬如說：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">figure</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"photo"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"photo__img"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"image.jpg"</span> /&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">figcaption</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"photo__caption"</span>&gt;</span></span><br><span class="line">    圖片解說</span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">blockquote</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"photo__caption__quote"</span>&gt;</span></span><br><span class="line">      不要在一個class裡面放一個以上的element</span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">blockquote</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">figcaption</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">figure</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>所以一個<code>Block</code>下最多只會寫一層<code>Element</code>：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">figure</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"photo"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"photo__img"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"image.jpg"</span> /&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">figcaption</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"photo__caption"</span>&gt;</span></span><br><span class="line">    圖片解說</span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">blockquote</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"photo__quote"</span>&gt;</span>這樣就對了<span class="hljs-tag">&lt;/<span class="hljs-name">blockquote</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">figcaption</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">figure</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>即便你沒有把每一個層級都寫出來，也能夠看出<code>img</code>, <code>caption</code>, <code>quote</code>都是<code>photo</code>這個 component 下的元素。</p>
+<p>所以只要掌握住一個原則：<strong>這個元素是哪個 component 下的元素</strong>，就能寫出簡潔清楚的 class 名稱。</p>
+<h2 id="有些元素不需要綁在-Block-上"><a href="#有些元素不需要綁在-Block-上" class="headerlink" title="有些元素不需要綁在 Block 上"></a>有些元素不需要綁在 Block 上</h2><p>拿我在<a target="_blank" rel="noopener" href="https://github.com/jubeatt/Sunnyside-agency-landing-page">Frontend Mentor</a>挑戰中的<code>header</code>部分來舉例：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">header</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"header"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h3</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"slogan"</span>&gt;</span>WE ARE CREATIVES<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"arrow"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"pic"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"arrow.jpg"</span> /&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">header</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>slogan</code>跟<code>arrow</code>這兩個元素其實都能獨自存在，並沒有一定要綁在<code>header</code>這個<code>Block</code>上（除非你把整個<code>header</code>當成是一個 component），所以就不建議這樣子寫：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">header</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"header"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h3</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"header__slogan"</span>&gt;</span>WE ARE CREATIVES<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"header__arrow"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"header__pic"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"arrow.jpg"</span> /&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">header</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這種情況大多會發生在文字的部分，所以這種時候就建議寫一個方便識別的 class 就好，不用一定要照著 BEM 的規則來命名。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://sparkbox.com/foundry/bem_by_example">BEM by Example</a><br><a target="_blank" rel="noopener" href="https://chupai.github.io/posts/2104/bem/">竹白記事本-BEM，CSS 設計模式</a><br><a target="_blank" rel="noopener" href="https://iter01.com/118448.html">IT 人-[譯] CSS 使用 BEM 命名規範的五大理由</a></p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/07/29/common-english-idioms/">日常英文用語</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/07/28/scss-note/">SCSS隨筆記</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

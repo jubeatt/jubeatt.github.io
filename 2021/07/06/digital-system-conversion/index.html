@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>數字系統並沒有你想的那麼複雜 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="前言今天要談的主題是「數字系統」 數字系統在我們的生活或許不怎麼起眼，但如果是在電腦科學這個領域，就很難不談到它了。不知道各位會不會跟我一樣，一直對於數字系統有點似懂非懂的感覺，或者是需要用到時就滿頭霧水。基於這個原因，所以我決定寫一篇文章來記錄，希望跟我有一樣這種困擾的各位能夠好好紮實地把這些重要知識給學起來！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="數字系統並沒有你想的那麼複雜">
+<meta property="og:url" content="https://jubeatt.github.io/2021/07/06/digital-system-conversion/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="前言今天要談的主題是「數字系統」 數字系統在我們的生活或許不怎麼起眼，但如果是在電腦科學這個領域，就很難不談到它了。不知道各位會不會跟我一樣，一直對於數字系統有點似懂非懂的感覺，或者是需要用到時就滿頭霧水。基於這個原因，所以我決定寫一篇文章來記錄，希望跟我有一樣這種困擾的各位能夠好好紮實地把這些重要知識給學起來！">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-07-06T12:18:17.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.367Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#前言">1&nbsp;&nbsp;<b>前言</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#學習目標">2&nbsp;&nbsp;<b>學習目標</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#正文">3&nbsp;&nbsp;<b>正文</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#認識數字系統">3.1&nbsp;&nbsp;認識數字系統</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#怎麼對數字做進位制轉換">3.2&nbsp;&nbsp;怎麼對數字做進位制轉換</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#把十進位轉換成其他進位">3.2.1&nbsp;&nbsp;把十進位轉換成其他進位</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#把其他進位轉換成十進位">3.2.2&nbsp;&nbsp;把其他進位轉換成十進位</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#實做一個轉換進位的程式">4&nbsp;&nbsp;<b>實做一個轉換進位的程式</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#文末">5&nbsp;&nbsp;<b>文末</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#參考資料">6&nbsp;&nbsp;<b>參考資料</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            數字系統並沒有你想的那麼複雜
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>7月 6 2021</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Computer-science/">Computer-science</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>今天要談的主題是「數字系統」</p>
+<p>數字系統在我們的生活或許不怎麼起眼，但如果是在電腦科學這個領域，就很難不談到它了。<br>不知道各位會不會跟我一樣，一直對於數字系統有點似懂非懂的感覺，或者是需要用到時就滿頭霧水。<br>基於這個原因，所以我決定寫一篇文章來記錄，希望跟我有一樣這種困擾的各位能夠好好紮實地把這些重要知識給學起來！</p>
+<span id="more"></span>
+
+<h2 id="學習目標"><a href="#學習目標" class="headerlink" title="學習目標"></a>學習目標</h2><ol>
+<li>了解數字系統（知道什麼是二進位、八進位、十進位、十六進位）</li>
+<li>知道怎麼把轉換進位制（例如：十進位轉成二進位）</li>
+<li>知道怎麼寫出一個能夠轉換進位制的程式碼</li>
+</ol>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="認識數字系統"><a href="#認識數字系統" class="headerlink" title="認識數字系統"></a>認識數字系統</h3><p>在學怎麼對數字做轉換前，當然要先知道什麼叫數字系統，所以這裡會先簡單介紹一下關於數字系統的知識。</p>
+<p>數字系統可以分為：</p>
+<ul>
+<li>二進位（Binary）</li>
+<li>八進位（Octal）</li>
+<li>十進位（Decimal）</li>
+<li>十六進位（Hexadecimal）</li>
+</ul>
+<p>先從我們生活中最熟悉的的十進位來做說明吧。（我們現在正在使用的數字系統就是十進位）</p>
+<p><strong>題外話：為什麼我們的數字系統是 10 進位？</strong></p>
+<blockquote>
+<p><em>也許是因為我們人只有 10 根手指頭吧…</em></p>
+</blockquote>
+<p>如果你對於「進位」這個詞感到很害怕或陌生的話，別擔心。</p>
+<p>其實講的白話一點，這只是用來代表 <strong>「你要用哪個規則來表示一個數」</strong> 的意思。</p>
+<p>而且你早就學會怎麼做進位這件事了（待會就知道了）</p>
+<p>不知道各位有沒有上過計算機概論或者自己 Google 過，大部分應該會得到這樣的解釋：</p>
+<blockquote>
+<p><em>「逢 10 進位」（如果是十進位的話）</em></p>
+</blockquote>
+<p>以前的我聽到這個解釋後，我心裡的感想是，痾…到底什麼叫做逢 10 進位？</p>
+<p>不過在我理解後，我認為這句話的完整意思應該要這樣說：「每當碰到 10 這個數字，就增加一個位數」</p>
+<p>讓我們直接來看個例子吧。</p>
+<p>如果要你算 <code>18 + 25</code>，你會怎麼計算呢？（我知道你會馬上說是 43，但重點是你怎麼算的？）</p>
+<p>我相信不管你是數學菜逼還是數學天才，應該都是用這種方式來計算的。</p>
+<ol>
+<li>先計算<code>8 + 5</code>的部分，會得到<code>13</code></li>
+<li>接著因為<code>13</code><strong>超過 10 了</strong>，所以把<code>1</code>加到<strong>下一個位數</strong>，留下<code>3</code></li>
+<li>接著計算<code>1 + 2</code>的部分，會得到<code>3</code></li>
+<li>接著因為前面的<code>1</code>要加到這個位數，所以最後<code>3</code>要再加上這個<code>被進位的1</code>，得到<code>4</code></li>
+<li>最後才能得到答案<code>43</code></li>
+</ol>
+<p>不知道你有沒有注意到？</p>
+<p>在第二個步驟的時候，你很自然的做了進位這件事，你知道 13 是一個超出 10 的數字，所以就把 1 放到十位數去，讓個位數只剩下 3。</p>
+<p>沒錯，逢 10 進位就是指這個很簡單的動作而已。</p>
+<p>如果你還是似懂非懂的話，你可以再思考看看，如果你不做進位這個動作的話，會變怎麼樣？</p>
+<ol>
+<li>先計算<code>8 + 5</code>的部分，會得到<code>13</code></li>
+<li>接著計算<code>1 + 2</code>的部分，會得到<code>3</code></li>
+<li>最後得到<code>313</code></li>
+</ol>
+<p>這時候你應該就能理解，為什麼需要<strong>進位</strong>這件事了吧？</p>
+<p>如果沒有進位的話，那數字會變得非常的長，你也很難理解這個數實際要表達的是什麼。</p>
+<p>所以再強調一次，數字系統的用途只是讓你更好地去 <strong>「表示一個數」</strong>，僅此而已。</p>
+<p>到這邊你都能理解的話，那接著要理解其他進位制就不是什麼難事了，只是換一個規則來表示而已。</p>
+<p><strong>來看一些例子吧</strong></p>
+<p>現在我們有一個 10 進位的數字<code>3</code>，現在我們要改成用 2 進位來表示的話，怎麼表示？</p>
+<p>首先，既然是二進位，所以我們的規則就會變成是「逢 2 進位」。</p>
+<ol>
+<li><code>3</code>是一個超過 2 的數字，所以把<code>1</code>加到<strong>下一個位數</strong>，留下<code>1</code></li>
+<li><code>1</code>沒有超過 2，所以不用再進位</li>
+<li>最後得到<code>11</code></li>
+</ol>
+<p>再來一個，<code>4</code>的話呢？</p>
+<ol>
+<li><code>4</code>是一個超過 2 的數字，所以把<code>1</code>加到<strong>下一個位數</strong>，留下<code>2</code></li>
+<li><code>2</code>還是一個超過 2 的數字，所以再把<code>1</code>加到<strong>下一個位數</strong>，留下<code>0</code></li>
+<li><code>2</code>（前面進位的兩個 1），是一個超過 2 的數字，所以把<code>1</code>加到<strong>下一個位數</strong>，留下<code>0</code></li>
+<li><code>1</code>沒有超過 2，所以不用再進位</li>
+<li>最後得到<code>100</code></li>
+</ol>
+<p>以上大致就是數字系統的核心概念了，只要你能理解，那就算你想發明一個 87 進位也應該不會是個問題….</p>
+<p>這邊特別補充一下，有些人可能會想問？十六進位的話<code>10 ~ 11</code>要怎麼表示？</p>
+<p>這個疑惑很合理，畢竟我們直接用 11 ~ 15 來表示一個位數的話顯然是有點難理解。</p>
+<p>所以為了避免這個問題，會改用這樣來表示：</p>
+<ul>
+<li><code>a</code> 代表 10</li>
+<li><code>b</code> 代表 11</li>
+<li><code>c</code> 代表 12</li>
+<li><code>d</code> 代表 13</li>
+<li><code>e</code> 代表 14</li>
+<li><code>f</code> 代表 15</li>
+</ul>
+<p>這裡提供一個進位轉換的<a target="_blank" rel="noopener" href="https://www.convertworld.com/zh-hant/numerals/hexadecimal.html">網頁</a>，如果還是不太清楚的話，可以到這裡去玩玩看，去觀察數字在進位時的變化，多試幾次就能幫助你去理解這個概念囉！</p>
+<h3 id="怎麼對數字做進位制轉換"><a href="#怎麼對數字做進位制轉換" class="headerlink" title="怎麼對數字做進位制轉換"></a>怎麼對數字做進位制轉換</h3><p>在學怎麼轉換前，先解釋一下為什麼要學這個東西。</p>
+<p>雖然現在隨便 Google 都有現成的工具可以幫你做進位轉換，但有些時候重要的並不只是數字轉換後的結果，而是它在轉換過程中的一些涵義。</p>
+<p>試著去理解這些涵義，會對你在寫程式或思考的時候是有一些幫助存在的（相信我~）</p>
+<h4 id="把十進位轉換成其他進位"><a href="#把十進位轉換成其他進位" class="headerlink" title="把十進位轉換成其他進位"></a>把十進位轉換成其他進位</h4><p>假設一個十進位的數字為<code>25</code>，接著來試著把它轉換成二進位</p>
+<p><strong>二進位</strong></p>
+<ul>
+<li>25 / 2 = 12 … <code>1</code></li>
+<li>12 / 2 = 6 … <code>0</code></li>
+<li>6 / 2 = 3 … <code>0</code></li>
+<li>3 / 2 = 1 … <code>1</code></li>
+<li>1 / 2 = 0 … <code>1</code></li>
+</ul>
+<p>接著再把這些數字<strong>由下至上</strong>組合起來，<code>11001</code>就是 25 的 2 進位表示法。</p>
+<p>你應該注意到了，我們其實就只是一直在做，除以 2 後得到的餘數而已，所以你也能把他稱作取餘數大法（？</p>
+<p>所以只要你知道怎麼取餘數，那你就會做進位制的轉換了。</p>
+<p>不過在這裡先聲明，雖然你可以用死記的方式來做轉換，但比起用死記的，我更推薦你去理解背後的涵義。</p>
+<p>只要你仔細去觀察每個步驟，就會發現它其實並不複雜，都是前面所說的基本概念而已。</p>
+<p>所以我們先看到第一個步驟。</p>
+<ol>
+<li>對 25 除以 2，得到商為<code>12</code>，餘數為<code>1</code></li>
+</ol>
+<p>這裡你先思考看看，為什麼我們要對 25 做除以 2，跟取它的餘數這件事？（回想看看我們介紹數字系統時的概念）</p>
+<p>因為 25 是一個超過 2 的數嘛！所以要做什麼？進位阿！阿要<strong>進位幾次？</strong>進位數字到<strong>不超過 2</strong>為止嘛！</p>
+<p>那我要怎麼知道該進位幾次，跟什麼時時候數字才會不超過 2 這件事？</p>
+<p>透過第一步所做的事情就能知道囉！</p>
+<p>把某個數字對 2 做除法，求出它的商跟餘數，<strong>商數代表這個數字進位了幾次，餘數就代表剩下了多少數</strong>。</p>
+<p>一直重複這個步驟，<strong>直到商數為 0</strong>，就代表不能再進位了，而此時的<strong>餘數就代表進位到最後剩下的數</strong>。</p>
+<p>所以我們在重新看一下前面的計算，可以列成以下這些步驟：</p>
+<ul>
+<li>25 / 2 = 12 … 1，代表 25 可以被 2 進位<code>12</code>次，剩下<code>1</code>，進位後的 12 還可以被 2 進位幾次？</li>
+<li>12 / 2 = 6 … 0，代表 12 可以被 2 進位<code>6</code>次，剩下<code>0</code>，進位後的 6 還可以被 2 進位幾次？</li>
+<li>6 / 2 = 3 … 0，代表 6 可以被 2 進位<code>3</code>次，剩下<code>0</code>，進位後的 3 還可以被 2 進位幾次？</li>
+<li>3 / 2 = 1 … 1，代表 3 可以被 2 進位<code>1</code>次，剩下<code>1</code>，進位後的 1 還可以被 2 進位幾次？</li>
+<li>1 / 2 = 0 … 1， 代表 1 不能再被 2 進位了，最後剩下的數為<code>1</code>。</li>
+</ul>
+<p>不管是二進位、八進位、十六進位，甚至是十進位本身，都可以遵循這個規則去做。</p>
+<p>接著試著自己練習看看吧！把 25 轉換成其他進位看看，如果都正確的話，就代表你有理解這個概念囉！</p>
+<h4 id="把其他進位轉換成十進位"><a href="#把其他進位轉換成十進位" class="headerlink" title="把其他進位轉換成十進位"></a>把其他進位轉換成十進位</h4><p>延續前面的例子，現在我們知道<code>11001</code>是代表 25，但這之間是發生了什麼？怎麼做到的？</p>
+<p>其實你只要把她拆成<strong>次方</strong>來看就可以了，像這樣：</p>
+<p>1 x 2<sup>4</sup> + 1 x 2<sup>3</sup> + 0 x 2<sup>2</sup> + 0 x 2<sup>1</sup> + 1 x 2<sup>0</sup></p>
+<p>把上面這些算式算出來後，就會得到<code>25</code></p>
+<blockquote>
+<p><em>傑克，這真是太神奇了！！</em></p>
+</blockquote>
+<p>為什麼能這樣呢？</p>
+<p>我個人認為比較好理解的方式是，用<strong>位數</strong>的概念來觀察。</p>
+<p>譬如說，如果是要你把 10 進位用次方來表示的話，你應該能很直覺的得出以下式子：</p>
+<p>25 = <code>2</code> x 10<sup>1</sup> + <code>5</code> x 10<sup>0</sup>，得到<code>25</code></p>
+<p>為什麼這麼直覺？</p>
+<ol>
+<li><p>首先你知道，10 進位代表每個位數的數字只能在 0 ~ 9</p>
+</li>
+<li><p>接著你又知道第一個位數的範圍必須是在 0 ~ 9 之間的數，那一定得是<code>1 x n</code>這樣的算式才有辦法求出，所以如果要寫成次方的話，我們只能寫成 10<sup><code>0</code></sup>，接著在把 10<sup><code>0</code></sup>去乘上一個數，就能得出 0~9 之間的數字。</p>
+</li>
+<li><p>接著是第二個位數，代表數字的範圍必須在 10 ~ 99 之間，那就一定得是<code>10 x n</code>這樣的算式才有辦法求出，所以寫成次方的話就會是 10<sup><code>1</code></sup>，接著再把 10<sup><code>1</code></sup>去乘上一個數，就能得出 10~99 之間的數字。</p>
+</li>
+<li><p>最後把兩個數字相加，就能得出最後的結果，也就是<code>25</code></p>
+</li>
+</ol>
+<p>其實換成 2 進位也是一樣的道理：</p>
+<ol>
+<li>首先你知道，2 進位代表每個位數的數字只能在 0 ~ 1</li>
+<li>現在第一個位數的範圍是在 0 ~ 1，那得是<code>1 x n</code>，所以就會是 2<sup><code>0</code></sup></li>
+<li>第二個位數的範圍是在 2 ~ 4，那得是 <code>2 x n</code>，所以就會是 2<sup><code>1</code></sup></li>
+<li>第三個位數的範圍是在 4 ~ 8，那得是<code>4 x n</code>，所以就會是 2<sup><code>2</code></sup></li>
+<li>以此類推</li>
+</ol>
+<p>發現到規律了嗎？每當我們進一個位數，就代表範圍會增加一倍，所以次方的數字就得跟著加 1。</p>
+<p>所以再回過頭來看<code>11001</code></p>
+<p>照著前面的邏輯，你腦中應該要有這個畫面：</p>
+<table>
+<thead>
+<tr>
+<th align="center">1</th>
+<th align="center">1</th>
+<th align="center">0</th>
+<th align="center">0</th>
+<th align="center">1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1 x 2<sup>4</sup></td>
+<td align="center">1 x 2<sup>3</sup></td>
+<td align="center">0 x 2<sup>2</sup></td>
+<td align="center">0 x 2<sup>1</sup></td>
+<td align="center">1 x 2<sup>0</sup></td>
+</tr>
+</tbody></table>
+<p>接下來該怎麼變成 10 進位應該就不用我多解釋了吧？</p>
+<h2 id="實做一個轉換進位的程式"><a href="#實做一個轉換進位的程式" class="headerlink" title="實做一個轉換進位的程式"></a>實做一個轉換進位的程式</h2><p>這裡就留給各位去挑戰看看，如果感到苦惱的話就先思考看看自己是不是有什麼地方沒有弄清楚？</p>
+<p>另外關於 16 進位，因為要考慮到 10 ~ 15 的問題，所以這部分如果覺得比較複雜的人，可以先省略 16 進位，先從二、八進位試試看！</p>
+<p>附上自己的程式碼：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">covert</span>(<span class="hljs-params">n, base</span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 儲存轉換後的結果(用三元運算子設定初始值)</span></span><br><span class="line">  <span class="hljs-keyword">let</span> result = base !== <span class="hljs-number">16</span> ? <span class="hljs-number">0</span> : <span class="hljs-string">''</span></span><br><span class="line">  <span class="hljs-comment">// 代表位數</span></span><br><span class="line">  <span class="hljs-keyword">let</span> digit = <span class="hljs-number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">while</span> (n !== <span class="hljs-number">0</span>) {</span><br><span class="line">    <span class="hljs-comment">// 餘數</span></span><br><span class="line">    <span class="hljs-keyword">let</span> remainder = n % base</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// 16進位的餘數處理</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (remainder === <span class="hljs-number">10</span>) remainder = <span class="hljs-string">'A'</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (remainder === <span class="hljs-number">11</span>) remainder = <span class="hljs-string">'B'</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (remainder === <span class="hljs-number">12</span>) remainder = <span class="hljs-string">'C'</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (remainder === <span class="hljs-number">13</span>) remainder = <span class="hljs-string">'D'</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (remainder === <span class="hljs-number">14</span>) remainder = <span class="hljs-string">'E'</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (remainder === <span class="hljs-number">15</span>) remainder = <span class="hljs-string">'F'</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// 非16進位的表示法</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (base !== <span class="hljs-number">16</span>) {</span><br><span class="line">      <span class="hljs-comment">// 取出餘數並乘上對應位數</span></span><br><span class="line">      result += remainder * <span class="hljs-number">10</span> ** digit</span><br><span class="line">      <span class="hljs-comment">// 更新為下個位數</span></span><br><span class="line">      digit++</span><br><span class="line">      <span class="hljs-comment">// 取出進位數</span></span><br><span class="line">      n = <span class="hljs-built_in">Math</span>.floor(n / base)</span><br><span class="line">    } <span class="hljs-keyword">else</span> {</span><br><span class="line">      result = remainder + result</span><br><span class="line">      <span class="hljs-comment">// 取出進位數</span></span><br><span class="line">      n = <span class="hljs-built_in">Math</span>.floor(n / base)</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-keyword">return</span> result</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(covert(<span class="hljs-number">8</span>, <span class="hljs-number">2</span>)) <span class="hljs-comment">// 1000</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(covert(<span class="hljs-number">26</span>, <span class="hljs-number">16</span>)) <span class="hljs-comment">// 1A</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="文末"><a href="#文末" class="headerlink" title="文末"></a>文末</h2><p>謝謝看完這篇文章的各位，自己開始寫文章後才明白，寫文章不是件想像中容易的事，不知不覺中一個下午就消失了。不過在完成這篇文章後，我也感受到其實寫文章對於學習確實是有幫助的，在撰寫的過程中也能發現一些自己的問題。</p>
+<p>像是很多時候我們以為自己了解某個東西，但實際上並不是這個樣子，事實上我們並沒有真正的理解，只是誤以為自己好像理解這件事，所以我們才更需要去正視自己的問題，找出改善方法，或者弄清楚是卡住的哪個點？這樣子可能才能真正的去學好一個知識吧？我是這樣子認為的。</p>
+<p>最後還是再次感謝各位，如果這篇文章幫你解開了你多年的困擾的話，那就再好不過了！<br>當然，如果文中有任何錯誤，或是你認為有更好的建議的話，歡迎向我聯絡。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://www.footmark.info/introduction-to-computer/digital-system-conversion/">二、八、十與十六進位 (數字系統) 轉換教學</a><br><a target="_blank" rel="noopener" href="https://www.convertworld.com/zh-hant/">免費線上單位換算</a><br><a target="_blank" rel="noopener" href="https://sites.google.com/site/nutncsie10412/ge-ren-jian-jie/xi-zi-xi-tong">數字系統 - NUTNCSIE10412</a></p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/07/11/relative-clauses/">which？that？關係子句？</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop is-hidden-mobile article-nav-next">
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

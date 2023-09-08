@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>VS-Code 一些實用的快捷鍵 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="一樣是快捷鍵系列。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VS-Code 一些實用的快捷鍵">
+<meta property="og:url" content="https://jubeatt.github.io/2021/12/14/vs-code-shortcut/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="一樣是快捷鍵系列。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2021/12/14/vs-code-shortcut/folder-setting-before.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/12/14/vs-code-shortcut/folder-setting-after.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2021/12/14/vs-code-shortcut/show-suggestion-detail.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2021/12/14/vs-code-shortcut/toggle-suggestion-details.png">
+<meta property="og:image" content="https://jubeatt.github.io/2021/12/14/vs-code-shortcut/function-comment.jpg">
+<meta property="article:published_time" content="2021-12-14T05:03:26.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:46:48.484Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2021/12/14/vs-code-shortcut/folder-setting-before.jpg">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Windows">1&nbsp;&nbsp;<b>Windows</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Mac">2&nbsp;&nbsp;<b>Mac</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Emmet-的設定">3&nbsp;&nbsp;<b>Emmet 的設定</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#用-CLI-打開-VS-Code-的方式">4&nbsp;&nbsp;<b>用 CLI 打開 VS-Code 的方式</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#更改左側資料夾的顯示方式">5&nbsp;&nbsp;<b>更改左側資料夾的顯示方式</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#顯示提示內容">6&nbsp;&nbsp;<b>顯示提示內容</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#幫-function-加上說明">7&nbsp;&nbsp;<b>幫 function 加上說明</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#我的-VS-Code-設定檔">8&nbsp;&nbsp;<b>我的 VS-Code 設定檔</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#推薦裝的套件">9&nbsp;&nbsp;<b>推薦裝的套件</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#參考資料">10&nbsp;&nbsp;<b>參考資料</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            VS-Code 一些實用的快捷鍵
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>12月 14 2021</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/VS-code/">VS-code</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>一樣是快捷鍵系列。</p>
+<span id="more"></span>
+
+<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><ul>
+<li><code>Ctrl + G</code> 跳到某一個行數</li>
+<li><code>Ctrl + E</code> <code>Ctrl + P</code> 切換到某個檔案的分頁</li>
+<li><code>Ctrl + E + @[變數名稱 / Tag / 內容]</code> 切換到某個分頁的某個段落</li>
+<li><code>Ctrl + L</code> 選取整行內容</li>
+<li><code>Ctrl + X</code> <code>Shift + Delete</code> 刪除整行內容</li>
+<li><code>Shift + 方向鍵</code> 選取文字</li>
+<li><code>Ctrl + 方向鍵</code> 單字間跳躍（若要選取的話就加上 Shift）</li>
+<li><code>Home鍵</code> 跳到句子頭端</li>
+<li><code>End鍵</code> 跳到句子尾端</li>
+<li><code>Ctrl + D</code> 選取同名字串</li>
+<li><code>Ctrl + Shift + L</code> 選取所有同名字串</li>
+<li><code>Alt + 方向鍵</code> 移動程式碼區塊（可搭配選取內容使用）</li>
+<li><code>Alt + 左右方向鍵</code> 切換分頁</li>
+<li><code>Alt + Shift + 上或下</code> 複製程式碼區塊（可搭配選取內容使用）</li>
+<li><code>Alt + Shift + R</code> 打開資料夾總管</li>
+<li><code>Alt + Z</code> 自動換行開關（關掉後就不會隨著寬度換行）</li>
+<li><code>Ctrl + H</code> 搜尋內容 + 取代內容</li>
+<li><code>Ctrl + Shift + E</code> 切換到檔案面板（側邊欄）</li>
+<li><code>Ctrl + Shift + F</code> 切換到搜尋面板（側邊欄）</li>
+<li><code>Ctrl + N</code> 新增檔案</li>
+<li><code>Ctrl + K，M</code> 選擇檔案的程式語言</li>
+<li><code>Ctrl + Shift + O</code> 搜尋變數、函式</li>
+<li><code>F2</code> 修改變數或函式的名稱（不會改到字串）（記得先選取）</li>
+<li><code>F12</code> 查看某段函式的內容</li>
+<li><code>Ctrl + ~</code> <code>Ctrl + J</code> 打開或關閉終端機</li>
+<li><code>Ctrl + /</code> 註解</li>
+<li><code>Alt + Shift + A</code> 多行註解</li>
+<li><code>Ctrl + B</code> 打開或關閉側邊攔</li>
+<li><code>Shift + Alt + F</code> 對內容排版</li>
+<li><code>Ctrl + Shift + M</code> 查看有 Bug 的分頁</li>
+<li><code>Ctrl + \</code> 切割視窗</li>
+<li><code>Ctrl + ，</code> <code>Ctrl + 。</code> 快速標點符號</li>
+<li><code>Ctrl + K + L</code> 摺疊或展開一個區塊的內容</li>
+<li><code>Ctrl + K，W</code> 關閉所有分頁</li>
+<li><code>Ctrl + K + U</code> 關閉所有「已儲存」的分頁</li>
+<li><code>Ctrl + Shift + T</code> 復原分頁（只回復最後一個關掉的分頁）</li>
+<li><code>Ctrl + M</code> 把 tab 鍵變成 focus 功能（就是 tab 的預設功能）</li>
+<li><code>Ctrl + K + S</code> 存檔所有分頁</li>
+</ul>
+<h2 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h2><ul>
+<li><code>Command + Option + up/down</code> 多個游標</li>
+<li><code>Option + up/down</code> 移動程式碼</li>
+<li><code>Command + P</code> 切換分頁</li>
+<li><code>Command/Fn + left/right</code> Home 鍵和 End 鍵的功能</li>
+<li><code>Command + top/bottom</code> 跳到檔案的起始位置/終點位置（可搭配 shift 選取）</li>
+<li><code>Command + Shift + L</code> 選取所有相同的文字</li>
+<li><code>Command + L</code> 選取整行</li>
+<li><code>Command + Shift + left/right</code> 等於 Ctrl + L 的效果</li>
+<li><code>Option + esc</code> 或 <code>command + i</code> 可以自動顯示相關的 value 或 props</li>
+<li><code>Command + K + V</code> 打開 markdown preview 視窗</li>
+<li><code>Option + Command + S</code> 存擋所有分頁</li>
+<li><code>Shift + Command + .</code> 打開 breadcrumb，並且用 <code>←</code> 和 <code>→</code> 來移動位置</li>
+<li><code>Option + Command + click</code> 把 definition 分割到新分頁</li>
+<li><code>Command + Shift + O</code> 搜尋函式 or 變數的 popup</li>
+<li><code>Shift + F12</code> 打開某個變數或函式的所有 reference popup</li>
+<li><code>F12</code> 跳到 reference 或 definition 的位置</li>
+<li><code>F8</code> 跳到 Linter 的錯誤位置</li>
+<li><code>Command + Shift + M</code> 打開 Linter 錯誤列表</li>
+<li><code>Ctrl + g</code> 跳到指定行數</li>
+<li><code>Command + j</code> toggle panel 收合（terminal）</li>
+<li><code>Command + \</code> 分割視窗（垂直）</li>
+<li><code>Command + 1 or 2 or 3...</code> 切換到不同的分割視窗</li>
+<li><code>Command + K, Command + \</code> 分割視窗（水平）</li>
+<li><code>Command + Option + ← / →</code> 切換 Tab 頁面（也可以把游標切換到分割視窗）</li>
+<li><code>Command + Option + [ / ]</code> 收起 / 展開程式碼區塊</li>
+<li><code>Command + Shift + \</code> 跳到起始 bracket 或結尾 bracket（跟 vim 的 <code>%</code> 一樣功能）</li>
+<li><code>Command + Shift + E</code> 把游標移到 Side bar 或 Editor</li>
+<li><code>Command + Shift + F</code> 打開搜尋側邊欄</li>
+<li><code>Space</code> 打開在 Sidebar 中選取的檔案</li>
+<li><code>Option / Control + Enter</code> 以分割視窗開啟分頁</li>
+<li><code>Command K + Command I</code> 彈出 Symbol 的型別內容（滑鼠 hover 會彈出來的那個）</li>
+<li><code>Option + F5</code> 跳到下一個更新的位置（Git）</li>
+</ul>
+<p>這邊的詳細資訊可以參考 VS-Code 的 <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/editingevolved">官方文件</a> 介紹。</p>
+<h2 id="Emmet-的設定"><a href="#Emmet-的設定" class="headerlink" title="Emmet 的設定"></a>Emmet 的設定</h2><p>如果想在 JS 的 template string 中使用 Emmet，可以加上這段設定：</p>
+<figure class="highlight json hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 要包含的語言（預設應該是只有 HTML吧）</span></span><br><span class="line"><span class="hljs-string">"emmet.includeLanguages"</span>: {</span><br><span class="line">    <span class="hljs-attr">"javascript"</span>: <span class="hljs-string">"javascriptreact"</span>,</span><br><span class="line">},</span><br><span class="line"><span class="hljs-string">"emmet.triggerExpansionOnTab"</span>: <span class="hljs-literal">true</span>,</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="用-CLI-打開-VS-Code-的方式"><a href="#用-CLI-打開-VS-Code-的方式" class="headerlink" title="用 CLI 打開 VS-Code 的方式"></a>用 CLI 打開 VS-Code 的方式</h2><p>首先先用 VS-Code 添加環境變數 <code>Command + Shift + P</code> 搜尋 <code>shell</code>，然後 Enter 看到 OK 就好了。</p>
+<p>打開整個資料夾：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">code .</span><br></pre></td></tr></tbody></table></figure>
+
+<p>打開指定檔案：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">code file.js</span><br></pre></td></tr></tbody></table></figure>
+
+<p>只打開 VS-Code：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">code --</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="更改左側資料夾的顯示方式"><a href="#更改左側資料夾的顯示方式" class="headerlink" title="更改左側資料夾的顯示方式"></a>更改左側資料夾的顯示方式</h2><p>原本是長這樣：</p>
+<p><img src="folder-setting-before.jpg" alt="folder-setting-before"></p>
+<p>但你可能會希望是這樣：</p>
+<p><img src="folder-setting-after.jpg" alt="folder-setting-after"></p>
+<p>這時候只要新增一項設定就好：</p>
+<figure class="highlight json hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 預設是 true</span></span><br><span class="line"><span class="hljs-string">"explorer.compactFolders"</span>: <span class="hljs-literal">false</span>,</span><br></pre></td></tr></tbody></table></figure>
+
+<p>搞定！</p>
+<h2 id="顯示提示內容"><a href="#顯示提示內容" class="headerlink" title="顯示提示內容"></a>顯示提示內容</h2><p>在使用 <code>trigger suggestion</code> 的時候你可能會想看他的 detail，像這樣：</p>
+<p><img src="show-suggestion-detail.gif" alt="show-suggestion-detail"></p>
+<p>不過因為預設的快捷鍵跟 Mac 有衝突，所以建議能把 <code>toggleSuggestionDetails</code> 調整一下：</p>
+<p><img src="toggle-suggestion-details.png" alt="toggle-suggestion-details"></p>
+<h2 id="幫-function-加上說明"><a href="#幫-function-加上說明" class="headerlink" title="幫 function 加上說明"></a>幫 function 加上說明</h2><p>只要輸入 <code>/**</code> 就會自動產生像這樣的 snippe</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 加入購物車的函式，讚吧！</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">{Number}</span> </span>num 產品的 id</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addToCart</span>(<span class="hljs-params">num</span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`add item <span class="hljs-subst">${num}</span> to cart.`</span>)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">module</span>.exports = addToCart</span><br></pre></td></tr></tbody></table></figure>
+
+<p>可以加入說明文字，而 <code>{Number}</code> 的部分代表參數 <code>num</code> 的資料型態。</p>
+<p>接著在使用這個 function 的地方就會出現對應提示：</p>
+<p><img src="function-comment.jpg" alt="function-comment"></p>
+<h2 id="我的-VS-Code-設定檔"><a href="#我的-VS-Code-設定檔" class="headerlink" title="我的 VS-Code 設定檔"></a>我的 VS-Code 設定檔</h2><figure class="highlight json hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="hljs-attr">"workbench.panel.defaultLocation"</span>: <span class="hljs-string">"right"</span>,</span><br><span class="line">  <span class="hljs-attr">"editor.cursorSmoothCaretAnimation"</span>: <span class="hljs-string">"on"</span>,</span><br><span class="line">  <span class="hljs-attr">"explorer.compactFolders"</span>: <span class="hljs-literal">false</span>,</span><br><span class="line">  <span class="hljs-attr">"workbench.iconTheme"</span>: <span class="hljs-string">"material-icon-theme"</span>,</span><br><span class="line">  <span class="hljs-attr">"terminal.integrated.fontSize"</span>: <span class="hljs-number">14</span>,</span><br><span class="line">  <span class="hljs-attr">"editor.fontFamily"</span>: <span class="hljs-string">"'JetBrainsMono Nerd Font', Monaco, 'Courier New', monospace"</span>,</span><br><span class="line">  <span class="hljs-attr">"editor.tabSize"</span>: <span class="hljs-number">2</span>,</span><br><span class="line">  <span class="hljs-attr">"editor.fontSize"</span>: <span class="hljs-number">14</span>,</span><br><span class="line">  <span class="hljs-attr">"editor.fontLigatures"</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">  <span class="hljs-attr">"editor.formatOnSave"</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">  <span class="hljs-attr">"editor.defaultFormatter"</span>: <span class="hljs-string">"esbenp.prettier-vscode"</span>,</span><br><span class="line">  <span class="hljs-attr">"editor.suggest.showStatusBar"</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">  <span class="hljs-attr">"prettier.jsxSingleQuote"</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">  <span class="hljs-attr">"prettier.printWidth"</span>: <span class="hljs-number">120</span>,</span><br><span class="line">  <span class="hljs-attr">"prettier.singleAttributePerLine"</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">  <span class="hljs-attr">"prettier.semi"</span>: <span class="hljs-literal">false</span>,</span><br><span class="line">  <span class="hljs-attr">"prettier.singleQuote"</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">  <span class="hljs-attr">"prettier.trailingComma"</span>: <span class="hljs-string">"none"</span>,</span><br><span class="line">  <span class="hljs-attr">"emmet.includeLanguages"</span>: {</span><br><span class="line">    <span class="hljs-attr">"javascript"</span>: <span class="hljs-string">"javascriptreact"</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">"formattingToggle.affects"</span>: [<span class="hljs-string">"editor.formatOnSave"</span>],</span><br><span class="line">  <span class="hljs-attr">"explorer.fileNesting.enabled"</span>: <span class="hljs-literal">false</span>,</span><br><span class="line">  <span class="hljs-attr">"editor.minimap.enabled"</span>: <span class="hljs-literal">false</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="推薦裝的套件"><a href="#推薦裝的套件" class="headerlink" title="推薦裝的套件"></a>推薦裝的套件</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme">Material Icon Theme</a> 美美的 Icon</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=adrianwilczynski.one-dark-pro">One Dark Pro</a> 配色主題一</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=enkia.tokyo-night">Tokyo Night</a> 配色主題二</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=dracula-theme.theme-dracula">Dracula Official</a> 配色主題三</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=letrieu.expand-region">expand-region</a> 選取工具</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=oderwat.indent-rainbow">indent-rainbow</a> 縮排醒目色彩</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker">Code Spell Checker</a> 錯字檢查</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=dakshmiglani.hex-to-rgba">Hex 轉 RGBA</a> 色彩轉換</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint">ESLint</a> 就是檢查 JS 的 Linter</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=hoovercj.vscode-power-mode">Power Mode</a> 炫泡的 typing 效果</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=bierner.emojisense">:emojisense:</a> 快速插入 emoji</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens">GitLens</a> 團隊合作時很好用</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=RapidAPI.vscode-rapidapi-client">RapidAPI Client</a> 不想用 PostMan 的另一種選擇</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss">Tailwind CSS IntelliSense</a> 寫 Tailwind 的好幫手！</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=Nixon.env-cmd-file-syntax">env-cmd-file-syntax</a> 支援 env 檔案</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets">ES7+ React/Redux/React-Native snippets</a> React Snippets</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer">Live Server</a> Live Server 不解釋</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx">MDX</a> MDX 語法</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin">TypeScript Vue Plugin (Volar)</a> 給 Volar 用的 TypeScript 套件</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=Vue.volar">Vue Language Features (Volar)</a> Vue 語法支援</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=EdgardMessias.clipboard-manager">Clipboard Manager</a> 複製貼上好幫手</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=wmaurer.change-case">change-case</a> 把單字轉換成各種 case</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=adpyke.codesnap">CodeSnap</a> 加了美圖秀秀的程式碼（拍立得）</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=kaiwood.center-editor-window">Center Editor Window</a> 視角置中（有用過 vim 的 zz 都懂）</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=wmaurer.vscode-jumpy">jumpy</a> 快速把游標跳到想要的位置。</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=liamhammett.inline-parameters">Inline Parameters for VSCode</a> 顯示 parameter 的名稱（類似 IntelliJ）</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=tombonnike.vscode-status-bar-format-toggle">Formatting Toggle</a> 一鍵切換 Formatter</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=yoavbls.pretty-ts-errors">pretty-ts-errors</a> 給人類看的 TS 錯誤訊息</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one">markdown-all-in-one</a> 有在用 markdown 的人不要錯過！</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight">TODO-Highlight</a> 就是 TODO 貼紙</li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://hackmd.io/@JohnsonMao/Front-end/%2F1aO7EIBfRXeym0AisOMRmQ">毛毛前端筆記</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=LOjUnXk_TNU">20 個 VSCode 開發小技巧，讓你 Coding 三倍速！</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.typeart.cc/visual-studio-code-recommend-extensions/">Visual Studio Code 必裝套件(extensions)</a></li>
+</ul>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/12/15/mentor-program-day04/">mentor-program-day04</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/12/14/commandline-instruction/">Commandline 的指令</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

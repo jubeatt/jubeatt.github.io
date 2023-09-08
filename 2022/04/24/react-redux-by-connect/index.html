@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>用 react-redux 把 redux 跟 React 串接起來（Connect 版本） - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="早期的方法，雖然麻煩但也有一些好處。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 react-redux 把 redux 跟 React 串接起來（Connect 版本）">
+<meta property="og:url" content="https://jubeatt.github.io/2022/04/24/react-redux-by-connect/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="早期的方法，雖然麻煩但也有一些好處。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-04-24T09:42:25.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.590Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡述">1&nbsp;&nbsp;<b>簡述</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#正文">2&nbsp;&nbsp;<b>正文</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            用 react-redux 把 redux 跟 React 串接起來（Connect 版本）
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>4月 24 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/React/">React</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>早期的方法，雖然麻煩但也有一些好處。</p>
+<span id="more"></span>
+
+<h2 id="簡述"><a href="#簡述" class="headerlink" title="簡述"></a>簡述</h2><p>用 react redux 串接 redux 的方法有兩種：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://react-redux.js.org/api/hooks">hook</a></li>
+<li><a target="_blank" rel="noopener" href="https://react-redux.js.org/tutorials/connect">connect</a></li>
+</ul>
+<p>目前都會推薦用 hook 的方式來串，但建議還是能了解一下 connect 的做法是怎麼做的。</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>它背後的原理其實就是「把 store 的東西當作 props 傳到 component 裡面」，我框起來的地方是重點，一定要看懂。</p>
+<p>這種作法稱為：</p>
+<blockquote>
+<p>HOC Higher Order Component，意思就是 Component 在包一層 Component</p>
+</blockquote>
+<p>總而言之寫起來會長這樣（先看個大概就好，看不懂沒關係）：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> TodoInput <span class="hljs-keyword">from</span> <span class="hljs-string">"../components/TodoInput"</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> { connect } <span class="hljs-keyword">from</span> <span class="hljs-string">"react-redux"</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> { addTodo } <span class="hljs-keyword">from</span> <span class="hljs-string">"../redux/actions"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 這兩個 function 下面會在解釋</span></span><br><span class="line"><span class="hljs-keyword">const</span> mapStateToProps = <span class="hljs-function"><span class="hljs-params">store</span> =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> {</span><br><span class="line">    <span class="hljs-attr">todos</span>: store.todosReducer.todos</span><br><span class="line">  }</span><br><span class="line">};</span><br><span class="line"><span class="hljs-keyword">const</span> mapDispatchToProps = <span class="hljs-function"><span class="hljs-params">dispatch</span> =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> {</span><br><span class="line">    <span class="hljs-attr">addTodo</span>: <span class="hljs-function"><span class="hljs-params">payload</span> =&gt;</span> dispatch(addTodo(payload))</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 在 connect 傳入兩個 function，拿到 store 裡面的東西</span></span><br><span class="line"><span class="hljs-keyword">const</span> connectToStore = connect(mapStateToProps, mapDispatchToProps);</span><br><span class="line"><span class="hljs-comment">// 把 TodoInput 這個 Component 傳給 connectToStore</span></span><br><span class="line"><span class="hljs-comment">// 它會產生一個新的 Component</span></span><br><span class="line"><span class="hljs-keyword">const</span> connectTodoInput = connectToStore(TodoInput)</span><br><span class="line"><span class="hljs-comment">// 最後把新的 Component 輸出</span></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> connectTodoInput;</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p>在解釋這段 code 以前先打個岔。</p>
+<p>還記得剛剛說的嗎？ connect 的原理只是多包一層 Component 而已，所以關於 Component 其實還可以分成下面這兩個東西：</p>
+<ul>
+<li><code>dump / presentational Component</code></li>
+<li><code>smart / container Component</code></li>
+</ul>
+<p>那個負責接收 props 的 Component 就叫做 dump component，因為它完全不知道 redux 的存在，它只知道「哦，我會接收到 props，我用就對了」。</p>
+<p>而那個負責把 store 傳下去的 Component 就是 smart component，因為它知道 redux 的存在，不像 dump component 純粹只管理 UI 的顯示。</p>
+<p>所以這時候呢，資料夾的結構通常會長成這樣子：</p>
+<ul>
+<li>containers<ul>
+<li>todoInput.js（dump Component）</li>
+</ul>
+</li>
+<li>components<ul>
+<li>todoInput.js（smart Component）</li>
+</ul>
+</li>
+</ul>
+<p>雖然只看名字的話感覺是一樣的東西，但它背後卻有著 dump 跟 smart 的區別。</p>
+<p>這個想法是 Redux 的作者 Dan Abramov 提出的，有興趣的話推薦去看這篇文章：<a target="_blank" rel="noopener" href="https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0">Presentational and Container Components</a></p>
+<p>好，讓我們回來解釋 code 的部分吧。</p>
+<p>首先 <code>connect</code> 只是個用來跟 store 串接起來的函式，它會接收兩個參數（function）：</p>
+<p>1. <code>mapStateToProps</code> </p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> mapStateToProps = <span class="hljs-function"><span class="hljs-params">store</span> =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> {</span><br><span class="line">    <span class="hljs-attr">todos</span>: store.todosReducer.todos</span><br><span class="line">  }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+
+<p>跟 <code>useSelector</code> 是差不多的概念，就是「從 store 把想要的 state 選出來」，然後 return，它就會被當成 Props 傳入（它的函式命名我覺得有夠貼切）。</p>
+<p>2. <code>mapDispatchToProps</code></p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> mapDispatchToProps = <span class="hljs-function"><span class="hljs-params">dispatch</span> =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> {</span><br><span class="line">    <span class="hljs-attr">addTodo</span>: <span class="hljs-function"><span class="hljs-params">payload</span> =&gt;</span> dispatch(addTodo(payload))</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>我是這樣理解啦，你可以先思考這個問題，「現在沒有 <code>useDispatch</code> 能用了，那原本的 Component 要怎麼 dispatch 一個 action？」</p>
+<p>剛剛不是有說可以傳 props 嗎？所以只要先在外面這一層把 dispatch 寫好後在當作 props 傳進去就好啦，這就是這一段在做的事情。</p>
+<p>順道一提，這邊如果 props 跟 dispatch 的 action 同名，可以用這樣來縮寫：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> mapDispatchToProps = {</span><br><span class="line">  addTodo</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p>做好以後，最後一步就是把 container/ 底下的 Component 引入使用而已。因為 code 有點多我就不貼這邊了，想看完整的原始碼到<a target="_blank" rel="noopener" href="https://codesandbox.io/s/ba-react-gen-redux-chuan-jie-qi-lai-huan-mei-tui-chu-hook-qian-de-zuo-fa-4jxdnb?file=/src/index.js">這邊</a>來看。</p>
+<p>最後只是想提一下，這樣子的做法有什麼好處嗎？</p>
+<p>有哦！好處是「測試」比較好測，因為把 Component 都拆成更小的單位了，而且每個 Component 的職責更加分明（負責 UI / 負責 Redux），所以會要測試的項目會單純許多。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/04/25/redux-toolkit/">用 Redux-toolkit 串接 React 和 Redux</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/04/24/redux-devtool/">使用 redux-devtool 的小提醒</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

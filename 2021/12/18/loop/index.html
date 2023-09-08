@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>重新認識迴圈 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="沒有那麼複雜。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重新認識迴圈">
+<meta property="og:url" content="https://jubeatt.github.io/2021/12/18/loop/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="沒有那麼複雜。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-12-18T07:27:31.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.546Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#從-label-與-goto-來理解迴圈的本質">1&nbsp;&nbsp;<b>從 label 與 goto 來理解迴圈的本質</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#do-while-先做再說">1.1&nbsp;&nbsp;do while 先做再說</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#while-就是我熟悉的它">1.2&nbsp;&nbsp;while 就是我熟悉的它</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#for-loop">2&nbsp;&nbsp;<b>for loop</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#break-與-continue">2.1&nbsp;&nbsp;break 與 continue</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#break">2.1.1&nbsp;&nbsp;break</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#continue">2.1.2&nbsp;&nbsp;continue</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#簡單的應用">3&nbsp;&nbsp;<b>簡單的應用</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#i-lt-n-跟-i-lt-n-的理解方式">3.1&nbsp;&nbsp;i&amp;lt;n 跟 i&amp;lt;=n 的理解方式</a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            重新認識迴圈
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>12月 18 2021</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>沒有那麼複雜。</p>
+<span id="more"></span>
+
+
+<h2 id="從-label-與-goto-來理解迴圈的本質"><a href="#從-label-與-goto-來理解迴圈的本質" class="headerlink" title="從 label 與 goto 來理解迴圈的本質"></a>從 label 與 goto 來理解迴圈的本質</h2><p>先介紹這兩個東西是因為不管是哪種迴圈，本質都是這三樣東西：</p>
+<ol>
+<li>初始值</li>
+<li>終止條件</li>
+<li>每一圈要做的事（更新控制迴圈的變數值）</li>
+</ol>
+<p>如果把每種迴圈的步驟拆出來分析，會發現背後的概念都是用<code>label</code> 跟 <code>goto</code> 來實作的。</p>
+<p>（JavaScript 沒有這個語法，純粹只是要解釋這個概念）</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span>  <span class="hljs-comment">// 初始值</span></span><br><span class="line"><span class="hljs-attr">loop</span>: <span class="hljs-comment">// label</span></span><br><span class="line"><span class="hljs-built_in">console</span>.log(i) <span class="hljs-comment">// 每一圈要做的事</span></span><br><span class="line">i++   <span class="hljs-comment">// 更新控制迴圈的變數</span></span><br><span class="line"><span class="hljs-keyword">if</span> (i &lt;= <span class="hljs-number">10</span>) { <span class="hljs-comment">// 終止條件</span></span><br><span class="line">  goto loop    <span class="hljs-comment">// goto lbael (loop) </span></span><br><span class="line">}</span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'finished'</span>) <span class="hljs-comment">// loop end</span></span><br></pre></td></tr></tbody></table></figure>
+<p>試著自己把一個步驟走過一遍：</p>
+<ol>
+<li>建立初始值 <code>i = 1</code></li>
+<li>loop 是標籤，不理它</li>
+<li>印出 <code>i</code></li>
+<li>更新 <code>i</code> </li>
+<li>終止條件，<code>i&lt;=10</code> 的話就跳回 <code>loop</code></li>
+<li>印出 <code>finished</code></li>
+</ol>
+<p>最後你會發現這就跟你用迴圈的語法寫出來的結果一樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">1</span></span><br><span class="line"><span class="hljs-number">2</span></span><br><span class="line"><span class="hljs-number">3</span></span><br><span class="line"><span class="hljs-number">4</span></span><br><span class="line"><span class="hljs-number">5</span></span><br><span class="line"><span class="hljs-number">6</span></span><br><span class="line"><span class="hljs-number">7</span></span><br><span class="line"><span class="hljs-number">8</span></span><br><span class="line"><span class="hljs-number">9</span></span><br><span class="line"><span class="hljs-number">10</span></span><br><span class="line">finished</span><br></pre></td></tr></tbody></table></figure>
+
+
+<h3 id="do-while-先做再說"><a href="#do-while-先做再說" class="headerlink" title="do while 先做再說"></a>do while 先做再說</h3><p>因為 do while 不常用，所以還蠻常忘記它的語法。一個比較直覺的想法：一個迴圈就是一個 block，所以要做（do）的事情就放在 block 裡。</p>
+<p>do while 的流程：</p>
+<ol>
+<li>初始值</li>
+<li>每一圈要做的事（更新控制迴圈的變數值）</li>
+<li>終止條件</li>
+</ol>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span></span><br><span class="line"><span class="hljs-keyword">do</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(i)</span><br><span class="line">  i++</span><br><span class="line">} <span class="hljs-keyword">while</span> (i &lt;= <span class="hljs-number">10</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="while-就是我熟悉的它"><a href="#while-就是我熟悉的它" class="headerlink" title="while 就是我熟悉的它"></a>while 就是我熟悉的它</h3><p>while 跟 do whie 最不一樣的地方是：「先判斷條件」，接著才執行迴圈區塊。</p>
+<p>while 的流程：</p>
+<ol>
+<li>初始值</li>
+<li>終止條件</li>
+<li>每一圈要做的事（更新控制迴圈的變數值）</li>
+</ol>
+<p>單舉例子太無聊了，所以做點有趣的：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span></span><br><span class="line"><span class="hljs-keyword">while</span> (i &lt;= <span class="hljs-number">10</span>) {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(i++)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'i = '</span>, i)</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>i++</code> 寫在 log 也沒問題哦！（不知道為什麼的話罰你回去看 i++ 是什麼意思）</p>
+<h2 id="for-loop"><a href="#for-loop" class="headerlink" title="for loop"></a>for loop</h2><p>其實 <code>for</code> 跟 <code>while</code> 的流程是一樣的：</p>
+<ol>
+<li>初始值</li>
+<li>終止條件</li>
+<li>每一圈要做的事（更新控制迴圈的變數值）</li>
+</ol>
+<p>只是 <code>while</code> 的結構寫起來沒有那麼好讀：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span> <span class="hljs-comment">// 初始值</span></span><br><span class="line"><span class="hljs-keyword">while</span> (i &lt;= <span class="hljs-number">100</span>) {  <span class="hljs-comment">// 終止條件</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(i)</span><br><span class="line">  <span class="hljs-comment">// ...</span></span><br><span class="line">  i+=<span class="hljs-number">2</span> <span class="hljs-comment">// 每一圈要做的事</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p><code>for</code> 把東西都寫在一行裡，一目了然：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 同一行所以要句點</span></span><br><span class="line"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;=<span class="hljs-number">100</span>; i++) {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(i)</span><br><span class="line">  <span class="hljs-comment">// ...</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>在幫你複習一下，如果你用 <code>label</code> 跟 <code>goto</code> 的概念來解析 for 跟 while 的話，會發現做的事情都一樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span></span><br><span class="line">:check <span class="hljs-keyword">if</span> (i&lt;=<span class="hljs-number">10</span>) {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(i)</span><br><span class="line">  i++</span><br><span class="line">  goto check</span><br><span class="line">}</span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'finished'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<ol>
+<li>初始值</li>
+<li>終止條件（不符合就跳第五步）</li>
+<li>執行迴圈 block（更新控制變數的值）</li>
+<li>跳回第二步</li>
+<li>結束 </li>
+</ol>
+<h3 id="break-與-continue"><a href="#break-與-continue" class="headerlink" title="break 與 continue"></a>break 與 continue</h3><p>即便迴圈本身已經自帶「終止條件」，但有些時候我們會想要在執行「迴圈 block」的過程中來控制迴圈的執行流程：</p>
+<ol>
+<li>跳出迴圈</li>
+<li>忽略掉那一圈要做的事情</li>
+</ol>
+<p>這個時候 <code>break</code> 跟 <code>continue</code> 就派上用場了。 </p>
+<h4 id="break"><a href="#break" class="headerlink" title="break"></a>break</h4><p>碰到 break 時，不會執行之後的指令，直接跳出迴圈。</p>
+<p>這裡利用 break 來在迴圈區塊中建立終止條件：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span></span><br><span class="line"><span class="hljs-keyword">do</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(i)</span><br><span class="line">  i++</span><br><span class="line">  <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">100</span>) {</span><br><span class="line">    <span class="hljs-keyword">break</span></span><br><span class="line">  }</span><br><span class="line">} <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>)</span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'i='</span>, i)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>儘管 <code>while (true)</code> 會蹦出一個「無窮迴圈」，但因為我們在迴圈區塊使用了 break 來控制流程，所以在 <code>i=101</code> 的時候，迴圈就會結束。</p>
+<h4 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h4><p>碰到 continue 時，不會執行之後的指令，直接跳下一圈迴圈。</p>
+<p>這裡寫一個碰到奇數就跳下一圈的迴圈：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span></span><br><span class="line"><span class="hljs-keyword">do</span> {</span><br><span class="line">  <span class="hljs-keyword">if</span> (i&amp;<span class="hljs-number">1</span>) {</span><br><span class="line">    i++</span><br><span class="line">    <span class="hljs-keyword">continue</span></span><br><span class="line">  } </span><br><span class="line">  <span class="hljs-built_in">console</span>.log(i)</span><br><span class="line">  i++</span><br><span class="line">} <span class="hljs-keyword">while</span> (i &lt;= <span class="hljs-number">10</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+
+<h2 id="簡單的應用"><a href="#簡單的應用" class="headerlink" title="簡單的應用"></a>簡單的應用</h2><p>用三種不同的迴圈來「印出分數的總和」</p>
+<ol>
+<li>do while</li>
+</ol>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span></span><br><span class="line"><span class="hljs-keyword">var</span> scores = [<span class="hljs-number">70</span>, <span class="hljs-number">32</span>, <span class="hljs-number">52</span>, <span class="hljs-number">66</span>, <span class="hljs-number">90</span>]</span><br><span class="line"><span class="hljs-keyword">var</span> sum = <span class="hljs-number">0</span></span><br><span class="line"><span class="hljs-keyword">do</span> {</span><br><span class="line">  sum += scores[i]</span><br><span class="line">  i++</span><br><span class="line">} <span class="hljs-keyword">while</span>(i&lt;scores.length)</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(sum)</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="2">
+<li>while</li>
+</ol>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> scores = [<span class="hljs-number">70</span>, <span class="hljs-number">32</span>, <span class="hljs-number">52</span>, <span class="hljs-number">66</span>, <span class="hljs-number">90</span>]</span><br><span class="line"><span class="hljs-keyword">var</span> sum = <span class="hljs-number">0</span></span><br><span class="line"><span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span></span><br><span class="line"><span class="hljs-keyword">while</span> (i&lt;scores.length) {</span><br><span class="line">  sum += scores[i]</span><br><span class="line">  i++</span><br><span class="line">}</span><br><span class="line"><span class="hljs-built_in">console</span>.log(sum)</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="3">
+<li>for </li>
+</ol>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> scores = [<span class="hljs-number">70</span>, <span class="hljs-number">32</span>, <span class="hljs-number">52</span>, <span class="hljs-number">66</span>, <span class="hljs-number">90</span>]</span><br><span class="line"><span class="hljs-keyword">var</span> sum = <span class="hljs-number">0</span></span><br><span class="line"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;scores.length; i++) {</span><br><span class="line">  sum += scores[i]</span><br><span class="line">}</span><br><span class="line"><span class="hljs-built_in">console</span>.log(sum)</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="i-lt-n-跟-i-lt-n-的理解方式"><a href="#i-lt-n-跟-i-lt-n-的理解方式" class="headerlink" title="i<n 跟 i<=n 的理解方式"></a>i&lt;n 跟 i&lt;=n 的理解方式</h3><p>剛開始學迴圈的時候很常會搞混 <code>&lt;</code> 跟 <code>&lt;=</code> 的差別。其實有個簡單的判斷法：</p>
+<ol>
+<li>i&lt;5，只會執行到 4</li>
+<li>i&lt;=5，會執行到 5</li>
+</ol>
+<p>我的記法是只要看到 <code>&lt;=</code>，就表示一定會碰到 n；不是的話就是 n - 1</p>
+<p>搭配 Array.length 使用的時候，通常都是寫 <code>&lt;</code>，因為「索引值」是從 0 開始，所以假設長度是 5，最後一個索引值就會是 4：<code>0 =&gt; 1 =&gt; 2 =&gt; 3 =&gt; 4</code></p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/12/18/principle-of-parameter/">理解 function 傳遞參數的機制</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/12/18/mentor-program-day07/">mentor-program-day07</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

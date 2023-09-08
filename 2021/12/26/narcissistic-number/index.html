@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>水仙花數 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="來自 LIOJ，還蠻值得練習的題目。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="水仙花數">
+<meta property="og:url" content="https://jubeatt.github.io/2021/12/26/narcissistic-number/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="來自 LIOJ，還蠻值得練習的題目。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-12-26T10:42:16.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.488Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#解題方向">1&nbsp;&nbsp;<b>解題方向</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#求出位數">1.1&nbsp;&nbsp;求出位數</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#取出每個位數的數字">1.2&nbsp;&nbsp;取出每個位數的數字</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#解法">2&nbsp;&nbsp;<b>解法</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#作弊解法－轉成字串">3&nbsp;&nbsp;<b>作弊解法－轉成字串</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            水仙花數
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>12月 26 2021</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Example/">Example</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>來自 <a target="_blank" rel="noopener" href="https://oj.lidemy.com/problem/1025">LIOJ</a>，還蠻值得練習的題目。</p>
+<span id="more"></span>
+
+
+<h2 id="解題方向"><a href="#解題方向" class="headerlink" title="解題方向"></a>解題方向</h2><ol>
+<li>怎麼知道一個數字有幾位數？</li>
+<li>怎麼取出每個位數的數字？</li>
+</ol>
+<h3 id="求出位數"><a href="#求出位數" class="headerlink" title="求出位數"></a>求出位數</h3><p>把一個數字一直 <code>/10</code>（記得無條件捨去），直到 0 為止。看總共除幾次，就代表這個數字有幾位數：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">digitCount</span>(<span class="hljs-params">n</span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// n=0 時會被當作 0 位數，所以做點處理</span></span><br><span class="line">  <span class="hljs-keyword">if</span>(n === <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span></span><br><span class="line">  <span class="hljs-keyword">let</span> result = <span class="hljs-number">0</span></span><br><span class="line">  <span class="hljs-comment">// 直到 0 為止</span></span><br><span class="line">  <span class="hljs-keyword">while</span>(n !== <span class="hljs-number">0</span>) {</span><br><span class="line">    n = <span class="hljs-built_in">Math</span>.floor(n/<span class="hljs-number">10</span>)</span><br><span class="line">    result++</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-keyword">return</span> result</span><br><span class="line">}</span><br><span class="line">digitCount(<span class="hljs-number">0</span>) <span class="hljs-comment">// 1</span></span><br><span class="line">digitCount(<span class="hljs-number">12</span>) <span class="hljs-comment">// 2</span></span><br><span class="line">digitCount(<span class="hljs-number">123</span>) <span class="hljs-comment">// 3</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="取出每個位數的數字"><a href="#取出每個位數的數字" class="headerlink" title="取出每個位數的數字"></a>取出每個位數的數字</h3><p>對一個數字取餘數 <code>%10</code> 可以取到「最後一位數字」，接著搭配迴圈使用 <code>/10</code> 來更新數字（去掉最後一位數），就可以取出每一個位數的數字： </p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">printSingleDigit</span>(<span class="hljs-params">n</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">while</span>(n !== <span class="hljs-number">0</span>) {</span><br><span class="line">    <span class="hljs-keyword">const</span> number = n % <span class="hljs-number">10</span></span><br><span class="line">    <span class="hljs-built_in">console</span>.log(number)</span><br><span class="line">    n = <span class="hljs-built_in">Math</span>.floor(n/<span class="hljs-number">10</span>)</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line">printSingleDigit(<span class="hljs-number">123</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>輸出結果：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">3</span></span><br><span class="line"><span class="hljs-number">2</span></span><br><span class="line"><span class="hljs-number">1</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><p>上面問題搞定後，接下來只要依據水仙花數的定義來解題即可：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isNarcissistic</span>(<span class="hljs-params">n</span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 幾位數</span></span><br><span class="line">  <span class="hljs-keyword">let</span> digit = digitCount(n)</span><br><span class="line">  <span class="hljs-comment">// 儲存每一位數的加總</span></span><br><span class="line">  <span class="hljs-keyword">let</span> sum = <span class="hljs-number">0</span></span><br><span class="line">  <span class="hljs-comment">// 複製一份數字</span></span><br><span class="line">  <span class="hljs-keyword">let</span> m = n</span><br><span class="line">  <span class="hljs-comment">// 計算總和</span></span><br><span class="line">  <span class="hljs-keyword">while</span>(m !== <span class="hljs-number">0</span>) {</span><br><span class="line">    <span class="hljs-comment">// 每一位數 x 位數</span></span><br><span class="line">    sum += (m%<span class="hljs-number">10</span>) ** digit</span><br><span class="line">    <span class="hljs-comment">// 去除最後一位數</span></span><br><span class="line">    m = <span class="hljs-built_in">Math</span>.floor(m/<span class="hljs-number">10</span>)</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(sum === n)</span><br><span class="line">}</span><br><span class="line">isNarcissistic(<span class="hljs-number">5</span>)  <span class="hljs-comment">// true</span></span><br><span class="line">isNarcissistic(<span class="hljs-number">1634</span>) <span class="hljs-comment">// true</span></span><br><span class="line">isNarcissistic(<span class="hljs-number">1024</span>) <span class="hljs-comment">// false</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>這裡做兩個小提醒：</p>
+<ol>
+<li><code>n</code> 的值必須拷貝一份，不然最後會變成 0，也就沒辦法做 <code>sum === n</code> 的判斷</li>
+<li><code>m%10 ** digit</code>，其中 <code>m%10</code> 必須括號起來，否則會先計算 <code>10**digit</code></li>
+</ol>
+<h2 id="作弊解法－轉成字串"><a href="#作弊解法－轉成字串" class="headerlink" title="作弊解法－轉成字串"></a>作弊解法－轉成字串</h2><p>前面是用正統的數學計算來取得每一位數還有總位數，但你仔細想想，如果變成字串的話，要做到那些事就容易很多，例如說 <code>'123'</code>：</p>
+<ol>
+<li>取得每一位數 <code>str[0] = 1</code> <code>str[1] = 2</code> <code>str[2] = 3</code></li>
+<li>取得總位數 <code>str.length = 3</code></li>
+</ol>
+<p>所以把剛剛的例子改寫一下：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isNarcissisticString</span>(<span class="hljs-params">n</span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 轉成字串</span></span><br><span class="line">  <span class="hljs-keyword">const</span> str = n + <span class="hljs-string">''</span></span><br><span class="line">  <span class="hljs-comment">// 總位數</span></span><br><span class="line">  <span class="hljs-keyword">const</span> digits = str.length  </span><br><span class="line">  <span class="hljs-keyword">let</span> sum = <span class="hljs-number">0</span></span><br><span class="line">  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;str.length; i++) {</span><br><span class="line">    sum += <span class="hljs-built_in">Number</span>(str[i]) ** digits</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(sum === n)</span><br><span class="line">}</span><br><span class="line">isNarcissisticString(<span class="hljs-number">5</span>)  <span class="hljs-comment">// true</span></span><br><span class="line">isNarcissisticString(<span class="hljs-number">1634</span>) <span class="hljs-comment">// true</span></span><br><span class="line">isNarcissisticString(<span class="hljs-number">1024</span>) <span class="hljs-comment">// false</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>一樣可以求出正確的結果唷！</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/12/26/scientific-notation/">JavaScript 中的科學記號表示法</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/12/26/print-tree/">印出聖誕樹</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

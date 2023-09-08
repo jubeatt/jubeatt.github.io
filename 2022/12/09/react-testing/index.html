@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>React－Testing - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="以前總認為寫測試很麻煩，最近才慢慢體會到測試是一項很重要的技能。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React－Testing">
+<meta property="og:url" content="https://jubeatt.github.io/2022/12/09/react-testing/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="以前總認為寫測試很麻煩，最近才慢慢體會到測試是一項很重要的技能。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/12/09/react-testing/example10-partial-mock.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/12/09/react-testing/example10-partial-mock-2.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/12/09/react-testing/example1-screen-debug.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/12/09/react-testing/example2-logRoles.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/12/09/react-testing/example3-getByRole-by-empty.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/12/09/react-testing/example4-testing-library.gif">
+<meta property="og:image" content="https://jubeatt.github.io/2022/12/09/react-testing/example5-provider.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/12/09/react-testing/example6-act-error.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/12/09/react-testing/example7-mock-error.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/12/09/react-testing/example8-testing-result.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/12/09/react-testing/example9-testing-result.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/12/09/react-testing/question1-error.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/12/09/react-testing/question2-error.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/12/09/react-testing/question3-no-description.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/12/09/react-testing/question3-no-description-solve.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/12/09/react-testing/question4-error.png">
+<meta property="article:published_time" content="2022-12-09T02:32:07.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.595Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/12/09/react-testing/example10-partial-mock.png">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#關於-Jest-與-React-Testing-Library">1&nbsp;&nbsp;<b>關於 Jest 與 React Testing Library</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Jest">1.1&nbsp;&nbsp;Jest</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#React-Testing-Library-RTL">1.2&nbsp;&nbsp;React Testing Library (RTL)</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#各種測試套件">2&nbsp;&nbsp;<b>各種測試套件</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#setupTests-ts">3&nbsp;&nbsp;<b>setupTests.ts</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Jest-watch-mode">4&nbsp;&nbsp;<b>Jest watch mode</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Filename-Convention">5&nbsp;&nbsp;<b>Filename Convention</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#基本結構">6&nbsp;&nbsp;<b>基本結構</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Jest-matcher">7&nbsp;&nbsp;<b>Jest matcher</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Jest-API">8&nbsp;&nbsp;<b>Jest API</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Jest-Mock">9&nbsp;&nbsp;<b>Jest Mock</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#只想-mock-一部分的內容">9.1&nbsp;&nbsp;只想 mock 一部分的內容</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#RTL－Query">10&nbsp;&nbsp;<b>RTL－Query</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#query-的用途">10.1&nbsp;&nbsp;query 的用途</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#find-的用途">10.2&nbsp;&nbsp;find 的用途</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#RTL－Debugging">11&nbsp;&nbsp;<b>RTL－Debugging</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#screen-debug">11.1&nbsp;&nbsp;screen.debug</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#logRoles">11.2&nbsp;&nbsp;logRoles</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#testing-playground">12&nbsp;&nbsp;<b>testing-playground</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#RTL－Event">13&nbsp;&nbsp;<b>RTL－Event</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#RTL－對-Provider-中的元件測試">14&nbsp;&nbsp;<b>RTL－對 Provider 中的元件測試</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#客制化-render-function">14.1&nbsp;&nbsp;客制化 render function</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#RTL－對-custom-hook-做測試">15&nbsp;&nbsp;<b>RTL－對 custom hook 做測試</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#當測試會改變-state-時，需搭配-act-使用">15.1&nbsp;&nbsp;當測試會改變 state 時，需搭配 act 使用</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#RTL－利用-mock-function-來測試">16&nbsp;&nbsp;<b>RTL－利用 mock function 來測試</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#RTL－搭配-MSW-測試-HTTP-Request">17&nbsp;&nbsp;<b>RTL－搭配 MSW 測試 HTTP Request</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#安裝與配置-MSW">17.1&nbsp;&nbsp;安裝與配置 MSW</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#撰寫測試">17.2&nbsp;&nbsp;撰寫測試</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#RTL－另一種測試-HTTP-Request-的方式">18&nbsp;&nbsp;<b>RTL－另一種測試 HTTP Request 的方式</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#jest-mock-的用法">18.1&nbsp;&nbsp;jest.mock 的用法</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#問題集">19&nbsp;&nbsp;<b>問題集</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#當你的-api-function-比較複雜時的-mock-方式">19.1&nbsp;&nbsp;當你的 api function 比較複雜時的 mock 方式</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#明明-mock-有被執行，為什麼-toHaveBeenCalledTimes-偵測不到？">19.2&nbsp;&nbsp;明明 mock 有被執行，為什麼 toHaveBeenCalledTimes 偵測不到？</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Jest-的顯示結果沒有包含敘述？">19.3&nbsp;&nbsp;Jest 的顯示結果沒有包含敘述？</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#有些情況下我只用-querySelector-等等相關的-query-來查詢元素，但那個元素又會根據-state-更新時該怎麼處理？">19.4&nbsp;&nbsp;有些情況下我只用 querySelector 等等相關的 query 來查詢元素，但那個元素又會根據 state 更新時該怎麼處理？</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Uncaught-TypeError-window-matchMedia-is-not-a-function">19.5&nbsp;&nbsp;Uncaught TypeError: window.matchMedia is not a function</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#怎麼模擬-localStorage？">19.6&nbsp;&nbsp;怎麼模擬 localStorage？</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#參考資料">20&nbsp;&nbsp;<b>參考資料</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            React－Testing
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>12月 9 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Testing/">Testing</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>以前總認為寫測試很麻煩，最近才慢慢體會到測試是一項很重要的技能。</p>
+<span id="more"></span>
+
+<h2 id="關於-Jest-與-React-Testing-Library"><a href="#關於-Jest-與-React-Testing-Library" class="headerlink" title="關於 Jest 與 React Testing Library"></a>關於 Jest 與 React Testing Library</h2><h3 id="Jest"><a href="#Jest" class="headerlink" title="Jest"></a>Jest</h3><p>一個用來執行測試的 <strong>Runner</strong>，它能夠自動找出該被測試的檔案並執行測試，並把測試結果轉換成好閱讀的結果。</p>
+<h3 id="React-Testing-Library-RTL"><a href="#React-Testing-Library-RTL" class="headerlink" title="React Testing Library (RTL)"></a>React Testing Library (RTL)</h3><p>讓 JavaScript 可以透過 Virtual DOM 的方式來測試 React Component。</p>
+<p>Testing Library 其實是一套集結各種 UI 元件的測試庫，所以 React 只是這個家族中的其中一個項目。</p>
+<p>背後運作的核心是「DOM Testing Library」，而 RTL 只是把這些東西包裝起來讓我們使用起來更方便一點。</p>
+<h2 id="各種測試套件"><a href="#各種測試套件" class="headerlink" title="各種測試套件"></a>各種測試套件</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/@testing-library/jest-dom">@testing-library/jest-dom</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/@testing-library/react">@testing-library/react</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/@testing-library/user-event">@testing-library/user-event</a></li>
+</ul>
+<p>如果是用 CRA 來建立專案的人，CRA 會在建立時自動安裝好這些套件和設定，不需要額外處理就能開始寫測試囉。</p>
+<h2 id="setupTests-ts"><a href="#setupTests-ts" class="headerlink" title="setupTests.ts"></a>setupTests.ts</h2><p>如果是用 CRA 建立環境的話應該能在根目錄看到這個檔案，內容是這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// jest-dom adds custom jest matchers for asserting on DOM nodes.</span></span><br><span class="line"><span class="hljs-comment">// allows you to do things like:</span></span><br><span class="line"><span class="hljs-comment">// expect(element).toHaveTextContent(/react/i)</span></span><br><span class="line"><span class="hljs-comment">// learn more: https://github.com/testing-library/jest-dom</span></span><br><span class="line"><span class="hljs-keyword">import</span> <span class="hljs-string">'@testing-library/jest-dom'</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>以 CRA 的例子來說是用來把 jest-dom 提供的 matcher 給引入到 jest，讓我們寫測試的能夠時使用那些額外的 matcher。</p>
+<p>原理的話很簡單，就是在 jest 執行以前會先執行 <code>setupTests.ts</code> 的內容，所以 jest 自然可以看懂那些額外的 matcher。</p>
+<h2 id="Jest-watch-mode"><a href="#Jest-watch-mode" class="headerlink" title="Jest watch mode"></a>Jest watch mode</h2><p>CRA 預設開啟 watch mode，watch mode 的用途是執行 <code>test</code> 時只會對上次 commit 後有被修改的檔案做測試，避免花很多時間跑不相關的測試。</p>
+<h2 id="Filename-Convention"><a href="#Filename-Convention" class="headerlink" title="Filename Convention"></a>Filename Convention</h2><p>以 Jest 來說的話會分成底下幾個：</p>
+<ul>
+<li><code>.test.js</code>（檔案）</li>
+<li><code>.spec.js</code>（檔案）</li>
+<li><code>__tess__</code>（資料夾）</li>
+</ul>
+<p>比較常見的做法是把測試檔案放在原檔案的隔壁，這樣就可以用最短的 import 路徑來引入，要找測試檔案的時候也比較好找。</p>
+<h2 id="基本結構"><a href="#基本結構" class="headerlink" title="基本結構"></a>基本結構</h2><p>一個 Test 會包含三個要素：</p>
+<ul>
+<li>Arrange（佈置，簡單來說就是把 component 渲染出來）</li>
+<li>Action（動作）</li>
+<li>Assertion / Expect（斷言）</li>
+</ul>
+<p>範例：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="hljs-string">'if user inputted amount and note fields, the buttons become enabled. '</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">  <span class="hljs-comment">// 渲染 TransactionCreateStepTwo 這個 component</span></span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">TransactionCreateStepTwo</span> <span class="hljs-attr">sender</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">id:</span> '<span class="hljs-attr">5</span>' }} <span class="hljs-attr">receiver</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">id:</span> '<span class="hljs-attr">6</span>' }} /&gt;</span></span>)</span><br><span class="line">  <span class="hljs-comment">// 使用者輸入在表單中輸入內容</span></span><br><span class="line">  userEvent.type(screen.getByPlaceholderText(<span class="hljs-regexp">/amount/i</span>), <span class="hljs-string">'50'</span>)</span><br><span class="line">  userEvent.type(screen.getByPlaceholderText(<span class="hljs-regexp">/add a note/i</span>), <span class="hljs-string">'This is good for you.'</span>)</span><br><span class="line">  <span class="hljs-comment">// 最後應該產生什麼結果（變成 Enabled）</span></span><br><span class="line">  expect(<span class="hljs-keyword">await</span> screen.findByRole(<span class="hljs-string">'button'</span>, { <span class="hljs-attr">name</span>: <span class="hljs-regexp">/pay/i</span> })).toBeEnabled()</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這段測試是當使用者輸入必填欄位後，提交按鈕應該要被 enabled。</p>
+<h2 id="Jest-matcher"><a href="#Jest-matcher" class="headerlink" title="Jest matcher"></a>Jest matcher</h2><p>當我們用 <code>expect(...)</code> 建立一個 Assertion 時，都會搭配一個「matcher」來決定我們 Assertion 是否正確，舉例來說：</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(element).toHaveTextContent(<span class="hljs-string">'abc'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這是用來檢查 <code>element</code> 中是否有包含 <code>abc</code> 的內容。後面的 <code>toHaveTextContent</code> 就是 matcher。</p>
+<p>這裡列出幾個比較常用到的 matcher：</p>
+<ul>
+<li><code>toHaveTextContent</code> 元素的文字內容</li>
+<li><code>toBeInTheDocument</code> 元素有出現在 DOM</li>
+<li><code>not.toBeInTheDocument</code> 文字沒有出現在 DOM</li>
+</ul>
+<p>這邊講的 matcher 多數是來自 <a target="_blank" rel="noopener" href="https://github.com/testing-library/jest-dom">jest-dom</a>，如果你想查 jest 自己的 matcher 可以參考 Jest 的<a target="_blank" rel="noopener" href="https://jestjs.io/docs/using-matchers">官方文件</a>。</p>
+<h2 id="Jest-API"><a href="#Jest-API" class="headerlink" title="Jest API"></a>Jest API</h2><ul>
+<li><code>describe()</code> 把一群 <code>test</code> 給 group 起來</li>
+<li><code>test.only()</code> 忽略掉目前檔案中的其他測試，只執行 only 這個 case。</li>
+<li><code>test.skip()</code> 忽略掉這個 case。</li>
+</ul>
+<h2 id="Jest-Mock"><a href="#Jest-Mock" class="headerlink" title="Jest Mock"></a>Jest Mock</h2><p>一個 mock function 可能有很多種寫法，所以這邊簡單介紹幾個比較容易搞混的種類。</p>
+<p>1. <code>jest.fn()</code> 與 <code>jest.fn().mockImplementation</code></p>
+<p>這兩個其實是等價的東西，只是如果你是寫 TypeScript 的話我覺得前者會比較方便一點：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="hljs-string">'Mock compare'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  test(<span class="hljs-string">'mock function 1'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">const</span> mockFn = jest.fn(<span class="hljs-function">(<span class="hljs-params">value: <span class="hljs-built_in">string</span></span>) =&gt;</span> value)</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(mockFn(<span class="hljs-string">'Hello'</span>)) <span class="hljs-comment">// Hello</span></span><br><span class="line">  })</span><br><span class="line">  test(<span class="hljs-string">'mock function 2'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 需要用 "as" 來指定 mockFn 的 type</span></span><br><span class="line">    <span class="hljs-keyword">const</span> mockFn = jest.fn().mockImplementation(<span class="hljs-function">(<span class="hljs-params">value: <span class="hljs-built_in">string</span></span>) =&gt;</span> value) <span class="hljs-keyword">as</span> jest.MockedFunction&lt;</span><br><span class="line">      <span class="hljs-function">(<span class="hljs-params">value: <span class="hljs-built_in">string</span></span>) =&gt;</span> <span class="hljs-built_in">void</span></span><br><span class="line">    &gt;</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(mockFn(<span class="hljs-string">'Ha Ha Ha'</span>)) <span class="hljs-comment">// Ha Ha Ha</span></span><br><span class="line">  })</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>2. <code>jest.fn(() =&gt; ...)</code> 與 <code>jest.fn().mockReturn...()</code></p>
+<p>這兩個也是差不多的東西，但在不關心參數的情況下我會建議用 <code>mockReturn...</code> 來處理：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="hljs-string">'Mock compare'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  test(<span class="hljs-string">'mock function 1'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">const</span> mockFn = jest.fn(<span class="hljs-function">() =&gt;</span> <span class="hljs-literal">true</span>)</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(mockFn()) <span class="hljs-comment">// true</span></span><br><span class="line">    expect(mockFn).toBeCalledTimes(<span class="hljs-number">1</span>)</span><br><span class="line">  })</span><br><span class="line">  test(<span class="hljs-string">'mock function 2'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">const</span> mockFn = jest.fn().mockReturnValue(<span class="hljs-literal">false</span>)</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(mockFn()) <span class="hljs-comment">// false</span></span><br><span class="line">    expect(mockFn).toBeCalledTimes(<span class="hljs-number">1</span>)</span><br><span class="line">  })</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>而當你關心參數時則會用 <code>jest.fn(() =&gt; ...)</code> 搭配 <code>toBeCalledWith</code> 來測試傳入的參數是否正確：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="hljs-string">'mock function call with right args'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> mockFn = jest.fn(<span class="hljs-function">(<span class="hljs-params">value: <span class="hljs-built_in">boolean</span></span>) =&gt;</span> value)</span><br><span class="line">  mockFn(<span class="hljs-literal">true</span>)</span><br><span class="line">  expect(mockFn).toBeCalledWith(<span class="hljs-literal">true</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>所以我覺得這兩個的差別在於用途，當你只在意回傳值的時候會用 <code>mockReturn...</code>，在意參數的時候會用 <code>jest.fn(() =&gt; ...)</code>。</p>
+<h3 id="只想-mock-一部分的內容"><a href="#只想-mock-一部分的內容" class="headerlink" title="只想 mock 一部分的內容"></a>只想 mock 一部分的內容</h3><p>假設我們現在有一個 module 的內容長這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getName</span>(<span class="hljs-params"></span>): <span class="hljs-title">string</span> </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-string">'PeaNu'</span></span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getAge</span>(<span class="hljs-params"></span>): <span class="hljs-title">number</span> </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-number">20</span></span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> person = {</span><br><span class="line">  <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>,</span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-number">20</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>然後 component 的內容如下：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { getAge, getName, person } <span class="hljs-keyword">from</span> <span class="hljs-string">'./utils'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Module = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// 使用 module</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'person'</span>, person)</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'getName'</span>, getName())</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'getAge'</span>, getAge())</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Module Test<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>接著，如果我想要 mock 的只有 <code>getName</code>，那可以這樣寫：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { render } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { Module } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Module'</span></span><br><span class="line"></span><br><span class="line">jest.mock(<span class="hljs-string">'./utils'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> {</span><br><span class="line">    <span class="hljs-comment">// 把原本的 module 展開</span></span><br><span class="line">    ...jest.requireActual(<span class="hljs-string">'./utils'</span>),</span><br><span class="line">    <span class="hljs-comment">// 寫上要修改的屬性（覆寫）</span></span><br><span class="line">    <span class="hljs-attr">getName</span>: jest.fn(<span class="hljs-function">() =&gt;</span> <span class="hljs-string">'ABC'</span>)</span><br><span class="line">  }</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line">describe(<span class="hljs-string">'Module'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  test(<span class="hljs-string">'render correctly'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Module</span> /&gt;</span></span>)</span><br><span class="line">  })</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：就跟你在修改 Object 的特定 property 的概念很像。</p>
+<p>出來的結果如下：</p>
+<p><img src="example10-partial-mock.png" alt="example10-partial-mock"></p>
+<p>眼尖的話會注意到 module 中有一個 <code>person</code>，這是要做什麼用的？</p>
+<p>這是想示範如果你只想修改 <code>person</code> 中的指定屬性的話，甚至可以這樣做：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { render } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { Module } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Module'</span></span><br><span class="line"></span><br><span class="line">jest.mock(<span class="hljs-string">'./utils'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> {</span><br><span class="line">    ...jest.requireActual(<span class="hljs-string">'./utils'</span>),</span><br><span class="line">    <span class="hljs-comment">// 修改 person</span></span><br><span class="line">    <span class="hljs-attr">person</span>: {</span><br><span class="line">      <span class="hljs-comment">// 把原本 person 的內容展開（注意後面的 .person）</span></span><br><span class="line">      ...jest.requireActual(<span class="hljs-string">'./utils'</span>).person,</span><br><span class="line">      <span class="hljs-comment">// 對要修改的屬性做修改</span></span><br><span class="line">      <span class="hljs-attr">name</span>: <span class="hljs-string">'PPB'</span></span><br><span class="line">    },</span><br><span class="line">    <span class="hljs-attr">getName</span>: jest.fn(<span class="hljs-function">() =&gt;</span> <span class="hljs-string">'ABC'</span>)</span><br><span class="line">  }</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line">describe(<span class="hljs-string">'Module'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  test(<span class="hljs-string">'render correctly'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Module</span> /&gt;</span></span>)</span><br><span class="line">  })</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>出來的結果如下：</p>
+<p><img src="example10-partial-mock-2.png" alt="example10-partial-mock-2"></p>
+<p>總之，這一段只是想介紹 <code>jest.mock</code> 的 <code>factory</code> 功能，詳細可以參考官方文件的<a target="_blank" rel="noopener" href="https://jestjs.io/docs/jest-object#jestmockmodulename-factory-options">這段</a></p>
+<h2 id="RTL－Query"><a href="#RTL－Query" class="headerlink" title="RTL－Query"></a>RTL－Query</h2><p>一般在對 React Component 寫測試的時候，我們會有一個「Query（查詢）」動作，像這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="hljs-string">'renders correctly !!'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Greet</span> /&gt;</span></span>)</span><br><span class="line">  <span class="hljs-comment">// 找出包含 hello 文字的 DOM 元素</span></span><br><span class="line">  <span class="hljs-keyword">const</span> element = screen.getByText(<span class="hljs-regexp">/hello/i</span>)</span><br><span class="line">  expect(element).toBeInTheDocument()</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>以 RTL 的 convention 來說，要查詢單一元素的 query 有這些：</p>
+<ul>
+<li><code>getBy</code>…</li>
+<li><code>queryBy</code>…</li>
+<li><code>findBy</code>…</li>
+</ul>
+<p>多個元素的話：</p>
+<ul>
+<li><code>getAllBy</code>…</li>
+<li><code>queryAllBy</code>…</li>
+<li><code>findAllBy</code>…</li>
+</ul>
+<p>要注意的幾件事：</p>
+<ul>
+<li><code>findBy</code> 一定要搭配 async await 使用</li>
+<li>查詢單一元素的 query 如果找到多筆的話會報錯</li>
+<li>盡量從 user 的角度去選擇適合的 query，藉此得知 a11y 的品質，詳細可以參考官方文件的 <a target="_blank" rel="noopener" href="https://testing-library.com/docs/queries/about/#priority">priority</a> 段落</li>
+</ul>
+<h3 id="query-的用途"><a href="#query-的用途" class="headerlink" title="query 的用途"></a>query 的用途</h3><p><code>query</code> 是用來查詢<strong>不會渲染在畫面上的元素</strong>，例如：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Skills: React.FC = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> [isLoggedIn, setIsLoggedIn] = useState&lt;<span class="hljs-built_in">boolean</span>&gt;(<span class="hljs-literal">false</span>)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {isLoggedIn ? (</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>Start Learn<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      ) : (</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsLoggedIn(true)}&gt;Login<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      )}</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這時候如果想測試第一次渲染時 <code>Start Learn</code> 不會出現在畫面上的話，可能會這樣寫：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="hljs-string">'start learn button is not rendered'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Skills</span> <span class="hljs-attr">skills</span>=<span class="hljs-string">{skills}</span> /&gt;</span></span>)</span><br><span class="line">  <span class="hljs-comment">// 透過 getByRole 查詢</span></span><br><span class="line">  <span class="hljs-keyword">const</span> buttonElement = screen.getByRole(<span class="hljs-string">'button'</span>, { <span class="hljs-attr">name</span>: <span class="hljs-regexp">/start learn/i</span> })</span><br><span class="line">  expect(buttonElement).not.toBeInTheDocument()</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣子在跑測試的時候就會出錯，因為 <code>getByRole</code> 找不到那個按鈕。</p>
+<p>所以這時候可以改用 <code>query</code> 的方式來查詢就不會出錯了：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="hljs-string">'start learn button is not rendered'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Skills</span> <span class="hljs-attr">skills</span>=<span class="hljs-string">{skills}</span> /&gt;</span></span>)</span><br><span class="line">  <span class="hljs-comment">// 改成 query</span></span><br><span class="line">  <span class="hljs-keyword">const</span> buttonElement = screen.queryByRole(<span class="hljs-string">'button'</span>, { <span class="hljs-attr">name</span>: <span class="hljs-regexp">/start learn/i</span> })</span><br><span class="line">  expect(buttonElement).not.toBeInTheDocument()</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>之所以可以這樣做是因為當 <code>query</code> 找不到指定元素時會回傳的是 <code>null</code>（如果是 <code>queryAll</code> 的話會回傳 <code>[]</code>） ，而不是直接拋出一個 Error。我們是利用這一點來通過測試的。</p>
+<h3 id="find-的用途"><a href="#find-的用途" class="headerlink" title="find 的用途"></a>find 的用途</h3><p><code>find</code> 是用來查詢會<strong>根據 state 出現或消失的元素</strong>，例如：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Skills: React.FC&lt;Props&gt; = <span class="hljs-function">(<span class="hljs-params">props</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> [isLoggedIn, setIsLoggedIn] = useState&lt;<span class="hljs-built_in">boolean</span>&gt;(<span class="hljs-literal">false</span>)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 500ms 後更新為登入</span></span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">const</span> timer = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">      setIsLoggedIn(<span class="hljs-literal">true</span>)</span><br><span class="line">    }, <span class="hljs-number">500</span>)</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">clearTimeout</span>(timer)</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        {props.skills.map((skill) =&gt; (</span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{skill}</span>&gt;</span>{skill}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        ))}</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {isLoggedIn ? (</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>Start Learn<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      ) : (</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsLoggedIn(true)}&gt;Login<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      )}</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這時候會碰到「非同步更新」的問題，因此用 <code>getBy</code> 或 <code>query</code> 的話沒辦法做正確的查詢。</p>
+<p>所以要改用 <code>find</code> 來處理：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="hljs-string">'start learn button is rendered after a little times'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Skills</span> <span class="hljs-attr">skills</span>=<span class="hljs-string">{skills}</span> /&gt;</span></span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> buttonElement = <span class="hljs-keyword">await</span> screen.findByRole(</span><br><span class="line">    <span class="hljs-string">'button'</span>,</span><br><span class="line">    { <span class="hljs-attr">name</span>: <span class="hljs-regexp">/start learn/i</span> },</span><br><span class="line">    { <span class="hljs-attr">timeout</span>: <span class="hljs-number">2000</span> }</span><br><span class="line">  )</span><br><span class="line">  expect(buttonElement).toBeInTheDocument()</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>find</code> 會回傳一個 <code>Promise</code>，當 1000ms 內找到元素時，就會 <code>resolve</code> 這個 <code>Promise</code>，反之則 <code>reject</code>。</p>
+<p>上面刻意加上了 <code>{ timeout: 2000 }</code> 這個 option，只是要提醒你如果預設的 1000ms 不夠用的話可以透過 option 來改寫。</p>
+<h2 id="RTL－Debugging"><a href="#RTL－Debugging" class="headerlink" title="RTL－Debugging"></a>RTL－Debugging</h2><h3 id="screen-debug"><a href="#screen-debug" class="headerlink" title="screen.debug"></a>screen.debug</h3><p>有時候你可能會想直接查看 DOM 元素的結構，這時候可以在測試中加上 <code>screen.debug</code>，RTL 會自動把 format 後的 DOM Tree 印出來：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="hljs-string">'start learn button is rendered after a little times'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Skills</span> <span class="hljs-attr">skills</span>=<span class="hljs-string">{skills}</span> /&gt;</span></span>)</span><br><span class="line">  <span class="hljs-comment">// 記得放在 render 後的位置</span></span><br><span class="line">  screen.debug()</span><br><span class="line">  <span class="hljs-keyword">const</span> buttonElement = <span class="hljs-keyword">await</span> screen.findByRole(</span><br><span class="line">    <span class="hljs-string">'button'</span>,</span><br><span class="line">    { <span class="hljs-attr">name</span>: <span class="hljs-regexp">/start learn/i</span> },</span><br><span class="line">    { <span class="hljs-attr">timeout</span>: <span class="hljs-number">2000</span> }</span><br><span class="line">  )</span><br><span class="line">  expect(buttonElement).toBeInTheDocument()</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="example1-screen-debug.png" alt="example1-screen-debug"></p>
+<h3 id="logRoles"><a href="#logRoles" class="headerlink" title="logRoles"></a>logRoles</h3><p>如果你想要查看目前 DOM 上的所有 role，可以透過 <code>logRoles</code> 來查詢：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 1. 從 RTL 中引入</span></span><br><span class="line"><span class="hljs-keyword">import</span> { render, screen, logRoles } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"></span><br><span class="line">test(<span class="hljs-string">'start learn button is rendered after a little times'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">  <span class="hljs-comment">// 2. 把 render 的結果存到變數</span></span><br><span class="line">  <span class="hljs-keyword">const</span> view = render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Skills</span> <span class="hljs-attr">skills</span>=<span class="hljs-string">{skills}</span> /&gt;</span></span>)</span><br><span class="line">  <span class="hljs-comment">// 3. 把 container 丟給 logRoles 處理</span></span><br><span class="line">  logRoles(view.container)</span><br><span class="line">  <span class="hljs-keyword">const</span> buttonElement = <span class="hljs-keyword">await</span> screen.findByRole(</span><br><span class="line">    <span class="hljs-string">'button'</span>,</span><br><span class="line">    { <span class="hljs-attr">name</span>: <span class="hljs-regexp">/start learn/i</span> },</span><br><span class="line">    { <span class="hljs-attr">timeout</span>: <span class="hljs-number">2000</span> }</span><br><span class="line">  )</span><br><span class="line">  expect(buttonElement).toBeInTheDocument()</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>之後就能用比較好讀的格式來查看所有 roles：</p>
+<p><img src="example2-logRoles.png" alt="example2-logRoles"></p>
+<p>不過其實也可以用一個比較 tricky 的方法來做，就是用 <code>screen.getByRole('')</code>：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="hljs-string">'start learn button is rendered after a little times'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Skills</span> <span class="hljs-attr">skills</span>=<span class="hljs-string">{skills}</span> /&gt;</span></span>)</span><br><span class="line">  <span class="hljs-comment">// 對 getByRole 傳入空字串</span></span><br><span class="line">  screen.getByRole(<span class="hljs-string">''</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> buttonElement = <span class="hljs-keyword">await</span> screen.findByRole(</span><br><span class="line">    <span class="hljs-string">'button'</span>,</span><br><span class="line">    { <span class="hljs-attr">name</span>: <span class="hljs-regexp">/start learn/i</span> },</span><br><span class="line">    { <span class="hljs-attr">timeout</span>: <span class="hljs-number">2000</span> }</span><br><span class="line">  )</span><br><span class="line">  expect(buttonElement).toBeInTheDocument()</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這招是故意讓 jest 拋出錯誤，與此同時自動列出我們可以搜尋的 roles 來達到同樣的效果：</p>
+<p><img src="example3-getByRole-by-empty.png" alt="example3-getByRole-by-empty"></p>
+<h2 id="testing-playground"><a href="#testing-playground" class="headerlink" title="testing-playground"></a>testing-playground</h2><p>一個讓你用 UI 來產生對應的 RTL Query 的擴充套件，用起來會像這樣：</p>
+<p><img src="example4-testing-library.gif" alt="example4-testing-library"></p>
+<p>只要選取想要的那個元素它就會自動產生適合的 query 給你，還蠻方便的。</p>
+<h2 id="RTL－Event"><a href="#RTL－Event" class="headerlink" title="RTL－Event"></a>RTL－Event</h2><p>當你想要針對「事件」來做測試時會用到 <a target="_blank" rel="noopener" href="https://github.com/testing-library/user-event">@testing-library/user-event</a> 來處理。</p>
+<p>比較需要注意的地方是 v13 跟 v14 的寫法不太一樣，所以這邊示範一下。</p>
+<p>在 v13 的寫法是這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="hljs-string">'the count should become 1 after user click the button'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Counter</span> /&gt;</span></span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> titleElement = screen.getByRole(<span class="hljs-string">'heading'</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> btnElement = screen.getByRole(<span class="hljs-string">'button'</span>)</span><br><span class="line">  userEvent.click(btnElement)</span><br><span class="line">  expect(titleElement).toHaveTextContent(<span class="hljs-string">'1'</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：使用者按下按鈕後數字應該從 0 變成 1</p>
+<p>在 v14 的寫法是這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="hljs-string">'the count should become 1 after user click the button'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">  userEvent.setup()</span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Counter</span> /&gt;</span></span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> titleElement = screen.getByRole(<span class="hljs-string">'heading'</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> btnElement = screen.getByRole(<span class="hljs-string">'button'</span>)</span><br><span class="line">  <span class="hljs-keyword">await</span> userEvent.click(btnElement)</span><br><span class="line">  expect(titleElement).toHaveTextContent(<span class="hljs-string">'1'</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>在 v14 中要用 userEvent 必須先執行 <code>setup</code>，並且 userEvent 變成是了非同步的 Promise ，所以要搭配 <code>async</code> <code>await</code> 來使用。</p>
+<h2 id="RTL－對-Provider-中的元件測試"><a href="#RTL－對-Provider-中的元件測試" class="headerlink" title="RTL－對 Provider 中的元件測試"></a>RTL－對 Provider 中的元件測試</h2><p>一般來說我們在寫 React 的時候都會用 Provider 來包住整個元件，像這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { Mui } <span class="hljs-keyword">from</span> <span class="hljs-string">'components/Mui/Mui'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { AppProvider } <span class="hljs-keyword">from</span> <span class="hljs-string">'provider/AppProvider'</span></span><br><span class="line"><span class="hljs-keyword">import</span> <span class="hljs-string">'./App.css'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">AppProvider</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'App'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Mui</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">AppProvider</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="example5-provider.png" alt="example5-provider"></p>
+<p>這裡的示範是用 Mui 提供的 <code>theme</code> 功能來讓預設的模式是「dark mode」，所以會用一個 Provider 來包住底下的所有元素。</p>
+<p>不用太在意 <code>AppProvider</code> 的內容是什麼，只要知道我們需要這個 Provier 來讓 dark mode 能夠正常運作就好了。</p>
+<p>然而當我們測試想測試 <code>&lt;Mui&gt;</code> 時，可能會寫出這樣的西：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// Mui.tsx</span></span><br><span class="line"><span class="hljs-keyword">import</span> { Typography } <span class="hljs-keyword">from</span> <span class="hljs-string">'@mui/material'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { useTheme } <span class="hljs-keyword">from</span> <span class="hljs-string">'@mui/material/styles'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Mui = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> theme = useTheme()</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Typography</span> <span class="hljs-attr">component</span>=<span class="hljs-string">'h1'</span>&gt;</span>{theme.palette.mode} mode<span class="hljs-tag">&lt;/<span class="hljs-name">Typography</span>&gt;</span></span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// Mui.test.tsx</span></span><br><span class="line">test(<span class="hljs-string">'renders correctly'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Mui</span> /&gt;</span></span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> headingElement = screen.getByRole(<span class="hljs-string">'heading'</span>)</span><br><span class="line">  <span class="hljs-comment">// 內容應該要有 dark 文字（如果是 dark mode 的話）</span></span><br><span class="line">  expect(headingElement).toHaveTextContent(<span class="hljs-regexp">/dark/i</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>注意 <code>render</code> 的內容只有 <code>&lt;Mui&gt;</code>，並沒有 Provier，所以這段測試是不會通過的。</p>
+<p>你可能會想說「那我直接在 <code>&lt;Mui&gt;</code> 外面包一層 <code>&lt;AppProvider&gt;</code> 不就好了？」。這樣子確實可行，但這樣就沒有那麼 unit 了，所以一般會推薦這樣做：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="hljs-string">'renders correctly'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Mui</span> /&gt;</span></span>, {</span><br><span class="line">    <span class="hljs-comment">// 傳入 option 設定 wrapper</span></span><br><span class="line">    <span class="hljs-attr">wrapper</span>: AppProvider</span><br><span class="line">  })</span><br><span class="line">  <span class="hljs-keyword">const</span> headingElement = screen.getByRole(<span class="hljs-string">'heading'</span>)</span><br><span class="line">  expect(headingElement).toHaveTextContent(<span class="hljs-regexp">/dark/i</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣 jest 就會自動在背後補一層 Provider，就能正確的測試了。</p>
+<h3 id="客制化-render-function"><a href="#客制化-render-function" class="headerlink" title="客制化 render function"></a>客制化 render function</h3><p>以上面的例子來說，如果我想測試的東西都需要用到 Provider 的話，我就得在每一個 <code>render</code> 中都加入 <code>wrapper</code> 這個 option，其實有點麻煩對吧？</p>
+<p>要解決這個問題，可以參考 <a target="_blank" rel="noopener" href="https://testing-library.com/docs/react-testing-library/setup#custom-render">官方文件</a>。裡面有教你如何針對 <code>render</code> 做客製化，這樣之後在用的時候就會方便許多。</p>
+<p>現在拿剛剛的例子來改寫一下。首先，我們建立一個新的檔案，並寫入底下的內容：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// test.utils.tsx</span></span><br><span class="line"><span class="hljs-keyword">import</span> { ReactElement } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { render, RenderOptions } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { AppProvider } <span class="hljs-keyword">from</span> <span class="hljs-string">'provider/AppProvider'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 客制化的 render</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">customRender</span>(<span class="hljs-params">ui: ReactElement, options?: Omit&lt;RenderOptions, <span class="hljs-string">'wrapper'</span>&gt;</span>) </span>{</span><br><span class="line">  render(ui, { <span class="hljs-attr">wrapper</span>: AppProvider, ...options })</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 輸出原本的 rtl（所有內容）</span></span><br><span class="line"><span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"><span class="hljs-comment">// 用 customRender 覆寫原本的 render</span></span><br><span class="line"><span class="hljs-keyword">export</span> { customRender <span class="hljs-keyword">as</span> render }</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：其實就是把原本的 <code>render</code> 用 <code>customRender</code> 包裝後再輸出，搭配註解想一下應該不難理解。</p>
+<p>然後再把剛剛的測試的內容改寫成這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 改用我們客製化以後的 module</span></span><br><span class="line"><span class="hljs-keyword">import</span> { render, screen } <span class="hljs-keyword">from</span> <span class="hljs-string">'test.utils'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { Mui } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Mui'</span></span><br><span class="line"></span><br><span class="line">test(<span class="hljs-string">'renders correctly'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Mui</span> /&gt;</span></span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> headingElement = screen.getByRole(<span class="hljs-string">'heading'</span>)</span><br><span class="line">  expect(headingElement).toHaveTextContent(<span class="hljs-regexp">/dark/i</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣子就不用在每一個地方都加上 <code>wrapper</code> 來處理了，真的方便許多！</p>
+<h2 id="RTL－對-custom-hook-做測試"><a href="#RTL－對-custom-hook-做測試" class="headerlink" title="RTL－對 custom hook 做測試"></a>RTL－對 custom hook 做測試</h2><p>假設我有一個 custom hook 如下：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { useState } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">interface</span> Props {</span><br><span class="line">  initialCount?: <span class="hljs-built_in">number</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 因為 initialCount 是 optional，代表 Props 有機會是 undefined</span></span><br><span class="line"><span class="hljs-comment">// 為了避免這樣的情形發生所以後面才會寫成 "Props = {}"</span></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">useCounter</span>(<span class="hljs-params">{ initialCount = <span class="hljs-number">0</span> }: Props = {}</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [count, setCount] = useState&lt;<span class="hljs-built_in">number</span>&gt;(initialCount)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">increment</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    setCount(count + <span class="hljs-number">1</span>)</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">decrement</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    setCount(count - <span class="hljs-number">1</span>)</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> { count, increment, decrement }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：關於 <code>Props = {}</code> 的細節可以參考<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/23314806/setting-default-value-for-typescript-object-passed-as-argument#:~:text=If%20you%20want%20to%20make%20it%20optional%20to%20pass%20anything%20to%20the%20function%2C%20add%20a%20%3F%20for%20all%20keys%20in%20the%20type%2C%20and%20add%20a%20default%20of%20%3D%7B%7D%20after%20the%20type%20declaration%3A">這裡</a></p>
+<p>就是一個很基本的 counter 而已，但現在要對這個 custom hook 測試的話會先碰到幾個問題：</p>
+<ol>
+<li>沒辦法用 render 來渲染，因為 custom hook 並不包含 jsx</li>
+<li>沒辦法直接在測試中呼叫 custom hook，因為 hook 只能在 component 中被呼叫</li>
+</ol>
+<p>關於這一點 RTL 已經先幫你想好了，所以它提供了 <code>renderHook</code> 來讓你使用：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 引入 renderHook</span></span><br><span class="line"><span class="hljs-keyword">import</span> { renderHook } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"></span><br><span class="line">test(<span class="hljs-string">'if not recieve props, initial count should be 0'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// 回傳值是一個 object，其中 result 是 useCounter 的內容</span></span><br><span class="line">  <span class="hljs-keyword">const</span> { result } = renderHook(useCounter)</span><br><span class="line">  <span class="hljs-comment">// 透過 current 就可以存取到 useCounter 的回傳值</span></span><br><span class="line">  expect(result.current.count).toBe(<span class="hljs-number">0</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果要對 custom hook 傳入參數的話，可以這樣子寫：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { renderHook } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"></span><br><span class="line">test(<span class="hljs-string">'if recieve props, initial count should be that value'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> count = <span class="hljs-number">10</span></span><br><span class="line">  <span class="hljs-comment">// 透過 option 來設定 useCounter 的參數</span></span><br><span class="line">  <span class="hljs-keyword">const</span> { result } = renderHook(useCounter, {</span><br><span class="line">    <span class="hljs-attr">initialProps</span>: {</span><br><span class="line">      <span class="hljs-attr">initialCount</span>: count</span><br><span class="line">    }</span><br><span class="line">  })</span><br><span class="line">  expect(result.current.count).toBe(count)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>所以透過 <code>renderHook</code> 就可以對 custom hook 來做測試。</p>
+<h3 id="當測試會改變-state-時，需搭配-act-使用"><a href="#當測試會改變-state-時，需搭配-act-使用" class="headerlink" title="當測試會改變 state 時，需搭配 act 使用"></a>當測試會改變 state 時，需搭配 act 使用</h3><p>當我們想要測試 custom hook 中的 function 時，可能會很直覺的這樣寫：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { renderHook } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"></span><br><span class="line">test(<span class="hljs-string">'if increment is invoked, count should increase by 1'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> { result } = renderHook(useCounter)</span><br><span class="line">  <span class="hljs-comment">// 執行 increment</span></span><br><span class="line">  result.current.increment()</span><br><span class="line">  expect(result.current.count).toBe(<span class="hljs-number">1</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>接著就會看到這段錯誤訊息：</p>
+<p><img src="example6-act-error.png" alt="example6-act-error"></p>
+<p>簡單來說，當我們執行 <code>expect(...)</code> 當下的那個 state 還不是<strong>更新以後的值</strong>，如果要讓確保 <code>expect(...)</code> 當下的 state 是最新的，要用 <code>act</code> 來包住更新 state 的 function：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 引入 act</span></span><br><span class="line"><span class="hljs-keyword">import</span> { act, renderHook } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"></span><br><span class="line">test(<span class="hljs-string">'if increment is invoked, count should increase by 1'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> { result } = renderHook(useCounter)</span><br><span class="line">  <span class="hljs-comment">// 用 act 來包住 increment</span></span><br><span class="line">  act(<span class="hljs-function">() =&gt;</span> result.current.increment())</span><br><span class="line">  expect(result.current.count).toBe(<span class="hljs-number">1</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>改寫成這樣以後就能確保 <code>expect(...)</code> 拿到的 state 會是最新的那一個。</p>
+<h2 id="RTL－利用-mock-function-來測試"><a href="#RTL－利用-mock-function-來測試" class="headerlink" title="RTL－利用 mock function 來測試"></a>RTL－利用 mock function 來測試</h2><p>以前在 <a href="https://jubeatt.github.io/2022/03/22/unit-test-methods/">一個做 Unit test 可能會用到的方法</a> 有大概介紹過 mock function 的定義和用途，在 React 也有機會用到這個功能。</p>
+<p>底下是要示範的例子：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">interface</span> Props {</span><br><span class="line">  <span class="hljs-attr">count</span>: <span class="hljs-built_in">number</span></span><br><span class="line">  onIncrement?: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span></span><br><span class="line">  onDecrement?: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Counter2: React.FC&lt;Props&gt; = <span class="hljs-function">(<span class="hljs-params">props</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Count: {props.count}<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {props.onIncrement &amp;&amp; <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{props.onIncrement}</span>&gt;</span>Increment<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>}</span></span><br><span class="line"><span class="hljs-xml">      {props.onDecrement &amp;&amp; <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{props.onDecrement}</span>&gt;</span>Decrement<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>}</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>接下來，當我們想測試 <code>onIncrement</code> 和 <code>onDecrement</code> 的時候，會碰到一個問題是：<strong>該如何測試這兩個 function？</strong></p>
+<p>雖然這問題聽起有點奇怪，但你可以想一件事情。從 <code>Counter2</code> 的角度來思考的話，它的關注點並不會是這兩個 function 的內部的細節，畢竟我可以在 <code>onIncrement</code> 中把 <code>count</code> 加上 1，也可以加上 100，或其他各種可能；<code>onDecrement</code> 也是同理。</p>
+<p>所以，<code>Counter2</code> 該關注的地方其實是：</p>
+<blockquote>
+<p>這兩個 function 有沒有在在 <code>onClick</code> 的時候順利的被執行。</p>
+</blockquote>
+<p>儘管這兩個 function 有可能因為本身邏輯沒寫好的關係導致程式出錯，但那都跟 <code>Counter2</code> 沒有直接的關係。</p>
+<p>在知道關注點以後，你可能會這樣寫測試：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="hljs-string">'handlers are invoked correctly'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">  <span class="hljs-comment">// 建立兩個沒意義的 function</span></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">incrementHandler</span>(<span class="hljs-params"></span>) </span>{}</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">decrementHandler</span>(<span class="hljs-params"></span>) </span>{}</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 渲染元件</span></span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Counter2</span> <span class="hljs-attr">count</span>=<span class="hljs-string">{10}</span> <span class="hljs-attr">onIncrement</span>=<span class="hljs-string">{incrementHandler}</span> <span class="hljs-attr">onIncrement</span>=<span class="hljs-string">{decrementHandler}</span> /&gt;</span></span>)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 按鈕元素</span></span><br><span class="line">  <span class="hljs-keyword">const</span> incrementBtn = screen.getByRole(<span class="hljs-string">'button'</span>, { <span class="hljs-attr">name</span>: <span class="hljs-regexp">/increment/i</span> })</span><br><span class="line">  <span class="hljs-keyword">const</span> decrementBtn = screen.getByRole(<span class="hljs-string">'button'</span>, { <span class="hljs-attr">name</span>: <span class="hljs-regexp">/decrement/i</span> })</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// user 點擊</span></span><br><span class="line">  <span class="hljs-keyword">await</span> userEvent.click(incrementBtn)</span><br><span class="line">  <span class="hljs-keyword">await</span> userEvent.click(decrementBtn)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 預期兩個 handler 各被呼叫一次</span></span><br><span class="line">  expect(incrementHandler).toBeCalledTimes(<span class="hljs-number">1</span>)</span><br><span class="line">  expect(decrementHandler).toBeCalledTimes(<span class="hljs-number">1</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>但會看到這段錯誤：</p>
+<p><img src="example7-mock-error.png" alt="example7-mock-error"></p>
+<p>簡單來說 jest 會規定你用它提供 mock function 來處理這段測試，所以會改寫成這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="hljs-string">'handlers are invoked correctly'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">  <span class="hljs-comment">// 改成 mock function</span></span><br><span class="line">  <span class="hljs-keyword">const</span> incrementHandler = jest.fn()</span><br><span class="line">  <span class="hljs-keyword">const</span> decrementHandler = jest.fn()</span><br><span class="line"></span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Counter2</span> <span class="hljs-attr">count</span>=<span class="hljs-string">{10}</span> <span class="hljs-attr">onIncrement</span>=<span class="hljs-string">{incrementHandler}</span> <span class="hljs-attr">onDecrement</span>=<span class="hljs-string">{decrementHandler}</span> /&gt;</span></span>)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> incrementBtn = screen.getByRole(<span class="hljs-string">'button'</span>, { <span class="hljs-attr">name</span>: <span class="hljs-regexp">/increment/i</span> })</span><br><span class="line">  <span class="hljs-keyword">const</span> decrementBtn = screen.getByRole(<span class="hljs-string">'button'</span>, { <span class="hljs-attr">name</span>: <span class="hljs-regexp">/decrement/i</span> })</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">await</span> userEvent.click(incrementBtn)</span><br><span class="line">  <span class="hljs-keyword">await</span> userEvent.click(decrementBtn)</span><br><span class="line"></span><br><span class="line">  expect(incrementHandler).toBeCalledTimes(<span class="hljs-number">1</span>)</span><br><span class="line">  expect(decrementHandler).toBeCalledTimes(<span class="hljs-number">1</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>所以碰到類似這種情況時可以用 mock function 來解決。</p>
+<h2 id="RTL－搭配-MSW-測試-HTTP-Request"><a href="#RTL－搭配-MSW-測試-HTTP-Request" class="headerlink" title="RTL－搭配 MSW 測試 HTTP Request"></a>RTL－搭配 MSW 測試 HTTP Request</h2><p>在寫任何應用時一定會碰到 HTTP Request 的需求，這時候的測試得方式也會跟以往不太一樣，會相對複雜一些。</p>
+<p>先來看這次的範例：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { useEffect, useState } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> User = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// 寫成 custom hook 抽出去</span></span><br><span class="line">  <span class="hljs-keyword">const</span> { users, error } = useUsers()</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>User<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {error &amp;&amp; <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{error}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>}</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        {users.map((user) =&gt; (</span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{user}</span>&gt;</span>{user}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        ))}</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// fetch users 的邏輯</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">useUsers</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [users, setUsers] = useState&lt;<span class="hljs-built_in">string</span>[]&gt;([])</span><br><span class="line">  <span class="hljs-keyword">const</span> [error, setErorr] = useState&lt;<span class="hljs-literal">null</span> | <span class="hljs-built_in">string</span>&gt;(<span class="hljs-literal">null</span>)</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    fetch(<span class="hljs-string">'https://jsonplaceholder.typicode.com/users'</span>)</span><br><span class="line">      .then(<span class="hljs-keyword">async</span> (response) =&gt; {</span><br><span class="line">        <span class="hljs-keyword">if</span> (!response.ok) {</span><br><span class="line">          <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.reject(<span class="hljs-keyword">await</span> response.json())</span><br><span class="line">        }</span><br><span class="line">        <span class="hljs-keyword">return</span> response.json()</span><br><span class="line">      })</span><br><span class="line">      .then(<span class="hljs-function">(<span class="hljs-params">users: <span class="hljs-built_in">any</span>[]</span>) =&gt;</span> setUsers(users.map(<span class="hljs-function">(<span class="hljs-params">user</span>) =&gt;</span> user.name)))</span><br><span class="line">      .catch(<span class="hljs-function">(<span class="hljs-params">err: <span class="hljs-built_in">any</span></span>) =&gt;</span> setErorr(err.errorMessage))</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> { users, error }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這個範例是串接 <a target="_blank" rel="noopener" href="https://jsonplaceholder.typicode.com/">jsonplaceholder</a> 的 API，邏輯上應該不會太複雜，只是把抓到的 user 顯示在畫面上，失敗的話就顯示錯誤訊息。</p>
+<p>那接下來該如何對這段 HTTP Request 做測試呢？在開始之前要先釐清一個觀念：</p>
+<blockquote>
+<p>在包含 API 的單元測試中，我們只能用 mock 的方式去模擬 API 的運行。想要完整的測試 API + App 本身，那該做的是 E2E 測試而不是單元測試。</p>
+</blockquote>
+<p>畢竟 API 相關的事情會牽涉到 server，對單元測試來說這個 scope 太廣了，所以慣例上會自己 mock 一個 api server 出來做測試，也就是等一下要介紹的套件：<a target="_blank" rel="noopener" href="https://mswjs.io/">Mock Service Worker (MSW)</a></p>
+<h3 id="安裝與配置-MSW"><a href="#安裝與配置-MSW" class="headerlink" title="安裝與配置 MSW"></a>安裝與配置 MSW</h3><p>msw 是一個用來模擬 API 的套件，只要用跟 express 類似的語法就能快速建起一個 API server，並且在真正的 request 送出以前透過「攔截」的方式來取代原本的 request。</p>
+<p>1. 安裝 MSW</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install msw --save-dev</span><br><span class="line"># or</span><br><span class="line">yarn add msw --dev</span><br></pre></td></tr></tbody></table></figure>
+
+<p>2. 建立配置檔案</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">├── src</span><br><span class="line">│&nbsp;&nbsp; ├── components</span><br><span class="line">│&nbsp;&nbsp; │&nbsp;&nbsp; └── User</span><br><span class="line">│&nbsp;&nbsp; │&nbsp;&nbsp;     ├── User.test.tsx</span><br><span class="line">│&nbsp;&nbsp; │&nbsp;&nbsp;     └── User.tsx</span><br><span class="line">│&nbsp;&nbsp; ├── mocks &lt;- 這個</span><br><span class="line">│&nbsp;&nbsp; │&nbsp;&nbsp; ├── handlers.ts &lt;- 這個</span><br><span class="line">│&nbsp;&nbsp; │&nbsp;&nbsp; └── server.ts &lt;- 這個</span><br><span class="line">├── tsconfig.json</span><br><span class="line">└── yarn.lock</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>handlers.ts</code> 是用來設定 mock 的 API 處理，內容會是這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// msw 提供 Restful 和 GraphQL 兩種選擇</span></span><br><span class="line"><span class="hljs-keyword">import</span> { rest } <span class="hljs-keyword">from</span> <span class="hljs-string">'msw'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// handlers 可以有多個所以是陣列結構，每一個 item 代表一個 handler</span></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> handlers = [</span><br><span class="line">  <span class="hljs-comment">// 要攔截的 request（對應到 User.tsx 中的 fetch）</span></span><br><span class="line">  rest.get(<span class="hljs-string">'https://jsonplaceholder.typicode.com/users'</span>, <span class="hljs-function">(<span class="hljs-params">req, res, ctx</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 設定 response</span></span><br><span class="line">    <span class="hljs-keyword">return</span> res(ctx.status(<span class="hljs-number">200</span>), ctx.json([{ <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'PPB'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Ariana'</span> }]))</span><br><span class="line">  })</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>稍微解釋一下這裡的原理，設定這隻檔案的用意是當我們在 <code>User.tsx</code> 去對 jsonplaceholder 發出 GET 請求時，msw 會先檢查 <code>handlers</code> 中是否有對應的 API，若有的話就會攔截下來丟給 <code>handlers</code> 處理。也就是說 API 實際上不會發送到 jsonplaceholder 那邊，而是 msw 的 handler。</p>
+<p><code>server.ts</code> 是用來設置 server 的地方：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { setupServer } <span class="hljs-keyword">from</span> <span class="hljs-string">'msw/node'</span></span><br><span class="line"><span class="hljs-comment">// 引入前面的 handlers</span></span><br><span class="line"><span class="hljs-keyword">import</span> { handlers } <span class="hljs-keyword">from</span> <span class="hljs-string">'./handlers'</span></span><br><span class="line"><span class="hljs-comment">// server 本體</span></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> server = setupServer(...handlers)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>3. 設置 <code>setupTest.ts</code> hooks</p>
+<p>除了設定 server 以外，我們也得對 jest 本身做一些調整，否則它不會知道我們有 mock 一個 server 給元件使用：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// jest-dom adds custom jest matchers for asserting on DOM nodes.</span></span><br><span class="line"><span class="hljs-comment">// allows you to do things like:</span></span><br><span class="line"><span class="hljs-comment">// expect(element).toHaveTextContent(/react/i)</span></span><br><span class="line"><span class="hljs-comment">// learn more: https://github.com/testing-library/jest-dom</span></span><br><span class="line"><span class="hljs-keyword">import</span> <span class="hljs-string">'@testing-library/jest-dom'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 需要添加的設定是下面這些</span></span><br><span class="line"><span class="hljs-keyword">import</span> { server } <span class="hljs-keyword">from</span> <span class="hljs-string">'./mocks/server'</span></span><br><span class="line"><span class="hljs-comment">// Establish API mocking before all tests.</span></span><br><span class="line">beforeAll(<span class="hljs-function">() =&gt;</span> server.listen())</span><br><span class="line"><span class="hljs-comment">// Reset any request handlers that we may add during the tests,</span></span><br><span class="line"><span class="hljs-comment">// so they don't affect other tests.</span></span><br><span class="line">afterEach(<span class="hljs-function">() =&gt;</span> server.resetHandlers())</span><br><span class="line"><span class="hljs-comment">// Clean up after the tests are finished.</span></span><br><span class="line">afterAll(<span class="hljs-function">() =&gt;</span> server.close())</span><br></pre></td></tr></tbody></table></figure>
+
+<p>其實就是在不同時間點做一些設定而已：</p>
+<ul>
+<li><code>beforeALl</code>：在測試執行之前，架好 server 的 lstener</li>
+<li><code>afterEach</code>：單一個 <code>test</code> 跑完時，重設 <code>handler</code> 避免互相干擾</li>
+<li><code>afterAll</code>：所有測試跑完後，關閉 server</li>
+</ul>
+<p>這邊只是做一個全域設定來省掉一些麻煩而已。</p>
+<h3 id="撰寫測試"><a href="#撰寫測試" class="headerlink" title="撰寫測試"></a>撰寫測試</h3><p>msw 設定好之後就可以開始來寫測試了，直接來看 code：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="hljs-string">'Users'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// happy part</span></span><br><span class="line">  test(<span class="hljs-string">'renders list of items'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">    render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">User</span> /&gt;</span></span>)</span><br><span class="line">    <span class="hljs-keyword">const</span> listItem = <span class="hljs-keyword">await</span> screen.findAllByRole(<span class="hljs-string">'listitem'</span>)</span><br><span class="line">    <span class="hljs-comment">// mock server 回傳的資料有 3 筆，所以預期要有 3 個 &lt;li&gt;</span></span><br><span class="line">    expect(listItem).toHaveLength(<span class="hljs-number">3</span>)</span><br><span class="line">  })</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// sad part（錯誤處裡）</span></span><br><span class="line">  test(<span class="hljs-string">'renders error message'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">    <span class="hljs-keyword">const</span> errorMessage = <span class="hljs-string">'System Internal Error.'</span></span><br><span class="line">    server.use(</span><br><span class="line">      rest.get(<span class="hljs-string">'https://jsonplaceholder.typicode.com/users'</span>, <span class="hljs-function">(<span class="hljs-params">req, res, ctx</span>) =&gt;</span> {</span><br><span class="line">        <span class="hljs-keyword">return</span> res(ctx.status(<span class="hljs-number">500</span>), ctx.json({ errorMessage }))</span><br><span class="line">      })</span><br><span class="line">    )</span><br><span class="line">    render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">User</span> /&gt;</span></span>)</span><br><span class="line">    <span class="hljs-keyword">const</span> error = <span class="hljs-keyword">await</span> screen.findByText(errorMessage)</span><br><span class="line">    expect(error).toBeInTheDocument()</span><br><span class="line">  })</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊同時測試了成功和失敗的結果。</p>
+<p>首先成功的部分就跟平常的測試差不多，因為前面有做好設定了所以 jest 會自動去讓 mock server 攔截 <code>&lt;User /&gt;</code> 中的 request。</p>
+<p>至於失敗的部分也要做一些調整，因為我們沒辦法讓單一個 handler 同時處理成功和失敗，所以這邊的做法是直接在測試中寫另一個 handler 來拋出 500 erorr，這樣子就可以一次做兩種測試了。</p>
+<h2 id="RTL－另一種測試-HTTP-Request-的方式"><a href="#RTL－另一種測試-HTTP-Request-的方式" class="headerlink" title="RTL－另一種測試 HTTP Request 的方式"></a>RTL－另一種測試 HTTP Request 的方式</h2><p>前面有介紹怎麼用 msw 套件來測試 HTTP Request，但如果你沒有想要那麼直接模擬 server 的特性（像是會回傳 HTTP status code、等待回傳的時間等等）。那其實不一定要利用 msw 來建一個模擬 server 做測試，只要用 jest 提供的 mock function 就行了。</p>
+<p>來看一個實際的例子。</p>
+<p><code>getUser.ts</code>：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 打 API 拿資料的 function</span></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getUser</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> fetch(<span class="hljs-string">'https://jsonplaceholder.typicode.com/users/'</span>)</span><br><span class="line">    .then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> response.json())</span><br><span class="line">    .then(<span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> data)</span><br><span class="line">    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> error)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>Users.tsx</code>：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { useEffect, useState } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { getUser } <span class="hljs-keyword">from</span> <span class="hljs-string">'./getUser'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Users</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [users, setUsers] = useState&lt;<span class="hljs-built_in">any</span>[]&gt;([])</span><br><span class="line">  <span class="hljs-keyword">const</span> [errorMessage, setErrorMessage] = useState&lt;<span class="hljs-literal">null</span> | <span class="hljs-built_in">string</span>&gt;(<span class="hljs-literal">null</span>)</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 利用 getUser 取得 user list</span></span><br><span class="line">    getUser()</span><br><span class="line">      .then(<span class="hljs-function">(<span class="hljs-params">users</span>) =&gt;</span> setUsers(users))</span><br><span class="line">      .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> setErrorMessage(error.message))</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 成功的話渲染 user 列表，失敗的話顯示錯誤訊息</span></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'App'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Users:<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        {users.map((user: any) =&gt; (</span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{user.name}</span>&gt;</span>{user.name}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        ))}</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {errorMessage &amp;&amp; <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{errorMessage}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>}</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Users</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>Users.test.tsx</code>：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { render, screen } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { getUser } <span class="hljs-keyword">from</span> <span class="hljs-string">'./getUser'</span></span><br><span class="line"><span class="hljs-keyword">import</span> Users <span class="hljs-keyword">from</span> <span class="hljs-string">'./Users'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 告訴 jest 我們要 mock 的模組位置，他會自動拿來做 mock</span></span><br><span class="line"><span class="hljs-comment">//（我當初也有點疑惑這怎麼做到的，但不要懷疑就是這樣做）</span></span><br><span class="line">jest.mock(<span class="hljs-string">'./getUser'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 為我們要 mock 的 function 定義 type（這樣才有正確的 type check）</span></span><br><span class="line"><span class="hljs-keyword">const</span> mockGetUser = getUser <span class="hljs-keyword">as</span> jest.MockedFunction&lt;<span class="hljs-keyword">typeof</span> getUser&gt;</span><br><span class="line"></span><br><span class="line">test(<span class="hljs-string">'call api correctly'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">  <span class="hljs-keyword">const</span> response = [{ <span class="hljs-attr">name</span>: <span class="hljs-string">'Leanne Graham'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Ervin Howell'</span> }]</span><br><span class="line">  mockGetUser.mockResolvedValueOnce(response)</span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Users</span> /&gt;</span></span>)</span><br><span class="line">  expect(mockGetUser).toHaveBeenCalledTimes(<span class="hljs-number">1</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> listItem = <span class="hljs-keyword">await</span> screen.findAllByRole(<span class="hljs-string">'listitem'</span>)</span><br><span class="line">  expect(listItem).toHaveLength(<span class="hljs-number">2</span>)</span><br><span class="line">  screen.debug()</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line">test(<span class="hljs-string">'call api failed'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">  <span class="hljs-keyword">const</span> message = <span class="hljs-string">'System Internal Error'</span></span><br><span class="line">  mockGetUser.mockRejectedValueOnce(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(message))</span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Users</span> /&gt;</span></span>)</span><br><span class="line">  expect(mockGetUser).toHaveBeenCalledTimes(<span class="hljs-number">1</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> errorText = <span class="hljs-keyword">await</span> screen.findByText(message)</span><br><span class="line">  expect(errorText).toBeInTheDocument()</span><br><span class="line">  screen.debug()</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>測試結果一（fetch 成功）：</p>
+<p><img src="example8-testing-result.png" alt="example8-testing-result"></p>
+<p>測試結果二（fetch 失敗）：</p>
+<p><img src="example9-testing-result.png" alt="example9-testing-result"></p>
+<p>還蠻簡潔的對吧？不過缺點就是沒那麼接近實際的 server 而已，因為不會有實際去打 API 的行為發生。</p>
+<h3 id="jest-mock-的用法"><a href="#jest-mock-的用法" class="headerlink" title="jest.mock 的用法"></a>jest.mock 的用法</h3><p>如果剛剛的範例你看得懂的話可以無視這一段，這段是想更深入解釋一下 mock 的用法，因為我自己當初在這邊還卡蠻久的 QQ</p>
+<p>這邊會介紹的方法有底下幾個：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://jestjs.io/docs/jest-object#jestmockmodulename-factory-options">jest.mock</a></li>
+<li><a target="_blank" rel="noopener" href="https://jestjs.io/docs/mock-function-api#mockfnmockresolvedvaluevalue">mockResolvedValue</a></li>
+<li><a target="_blank" rel="noopener" href="https://jestjs.io/docs/mock-function-api#mockfnmockrejectedvaluevalue">mockRejectedValue</a></li>
+</ul>
+<p>來看這次的範例：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCount</span>(<span class="hljs-params"></span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">string</span> | <span class="hljs-title">number</span>&gt; </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">      <span class="hljs-keyword">const</span> count = <span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">10</span></span><br><span class="line">      <span class="hljs-keyword">if</span> (count &gt; <span class="hljs-number">5</span>) {</span><br><span class="line">        <span class="hljs-keyword">return</span> reject(<span class="hljs-string">'Faild'</span>)</span><br><span class="line">      }</span><br><span class="line">      <span class="hljs-keyword">return</span> resolve(count)</span><br><span class="line">    }, <span class="hljs-number">500</span>)</span><br><span class="line">  })</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>只是個 0.5 秒後會回傳數字，但有機率失敗的例子。</p>
+<p>假設說我們現在想要 mock 這個 function 的話，可以這樣子寫：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { getCount } <span class="hljs-keyword">from</span> <span class="hljs-string">'./getCount'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 告訴 jest 我們想要 mock 的 &lt;Source&gt;（引入路徑）</span></span><br><span class="line">jest.mock(<span class="hljs-string">'./getCount'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 定義 mock function 的 type（TypeScript 才需要）</span></span><br><span class="line"><span class="hljs-keyword">const</span> mockGetCount = getCount <span class="hljs-keyword">as</span> jest.MockedFunction&lt;<span class="hljs-keyword">typeof</span> getCount&gt;</span><br><span class="line"></span><br><span class="line">test(<span class="hljs-string">'should receive correctly value'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">  <span class="hljs-keyword">const</span> response = <span class="hljs-number">50</span></span><br><span class="line">  <span class="hljs-comment">// 定義 promise 被 resolve 後回傳的值（50）</span></span><br><span class="line">  mockGetCount.mockResolvedValue(response)</span><br><span class="line">  <span class="hljs-comment">// 執行 mock function</span></span><br><span class="line">  <span class="hljs-keyword">const</span> count = <span class="hljs-keyword">await</span> mockGetCount()</span><br><span class="line">  <span class="hljs-comment">// 預期 count = 50</span></span><br><span class="line">  expect(count).toBe(response)</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line">test(<span class="hljs-string">'should receive error'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">  <span class="hljs-keyword">const</span> response = <span class="hljs-string">'Ooops'</span></span><br><span class="line">  <span class="hljs-comment">// 定義 promise 被 reject 後回傳的值（'Oops'）</span></span><br><span class="line">  mockGetCount.mockRejectedValue(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(response))</span><br><span class="line">  <span class="hljs-comment">// 用變數來儲存回傳結果</span></span><br><span class="line">  <span class="hljs-keyword">let</span> errorMessage: <span class="hljs-built_in">string</span></span><br><span class="line">  <span class="hljs-keyword">await</span> mockGetCount()</span><br><span class="line">    <span class="hljs-comment">// reject 會進入 catch 區塊，接著把值存入剛剛的變數</span></span><br><span class="line">    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> (errorMessage = error.message))</span><br><span class="line">    <span class="hljs-comment">// 最後執行 assertion（斷言）</span></span><br><span class="line">    .finally(<span class="hljs-function">() =&gt;</span> expect(errorMessage).toBe(response))</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>雖然用了很懶人的註解法來解釋，不過我覺得以這個範例來說應該不難理解。如果還是有疑問的話建議到上面的官方文件連結點進去看一下每一個 method 大概在幹嘛應該會更清楚一點。</p>
+<h2 id="問題集"><a href="#問題集" class="headerlink" title="問題集"></a>問題集</h2><h3 id="當你的-api-function-比較複雜時的-mock-方式"><a href="#當你的-api-function-比較複雜時的-mock-方式" class="headerlink" title="當你的 api function 比較複雜時的 mock 方式"></a>當你的 api function 比較複雜時的 mock 方式</h3><p>由於我自己工作上的專案要打的 API 數量非常之多，所以 call api 的 method 不會是那種像 <code>getUser</code> 的單一個項目來處理，而是會包裝 Object 或 OOP 的形式，像這樣子：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">User</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getAll</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> fetch(<span class="hljs-string">'https://jsonplaceholder.typicode.com/users/'</span>)</span><br><span class="line">      .then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> response.json())</span><br><span class="line">      .then(<span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> data)</span><br><span class="line">      .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> error)</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getSingle</span>(<span class="hljs-params">id: <span class="hljs-built_in">number</span></span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> fetch(<span class="hljs-string">'https://jsonplaceholder.typicode.com/users/'</span> + id)</span><br><span class="line">      .then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> response.json())</span><br><span class="line">      .then(<span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> data)</span><br><span class="line">      .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> error)</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-comment">// 以此類推...</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> { getAll, getSingle }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>或是這樣子（class 寫法）：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{</span><br><span class="line"> <span class="hljs-keyword">static</span> asnyc <span class="hljs-function"><span class="hljs-title">getAll</span>(<span class="hljs-params"></span>)</span> {</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> fetch(<span class="hljs-string">'https://jsonplaceholder.typicode.com/users/'</span>)</span><br><span class="line">     .then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> response.json())</span><br><span class="line">     .then(<span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> data)</span><br><span class="line">     .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> error)</span><br><span class="line"> }</span><br><span class="line"><span class="hljs-keyword">static</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-title">getSingle</span>(<span class="hljs-params">id: <span class="hljs-built_in">number</span></span>)</span> {</span><br><span class="line">   <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> fetch(<span class="hljs-string">'https://jsonplaceholder.typicode.com/users/'</span> + id)</span><br><span class="line">     .then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> response.json())</span><br><span class="line">     .then(<span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> data)</span><br><span class="line">     .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> error)</span><br><span class="line"> }</span><br><span class="line"> <span class="hljs-comment">// 以此類推...</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這兩種 mock 的寫法等一下都會介紹，這裡來看第一種的解法。</p>
+<p>首先如果是第一個 api，那在 component 中使用的方式應該會是這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Users</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 執行 User 取出所有 api 的 methods</span></span><br><span class="line">  <span class="hljs-keyword">const</span> user = User()</span><br><span class="line">  <span class="hljs-keyword">const</span> [users, setUsers] = useState&lt;<span class="hljs-built_in">any</span>[]&gt;([])</span><br><span class="line">  <span class="hljs-keyword">const</span> [errorMessage, setErrorMessage] = useState&lt;<span class="hljs-literal">null</span> | <span class="hljs-built_in">string</span>&gt;(<span class="hljs-literal">null</span>)</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    user</span><br><span class="line">      .getAll()</span><br><span class="line">      .then(<span class="hljs-function">(<span class="hljs-params">users</span>) =&gt;</span> setUsers(users))</span><br><span class="line">      .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> setErrorMessage(error.message))</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'App'</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Users:<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        {users.map((user: any) =&gt; (</span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'hello'</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{user.name}</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">            {user.name}</span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        ))}</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {errorMessage &amp;&amp; <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{errorMessage}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>}</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Users</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這時候會碰到的問題是：「該怎麼對 <code>getAll</code> 做 mock？」</p>
+<p>我一開始的做法是這樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { render, screen } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { User } <span class="hljs-keyword">from</span> <span class="hljs-string">'./getUser'</span></span><br><span class="line"><span class="hljs-keyword">import</span> Users <span class="hljs-keyword">from</span> <span class="hljs-string">'./Users'</span></span><br><span class="line"></span><br><span class="line">jest.mock(<span class="hljs-string">'./getUser'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> mockUser = User <span class="hljs-keyword">as</span> jest.MockedFunction&lt;<span class="hljs-keyword">typeof</span> User&gt;</span><br><span class="line"></span><br><span class="line">test(<span class="hljs-string">'call api correctly'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">  <span class="hljs-keyword">const</span> response = [{ <span class="hljs-attr">name</span>: <span class="hljs-string">'Leanne Graham'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Ervin Howell'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Test Other'</span> }]</span><br><span class="line">  <span class="hljs-comment">// 修改 getAll 的回傳值</span></span><br><span class="line">  mockUser().getAll.mockReturnValue(response)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// render the Users component</span></span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Users</span> /&gt;</span></span>)</span><br><span class="line">  expect(mockUser).toHaveBeenCalledTimes(<span class="hljs-number">1</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> listItem = <span class="hljs-keyword">await</span> screen.findAllByRole(<span class="hljs-string">'listitem'</span>)</span><br><span class="line">  expect(listItem).toHaveLength(<span class="hljs-number">3</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>但 <code>mockUser().getAll.mockReturnValue(response)</code> 這段是有問題的：</p>
+<p><img src="question1-error.png" alt="question1-error"></p>
+<p>後來我也試過各式各樣的方法，但還是都不行。直到後來爬文爬出了一些心得以後，才發現整體思路應該要轉換一下才對。</p>
+<p>首先，剛剛的想法是聚焦在怎麼修改 component 中的 <code>getAll</code>，但這樣想是不對的，因為對 component 來說它實際用的是「把 <code>User</code> 的回傳值裡面的 <code>getAll</code> 拿來用」。也就是說你應該要<strong>修改的是整個 <code>User</code> 的回傳值，而不是單純只改 <code>getAll</code> 的回傳值</strong>。</p>
+<p>聽起來可能有點抽象，所以用 code 來解釋吧：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { render, screen } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { User } <span class="hljs-keyword">from</span> <span class="hljs-string">'./getUser'</span></span><br><span class="line"><span class="hljs-keyword">import</span> Users <span class="hljs-keyword">from</span> <span class="hljs-string">'./Users'</span></span><br><span class="line"></span><br><span class="line">jest.mock(<span class="hljs-string">'./getUser'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> mockUser = User <span class="hljs-keyword">as</span> jest.MockedFunction&lt;<span class="hljs-keyword">typeof</span> User&gt;</span><br><span class="line"></span><br><span class="line">test(<span class="hljs-string">'call api correctly'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">  <span class="hljs-keyword">const</span> response = [{ <span class="hljs-attr">name</span>: <span class="hljs-string">'Leanne Graham'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Ervin Howell'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Test Other'</span> }]</span><br><span class="line">  <span class="hljs-comment">// 建立 getAll 的 mock function</span></span><br><span class="line">  <span class="hljs-keyword">const</span> getAll = jest.fn().mockResolvedValue(response)</span><br><span class="line">  <span class="hljs-comment">// 設定 mockUser 的回傳值（上面的 getAll mock function）</span></span><br><span class="line">  mockUser.mockReturnValue({ getAll })</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// render the Users component</span></span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Users</span> /&gt;</span></span>)</span><br><span class="line">  expect(mockUser).toHaveBeenCalledTimes(<span class="hljs-number">1</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> listItem = <span class="hljs-keyword">await</span> screen.findAllByRole(<span class="hljs-string">'listitem'</span>)</span><br><span class="line">  expect(listItem).toHaveLength(<span class="hljs-number">3</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>簡單來說，除了為原本的 <code>User</code> 建立 mock 以外，你也得對他的回傳值的 function 做 mock。算是一個比較 tricky 的做法，但以這個案例來說我目前只知道這種解法而已 QQ</p>
+<p>接下來是第二種 <code>class</code> 的作法，概念上跟剛剛很類似，所以這裡就直接附 code 了：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { render, screen } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { User } <span class="hljs-keyword">from</span> <span class="hljs-string">'./getUser'</span></span><br><span class="line"><span class="hljs-keyword">import</span> Users <span class="hljs-keyword">from</span> <span class="hljs-string">'./Users'</span></span><br><span class="line"></span><br><span class="line">jest.mock(<span class="hljs-string">'./getUser'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> mockUser = User <span class="hljs-keyword">as</span> jest.MockedClass&lt;<span class="hljs-keyword">typeof</span> User&gt;</span><br><span class="line"></span><br><span class="line">test(<span class="hljs-string">'call api correctly'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">  <span class="hljs-keyword">const</span> response = [{ <span class="hljs-attr">name</span>: <span class="hljs-string">'Leanne Graham'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Ervin Howell'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Test Other'</span> }]</span><br><span class="line">  <span class="hljs-comment">// getAll 的 mock</span></span><br><span class="line">  <span class="hljs-keyword">const</span> mockGetAll = jest.fn().mockResolvedValue(response)</span><br><span class="line">  <span class="hljs-comment">// 把 getAll 修改為 mock function</span></span><br><span class="line">  mockUser.getAll = mockGetAll</span><br><span class="line"></span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Users</span> /&gt;</span></span>)</span><br><span class="line">  expect(mockUser.getAll).toHaveBeenCalledTimes(<span class="hljs-number">1</span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> listItem = <span class="hljs-keyword">await</span> screen.findAllByRole(<span class="hljs-string">'listitem'</span>)</span><br><span class="line">  expect(listItem).toHaveLength(<span class="hljs-number">3</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="明明-mock-有被執行，為什麼-toHaveBeenCalledTimes-偵測不到？"><a href="#明明-mock-有被執行，為什麼-toHaveBeenCalledTimes-偵測不到？" class="headerlink" title="明明 mock 有被執行，為什麼 toHaveBeenCalledTimes 偵測不到？"></a>明明 mock 有被執行，為什麼 toHaveBeenCalledTimes 偵測不到？</h3><p>當時的情境如下：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  getData()</span><br><span class="line">    .then()</span><br><span class="line">    .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {</span><br><span class="line">      setErrorMessage(error.message)</span><br><span class="line">    })</span><br><span class="line">}, [])</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getData</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> all = <span class="hljs-keyword">await</span> user.getAll()</span><br><span class="line">  <span class="hljs-keyword">const</span> single = <span class="hljs-keyword">await</span> user.getSingle()</span><br><span class="line">  setUsers(all)</span><br><span class="line">  setSingle(single)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊在 <code>useEffect</code> 中去執行 <code>user.getAll()</code> 和 <code>user.getSingle()</code>，所以寫了段測試想檢查是否有正確的呼叫這兩個 function：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { render } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { User } <span class="hljs-keyword">from</span> <span class="hljs-string">'./getUser'</span></span><br><span class="line"><span class="hljs-keyword">import</span> Users <span class="hljs-keyword">from</span> <span class="hljs-string">'./Users'</span></span><br><span class="line"></span><br><span class="line">jest.mock(<span class="hljs-string">'./getUser'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> mockUser = User <span class="hljs-keyword">as</span> jest.MockedFunction&lt;<span class="hljs-keyword">typeof</span> User&gt;</span><br><span class="line"></span><br><span class="line">test(<span class="hljs-string">'call api correctly'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">  <span class="hljs-comment">// mock part</span></span><br><span class="line">  <span class="hljs-keyword">const</span> response1 = [{ <span class="hljs-attr">name</span>: <span class="hljs-string">'Leanne Graham'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Ervin Howell'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Test Other'</span> }]</span><br><span class="line">  <span class="hljs-keyword">const</span> response2 = { <span class="hljs-attr">name</span>: <span class="hljs-string">'Leanne Graham'</span> }</span><br><span class="line">  <span class="hljs-keyword">const</span> mockGetAll = jest.fn().mockResolvedValue(response1)</span><br><span class="line">  <span class="hljs-keyword">const</span> mockGetSingle = jest.fn().mockResolvedValue(response2)</span><br><span class="line">  mockUser.mockReturnValue({</span><br><span class="line">    <span class="hljs-attr">getAll</span>: mockGetAll,</span><br><span class="line">    <span class="hljs-attr">getSingle</span>: mockGetSingle</span><br><span class="line">  })</span><br><span class="line"></span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Users</span> /&gt;</span></span>)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// assertion</span></span><br><span class="line">  expect(mockGetAll).toHaveBeenCalledTimes(<span class="hljs-number">1</span>) <span class="hljs-comment">// 應該被呼叫 1 次</span></span><br><span class="line">  expect(mockGetSingle).toHaveBeenCalledTimes(<span class="hljs-number">1</span>) <span class="hljs-comment">// 應該被呼叫 1 次</span></span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>結果如下：</p>
+<p><img src="question2-error.png" alt="question2-error"></p>
+<p>原因是 <code>await</code> 的特性會讓 <code>mockGetSingle</code> <strong>等到 <code>mockGetAll</code> 執行完以後才會執行</strong>，但測試時卻沒有做任何的等待，所以測試的當下 <code>mockGetSingle</code> 確實還沒有被執行，因此才會得到 <code>0</code>。</p>
+<p>解決的方法是把 assertion 加上 <code>waitFor</code>：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">await</span> waitFor(<span class="hljs-function">() =&gt;</span> expect(mockGetAll).toHaveBeenCalledTimes(<span class="hljs-number">1</span>))</span><br><span class="line"><span class="hljs-keyword">await</span> waitFor(<span class="hljs-function">() =&gt;</span> expect(mockGetSingle).toHaveBeenCalledTimes(<span class="hljs-number">1</span>))</span><br></pre></td></tr></tbody></table></figure>
+
+<p>雖然以這個例子來說只需要幫 <code>mockGetSingle</code> 加上就好，但我自己習慣是一律加上，這樣會更保險一點。</p>
+<h3 id="Jest-的顯示結果沒有包含敘述？"><a href="#Jest-的顯示結果沒有包含敘述？" class="headerlink" title="Jest 的顯示結果沒有包含敘述？"></a>Jest 的顯示結果沒有包含敘述？</h3><p><img src="question3-no-description.png" alt="question3-no-description"></p>
+<p>加上 <code>--verbose</code> 這個 flag 就可以解決了：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm run test --verbose</span><br><span class="line">yarn run test --verbose</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="question3-no-description-solve.png" alt="question3-no-description-solve"></p>
+<h3 id="有些情況下我只用-querySelector-等等相關的-query-來查詢元素，但那個元素又會根據-state-更新時該怎麼處理？"><a href="#有些情況下我只用-querySelector-等等相關的-query-來查詢元素，但那個元素又會根據-state-更新時該怎麼處理？" class="headerlink" title="有些情況下我只用 querySelector 等等相關的 query 來查詢元素，但那個元素又會根據 state 更新時該怎麼處理？"></a>有些情況下我只用 querySelector 等等相關的 query 來查詢元素，但那個元素又會根據 state 更新時該怎麼處理？</h3><p>這種情況應該真的很少很少，因為再怎麼樣你最後應該都能透過 <code>data-testId</code> 的方式來處理，但我很巧的就剛好碰到連 <code>data-testId</code> 都沒辦法加的窘境（汗，所以特別說明一下這種時候該怎麼處裡。</p>
+<p>來舉一個範例：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { useEffect, useState } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> QueryByClass = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> [isLogin, setIsLogin] = useState&lt;<span class="hljs-built_in">boolean</span>&gt;(<span class="hljs-literal">false</span>)</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 0.5s 後自動登入</span></span><br><span class="line">    <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">      setIsLogin(<span class="hljs-literal">true</span>)</span><br><span class="line">    }, <span class="hljs-number">500</span>)</span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 顯示登出或登入按鈕</span></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {isLogin ? (</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'btn-logout'</span>&gt;</span>Logout<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      ) : (</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">className</span>=<span class="hljs-string">'btn-login'</span>&gt;</span>Login<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      )}</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>應該不需要特別說明這是在幹嘛的範例，總之這邊想測試的是使用者登入時是否能看到 login 按鈕。</p>
+<p>以這個例子來說你當然可以用 <code>findByRole</code> 來處理，但假設你真的走投無路只剩下 <code>querySelector</code> 之類的選擇時，你可以用 <code>waitFor</code> 來處理：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { render, waitFor } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { QueryByClass } <span class="hljs-keyword">from</span> <span class="hljs-string">'./QueryByClass'</span></span><br><span class="line"></span><br><span class="line">describe(<span class="hljs-string">'QueryByClass'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  test(<span class="hljs-string">'if login, should see the logout button'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">    render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">QueryByClass</span> /&gt;</span></span>)</span><br><span class="line">    <span class="hljs-keyword">await</span> waitFor(<span class="hljs-function">() =&gt;</span> expect(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'.btn-logout'</span>)).toBeInTheDocument())</span><br><span class="line">  })</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>waitFor</code> 的原理是他會不停的去執行 callback 中的 assertion，直到 assertion 通過為止。預設的等待時間是 1 秒，有需要的話可以傳入 <code>options</code> 來調整。更多詳細資訊請參考 <a target="_blank" rel="noopener" href="https://testing-library.com/docs/dom-testing-library/api-async/#waitfor">官方文件</a></p>
+<p>所以這邊的流程就是會不停的用 <code>querySelector</code> 檢按鈕是否在 DOM 裡面，如果一秒內有找到就會 PASS，反之則 FAIL。</p>
+<h3 id="Uncaught-TypeError-window-matchMedia-is-not-a-function"><a href="#Uncaught-TypeError-window-matchMedia-is-not-a-function" class="headerlink" title="Uncaught TypeError: window.matchMedia is not a function"></a>Uncaught TypeError: window.matchMedia is not a function</h3><p>我工作專案的中有用到 Ant Design，在跑測試的時候就噴了這個 Error：</p>
+<p><img src="question4-error.png" alt="question4-error"></p>
+<p>這是因為在 jest 的環境（node.js）並沒有 <code>window.matchMedia</code> 這種東西，而我們卻在 component 中用到了，所以才會噴出這個錯誤。</p>
+<p>解決的方法就是自己定義一個 mock function，可以加上這段：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// setupTests.ts</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// ...略</span></span><br><span class="line"><span class="hljs-built_in">global</span>.matchMedia =</span><br><span class="line">  <span class="hljs-built_in">global</span>.matchMedia ||</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">return</span> {</span><br><span class="line">      <span class="hljs-attr">addListener</span>: jest.fn(),</span><br><span class="line">      <span class="hljs-attr">removeListener</span>: jest.fn()</span><br><span class="line">    }</span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure>
+
+<p>我這邊是因為很多地方都有用到 Ant Design 元件所以才加在 <code>setupTests.ts</code> 來做 global 處理，如果你只想針對單筆測試添加的話也是 ok 的：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// xxx.test.tsx</span></span><br><span class="line"><span class="hljs-built_in">window</span>.matchMedia =</span><br><span class="line">  <span class="hljs-built_in">window</span>.matchMedia ||</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">return</span> {</span><br><span class="line">      <span class="hljs-attr">addListener</span>: jest.fn(),</span><br><span class="line">      <span class="hljs-attr">removeListener</span>: jest.fn()</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 跟上面是一樣的東西</span></span><br><span class="line"><span class="hljs-built_in">Object</span>.defineProperty(<span class="hljs-built_in">window</span>, <span class="hljs-string">'matchMedia'</span>, {</span><br><span class="line">  <span class="hljs-attr">writable</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">  <span class="hljs-attr">value</span>: <span class="hljs-function">(<span class="hljs-params">query: <span class="hljs-built_in">any</span></span>) =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">return</span> {</span><br><span class="line">      <span class="hljs-attr">addListener</span>: jest.fn(),</span><br><span class="line">      <span class="hljs-attr">removeListener</span>: jest.fn()</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>附註：如果要用 function 的方式來回傳 object，不要把這個 function 變成 <code>jest.fn</code> 系列的 mock function。雖然官方範例是這樣子做，但我自己實際去跑會出問題。</p>
+<p>詳細資訊可以參考 <a target="_blank" rel="noopener" href="https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom">官方文件</a> 或這篇 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/39830580/jest-test-fails-typeerror-window-matchmedia-is-not-a-function">討論</a>。</p>
+<h3 id="怎麼模擬-localStorage？"><a href="#怎麼模擬-localStorage？" class="headerlink" title="怎麼模擬 localStorage？"></a>怎麼模擬 localStorage？</h3><p>其實就跟前一個問題的概念是一樣的，既然 jest 環境裡沒有 <code>window.localStorage</code> 這種東西，那就只好自己幫他定義一個。</p>
+<p>這邊先來看個範例：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Storage = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onClick</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-built_in">localStorage</span>.setItem(<span class="hljs-string">'username'</span>, <span class="hljs-string">'PeaNu'</span>)</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>User: {localStorage.getItem('username') ?? ''}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{onClick}</span>&gt;</span>Save<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>假設我現在想 mock <code>localStorage.getItem</code> 的回傳值的話可以這樣做：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { render, screen } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { Storage } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Storage'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 定義 mock</span></span><br><span class="line"><span class="hljs-keyword">const</span> mockLocalStorage = {</span><br><span class="line">  <span class="hljs-attr">getItem</span>: jest.fn()</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 綁到 window 身上</span></span><br><span class="line"><span class="hljs-built_in">Object</span>.defineProperty(<span class="hljs-built_in">window</span>, <span class="hljs-string">'localStorage'</span>, { <span class="hljs-attr">value</span>: mockLocalStorage })</span><br><span class="line"></span><br><span class="line">describe(<span class="hljs-string">'Storage'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  test(<span class="hljs-string">'mock getItem value'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">    <span class="hljs-keyword">const</span> mockValue = <span class="hljs-string">'PPB'</span></span><br><span class="line">    <span class="hljs-comment">// 設定 mock function 的 implementation</span></span><br><span class="line">    mockLocalStorage.getItem.mockImplementation(<span class="hljs-function">(<span class="hljs-params">key: <span class="hljs-built_in">string</span></span>) =&gt;</span> mockValue)</span><br><span class="line">    <span class="hljs-comment">// 渲染元件</span></span><br><span class="line">    render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Storage</span> /&gt;</span></span>)</span><br><span class="line">    <span class="hljs-comment">// Assertion</span></span><br><span class="line">    expect(mockLocalStorage.getItem).toBeCalledWith(<span class="hljs-string">'username'</span>)</span><br><span class="line">    <span class="hljs-keyword">const</span> name = screen.getByRole(<span class="hljs-string">'heading'</span>, { <span class="hljs-attr">level</span>: <span class="hljs-number">2</span> })</span><br><span class="line">    expect(name).toHaveTextContent(mockValue)</span><br><span class="line">  })</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>看 code 應該就能理解在做什麼了。另外這邊有幾個可能會犯的錯，來提醒一下：</p>
+<p>1. mock function 的回傳值一定要在單一個 <code>test</code> 中設定，不可以設定在外層：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { render, screen } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { Storage } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Storage'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> mockLocalStorage = {</span><br><span class="line">  <span class="hljs-comment">// 也不可以在這邊寫成 jest.fn.mockImplementation(...)，沒有用</span></span><br><span class="line">  <span class="hljs-attr">getItem</span>: jest.fn()</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">Object</span>.defineProperty(<span class="hljs-built_in">window</span>, <span class="hljs-string">'localStorage'</span>, { <span class="hljs-attr">value</span>: mockLocalStorage })</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 不可以在這邊設定，否則永遠會拿到 undefined</span></span><br><span class="line"><span class="hljs-keyword">const</span> mockValue = <span class="hljs-string">'PPB'</span></span><br><span class="line">mockLocalStorage.getItem.mockImplementation(<span class="hljs-function">(<span class="hljs-params">key: <span class="hljs-built_in">string</span></span>) =&gt;</span> mockValue)</span><br><span class="line"></span><br><span class="line">describe(<span class="hljs-string">'Storage'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  test(<span class="hljs-string">'mock getItem value'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">    render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Storage</span> /&gt;</span></span>)</span><br><span class="line">    expect(mockLocalStorage.getItem).toBeCalledWith(<span class="hljs-string">'username'</span>)</span><br><span class="line">    <span class="hljs-keyword">const</span> name = screen.getByRole(<span class="hljs-string">'heading'</span>, { <span class="hljs-attr">level</span>: <span class="hljs-number">2</span> })</span><br><span class="line">    <span class="hljs-comment">// 這段會出錯</span></span><br><span class="line">    expect(name).toHaveTextContent(mockValue)</span><br><span class="line">  })</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>2. 順序一定要對，不然一樣拿不到回傳值：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { render, screen } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span></span><br><span class="line"><span class="hljs-keyword">import</span> { Storage } <span class="hljs-keyword">from</span> <span class="hljs-string">'./Storage'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> mockLocalStorage = {</span><br><span class="line">  <span class="hljs-attr">getItem</span>: jest.fn()</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">Object</span>.defineProperty(<span class="hljs-built_in">window</span>, <span class="hljs-string">'localStorage'</span>, { <span class="hljs-attr">value</span>: mockLocalStorage })</span><br><span class="line"></span><br><span class="line">describe(<span class="hljs-string">'Storage'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  test(<span class="hljs-string">'mock getItem value'</span>, <span class="hljs-keyword">async</span> () =&gt; {</span><br><span class="line">    <span class="hljs-keyword">const</span> mockValue = <span class="hljs-string">'PPB'</span></span><br><span class="line">    <span class="hljs-comment">// 渲染元件</span></span><br><span class="line">    render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Storage</span> /&gt;</span></span>)</span><br><span class="line">    <span class="hljs-comment">// 不可以在元件渲染後才設定回傳值，這樣就來不及了。</span></span><br><span class="line">    mockLocalStorage.getItem.mockImplementation(<span class="hljs-function">(<span class="hljs-params">key: <span class="hljs-built_in">string</span></span>) =&gt;</span> mockValue)</span><br><span class="line">    expect(mockLocalStorage.getItem).toBeCalledWith(<span class="hljs-string">'username'</span>)</span><br><span class="line">    <span class="hljs-keyword">const</span> name = screen.getByRole(<span class="hljs-string">'heading'</span>, { <span class="hljs-attr">level</span>: <span class="hljs-number">2</span> })</span><br><span class="line">    expect(name).toHaveTextContent(mockValue)</span><br><span class="line">  })</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果上面的範例有理解，那 <code>setItem</code> 應該也沒什麼困難的了。可以先自己試試看再回來對 code，看有沒有跟你想的一樣：</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="hljs-string">'if button click should setItem to storage'</span>, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Storage</span> /&gt;</span></span>)</span><br><span class="line">  <span class="hljs-keyword">const</span> button = screen.getByRole(<span class="hljs-string">'button'</span>, { <span class="hljs-attr">name</span>: <span class="hljs-regexp">/save/i</span> })</span><br><span class="line">  userEvent.click(button)</span><br><span class="line">  expect(mockLocalStorage.setItem).toHaveBeenCalled()</span><br><span class="line">  expect(mockLocalStorage.setItem).toHaveBeenCalledWith(<span class="hljs-string">'username'</span>, <span class="hljs-string">'PeaNu'</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=T2sv8jXoP4s&amp;list=PLC3y8-rFHvwirqe1KHFCHJ0RqNuN61SJd&amp;index=2">React Testing Tutorial </a></li>
+<li><a target="_blank" rel="noopener" href="https://testing-library.com/docs/react-testing-library/intro/">React Testing Library 官方文件</a></li>
+<li><a target="_blank" rel="noopener" href="https://jestjs.io/docs/getting-started">Jest 官方文件</a></li>
+<li><a target="_blank" rel="noopener" href="https://pjchender.dev/react/note-react-testing/">React Testing by pjchender</a></li>
+</ul>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2023/01/01/typescript-advanced/">TypeScript－各種進階使用的技巧</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/12/02/vite-environment-variable/">Vite－Environment Variable</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

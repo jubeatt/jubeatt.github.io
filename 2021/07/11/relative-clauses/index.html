@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>which？that？關係子句？ - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="由於關係子句在應該是一個很常見到的句型，就是會冒出一堆 which &#x2F; that &#x2F; who 等等的那種句子。 雖然它的基本概念不算太複雜，但有礙於篇幅比較長，所以我覺得還是把它獨立出來當成一篇文章來說明會比較清楚。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="which？that？關係子句？">
+<meta property="og:url" content="https://jubeatt.github.io/2021/07/11/relative-clauses/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="由於關係子句在應該是一個很常見到的句型，就是會冒出一堆 which &#x2F; that &#x2F; who 等等的那種句子。 雖然它的基本概念不算太複雜，但有礙於篇幅比較長，所以我覺得還是把它獨立出來當成一篇文章來說明會比較清楚。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-07-11T08:55:09.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.641Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#先認識關係子句">1&nbsp;&nbsp;<b>先認識關係子句</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#為什麼需要關係子句？">1.1&nbsp;&nbsp;為什麼需要關係子句？</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#補充：有些時候可以省略關係代名詞">1.2&nbsp;&nbsp;補充：有些時候可以省略關係代名詞</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#補充：以-what-來連結的句子是關係子句嗎？">1.3&nbsp;&nbsp;補充：以 what 來連結的句子是關係子句嗎？</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#限定關係子句-vs-非限定關係子句">2&nbsp;&nbsp;<b>限定關係子句 vs 非限定關係子句</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#非限定關係子句（東西可能是單個或是多個，但不限定範圍）">2.1&nbsp;&nbsp;非限定關係子句（東西可能是單個或是多個，但不限定範圍）</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#限定關係子句（東西在一個範圍中，但限定指定的範圍）">2.2&nbsp;&nbsp;限定關係子句（東西在一個範圍中，但限定指定的範圍）</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#做個彙整">2.3&nbsp;&nbsp;做個彙整</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#參考資料">3&nbsp;&nbsp;<b>參考資料</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            which？that？關係子句？
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>7月 11 2021</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/English/">English</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>由於關係子句在應該是一個很常見到的句型，就是會冒出一堆 which / that / who 等等的那種句子。</p>
+<p>雖然它的基本概念不算太複雜，但有礙於篇幅比較長，所以我覺得還是把它獨立出來當成一篇文章來說明會比較清楚。</p>
+<span id="more"></span>
+
+<h2 id="先認識關係子句"><a href="#先認識關係子句" class="headerlink" title="先認識關係子句"></a>先認識關係子句</h2><p>明確的定義大概是這樣子：</p>
+<blockquote>
+<p><em>關係子句是由關係代名詞(who, whom, whose, which, that)或關係副詞(when, where, why)所引導的形容詞子句。</em></p>
+</blockquote>
+<p>先別吐槽，我知道大部分的人都不會從某個東西的官方定義去理解它的意思，不然我們就不需要上學，也不需要老師了。</p>
+<p>不過你可以抓重點出來看，根據定義，我們至少能知道，關係子句就是由關係代名詞、關係副詞這兩個東西來組成的一個 <strong>「句子」</strong> ，而這個句子的作用就是 <strong>「拿來形容某個你要講的東西」</strong>。</p>
+<p>來看一些例子：</p>
+<p>I found a bug which is a SyntaxError.<br>我找到了一個語法錯誤的 bug</p>
+<p>你可以把這個句子看成是這樣子：</p>
+<table>
+<thead>
+<tr>
+<th align="center">I found</th>
+<th align="center">a bug</th>
+<th align="center">which</th>
+<th align="center">is a SyntaxError.</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"></td>
+<td align="center">要形容的東西</td>
+<td align="center">關係代名詞</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p><strong>“which is a SyntaxError”</strong> 這整句話就是「<strong>關係子句</strong>」，用來形容你前面說的那個 bug 。</p>
+<p><strong>“which”</strong> 是「<strong>關係代名詞</strong>」，在此處它有兩個作用：</p>
+<ol>
+<li>當作 bug 這個詞的代名詞</li>
+<li>連結前面的句子</li>
+</ol>
+<p>所以一個完整的關係子句就大概是長這個樣子，而它又包含了關係代名詞與關係副詞這兩個東西，主要用途是來幫助你連接前面的句子。</p>
+<p>所以最基本的，你要能分辨什麼時候用哪個詞，可以參考以下表格：</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">關係代名詞</th>
+<th align="center">關係副詞</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>用詞</strong></td>
+<td align="center">who / whom / whose / which / that</td>
+<td align="center">when / where / why</td>
+</tr>
+<tr>
+<td align="center"><strong>時機</strong></td>
+<td align="center">指某個人、事、物</td>
+<td align="center">指某個時間、地點、原因</td>
+</tr>
+<tr>
+<td align="center"><strong>用途</strong></td>
+<td align="center">當作代名詞、連接句子</td>
+<td align="center">連接句子</td>
+</tr>
+</tbody></table>
+<p><small>如果你不清楚 who / whom / whose / which / that 的差別，請參考<a target="_blank" rel="noopener" href="https://www.ef.com.tw/english-guide/english-grammar/defining-relative-clauses/">這裡</a>。</small></p>
+<p>簡單來說。<br>如果要形容的東西是指某個人、事、物，那就用關係代名詞。<br>反之，如果要形容的東西是指時間、地點、原因，那就改用關係副詞。<br>以剛剛的例子來說，因為要形容的東西是 <strong>“bug”</strong> ，所以就用關係代名詞。</p>
+<p>如果是關係副詞的話，會像這樣：</p>
+<ul>
+<li><p>I remember <strong>the day</strong> when I first read JavaScript.<br>我記得我第一次讀 JavaScript 的<strong>那一天</strong>。</p>
+</li>
+<li><p>This is <strong>the company</strong> where I met him yesterday.<br>這是我昨天遇到他的<strong>那家公司</strong>。</p>
+</li>
+<li><p>That is <strong>the reason</strong> why I recommand arrow function instead of normal function.<br>這就是我為什麼推薦箭頭函式而不是一般函示<strong>的原因</strong>。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">I remember</th>
+<th align="center">the day</th>
+<th align="center">when</th>
+<th>I first read JavaScript</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"></td>
+<td align="center">要形容的東西</td>
+<td align="center">關係副詞</td>
+<td></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center">This is</th>
+<th align="center">the company</th>
+<th align="center">where</th>
+<th>I met him yesterday</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"></td>
+<td align="center">要形容的東西</td>
+<td align="center">關係副詞</td>
+<td></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center">That is</th>
+<th align="center">the reason</th>
+<th align="center">why</th>
+<th>I recommand arrow function instead of normal function</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"></td>
+<td align="center">要形容的東西</td>
+<td align="center">關係副詞</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>試著去理解這個概念，會比刻意去死記來得容易，也不需要特別去記憶。<br>就好比我們講中文的時候也會拿適當的詞語來形容某個東西，英文也一樣，不用想的太複雜。</p>
+<h3 id="為什麼需要關係子句？"><a href="#為什麼需要關係子句？" class="headerlink" title="為什麼需要關係子句？"></a>為什麼需要關係子句？</h3><p>當你想不通一些東西時，我很推薦大家去這樣思考。</p>
+<blockquote>
+<p><em>為什麼要有這個東西的存在？如果這個東西不存在的話會有什麼問題？</em></p>
+</blockquote>
+<p>當你能回答出這兩件事的時候，通常就能想通，不會在感到困惑了。<br>所以讓我們來討論看看，為什麼要有關係子句，以及沒有關係子句的話會有什麼問題？</p>
+<p>既然我們已經知道，關係子句的作用只是拿來形容一個東西的句子而已。<br>不知道你會不會疑惑，為什麼不直接拿一般的形容詞來形容就好了？<br>其實你仔細想想，會發現並不是每個情境下，我們都有<strong>適合的形容詞</strong>來修飾我們想表達的東西。</p>
+<p>例如：</p>
+<ul>
+<li><p>有適合的形容詞時<br>I love the <strong>newly-opened</strong> restaurant. 我超愛那家新開的餐廳</p>
+</li>
+<li><p>沒有適合的形容詞時<br>I love the restarant <strong>that Tom recommand</strong>. 我超愛那家 Tom 推薦的餐廳</p>
+</li>
+</ul>
+<p>你可以看到第二個句子很明顯地，他只能那樣子去形容。</p>
+<p>所以為什麼需要關係子句？，理由很簡單，<font size="4"> <strong>因為你找不到可以用的形容詞</strong></font>。</p>
+<h3 id="補充：有些時候可以省略關係代名詞"><a href="#補充：有些時候可以省略關係代名詞" class="headerlink" title="補充：有些時候可以省略關係代名詞"></a>補充：有些時候可以省略關係代名詞</h3><p>當關係代名詞在關係子句中當作<strong>受詞</strong>的時候，可以省略，<br>反之，如果在關係子句中當作<strong>主詞</strong>的時候，不能被省略。</p>
+<p>例如：</p>
+<ul>
+<li><p>I love the restaurant (that) Tom recommended. 這裡的 that 作為（Tom recommended）的受詞</p>
+</li>
+<li><p>I love the restaurant that has a big signboard. 這裡的 that 作為（has a big signboard）的主詞</p>
+</li>
+</ul>
+<h3 id="補充：以-what-來連結的句子是關係子句嗎？"><a href="#補充：以-what-來連結的句子是關係子句嗎？" class="headerlink" title="補充：以 what 來連結的句子是關係子句嗎？"></a>補充：以 what 來連結的句子是關係子句嗎？</h3><p>不是，what 所引導的是名詞子句，不像關係子句是形容詞子句。<br>所以換句話說，這整句話只是一個用來接受某個動作的 <strong>「受詞」</strong>。<br>既然是個受詞，就說明他並不是關係子句。</p>
+<p>例如：</p>
+<p>I don’t know what are you talking about.<br>我不知道你在說什麼。</p>
+<p>“what are you talking about” 這一整句話會看做是 know 這個動作的「受詞」。</p>
+<h2 id="限定關係子句-vs-非限定關係子句"><a href="#限定關係子句-vs-非限定關係子句" class="headerlink" title="限定關係子句 vs 非限定關係子句"></a>限定關係子句 vs 非限定關係子句</h2><p>這邊就只是在做個延伸，你可以大致了解一下，但真的弄不懂的話也沒關係。</p>
+<p>當關係子句是使用關係代名詞時，可以在區分成 <strong>「限定關係子句」</strong> 與 <strong>「非限定關係子句」</strong></p>
+<h3 id="非限定關係子句（東西可能是單個或是多個，但不限定範圍）"><a href="#非限定關係子句（東西可能是單個或是多個，但不限定範圍）" class="headerlink" title="非限定關係子句（東西可能是單個或是多個，但不限定範圍）"></a>非限定關係子句（東西可能是單個或是多個，但不限定範圍）</h3><blockquote>
+<p>我不限定是哪些東西，因為東西只有一個，或我指的是所有的。</p>
+</blockquote>
+<ol>
+<li>不用特別指出，大家都很清楚那是什麼東西。</li>
+<li>對東西提供額外的資訊來補充說明。</li>
+<li>拿掉的話，對方還是知道你是指什麼東西。</li>
+<li>需要以 “逗號” 來分隔句子。</li>
+</ol>
+<p>例如：</p>
+<p>I have a brother, who work at Japan.<br>我有一個在日本工作的哥哥</p>
+<ul>
+<li>代表你只有一個哥哥。</li>
+<li>work at Japan 只是補充額外的資訊，說明哥哥在日本工作。</li>
+<li>即便少了補充說明，別人也知道你在指哪位（因為你只有一個哥哥）。</li>
+</ul>
+<p>Gorillas, which are large and originate in Africa, can sometimes be found in zoos.<br>大猩猩很龐大且起源於非洲，有時候在動物園可以看到。</p>
+<ul>
+<li>代表你指的是所有大猩猩（注意字尾有 s）這個群體，</li>
+<li>which are large and originate in Africa，只是補充額外的資訊，說明大猩猩的體型與起源。</li>
+<li>如果省略掉，也不影響整個句子及語意。</li>
+</ul>
+<h3 id="限定關係子句（東西在一個範圍中，但限定指定的範圍）"><a href="#限定關係子句（東西在一個範圍中，但限定指定的範圍）" class="headerlink" title="限定關係子句（東西在一個範圍中，但限定指定的範圍）"></a>限定關係子句（東西在一個範圍中，但限定指定的範圍）</h3><blockquote>
+<p>我指的東西一定有一個以上，所以我必須指出是哪一個，或哪個範圍。</p>
+</blockquote>
+<ol>
+<li>在一個某個範圍指一些特定的東西（代表有很多個）</li>
+<li>拿掉的話，對方會不知道是指什麼東西</li>
+<li>有這些資訊才能讓句子完整</li>
+</ol>
+<p>例如：</p>
+<p>I have a brother who work at Japan.<br>我有一個在日本工作的哥哥</p>
+<ul>
+<li>代表你有一個以上的哥哥，而你說的是在日本工作那位。</li>
+<li>你有很多個哥哥，所以 work at Japan 是一個必要的資訊，如果拿掉別人會不知道你在說誰。</li>
+</ul>
+<p>Gorillas which name are Orangutan can sometimes be found in zoos.<br>名字叫 Orangutan 的猩猩，有時候可以在動物園看到。</p>
+<ul>
+<li>你指的是名子叫做 Orangutan 的大猩猩。</li>
+<li>拿掉的話，雖然不影響句子，<strong>但會影響語意</strong>，因為別人只知道你是說所有的大猩猩，而不是名字為 “Orangutan” 的大猩猩。</li>
+</ul>
+<h3 id="做個彙整"><a href="#做個彙整" class="headerlink" title="做個彙整"></a>做個彙整</h3><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">限定關係子句</th>
+<th align="center">非限定關係子句</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>用途</strong></td>
+<td align="center">提供完整的資訊</td>
+<td align="center">補充額外的資訊</td>
+</tr>
+<tr>
+<td align="center"><strong>若省略是否會影響句子</strong></td>
+<td align="center">是</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center"><strong>是否需要逗號</strong></td>
+<td align="center">否</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="center"><strong>是否能省略關係代名詞</strong></td>
+<td align="center">是</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center"><strong>是否可以用 that</strong></td>
+<td align="center">是</td>
+<td align="center">否</td>
+</tr>
+</tbody></table>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="http://www.taiwantestcentral.com/grammar/Title.aspx?ID=604">實用基礎文法（關係子句）</a><br><a target="_blank" rel="noopener" href="http://www.taiwantestcentral.com/grammar/Title.aspx?ID=248">實用基礎文法（關係代名詞）</a><br><a target="_blank" rel="noopener" href="https://www.ef.com.tw/english-guide/english-grammar/non-defining-relative-clauses/">非限定關係子句 | 英語文法 | EF</a><br><a target="_blank" rel="noopener" href="https://www.ef.com.tw/english-guide/english-grammar/defining-relative-clauses/">限定關係子句 | 英語文法 | EF</a><br><a target="_blank" rel="noopener" href="https://www.hopenglish.com/5-things-about-non-defining-relative-clauses-2">文法教室】限定與非限定關係代名詞</a><br><a target="_blank" rel="noopener" href="https://engoo.com.tw/blog/%E3%80%90%E8%8B%B1%E6%96%87%E6%96%87%E6%B3%95%E3%80%91%E9%99%90%E5%AE%9A%E5%92%8C%E9%9D%9E%E9%99%90%E5%AE%9A%E7%94%A8%E6%B3%95-%E9%80%99%E4%B8%80%E7%AF%87%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E6%B8%85/">【英文文法】限定和非限定用法　這一篇教你如何清楚分辦！ - Engoo 線上英文家教-部落格</a><br><a target="_blank" rel="noopener" href="https://www.storm.mg/lifestyle/685408">風傳媒－what 是關係代名詞嗎？</a></p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/07/18/english-note/">基礎英文文法</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/07/06/digital-system-conversion/">數字系統並沒有你想的那麼複雜</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

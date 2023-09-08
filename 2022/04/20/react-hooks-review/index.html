@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>React 重新複習 hooks - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="剛看完官方文件，來留個紀錄。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React 重新複習 hooks">
+<meta property="og:url" content="https://jubeatt.github.io/2022/04/20/react-hooks-review/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="剛看完官方文件，來留個紀錄。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-04-20T15:07:52.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.557Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡述">1&nbsp;&nbsp;<b>簡述</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#其他補充">1.1&nbsp;&nbsp;其他補充</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#useState">2&nbsp;&nbsp;<b>useState</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#useEffect">3&nbsp;&nbsp;<b>useEffect</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#useContext">4&nbsp;&nbsp;<b>useContext</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#useReducer">5&nbsp;&nbsp;<b>useReducer</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#useCallback">6&nbsp;&nbsp;<b>useCallback</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#useMemo">7&nbsp;&nbsp;<b>useMemo</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#useRef">8&nbsp;&nbsp;<b>useRef</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#useImperativeHandle">9&nbsp;&nbsp;<b>useImperativeHandle</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#useLayoutEffect">10&nbsp;&nbsp;<b>useLayoutEffect</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            React 重新複習 hooks
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>4月 20 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/React/">React</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>剛看完官方文件，來留個紀錄。</p>
+<span id="more"></span>
+
+<h2 id="簡述"><a href="#簡述" class="headerlink" title="簡述"></a>簡述</h2><p>之前有針對各個 hooks 寫過系列筆記：</p>
+<ul>
+<li><a href="https://jubeatt.github.io/2022/04/06/react-use-state/">React 的第一個 hook：useState</a></li>
+<li><a href="https://jubeatt.github.io/2022/04/06/react-use-ref/">React 的第二個 hook：useRef</a></li>
+<li><a href="https://jubeatt.github.io/2022/04/06/react-use-effect/">React 的第三個 hook：useEffect</a></li>
+<li><a href="https://jubeatt.github.io/2022/04/06/react-use-layout-effect/">React 的第四個 hook：useLayoutEffect</a></li>
+<li><a href="https://jubeatt.github.io/2022/04/07/react-memo/">React 的第五個 hook：memo</a></li>
+<li><a href="https://jubeatt.github.io/2022/04/07/react-use-callback/">React 的第六個 hook：useCallback</a></li>
+<li><a href="https://jubeatt.github.io/2022/04/07/react-use-memo/">React 的第七個 hook：useMemo</a></li>
+<li><a href="https://jubeatt.github.io/2022/04/08/react-use-context-and-use-context/">React 的第八個 hook：useContext 與 createContext</a></li>
+</ul>
+<p>但當時還沒有仔細看過官方文件，可能寫得不是很完整，所以這篇會寫得更詳細一些。</p>
+<h3 id="其他補充"><a href="#其他補充" class="headerlink" title="其他補充"></a>其他補充</h3><p>舉凡像是 <code>setState</code> 或 <code>dispatch</code> 等等這些從 hook 回傳的 function，都不會在 re-render 的時候被改變，所以才可以不用在 <code>useEffect</code> 或 <code>useCallback</code> 把它們傳到 dependencies 中。</p>
+<h2 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h2><blockquote>
+<p>用來產生「state」的 function</p>
+</blockquote>
+<p>回傳值有兩個，第一個是 state 的值，第二個是改變 state 時會用到的 setter：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> [counter, setCounter] = useState(<span class="hljs-number">0</span>);</span><br></pre></td></tr></tbody></table></figure>
+
+<p>所以要在一個元件顯示 state 的話只要：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button&gt;{counter}&lt;/button&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>就會看到一個 0 的按鈕了。</p>
+<p>而要改變 state 的話就要透過 setter 來改變，像這樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 用 setCounter 來更新 state</span></span><br><span class="line">&lt;button onClick={<span class="hljs-function">() =&gt;</span> setCounter(<span class="hljs-function"><span class="hljs-params">prev</span> =&gt;</span> prev + <span class="hljs-number">1</span>)}&gt;{counter}&lt;/button&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣子每點一下按鈕 counter 的值就會加一。</p>
+<p>另外我想補充一個觀念，就是每次 re-render 時 state 會怎麼運作？</p>
+<p>像我之前就有想過，如果 re-render 等於重新執行一次 function component 的內容的話，那裡面的 <code>useState</code> 不就又會重新執行一次了嗎？這樣的話 state 不就會又變成最開始的初始值了？（0）</p>
+<p>列個流程，應該會比較好理解我的意思：</p>
+<ol>
+<li>第一次 render</li>
+<li>執行 <code>useState(0)</code>，counter 的初始值為 0</li>
+<li>點按鈕，更新 state 讓 counter 變成 1，觸發 re-render</li>
+<li>再執行一次 <code>useState(0)</code>，counter 的值為 0？還是 1？</li>
+</ol>
+<p>我們當然知道答案會是 1，但這是為什麼？原來官方文件裡面有提到：</p>
+<blockquote>
+<p>During subsequent re-renders, the first value returned by useState will always be the most recent state after applying updates.</p>
+</blockquote>
+<p>簡單來說 re-render 時 <code>useState</code> 確實會被重新執行，但它會確保第一個回傳值（也就是 state）是最新的那個值。</p>
+<p>最後補充幾個其他特性：</p>
+<ul>
+<li>更新 state 的方式有兩種，直接傳值的叫做「normal form」，透過 prev 的叫做「functional  form」，如果新的 state 必須用 prev 值來計算的話建議用後者比較安全</li>
+</ul>
+<ul>
+<li>如果新的 state 跟 目前的 state 一樣，就不會觸發 re-render</li>
+</ul>
+<ul>
+<li>在 hook 裡面就算只有要改 state 的某個部分，也必須把完整的 state 給放進去，而不是像 class component 一樣可以只寫要改的地方就好（這個很重要哦）</li>
+</ul>
+<ul>
+<li>如果 state 的初始值得用複雜計算來求出，可以在 useState 裡改傳進一個 function，這個只會在第一次 render 的時候被執行，後續的不會，技術上稱為「Lazy initial state」</li>
+</ul>
+<ul>
+<li>假設一次更新兩個 state，React 會自動合在一起，變成只 re-render 一次。在 18.0 以前只有 Event handler 裡面的更新 state 會有這效果，但這之後就不侷限了，想看範例可以參考<a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/MWrLexa?editors=1010">這裡</a></li>
+</ul>
+<h2 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a>useEffect</h2><p>就跟課程講的一樣，意思是：</p>
+<blockquote>
+<p>render 完以後想做什麼？</p>
+</blockquote>
+<p>為什麼會取名為「Effect」？其實是因為 React 希望你用這個 hook 來處理「side effect（副作用）」，意思是指跟 React 本身無關的事情，像是「發 API 拿資料」、「儲存到 storage」等等。</p>
+<p>這些 effect 雖然很重要（因為有可能會改變內容），但對 React 在渲染 Component 的時後來說是不重要的，所以才會說這是 side effect。</p>
+<p>總之呢，不要把一些跟 Component 沒有直接關係的東西寫在裡面，像這樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Component</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  fetch(<span class="hljs-string">'...'</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>而是要這樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Component</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> (...)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// render 完以後才去發 API</span></span><br><span class="line">useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  fetch(<span class="hljs-string">'...'</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>不過 <code>useEffect</code> 預設是<strong>每次</strong> render 以後都會被執行，所以更準確的作法是加上第二個參數（dependencies）來告訴它「當某某值改變的時候再幫我執行這個 effect」：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Component</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> (...)</span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">// 不管傳什麼第一次都一定會被執行</span></span><br><span class="line"><span class="hljs-comment">// 所以這邊傳空的代表我只希望他被執行一次</span></span><br><span class="line">useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// render 完以後才去發 API</span></span><br><span class="line">  fetch(<span class="hljs-string">'...'</span>)</span><br><span class="line">}, [])</span><br></pre></td></tr></tbody></table></figure>
+
+<p>基本上呢，只要是出現在 <code>useEffect</code> 裡的 props 或 state，都<strong>應該要放在 dependencies 裡面</strong>，否則當值改變時它們還是會停留在舊的那個值，這個要多注意一下。</p>
+<p>接著做一個補充，<code>useEffect</code> 每次在執行 side effect 以前會<strong>先把上一次的 effect 給清掉</strong>，這個階段叫做「clean up effect」，這樣做是為了確保「memory weak（簡單來說就是記憶體浪費吧？）」的問題。</p>
+<p>另外 <code>useEffect</code> 裡面其實還可以在回傳另一個 function，它會在 component 從畫面上移除前給執行，像這樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Message</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// render 以後執行</span></span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Message has rendered."</span>);</span><br><span class="line">    <span class="hljs-comment">// 回傳 function，被移除前會執行</span></span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"before Message remove."</span>);</span><br><span class="line">  });</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>想看實際效果可以到 <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/ExordmO?editors=1011">這邊</a> 看。</p>
+<h2 id="useContext"><a href="#useContext" class="headerlink" title="useContext"></a>useContext</h2><blockquote>
+<p>把 props 聚集到一個地方管理</p>
+</blockquote>
+<p>簡單來說就是這樣。</p>
+<p>舉個例子，當你的 props 要通過「很多層來傳遞時」，可能就會寫出這樣的東西：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 要往下傳遞的 props</span></span><br><span class="line"><span class="hljs-keyword">const</span> theme = {</span><br><span class="line">  <span class="hljs-attr">light</span>: {</span><br><span class="line">    <span class="hljs-attr">bg</span>: <span class="hljs-string">"white"</span>,</span><br><span class="line">    <span class="hljs-attr">color</span>: <span class="hljs-string">"black"</span>,</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">dark</span>: {</span><br><span class="line">    <span class="hljs-attr">bg</span>: <span class="hljs-string">"black"</span>,</span><br><span class="line">    <span class="hljs-attr">color</span>: <span class="hljs-string">"white"</span>,</span><br><span class="line">  },</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 第三層，終於拿到 props</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Content</span>(<span class="hljs-params">{ theme }</span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">backgroundColor:</span> <span class="hljs-attr">theme.bg</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">color:</span> <span class="hljs-attr">theme.color</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      }}</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    &gt;</span></span></span><br><span class="line"><span class="hljs-xml">      Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eos neque</span></span><br><span class="line"><span class="hljs-xml">      explicabo soluta excepturi impedit aperiam necessitatibus fugiat officia</span></span><br><span class="line"><span class="hljs-xml">      recusandae quidem consequuntur, minus facere suscipit quam asperiores</span></span><br><span class="line"><span class="hljs-xml">      ipsum. Impedit, facilis?</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Wrapper</span>(<span class="hljs-params">{ theme }</span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 第二層</span></span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Content</span> <span class="hljs-attr">theme</span>=<span class="hljs-string">{theme}</span> /&gt;</span></span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [isDarkmode, setIsDarkMode] = useState(<span class="hljs-literal">true</span>);</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"App"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      // 第一層</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Wrapper</span> <span class="hljs-attr">theme</span>=<span class="hljs-string">{theme.dark}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>有同學用說這樣的場景就跟「接力棒」很像，我覺得這還蠻貼切的 XD</p>
+<p>但如果改用 <code>useContext</code> 和 <code>createContext</code> 就能大大節省掉這個困擾：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> theme = {</span><br><span class="line">  <span class="hljs-attr">light</span>: {</span><br><span class="line">    <span class="hljs-attr">bg</span>: <span class="hljs-string">"white"</span>,</span><br><span class="line">    <span class="hljs-attr">color</span>: <span class="hljs-string">"black"</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">dark</span>: {</span><br><span class="line">    <span class="hljs-attr">bg</span>: <span class="hljs-string">"black"</span>,</span><br><span class="line">    <span class="hljs-attr">color</span>: <span class="hljs-string">"white"</span></span><br><span class="line">  }</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 1. 建立 Context</span></span><br><span class="line"><span class="hljs-keyword">const</span> ThemeContext = createContext(<span class="hljs-literal">null</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Content</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 3. 取得 Context 的值</span></span><br><span class="line">  <span class="hljs-keyword">const</span> theme = useContext(ThemeContext);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">backgroundColor:</span> <span class="hljs-attr">theme.bg</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">color:</span> <span class="hljs-attr">theme.color</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      }}</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    &gt;</span></span></span><br><span class="line"><span class="hljs-xml">      Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eos neque</span></span><br><span class="line"><span class="hljs-xml">      explicabo soluta excepturi impedit aperiam necessitatibus fugiat officia</span></span><br><span class="line"><span class="hljs-xml">      recusandae quidem consequuntur, minus facere suscipit quam asperiores</span></span><br><span class="line"><span class="hljs-xml">      ipsum. Impedit, facilis?</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Wrapper</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Content</span> /&gt;</span></span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [isDarkmode, setIsDarkMode] = useState(<span class="hljs-literal">true</span>);</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-comment">// 2. 建立 Provider 和要提供的值（value）</span></span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">ThemeContext.Provider</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{isDarkmode</span> ? <span class="hljs-attr">theme.dark</span> <span class="hljs-attr">:</span> <span class="hljs-attr">theme.light</span>}&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"App"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Wrapper</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        // 按下按鈕時切換主題</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsDarkMode((prev) =&gt; !prev)}&gt;</span></span><br><span class="line"><span class="hljs-xml">          switch theme</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">ThemeContext.Provider</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">ReactDOM.render(<span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">App</span> /&gt;</span></span>, <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"root"</span>));</span><br></pre></td></tr></tbody></table></figure>
+
+<p>想看效果的話可以到 <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/vYpbQGg">這裡</a> 看。</p>
+<p>總之呢，像這樣把 props 集中到 Context 來處理會好管理很多，也不用像剛剛那麼 hardcode 每一層都得傳一遍。</p>
+<h2 id="useReducer"><a href="#useReducer" class="headerlink" title="useReducer"></a>useReducer</h2><blockquote>
+<p>去學 redux 吧，畢竟這跟它有關。</p>
+</blockquote>
+<p>簡單來說就是用來取代 <code>useState</code> 的另一種 hook，會需要它是因為當 state 很多或很複雜的時候，要傳遞各種 props 也會變得很麻煩，所以才會用這種類似「flux」方式來集中管理。</p>
+<p>這邊先大概知道怎麼用就好，其他的等學 Redux 再說吧！</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// state 初始值</span></span><br><span class="line"><span class="hljs-keyword">const</span> initialState = { <span class="hljs-attr">count</span>: <span class="hljs-number">0</span> };</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// reducer，用來管理 state 的工具人</span></span><br><span class="line"><span class="hljs-comment">// 會根據 action 來更新 state </span></span><br><span class="line"><span class="hljs-keyword">const</span> reducer = <span class="hljs-function">(<span class="hljs-params">state, action</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">switch</span> (action.type) {</span><br><span class="line">    <span class="hljs-keyword">case</span> <span class="hljs-string">"increment"</span>:</span><br><span class="line">      <span class="hljs-keyword">return</span> { <span class="hljs-attr">count</span>: state.count + <span class="hljs-number">1</span> };</span><br><span class="line">    <span class="hljs-keyword">case</span> <span class="hljs-string">"decrement"</span>:</span><br><span class="line">      <span class="hljs-keyword">return</span> { <span class="hljs-attr">count</span>: state.count - <span class="hljs-number">1</span> };</span><br><span class="line">    <span class="hljs-keyword">default</span>:</span><br><span class="line">      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>();</span><br><span class="line">  }</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// 使用它，要記得傳入前面寫的 reducer 跟 state</span></span><br><span class="line">  <span class="hljs-keyword">const</span> [state, dispatch] = useReducer(reducer, initialState);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"App"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      count: {state.count}</span></span><br><span class="line"><span class="hljs-xml">      // 接著透過 dispatch 跟 reducer 說我想做什麼</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> dispatch({type: "increment"})}&gt;+<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> dispatch({type: "decrement"})}&gt;-<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>效果可以到 <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/LYeqXoL">這邊</a> 看。</p>
+<p>總之，這樣的好處是不用在透過 props 把更新 state 的 callback 傳給子元件，子元件只要先 <code>useReducer</code>，再透過 <code>dispatch</code> 來指派任務就完事了。</p>
+<h2 id="useCallback"><a href="#useCallback" class="headerlink" title="useCallback"></a>useCallback</h2><blockquote>
+<p>把 function 記起來。</p>
+</blockquote>
+<p>這個是拿來做優化時比較會用到。舉例來說，我們可能會在一個 Component 中定義 function：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [someState, setSomeState] = useState(<span class="hljs-string">"hello"</span>);</span><br><span class="line">  <span class="hljs-keyword">const</span> doSomething = <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">console</span>.log(someState);</span><br><span class="line">  ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>但這樣的問題在於，不管怎麼樣每次 re-render 的時候 <code>doSomething</code> 都會在重新宣告一次，即使 <code>someState</code> 沒有變也一樣，這樣不是很浪費嗎？明明沒有必要？</p>
+<p>所以 <code>useCallback</code> 就是用來解決這個問題的，它可以把一個 function 給記住，你只要告訴它「xxx 改變的時候再幫我重新宣告就好了」。</p>
+<p>這邊附上一個用來驗證的範例：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [value, setValue] = useState(<span class="hljs-string">""</span>);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 一個有用 useCallback，一個沒有</span></span><br><span class="line">  <span class="hljs-keyword">const</span> logHello = <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Hello"</span>);</span><br><span class="line">  <span class="hljs-keyword">const</span> logHelloMemorized = useCallback(logHello, []);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 把一開始的 reference 記起來</span></span><br><span class="line">  <span class="hljs-comment">// （利用 useRef 在 re-render 後不會變的特性）</span></span><br><span class="line">  <span class="hljs-keyword">const</span> refLogHello = useRef(logHello);</span><br><span class="line">  <span class="hljs-keyword">const</span> refLogHelloMemorized = useRef(logHelloMemorized);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"App"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Is same logHello: {refLogHello.current === logHello ? "Yes" : "No"}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Is same logHelloMemorized: {refLogHelloMemorized.current === logHelloMemorized ? "Yes" : "No"}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{value}</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(e)</span> =&gt;</span> setValue(e.target.value)} /&gt;</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊刻意放了一個 <code>&lt;input&gt;</code>，目的是要讓我在輸入文字時觸發 re-render。</p>
+<p>所以在 re-render 時，<code>logHello</code> 理應就會被重新宣告一次，變成一個新的 function，而 <code>logHelloMemorized</code> 不會，因為它有用 <code>useCallback</code> 包住。</p>
+<p>建議你到我寫的 <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/yLpZGPJ">範例</a> 去試試看，再來思考我這邊說的意思應該就能理解了。</p>
+<p>至於 dependencies 該傳什麼？就跟 <code>useEffect</code> 的邏輯差不多，只要是 function 裡會用到的 state 或 props 幾乎都要放進去，不然就很容易出現 bug。</p>
+<p>為什麼？<strong>因為 function 裡的值是舊的</strong>。</p>
+<h2 id="useMemo"><a href="#useMemo" class="headerlink" title="useMemo"></a>useMemo</h2><blockquote>
+<p>把回傳值給記住</p>
+</blockquote>
+<p>跟 <code>useCallback</code> 一樣是用來優化的 hook。</p>
+<p>簡單來說，可以把複雜的計算放在 <code>useMemo</code> 裡面來做，然後一樣給它 dependencies，告訴它什麼東西改變時在重新計算就好，這樣就能省下不必要的計算：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [value, setValue] = useState(<span class="hljs-string">""</span>);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 每次 re-render 都會被執行</span></span><br><span class="line">  <span class="hljs-keyword">const</span> veryComplexCalculate = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'calculate'</span>)</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> + <span class="hljs-number">1</span></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 只有 dependencies 改變時才執行</span></span><br><span class="line">  <span class="hljs-keyword">const</span> veryComplexCalculateByMemo = useMemo(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'memo'</span>)</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">100</span> + <span class="hljs-number">100</span></span><br><span class="line">  }, [])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"App"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Result1: {veryComplexCalculate()}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Result2: {veryComplexCalculateByMemo}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{value}</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(e)</span> =&gt;</span> setValue(e.target.value)} /&gt;</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>一樣可以到我寫 <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/YzYBgVZ?editors=1111">範例</a> 參考（記得打開 console）</p>
+<h2 id="useRef"><a href="#useRef" class="headerlink" title="useRef"></a>useRef</h2><blockquote>
+<p>一個 Mutable 的值，只有你自己去改它時它才會變，而且不會觸發 re-render</p>
+</blockquote>
+<p>附註：不會變的原理是因為 React 在背後幫你做了一些事情，讓每次 re-render 都會是同一個 Object 的 reference。</p>
+<p>上面的說法沒有很完整，但我覺得這樣講會好記一點，一樣來看個範例吧：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [randomValue, serRandomValue] = useState(<span class="hljs-number">0</span>);</span><br><span class="line">  <span class="hljs-comment">// {current: 0}</span></span><br><span class="line">  <span class="hljs-keyword">const</span> counter = useRef(<span class="hljs-number">0</span>)</span><br><span class="line">  <span class="hljs-comment">// 用來觸發 re-render</span></span><br><span class="line">  <span class="hljs-keyword">const</span> changeValue = <span class="hljs-function">() =&gt;</span> serRandomValue(<span class="hljs-built_in">Math</span>.random())</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"App"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Ref: {counter.current}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      // 因為是 Mutable 所以能直接改</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> counter.current++}&gt;add 1 to ref<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{changeValue}</span>&gt;</span>Re-render<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>首先 <code>useRef</code> 會建立一個<strong>物件</strong>，它會有一個 <code>current</code> 屬性，用來儲存你給的初始值。所以你要存取東西都要用 <code>.current</code> 來取，不然會拿到整個物件。</p>
+<p>它最大的特點就是「Mutable」，所以你可以直接改，不用像改 state 一樣還要先 copy 一份新的才行。</p>
+<p>這邊一樣有寫 <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/OJzdGLa?editors=1010">範例</a> 來練習，可以參考看看。</p>
+<p>除了上面這個範例，它還有一個很常會拿來用的地方：「儲存 DOM 元素」</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [flag, setFlag] = useState(<span class="hljs-literal">true</span>);</span><br><span class="line">  <span class="hljs-comment">// {current: null}</span></span><br><span class="line">  <span class="hljs-keyword">const</span> inputRef = useRef(<span class="hljs-literal">null</span>)</span><br><span class="line">  </span><br><span class="line">  useEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 每次 render 完如果有抓到 input 就 focus</span></span><br><span class="line">    <span class="hljs-keyword">if</span> (inputRef.current) {</span><br><span class="line">      inputRef.current.focus();</span><br><span class="line">    }</span><br><span class="line">  });</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"App"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      // 把 input 節點存到 useRef 裡</span></span><br><span class="line"><span class="hljs-xml">      { flag &amp;&amp; <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">{inputRef}</span> /&gt;</span>}</span></span><br><span class="line"><span class="hljs-xml">      // 點按鈕可以把 input 隱藏 or 顯示</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setFlag(prev =&gt; !prev)}&gt;Toggle<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊的範例可以到 <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/Exorzyp">這邊</a> 試。</p>
+<p>總之這背後的原理是，只要把一個物件放在 <code>ref</code> 屬性上，React 就會自動幫你把 DOM 元素放到 <code>current</code> 裡，但一般還是建議用 <code>useRef</code> 來存比較好。</p>
+<h2 id="useImperativeHandle"><a href="#useImperativeHandle" class="headerlink" title="useImperativeHandle"></a>useImperativeHandle</h2><blockquote>
+<p>useRef 的延伸</p>
+</blockquote>
+<p>這個應該不太會用到，只要大概知道一下就好了。</p>
+<p>這個是用在如果我把一個 Component 拆到最小單位，像是只有一個 <code>&lt;input&gt;</code>，那我有沒有辦法在在父元件去控制它？聽起來有點莫名奇妙吧？所以來直接看範例吧：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 我想操控的那個 input</span></span><br><span class="line"><span class="hljs-keyword">import</span> Myinput <span class="hljs-keyword">from</span> <span class="hljs-string">"./Myinput"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 一樣要透過 useRef 來儲存 DOM</span></span><br><span class="line">  <span class="hljs-keyword">const</span> inputRef = useRef(<span class="hljs-literal">null</span>);</span><br><span class="line">  <span class="hljs-keyword">const</span> focusInput = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// 這邊待會在解釋，你只要知道這邊的意思是用來 focus 就好了</span></span><br><span class="line">    inputRef.current.yoyoyo();</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"App"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      // 把這個 Component 存到 useRef</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Myinput</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">{inputRef}</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{focusInput}</span>&gt;</span>focus<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>簡單來說，<code>&lt;Myinput /&gt;</code> 在建立的時候可以決定要 export 哪些「method」來給父元件用，這邊是 <code>yoyoyo</code>。名字是我故意亂取的所以看起來很詭異，但我只是想讓你知道它是可以自定義的，不用一定要 <code>focus</code>。</p>
+<p>接著來看一下子元件的部分吧：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { useRef, useImperativeHandle, forwardRef } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MyInput</span> (<span class="hljs-params">props, ref</span>)  </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> inputRef = useRef(<span class="hljs-literal">null</span>);</span><br><span class="line">  useImperativeHandle(ref, <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-comment">// export 一個 yoyoyo，它可以 focus 到這個 input</span></span><br><span class="line">    <span class="hljs-keyword">return</span> {</span><br><span class="line">      <span class="hljs-attr">yoyoyo</span>: <span class="hljs-function">() =&gt;</span> inputRef.current.focus()</span><br><span class="line">    }</span><br><span class="line">  })</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">input</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"type some thing..."</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">ref</span>=<span class="hljs-string">{inputRef}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    /&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> forwardRef(MyInput)</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p>簡單來說，這邊你要做三件事情：</p>
+<ol>
+<li>把 DOM 元素用 <code>useRef</code> 儲存</li>
+<li>設定 <code>useImperativeHandle</code>，把要 export 出去的東西寫好</li>
+<li>最後用 <code>forwardRef</code> 包起來</li>
+</ol>
+<p>就這樣囉，想看範例可以到 <a target="_blank" rel="noopener" href="https://codesandbox.io/s/useimperativehandle-fan-li-0ggnbs?file=/src/App.js">這邊</a></p>
+<h2 id="useLayoutEffect"><a href="#useLayoutEffect" class="headerlink" title="useLayoutEffect"></a>useLayoutEffect</h2><p>這個也跟課程講的一樣：</p>
+<blockquote>
+<p>render 完以後，瀏覽器 paint 完後想做什麼</p>
+</blockquote>
+<p>它跟 useEffect 基本上是一樣的東西，只差在「觸發的時機」不同，一個是在畫面 paint 完以後執行，一個在 paint 之前。</p>
+<p>這邊的示範有點難做，不確定是不是 18.0 有做一些優化，不能做出「閃一下」的效果，有興趣的話可以參考 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10252118">這篇</a>，裡面有示範什麼是「閃一下」。</p>
+<p>或你也可以參考我寫的另一種 <a target="_blank" rel="noopener" href="https://codepen.io/jubeatt/pen/QWaYedW?editors=1011">範例</a>：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { useState, useEffect, useLayoutEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [todos, setTodos] = useState([<span class="hljs-string">"todo1"</span>, <span class="hljs-string">"todo2"</span>, <span class="hljs-string">"todo3"</span>]);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// 如果是 useLayoutEffect 畫面就會等 3 秒後才 paint 出來</span></span><br><span class="line">  <span class="hljs-comment">// 如果是 useEffect 畫面會直接顯示，不會受到影響</span></span><br><span class="line">  useLayoutEffect(<span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">const</span> target = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getTime() + <span class="hljs-number">3000</span>;</span><br><span class="line">    <span class="hljs-comment">// 等三秒</span></span><br><span class="line">    <span class="hljs-keyword">while</span> (<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getTime() &lt; target) {}</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"finish"</span>);</span><br><span class="line">  }, []);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"App"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        {todos.map((todo) =&gt; (</span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>{todo}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        ))}</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p>總之你只要知道這兩個觸發的「時機點」是不一樣的就好了。另外一般會建議能用 <code>useEffect</code> 就用它，少用 <code>useLayoutEffect</code>。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/04/21/mentor-program-day127/">mentor-program-day127</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/04/20/mentor-program-day126/">mentor-program-day126</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

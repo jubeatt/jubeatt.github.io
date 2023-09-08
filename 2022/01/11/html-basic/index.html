@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>HTML 基礎 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="要簡單很簡單，要複雜也可以很複雜。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML 基礎">
+<meta property="og:url" content="https://jubeatt.github.io/2022/01/11/html-basic/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="要簡單很簡單，要複雜也可以很複雜。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/11/html-basic/refuse.jpg">
+<meta property="article:published_time" content="2022-01-11T13:48:45.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.507Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/01/11/html-basic/refuse.jpg">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#HTML-架構">1&nbsp;&nbsp;<b>HTML 架構</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#成對與不成對的標籤">2&nbsp;&nbsp;<b>成對與不成對的標籤</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#HTML-一開始的用途">3&nbsp;&nbsp;<b>HTML 一開始的用途</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#把標籤給分組起來，-lt-div-gt-與-lt-span-gt">4&nbsp;&nbsp;<b>把標籤給分組起來，&amp;lt;div&amp;gt; 與 &amp;lt;span&amp;gt;</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#顯示圖片的標籤-lt-img-gt">5&nbsp;&nbsp;<b>顯示圖片的標籤 &amp;lt;img&amp;gt;</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#title-屬性">5.1&nbsp;&nbsp;title 屬性</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#alt-屬性">5.2&nbsp;&nbsp;alt 屬性</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#顯示清單">6&nbsp;&nbsp;<b>顯示清單</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#lt-ul-gt-（unordered-list）-無序清單">6.1&nbsp;&nbsp;&amp;lt;ul&amp;gt;（unordered list） 無序清單</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#lt-ol-gt-（ordered-list）-有序清單">6.2&nbsp;&nbsp;&amp;lt;ol&amp;gt;（ordered list） 有序清單</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#保留完整格式-lt-pre-gt-與換行-lt-br-gt">7&nbsp;&nbsp;<b>保留完整格式 &amp;lt;pre&amp;gt; 與換行 &amp;lt;br&amp;gt;</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#lt-pre-gt-preformatted-text">7.1&nbsp;&nbsp;&amp;lt;pre&amp;gt; preformatted text</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#lt-br-gt-line-break">7.2&nbsp;&nbsp;&amp;lt;br&amp;gt; line break</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#顯示表格-lt-table-gt">8&nbsp;&nbsp;<b>顯示表格 &amp;lt;table&amp;gt;</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#帶你環遊世界-lt-a-gt">9&nbsp;&nbsp;<b>帶你環遊世界 &amp;lt;a&amp;gt;</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#連到網頁外面的連結">9.1&nbsp;&nbsp;連到網頁外面的連結</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#連到網頁裡面的連結">9.2&nbsp;&nbsp;連到網頁裡面的連結</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#語意化標籤-Semantic-elements">10&nbsp;&nbsp;<b>語意化標籤 Semantic elements</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#直接用別人的網頁-lt-iframe-gt">11&nbsp;&nbsp;<b>直接用別人的網頁 &amp;lt;iframe&amp;gt;</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#上有政策-下有對策">11.1&nbsp;&nbsp;上有政策 下有對策</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#表單相關標籤">12&nbsp;&nbsp;<b>表單相關標籤</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#lt-input-gt-相關">12.1&nbsp;&nbsp;&amp;lt;input&amp;gt; 相關</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#其他">12.2&nbsp;&nbsp;其他</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#SEO">13&nbsp;&nbsp;<b>SEO</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#lt-meta-gt-標籤">13.1&nbsp;&nbsp;&amp;lt;meta&amp;gt; 標籤</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Open-Graph-Protocol">13.2&nbsp;&nbsp;Open Graph Protocol</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#JSON-ld">13.3&nbsp;&nbsp;JSON-ld</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#robots-txt">13.4&nbsp;&nbsp;robots.txt</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#APP-相關資訊">13.5&nbsp;&nbsp;APP 相關資訊</a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            HTML 基礎
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>1月 11 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/HTML/">HTML</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>要簡單很簡單，要複雜也可以很複雜。</p>
+<span id="more"></span>
+
+<h2 id="HTML-架構"><a href="#HTML-架構" class="headerlink" title="HTML 架構"></a>HTML 架構</h2><ol>
+<li><code>&lt;!DOCTYPE html&gt;</code> =&gt; 宣告我用的是 HTML5 這個格式</li>
+<li><code>html</code> =&gt; 整個 HTML 文件的根元素</li>
+<li><code>head</code> =&gt; 放一些額外資訊。像是編碼格式，外部檔案之類的</li>
+<li><code>title</code> =&gt; 網頁的標題</li>
+<li><code>body</code> =&gt; 網頁的主要內容</li>
+</ol>
+<h2 id="成對與不成對的標籤"><a href="#成對與不成對的標籤" class="headerlink" title="成對與不成對的標籤"></a>成對與不成對的標籤</h2><p>大部分的 HTML 標籤都會以成對出現，例如 <code>&lt;h1&gt;title&lt;/h1&gt;</code>、<code>&lt;p&gt;hahahaha&lt;/p&gt;</code>。</p>
+<p>但有些標籤是沒有內容的，像是 <code>&lt;meta charset="utf-8" /&gt;</code> ，所以就改成在後面加上 <code>/</code> 可以想成是「自己一組」的這種概念。</p>
+<h2 id="HTML-一開始的用途"><a href="#HTML-一開始的用途" class="headerlink" title="HTML 一開始的用途"></a>HTML 一開始的用途</h2><p>用來呈現「文章」的感覺，所以一開始最基本的標籤是 <code>&lt;h1&gt;~&lt;h6&gt;</code> 跟 <code>&lt;p&gt;</code>，這兩種標籤其實就大約是一篇文章的結構了，分別是「標題」跟「內文」。</p>
+<h2 id="把標籤給分組起來，-lt-div-gt-與-lt-span-gt"><a href="#把標籤給分組起來，-lt-div-gt-與-lt-span-gt" class="headerlink" title="把標籤給分組起來，<div> 與 <span>"></a>把標籤給分組起來，&lt;div&gt; 與 &lt;span&gt;</h2><p> 兩個都是用來做「分組」這件事情，主要是在 CSS 的時候會用到： </p>
+ <figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">&lt;!-- 第一組 --&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Group1<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">    Lorem ipsum, dolor sit amet consectetur adipisicing elit. </span><br><span class="line">    Ipsam quidem consectetur ratione doloribus ullam iusto neque iure,</span><br><span class="line">    ea aliquam iste a quod reiciendis nam labore? Quam aperiam numquam</span><br><span class="line">    totam sapiente?</span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-comment">&lt;!-- 第二組 --&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Group2<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">    Lorem ipsum, dolor sit amet consectetur adipisicing elit. </span><br><span class="line">    Ipsam quidem consectetur ratione doloribus ullam iusto neque iure,</span><br><span class="line">    ea aliquam iste a quod reiciendis nam labore? Quam aperiam numquam</span><br><span class="line">    totam sapiente?</span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<p> <code>&lt;span&gt;</code> 也是分組，跟 <code>&lt;div&gt;</code> 最大的差別在於不會換行，可以把它想成是「可以與別人共處，但在組裡還有自己的小圈圈」這種感覺：</p>
+ <figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> <span class="hljs-comment">&lt;!-- 第一組 --&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Group1<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">    Lorem ipsum, dolor sit <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>我是第一組裡面的小圈子<span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span> consectetur adipisicing elit. </span><br><span class="line">    Ipsam quidem consectetur ratione doloribus ullam iusto neque iure,</span><br><span class="line">    ea aliquam iste a quod reiciendis nam labore? Quam aperiam numquam</span><br><span class="line">    totam sapiente?</span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-comment">&lt;!-- 第二組 --&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Group2<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">    Lorem ipsum, dolor sit amet consectetur adipisicing elit. </span><br><span class="line">    Ipsam quidem consectetur <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>我是第二組裡面的小圈子<span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span> doloribus </span><br><span class="line">    ullam iusto neque iure,ea aliquam iste a quod reiciendis nam labore?</span><br><span class="line">    Quam aperiam numquamtotam sapiente?</span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+<h2 id="顯示圖片的標籤-lt-img-gt"><a href="#顯示圖片的標籤-lt-img-gt" class="headerlink" title="顯示圖片的標籤 <img>"></a>顯示圖片的標籤 &lt;img&gt;</h2><p>用 <code>&lt;img&gt;</code> 這個標籤，不過不是這樣寫：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">img</span>&gt;</span>https://xxxx<span class="hljs-tag">&lt;/<span class="hljs-name">img</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>通常會放在標籤裡的內容是指「直接顯示在網頁上」的東西。例如說 <code>&lt;h2&gt;Title&lt;/h2&gt;</code> 會在網頁上顯示 「Title」。</p>
+<p>但是圖片的內容是一個連結，不是我們真正想呈現的東西，所以正確的用法是這樣：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://xxx"</span> /&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>要用 <code>src</code> 來告訴網頁圖片的連結在哪裡。</p>
+<h4 id="title-屬性"><a href="#title-屬性" class="headerlink" title="title 屬性"></a>title 屬性</h4><figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://xxx"</span> <span class="hljs-attr">title</span>=<span class="hljs-string">"yoyoyo"</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>代表圖片的標題，當滑鼠停在圖片上的時候，會顯示訊息。</p>
+<h4 id="alt-屬性"><a href="#alt-屬性" class="headerlink" title="alt 屬性"></a>alt 屬性</h4><p>alt 的全文是 alternative（替代），當圖片沒辦法顯示的時候，就會顯示設定在 <code>alt</code> 中的替代文字。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://xxx"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">"你怎麼帥成這樣"</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<h2 id="顯示清單"><a href="#顯示清單" class="headerlink" title="顯示清單"></a>顯示清單</h2><h4 id="lt-ul-gt-（unordered-list）-無序清單"><a href="#lt-ul-gt-（unordered-list）-無序清單" class="headerlink" title="<ul>（unordered list） 無序清單"></a>&lt;ul&gt;（unordered list） 無序清單</h4><p>代表沒有先後順序的清單：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>yoyo<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>yoyo<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>yoyo<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="lt-ol-gt-（ordered-list）-有序清單"><a href="#lt-ol-gt-（ordered-list）-有序清單" class="headerlink" title="<ol>（ordered list） 有序清單"></a>&lt;ol&gt;（ordered list） 有序清單</h4><p>代表有先後順序的清單：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">ol</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>yoyo<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>yoyo<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>yoyo<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">ol</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<h2 id="保留完整格式-lt-pre-gt-與換行-lt-br-gt"><a href="#保留完整格式-lt-pre-gt-與換行-lt-br-gt" class="headerlink" title="保留完整格式 <pre> 與換行 <br>"></a>保留完整格式 &lt;pre&gt; 與換行 &lt;br&gt;</h2><h4 id="lt-pre-gt-preformatted-text"><a href="#lt-pre-gt-preformatted-text" class="headerlink" title="<pre> preformatted text"></a>&lt;pre&gt; preformatted text</h4><p>在標籤內的「換行」、「空白」不管有幾個都會被解析成「一個空白」，所以可能會跟你在編輯器裡面打的格式不一樣：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>   我      就     要      空     一    大    格 <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>pre</code> 可以幫你把文字格式化，保留原本的格式：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">pre</span>&gt;</span>   我      就     要      空     一    大    格 <span class="hljs-tag">&lt;/<span class="hljs-name">pre</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+<h4 id="lt-br-gt-line-break"><a href="#lt-br-gt-line-break" class="headerlink" title="<br> line break"></a>&lt;br&gt; line break</h4><p>因為剛剛說「換行」也會被解析成「一個空白」，所以真的想換行的時候可以用 <code>&lt;br /&gt;</code>：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  第一行 <span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span></span><br><span class="line">  下一行</span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="顯示表格-lt-table-gt"><a href="#顯示表格-lt-table-gt" class="headerlink" title="顯示表格 <table>"></a>顯示表格 &lt;table&gt;</h2><p>最常用的幾個：</p>
+<ul>
+<li><code>&lt;table&gt;</code> =&gt; 整個表格</li>
+<li><code>&lt;caption&gt;</code> =&gt; 整個表格的標題</li>
+<li><code>&lt;tr&gt;</code> =&gt; table row 表格的行</li>
+<li><code>&lt;td&gt;</code> =&gt; table cell 表格的列</li>
+<li><code>&lt;th&gt;</code> =&gt; table header 欄位標題</li>
+</ul>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">table</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">caption</span>&gt;</span>一年 A 班<span class="hljs-tag">&lt;/<span class="hljs-name">caption</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!-- 第一行（標題） --&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>姓名<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>英文<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>國文<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!-- 第二行 --&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>小明<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>80<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>90<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!-- 第三行 --&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>小花<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>10<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>30<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!-- 第四行 --&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>小邱<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>48763<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>66666<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="帶你環遊世界-lt-a-gt"><a href="#帶你環遊世界-lt-a-gt" class="headerlink" title="帶你環遊世界 <a>"></a>帶你環遊世界 &lt;a&gt;</h2><p><code>&lt;a&gt;</code> anchor，錨點。比喻的是從船上拋出去的那個錨，在網頁的世界代表「超連結」，分成兩種：</p>
+<ul>
+<li>連到網頁「外面」的連結</li>
+<li>連到網頁「裡面」的連結</li>
+</ul>
+<p>另外要搭配 <code>href</code> （hyper text reference）屬性來使用，用來設置連結的位置。</p>
+<h4 id="連到網頁外面的連結"><a href="#連到網頁外面的連結" class="headerlink" title="連到網頁外面的連結"></a>連到網頁外面的連結</h4><figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"https://google.com"</span>&gt;</span>take me to google<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>另外還有一個屬性：<code>target</code>，可以用來設定要直接連到新頁面，還是用分頁來開啟：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"https://google.com"</span> <span class="hljs-attr">target</span>=<span class="hljs-string">"_self"</span>&gt;</span>直接開啟<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"https://google.com"</span> <span class="hljs-attr">target</span>=<span class="hljs-string">"_blank"</span>&gt;</span>開新分頁<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+<h4 id="連到網頁裡面的連結"><a href="#連到網頁裡面的連結" class="headerlink" title="連到網頁裡面的連結"></a>連到網頁裡面的連結</h4><p>首先要在標籤加上 <code>id</code> 屬性，這樣 <code>href</code> 才可以有「參考點」，知道要把你帶到哪個位置：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">&lt;!-- 用法是 # + id 值 --&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#res1"</span>&gt;</span>帶我到餐廳1<span class="hljs-tag">&lt;<span class="hljs-name">a</span>/&gt;</span></span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"res1"</span>&gt;</span>餐廳1<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+
+
+
+<h2 id="語意化標籤-Semantic-elements"><a href="#語意化標籤-Semantic-elements" class="headerlink" title="語意化標籤 Semantic elements"></a>語意化標籤 Semantic elements</h2><p>這些元素在渲染後的畫面上看起來都跟 <code>&lt;div&gt;</code> 沒有區別。最主要的用意是要讓人（工程師）或機器（搜尋引擎）在讀 HTML 的時候可以比較清楚一點，因為有「語意」。就跟看到 <code>&lt;h1&gt;</code> 知道是標題，看到 <code>&lt;p&gt;</code> 知道是內文，這個就是有語意的標籤。</p>
+<ul>
+<li><code>&lt;main&gt;</code> 最主要的內容，一個網頁只會有一個。</li>
+<li><code>&lt;header&gt;</code> 作為往開場介紹的內容，可以是 logo 或導讀網頁的內容</li>
+<li><code>&lt;footer&gt;</code> 通常是 copyright 或作者資訊等等</li>
+<li><code>&lt;article&gt;</code> 一個段落，重點是要能夠「獨立」存在，不相依其他內容</li>
+<li><code>&lt;section&gt;</code> 一個段落，可以「內嵌」在 <code>&lt;article&gt;</code> 裡，通常要有「標題」</li>
+</ul>
+<p>更多的語意標籤可以參考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3schools.com/html/html5_semantic_elements.asp">W3C</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Glossary/Semantics#semantic_elements">MDN</a></li>
+</ul>
+<h2 id="直接用別人的網頁-lt-iframe-gt"><a href="#直接用別人的網頁-lt-iframe-gt" class="headerlink" title="直接用別人的網頁 <iframe>"></a>直接用別人的網頁 &lt;iframe&gt;</h2><p>如題，可以使用 <code>src</code> 來嵌入別人的網頁：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">iframe</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://jubeatt.github.io/"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"80%"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"500px"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"display: block; margin: auto;"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">iframe</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>備註：屬於 replace element 的一種，所以可以設定寬高。</p>
+<p>備註：可以把 replace element 想成是「內容是從外面嵌入的」會比較好理解，例如像 <code>&lt;img&gt;</code>、<code>&lt;iframe&gt;</code>、<code>&lt;textarea&gt;</code> 等等。</p>
+<h4 id="上有政策-下有對策"><a href="#上有政策-下有對策" class="headerlink" title="上有政策 下有對策"></a>上有政策 下有對策</h4><p>為了避免人家把你的網站拿去亂用，server 可以設定一個 header：<code>x-frame-options: SAMEORIGIN</code>。加了這個後別人就沒辦法用 <code>&lt;iframe&gt;</code> 來偷你的網站來用：</p>
+<p><img src="refuse.jpg" alt="refuse"></p>
+<h2 id="表單相關標籤"><a href="#表單相關標籤" class="headerlink" title="表單相關標籤"></a>表單相關標籤</h2><h4 id="lt-input-gt-相關"><a href="#lt-input-gt-相關" class="headerlink" title="<input> 相關"></a>&lt;input&gt; 相關</h4><p>text =&gt; 輸入文字<br>password =&gt; 輸入密碼，自動馬賽克<br>email =&gt; 瀏覽器會自動做驗證，手機上的鍵盤會自動添加 <code>@</code>、<code>.com</code> 的按鈕<br>tel =&gt; 不像 email 會自動驗證，但是手機上的 UX 會比較好（鍵盤）<br>date =&gt; 輸入日期<br>radio =&gt; 單選框<br>checkbox =&gt; 複選框<br>submit =&gt; 送出表單</p>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p><code>&lt;label&gt;</code> =&gt; 把文字跟 input 標籤關聯起來<br><code>&lt;select&gt;</code> =&gt; 下拉式選單<br><code>&lt;button&gt;</code> =&gt; 按鈕（在表單外也能使用，只是也可用在表單）</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">method</span>=<span class="hljs-string">"GET"</span> <span class="hljs-attr">action</span>=<span class="hljs-string">"https://a.com"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"interesting"</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"吃飯"</span>&gt;</span>吃飯<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"看電影"</span>&gt;</span>看電影<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"睡覺"</span>&gt;</span>睡覺<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"checkbox"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"time"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"早上"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"早上"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"早上"</span>&gt;</span>早上<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> </span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"checkbox"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"time"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"中午"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"中午"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"中午"</span>&gt;</span>中午<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> </span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"checkbox"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"time"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"晚上"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"晚上"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"晚上"</span>&gt;</span>晚上<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> </span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"送出"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>備註：<code>name</code> 跟 <code>value</code> 一定要附上，這會對應到 server 收到表單後的 <code>key</code> 跟 <code>value</code>，沒有的話 server 就不知道內容是什麼。</p>
+<p>更多 input 種類：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input">MDN</a></p>
+<h2 id="SEO"><a href="#SEO" class="headerlink" title="SEO"></a>SEO</h2><p>Search Engine Optimization 搜尋引擎優化，幫助搜尋引擎（dock yahoo bing）理解你的網頁在說什麼。</p>
+<p>主動告訴「搜尋引擎」你的網頁在做什麼，會更好。</p>
+<h4 id="lt-meta-gt-標籤"><a href="#lt-meta-gt-標籤" class="headerlink" title="<meta> 標籤"></a>&lt;meta&gt; 標籤</h4><p>最常見的就是 <code>keyword</code> 跟 <code>description</code>：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"keyword"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"搜尋關鍵字"</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">meat</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"description"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"網站的簡介"</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="Open-Graph-Protocol"><a href="#Open-Graph-Protocol" class="headerlink" title="Open Graph Protocol"></a>Open Graph Protocol</h4><p>Facebook 提出的協議，遵循這個協議就可以讓網頁被分享到社群網站（臉書）上的時候比較亮眼，像是縮圖、標題、描述等等。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">property</span>=<span class="hljs-string">"og:title"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"網站標題"</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">property</span>=<span class="hljs-string">"og:description"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"介紹"</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">property</span>=<span class="hljs-string">"og:image"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"https://xxx.com"</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">property</span>=<span class="hljs-string">"og:image:width"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"500"</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">property</span>=<span class="hljs-string">"og:image:height"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"400"</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>可以用 <a target="_blank" rel="noopener" href="https://developers.facebook.com/tools/debug/?locale=zh_TW">這個網站</a> 來查看 og 標籤的設定效果。</p>
+<p>更多詳細可以參考 <a target="_blank" rel="noopener" href="https://frankchiu.io/seo-open-graph/">這個網站</a>，寫得蠻簡潔的。</p>
+<h4 id="JSON-ld"><a href="#JSON-ld" class="headerlink" title="JSON-ld"></a>JSON-ld</h4><p>JSON-ld，全名是 JSON for Linking Data，主要是給 google 看的。</p>
+<p>跟 Open Graph Protocol 概念差不多，就是用「特定格式」來呈現資料，讓機器跟人比較好閱讀。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"application/ld+json"</span>&gt;</span><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript">{</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-string">"@context"</span>: <span class="hljs-string">"https://json-ld.org/contexts/person.jsonld"</span>,</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-string">"@id"</span>: <span class="hljs-string">"http://dbpedia.org/resource/John_Lennon"</span>,</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-string">"name"</span>: <span class="hljs-string">"John Lennon"</span>,</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-string">"born"</span>: <span class="hljs-string">"1940-10-09"</span>,</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-string">"spouse"</span>: <span class="hljs-string">"http://dbpedia.org/resource/Cynthia_Lennon"</span></span></span><br><span class="line"><span class="hljs-javascript">}</span></span><br><span class="line"><span class="hljs-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>附上幾個參考網站：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://json-ld.org/">官方網站</a></li>
+<li><a target="_blank" rel="noopener" href="https://developers.google.com/search/docs/advanced/structured-data/article">Google 開發者文件</a></li>
+<li><a target="_blank" rel="noopener" href="https://z3388638.medium.com/%E4%BD%BF%E7%94%A8-json-ld-%E8%99%95%E7%90%86-seo-%E4%B8%A6%E8%AE%93-google-%E9%87%9D%E5%B0%8D%E4%B8%8D%E5%90%8C%E5%BD%A2%E5%BC%8F%E7%B6%B2%E7%AB%99%E5%81%9A%E7%8D%A8%E7%89%B9%E7%9A%84%E6%90%9C%E5%B0%8B%E7%B5%90%E6%9E%9C%E5%91%88%E7%8F%BE-9c74783c017a">介紹文章</a></li>
+</ul>
+<h4 id="robots-txt"><a href="#robots-txt" class="headerlink" title="robots.txt"></a>robots.txt</h4><p>給「網頁爬蟲」看的檔案，參考<a target="_blank" rel="noopener" href="https://www.tripadvisor.com.tw/robots.txt">這裡</a>。</p>
+<p>其中 <code>Disallow</code> 是告訴爬蟲「不要爬這些檔案」，<code>Allow</code> 則是「爬這些檔案」。</p>
+<p><code>Sitemap</code> 則是把網站中的所有連結直接附給爬蟲，讓它們能更快找到有用的資訊。</p>
+<h4 id="APP-相關資訊"><a href="#APP-相關資訊" class="headerlink" title="APP 相關資訊"></a>APP 相關資訊</h4><p>效果就是跳一個視窗問你要不要下載 APP？或是有安裝的話會直接跳到 APP 裡：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">property</span>=<span class="hljs-string">"al:ios:app_name"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"app名稱"</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">property</span>=<span class="hljs-string">"al:ios:app_store_id"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"app的id"</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>跟 twitter 有關，用 twitter 瀏覽會有比較好的效果：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">property</span>=<span class="hljs-string">"twitter:app:id:ipad"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"twitter:app:id:ipad"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"284876795"</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">property</span>=<span class="hljs-string">"twitter:app:id:iphone"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"twitter:app:id:iphone"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"284876795"</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/01/11/mentor-program-day30/">mentor-program-day30</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/01/11/mentor-program-day29/">mentor-program-day29</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

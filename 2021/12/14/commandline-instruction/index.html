@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Commandline 的指令 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="記得我第一篇文章就是寫 Command-line 怎麼用，還真懷念。但人會隨著時間慢慢成長，所以這次要來把 Command-line 的指令紀錄的更加完整。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Commandline 的指令">
+<meta property="og:url" content="https://jubeatt.github.io/2021/12/14/commandline-instruction/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="記得我第一篇文章就是寫 Command-line 怎麼用，還真懷念。但人會隨著時間慢慢成長，所以這次要來把 Command-line 的指令紀錄的更加完整。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-12-14T04:34:08.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.251Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#簡單介紹-GUI-與-CLI-是什麼">1&nbsp;&nbsp;<b>簡單介紹 GUI 與 CLI 是什麼</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#CLI-的指令">2&nbsp;&nbsp;<b>CLI 的指令</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#進階指令">3&nbsp;&nbsp;<b>進階指令</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#取代字串">3.1&nbsp;&nbsp;取代字串</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#擷取字元">3.2&nbsp;&nbsp;擷取字元</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#其他指令">4&nbsp;&nbsp;<b>其他指令</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#想學更多可以參考的文章">5&nbsp;&nbsp;<b>想學更多可以參考的文章</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#參考資料">6&nbsp;&nbsp;<b>參考資料</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Commandline 的指令
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>12月 14 2021</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Command-line/">Command-line</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>記得我第一篇文章就是寫 Command-line 怎麼用，還真懷念。但人會隨著時間慢慢成長，所以這次要來把 Command-line 的指令紀錄的更加完整。</p>
+<span id="more"></span>
+
+<h2 id="簡單介紹-GUI-與-CLI-是什麼"><a href="#簡單介紹-GUI-與-CLI-是什麼" class="headerlink" title="簡單介紹 GUI 與 CLI 是什麼"></a>簡單介紹 GUI 與 CLI 是什麼</h2><p>圖形化介面 GUI（Graphic User Interface），我們日常在桌面上看的到的那些畫面，像是資料夾，我的電腦等等。<br>你可以透過那個介面來操作的東西就是「GUI」。</p>
+<p>但在早期沒有圖形化介面，所以都用「Command Line Interface」來跟電腦做溝通。而 CLI 是透過「純文字」來操作電腦的方法。再次強調，你只會用文字來溝通。</p>
+<h2 id="CLI-的指令"><a href="#CLI-的指令" class="headerlink" title="CLI 的指令"></a>CLI 的指令</h2><p><strong>提醒：</strong>這邊的指令建議都用 Git bash 來實作比較不會出錯</p>
+<p><strong>補充觀念：</strong>指令是可以下載的，畢竟指令其實就是執行一段程式</p>
+<p><code>pwd</code>（Print Working Directory） 印出所在位置</p>
+<p><code>touch &lt;file&gt;</code> 碰一下。更改檔案的最後修改時間。如果檔案不存在的話，建立一個新的檔案。</p>
+<p><code>man</code>（Manual） 查看使用說明</p>
+<p><code>mkdir &lt;directory&gt;</code>（Make Directory） 建立新的資料夾</p>
+<p><code>rmdir &lt;directory&gt;</code>（Remove directiory） 刪除資料夾</p>
+<p><code>cat &lt;file1&gt; &lt;file2&gt;</code>（Concatenation） 用來連接檔案。但如果你只有寫一個檔案（一個參數），會直接顯示出檔案內容。</p>
+<p><code>wget &lt;url&gt;</code> 下載檔案。（要額外安裝的指令）可以用來下載檔案，包含圖片、原始碼等等。</p>
+<p><code>ls</code>（List） 印出目前資料夾底下的檔案</p>
+<ul>
+<li><code>ls -l</code> 印出更詳細的內容</li>
+<li><code>ls -a</code> 不忽略「.」開頭的檔案</li>
+</ul>
+<p><code>cd &lt;directory&gt;</code>（Change Directory） 切換到指定的資料夾</p>
+<ul>
+<li><code>cd ..</code> 回到上一層資料夾</li>
+<li><code>cd ~</code> 回到 user/userName 的位置（應該是根目錄吧）</li>
+</ul>
+<p><code>rm &lt;file&gt;</code> （Remove）刪除檔案</p>
+<ul>
+<li><code>rm -f &lt;directory&gt;</code>（force） 強制刪除檔案</li>
+<li><code>rm -r &lt;directory&gt;</code> <code>rm -R &lt;directory&gt;</code>（root） / 資料夾跟底下的東西全部刪除</li>
+<li><code>rm -fr &lt;directory&gt;</code> 強制刪除根目錄跟所有檔案（如果只用 rm -f 的話，.git 檔會被留下）</li>
+</ul>
+<p><code>mv &lt;file&gt;</code>（Move）移動檔案或是改名</p>
+<ul>
+<li>mv 檔案 要移動到的資料夾</li>
+<li>mv 檔案 ..（移到上一層資料夾）</li>
+<li>mv 檔案 要更改的新名稱</li>
+</ul>
+<p>絕對位置與相對位置的概念</p>
+<p>絕對位置是以 <code>/</code> 作為開頭的路徑（代表 /user/userName）<br>相對位置是以目前的檔案位置作為參考。</p>
+<p>例如說 test 資料夾中有另一個 another 資料夾。假設我們在 test 資料夾，那就可以下 <code>cd another</code> 這個指令來移動到 another 資料夾。</p>
+<p><code>cp &lt;file&gt;</code>（Copy）複製檔案</p>
+<ul>
+<li>cp 原本的檔案 複製的新檔案名稱</li>
+<li>cp -f 如果是資料夾的話，可以用 -f 參數來強制執行。</li>
+</ul>
+<p><code>vim [&lt;file&gt;]</code> 一個文字編輯器。可以透過 vi 或 vim 指令進入：</p>
+<ul>
+<li><code>i</code>（Insert） 進入插入（編輯）模式</li>
+<li><code>esc</code>（Escape） 進入普通模式（可以複製、貼上，但就是不能打字）</li>
+<li><code>p</code> 貼上</li>
+<li><code>dd / D</code> 刪除一行內容</li>
+<li><code>:%d</code> 刪除所有內容</li>
+<li><code>:q</code> 退出（quit）</li>
+<li><code>:qa!</code> 不保存檔案退出</li>
+<li><code>:wq</code> 存檔並退出（write and quit）</li>
+</ul>
+<p><code>grep &lt;regexp&gt; &lt;file&gt;</code> 抓出關鍵字。輸入你想要的關鍵字（正則表達式） + 檔案名稱。就會把包含那個關鍵字的那一「整行」的文字印出來。</p>
+<ul>
+<li><code>grep -E &lt;regexp&gt; &lt;file&gt;</code> 搜尋多個關鍵字，例如 “字串 1|字串 2|字串 3”</li>
+<li><code>grep -o &lt;regexp&gt; &lt;file&gt;</code> 只印出關鍵字的部分，而不是整行印出</li>
+</ul>
+<p><code>curl &lt;url&gt;</code> 送出 request。</p>
+<ul>
+<li><code>curl -I</code> 只顯示 HTTP 的相關 header（不顯示 body）</li>
+<li><code>curl -i</code> 顯示 HTTP 的相關 header （因為預設只顯示 body，所以要把 header 給 include）</li>
+<li><code>curl -X</code> 指定要用 HTTP 的哪個方法來溝通（GET、POST、DELETE 等等）</li>
+<li><code>curl -d -F</code> option 的項目，代表要用 POST 傳遞的資料（兩種 content-type）</li>
+<li><code>curl --silent</code> 只顯示回傳的內容（不顯示讀取的進度資料）</li>
+</ul>
+<p>試試看：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://jsonplaceholder.typicode.com/todos/1</span><br></pre></td></tr></tbody></table></figure>
+
+<p>你就能得到 API 的回傳結果（這招真方便！）</p>
+<p><code>&gt; &lt;file&gt;</code> （redirection）把「指令」的輸出結果重新導向到「檔案」。</p>
+<p>原本的輸出會直接顯示在 terminal 上，但如果用 &gt; 的話，就會把輸出結果重新導向到「你指向的檔案」。</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">echo</span> <span class="hljs-string">'123'</span> &gt; 123.txt</span><br></pre></td></tr></tbody></table></figure>
+
+<p>另外，重新導向的內容會覆寫掉原本的內容</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">echo</span> <span class="hljs-string">'123'</span> &gt; 123.txt</span><br><span class="line"><span class="hljs-built_in">echo</span> <span class="hljs-string">'546'</span> &gt; 123.txt</span><br></pre></td></tr></tbody></table></figure>
+
+<p>最後 123.txt 中的內容會是 ‘546’，不是 ‘123546’。</p>
+<p>如果要不希望整個覆寫，而是添加新的內容，可以用「<code>&gt;&gt;</code>」這個指令，來把內容寫到新的一行。</p>
+<p><code>&lt; &lt;file&gt;</code> 把「檔案」的 input 輸入到左邊的指令中。</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># code.txt =&gt; 'This is a dog'</span></span><br><span class="line">cat &lt; code.txt </span><br><span class="line">This is a dog</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這裡要分清楚 <code>&gt;</code> 跟 <code>&lt;</code> 的用法不太一樣，<code>&gt;</code> 是用來把輸出寫到某個檔案，<code>&lt;</code> 是用來把檔案丟給指令執行。</p>
+<p><code>|</code>（pipe）組合記。把左邊指令的輸出，變成右邊指令的輸入</p>
+<p>假設有個 hello.txt 的內容是這樣：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hello world</span><br><span class="line">a new line</span><br><span class="line">another new line</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果我們用「|」來把 <code>cat</code> 跟 <code>grep</code> 做組合，就會變成這樣：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat hello.txt | grep another</span><br></pre></td></tr></tbody></table></figure>
+
+<p>此時的輸出結果會是「another new line」。</p>
+<p>流程是這樣子：</p>
+<ol>
+<li><code>cat</code> hello.txt 會輸出檔案中的內容</li>
+<li><code>|</code> 代表要把 1 的輸出內容當作右邊指令 <code>grep another</code> 的輸入內容</li>
+<li><code>grep another</code> 因為沒有第三個參數（檔案名稱），所以他會檢查前面是否有輸入的內容（也就是「|」）。</li>
+<li>所以這一整行的意思是「把 cat hello.txt」的輸出結果當作「grep another」的輸入內容</li>
+</ol>
+<p>除此之外，你也可以用其他指令來做出更多的組合記。例如說現在想要把 cat hello.text | grep another 的輸出結果寫到一個新的檔案中：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat hello.txt | grep another &gt; result</span><br></pre></td></tr></tbody></table></figure>
+
+<p>此時如果你再使用 <code>cat result</code> 來查看檔案內容，就會得到「another new line」。</p>
+<h2 id="進階指令"><a href="#進階指令" class="headerlink" title="進階指令"></a>進階指令</h2><h3 id="取代字串"><a href="#取代字串" class="headerlink" title="取代字串"></a>取代字串</h3><ul>
+<li><code>sed '/s&lt;regExp&gt;/&lt;replace-text&gt;/g' </code>，有點難閱讀的話就想成這樣 <code>s/&lt;A&gt;/&lt;B&gt;/</code>，AB 代表參數。</li>
+</ul>
+<p>另外補充一下，<code>sed</code> 只會改輸出不會改原內容。</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">echo</span> <span class="hljs-string">'nice to meet you'</span> | sed <span class="hljs-string">'s/nice/NICE/g'</span> </span><br><span class="line">NICE to meet you</span><br></pre></td></tr></tbody></table></figure>
+
+<p>解決重複選取的問題，例如說 <code>This is a book</code> 有兩個 <code>is</code>，如果沒有做處理的話會變這樣：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">echo</span> <span class="hljs-string">'This is a book'</span> | sed <span class="hljs-string">'s/is/IS/g'</span></span><br><span class="line">ThIS IS a book</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果只想改第二個 is，可以用正規的 <code>&lt;&gt;</code> 來包住單字（記得加上跳脫字元）：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">echo</span> <span class="hljs-string">'This is a book'</span> | sed <span class="hljs-string">'s/\&lt;is\&gt;/IS/g'</span> </span><br><span class="line">This IS a book</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="擷取字元"><a href="#擷取字元" class="headerlink" title="擷取字元"></a>擷取字元</h3><p><code>cut -c &lt;n-m&gt; &lt;file&gt;</code> 抓出第 n 個字元到第 m 個字元</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo 1234567890 | cut -c 1-5</span><br><span class="line">12345</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>cut -c &lt;n-m&gt; &lt;file&gt; --complement</code> 排除第 n 個字元到第 m 個字元</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo 1234567890 | cut -c 1-5 --complement</span><br><span class="line">67890</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>cut -d &lt;分隔字元&gt; -f &lt;要擷取的欄位&gt; &lt;file&gt;</code></p>
+<p>假設有一個檔案內容是長這樣：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AA,BB,CC,DD,EE,FF</span><br><span class="line">GG,HH,II,JJ,KK,LL</span><br><span class="line">MM,NN,OO,PP,QQ,RR</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cut -d , -f 1 code.txt</span><br><span class="line">AA</span><br><span class="line">GG</span><br><span class="line">MM</span><br></pre></td></tr></tbody></table></figure>
+
+<p>流程：</p>
+<ol>
+<li>第一行會分隔為，欄位一：<code>AA</code>，欄位二：<code>BB</code>，欄位三：<code>CC</code> …</li>
+<li><code>-f</code> 說要擷取的欄位是 <code>1</code>，所以輸出 <code>AA</code></li>
+<li>換下一行，重複上面動作，直到最後一行。</li>
+</ol>
+<p>如果要多個欄位可以寫成 <code>-f &lt;連續欄位&gt;, &lt;單個欄位&gt;</code>：</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cut -d , -f 1-3,6 code.txt</span><br><span class="line">AA,BB,CC,FF</span><br><span class="line">GG,HH,II,LL</span><br><span class="line">MM,NN,OO,RR</span><br></pre></td></tr></tbody></table></figure>
+
+<p>就是取出每行的 1-3 欄跟 6 欄。</p>
+<h2 id="其他指令"><a href="#其他指令" class="headerlink" title="其他指令"></a>其他指令</h2><ul>
+<li><code>whoami</code> 我是誰，會顯示目前電腦的使用者名稱</li>
+<li><code>less &lt;file-name&gt;</code> 用分頁來查看檔案內容，可以用 ↑ ↓ 來 往上或往下滾；← → 來切換頁面，q 是退出，h 是看幫助。</li>
+<li><code>explorer</code> 開啟檔案總管</li>
+<li><code>history</code> 檢視所有指令紀錄</li>
+<li><code>ipconfig</code> 查詢主機的 IP 設定與地址</li>
+<li><code>ping &lt;ip-address&gt;</code> 連到某個主機（或域名），看看某個主機是開著還是關著的</li>
+<li><code>uname</code> Unix Name 的縮寫，列出主機的作業系統名稱</li>
+<li><code>hostname</code> 查看主機名稱</li>
+<li><code>netstat</code> 查詢網路目前的狀況</li>
+<li><code>nslookup [&lt;domain-name&gt;] [id-address]</code> 用 domain name 來查 IP 地址，也可反過來</li>
+<li><code>telnet</code> 連到指定的連接埠（port）</li>
+<li><code>date</code> 顯示時間</li>
+<li><code>tree</code> 查看資料結構的樹狀圖，要顯示檔案可加上 <code>/f</code></li>
+<li><code>base64</code> 把左邊的 input 或右邊的 output 用 base64 來編碼（搭配 <code>|</code> 或 <code>&lt;</code> 使用），要解碼可以加上 <code>-d</code></li>
+<li><code>tasklist</code> 類似工作管理員，可以查看目前執行的程式</li>
+<li><code>taskkill</code> 關掉程式。<code>//im</code> 指定檔案名稱，<code>//PID</code> 指定 ID</li>
+</ul>
+<h2 id="想學更多可以參考的文章"><a href="#想學更多可以參考的文章" class="headerlink" title="想學更多可以參考的文章"></a>想學更多可以參考的文章</h2><ul>
+<li>學 <code>sed </code> <a target="_blank" rel="noopener" href="https://terryl.in/zh/linux-sed-command/">Linux 指令 SED 用法教學、取代範例、詳解</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://www.itread01.com/content/1546862771.html">linux 用 grep 查詢單個或多個字串（關鍵字）</a><br><a target="_blank" rel="noopener" href="https://myapollo.com.tw/zh-tw/grep-regex-substr/">用 grep 搭配正規表示式擷取字串</a><br><a target="_blank" rel="noopener" href="https://www.codecademy.com/learn/learn-the-command-line/modules/learn-the-command-line-redirection">Redirecting Input and Output</a></p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/12/14/vs-code-shortcut/">VS-Code 一些實用的快捷鍵</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/12/14/mentor-program-day03/">mentor-program-day03</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

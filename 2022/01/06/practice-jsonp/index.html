@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>實作 JSONP - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="時代的眼淚？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="實作 JSONP">
+<meta property="og:url" content="https://jubeatt.github.io/2022/01/06/practice-jsonp/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="時代的眼淚？">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/06/practice-jsonp/jsonp.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/06/practice-jsonp/corb.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/06/practice-jsonp/error.jpg">
+<meta property="article:published_time" content="2022-01-06T08:27:19.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.539Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/01/06/practice-jsonp/jsonp.jpg">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#原理簡述">1&nbsp;&nbsp;<b>原理簡述</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#後端該做的事">2&nbsp;&nbsp;<b>後端該做的事</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#前端該做的事">3&nbsp;&nbsp;<b>前端該做的事</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#備註">4&nbsp;&nbsp;<b>備註</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            實作 JSONP
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>1月 6 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>時代的眼淚？</p>
+<span id="more"></span>
+
+<h2 id="原理簡述"><a href="#原理簡述" class="headerlink" title="原理簡述"></a>原理簡述</h2><p>利用 <code>&lt;script&gt;</code> 的 <code>src="..."</code> 可以跨網域存取資料的特性，搭配 <code>callback function</code> 來實現跨域請求的技術。 </p>
+<p>要注意的是 JSONP 只能應用在 <code>GET</code>，沒辦法 <code>POST</code>，因為只有 <code>GET</code> 會透過網址帶資料給後端（可以參考<a href="https://jubeatt.github.io/2022/01/06/diffrence-between-form-get-and-post/#:~:text=%E7%B6%B2%E5%9D%80%E6%9C%83%E5%9C%A8%E5%BE%8C%E9%9D%A2%E5%8A%A0%E4%B8%8A%20%3Fparameter%3Dvalue">這裡</a>） </p>
+<p>接下來我會分別實作「後端」跟「前端」實際在使用 JSONP 的時候會怎麼做設定。</p>
+<h2 id="後端該做的事"><a href="#後端該做的事" class="headerlink" title="後端該做的事"></a>後端該做的事</h2><p>大致的思路是這樣：</p>
+<ol>
+<li>準備好要給前端的資料</li>
+<li>取得 url 中的 <code>query</code> 字串</li>
+<li>根據 <code>query</code> 回傳對應的內容（其實就是執行一個 function，讓前端可以透過 function 裡的參數拿到資料）</li>
+</ol>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 建立 server 的模組</span></span><br><span class="line"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>)</span><br><span class="line"><span class="hljs-comment">// 解析 url 的模組</span></span><br><span class="line"><span class="hljs-keyword">const</span> url = <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>);</span><br><span class="line"><span class="hljs-comment">// 要傳給前端的資料（物件）</span></span><br><span class="line"><span class="hljs-keyword">const</span> data = {</span><br><span class="line">  <span class="hljs-attr">name</span>: <span class="hljs-string">'PeaNu'</span>,</span><br><span class="line">  <span class="hljs-attr">age</span>: <span class="hljs-number">23</span></span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">// 伺服器設定</span></span><br><span class="line"><span class="hljs-keyword">const</span> server = http.createServer(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// 解析 url =&gt; {callback: 'getUser'}</span></span><br><span class="line">  <span class="hljs-keyword">const</span> queryObject = url.parse(req.url, <span class="hljs-literal">true</span>).query</span><br><span class="line">  <span class="hljs-comment">// 存取 callback 屬性 =&gt; 'getUser'</span></span><br><span class="line">  <span class="hljs-keyword">const</span> yourFunction = queryObject.callback</span><br><span class="line">  <span class="hljs-comment">// 把資料傳入（記得要轉成純字串） =&gt; getUser(data)</span></span><br><span class="line">  res.write(<span class="hljs-string">`<span class="hljs-subst">${yourFunction}</span>(<span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(data)}</span>)`</span>)</span><br><span class="line">  <span class="hljs-comment">// 送出 response</span></span><br><span class="line">  res.end()</span><br><span class="line">})</span><br><span class="line"><span class="hljs-comment">// 聽 5000 這個 port</span></span><br><span class="line">server.listen(<span class="hljs-number">5000</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="前端該做的事"><a href="#前端該做的事" class="headerlink" title="前端該做的事"></a>前端該做的事</h2><p>大致的思路是這樣：</p>
+<ol>
+<li>建立一個用來接收資料的 function（<code>getUser</code>）</li>
+<li>開一個 <code>&lt;script&gt;</code> 用 <code>src</code> 向伺服器發出請求，並帶上 <code>callback</code> 參數來對應到第一步設好的 function </li>
+</ol>
+<p>這裡要特別強調一下順序：<strong>先定義 function =&gt; 發出 request</strong></p>
+<p>不然在發 request 的時候 function 根本就還沒被定義，就等著吃 error。</p>
+<p>備註：除非你設定 <code>&lt;script asnyc&gt;</code> 強制轉成非同步，不然就一定要按照上面的順序。</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="hljs-javascript"></span></span><br><span class="line"><span class="hljs-javascript"><span class="hljs-comment">// 在這裡定義好要接收資料的 function</span></span></span><br><span class="line"><span class="hljs-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getUser</span>(<span class="hljs-params">data</span>) </span>{</span></span><br><span class="line"><span class="hljs-javascript">  <span class="hljs-built_in">console</span>.log(data)</span></span><br><span class="line"><span class="hljs-javascript">}</span></span><br><span class="line"><span class="hljs-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="line"><span class="hljs-comment">&lt;!-- 這裡定義 callback 參數的值，也就是上面的 function --&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://localhost:5000/callback=getUser"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果順利的話，最後就能成功拿到資料：</p>
+<p><img src="jsonp.jpg" alt="jsonp"></p>
+<h2 id="備註"><a href="#備註" class="headerlink" title="備註"></a>備註</h2><p>在這裡紀錄一下實作時碰到的問題。</p>
+<p>本來我是想分成：</p>
+<ol>
+<li>如果有帶上 callback 參數，後端就 <strong>回傳對應的 function</strong></li>
+<li>如果沒有帶參數，後端就 <strong>回傳純字串的 JSON 資料</strong></li>
+</ol>
+<p>所以後端的部分設定成這樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 伺服器設定</span></span><br><span class="line"><span class="hljs-keyword">const</span> server = http.createServer(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// {callback: 'getUser'}</span></span><br><span class="line">  <span class="hljs-keyword">const</span> queryObject = url.parse(req.url, <span class="hljs-literal">true</span>).query</span><br><span class="line">  <span class="hljs-comment">// 'getUser'</span></span><br><span class="line">  <span class="hljs-keyword">const</span> yourFunction = queryObject.callback</span><br><span class="line">  <span class="hljs-comment">// 檢查前端有沒有帶上 callback 參數</span></span><br><span class="line">  <span class="hljs-keyword">if</span>(yourFunction) {</span><br><span class="line">    <span class="hljs-comment">// 把資料傳入 =&gt; getUser(data)</span></span><br><span class="line">    res.write(<span class="hljs-string">`<span class="hljs-subst">${yourFunction}</span>(<span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(data)}</span>)`</span>)</span><br><span class="line">    <span class="hljs-comment">// 送出 response</span></span><br><span class="line">    res.end()</span><br><span class="line">  } <span class="hljs-keyword">else</span> {</span><br><span class="line">    <span class="hljs-comment">// 回傳 JSON 資料</span></span><br><span class="line">    res.write(<span class="hljs-built_in">JSON</span>.stringify(data))</span><br><span class="line">    <span class="hljs-comment">// 送出 response</span></span><br><span class="line">    res.end()</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>在有帶上 callback 參數的時候沒有問題，但是沒有的時候就會出現 <code>CORB</code> 的錯誤：</p>
+<p><img src="corb.jpg" alt="corb"></p>
+<p>本來以為是回傳內容的問題，所以我又把 <code>res.write(JSON.stringify(data))</code> 改成 <code>res.write('hi')</code>：</p>
+<p><img src="error.jpg" alt="error"></p>
+<p>簡單來說，如果你想要用這種塞在 <code>&lt;script&gt;</code> 裡面的方式來傳 JSON 資料，那就 <strong>一定要用 JSONP</strong> 來傳，不然瀏覽器會把 response 給擋下來。</p>
+<p>至於第二個 <code>res.write('hi')</code> 的結果也告訴我們，如果不是 JSON 資料的話就沒關係，但是這樣就沒有什麼意義了，因為等於前端只拿到一個裡面寫了 <code>hi</code> 的 js 檔案，所以最後執行這個檔案的時候才會噴 <code>Uncaught ReferenceError</code>。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/01/06/plugin-collection/">套件大總匯</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/01/06/button-inside-form/">放在 form 裡面的 button</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

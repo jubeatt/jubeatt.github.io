@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>React Native 中的 style 和 layout - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="好久不見的 style。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native 中的 style 和 layout">
+<meta property="og:url" content="https://jubeatt.github.io/2022/05/27/react-native-style-and-layout/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="好久不見的 style。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/05/27/react-native-style-and-layout/scale-factor.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/05/27/react-native-style-and-layout/align-content-01.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/05/27/react-native-style-and-layout/align-content-02.png">
+<meta property="og:image" content="https://jubeatt.github.io/2022/05/27/react-native-style-and-layout/position.png">
+<meta property="article:published_time" content="2022-05-27T08:02:51.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:53.579Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/05/27/react-native-style-and-layout/scale-factor.png">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#自我檢測">1&nbsp;&nbsp;<b>自我檢測</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#block-inline">2&nbsp;&nbsp;<b>block / inline</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Styles">3&nbsp;&nbsp;<b>Styles</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#RN-裡沒有繼承的概念">3.1&nbsp;&nbsp;RN 裡沒有繼承的概念</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#關於尺寸的單位">4&nbsp;&nbsp;<b>關於尺寸的單位</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Flex">5&nbsp;&nbsp;<b>Flex</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#複習幾個-flex-相關屬性">5.1&nbsp;&nbsp;複習幾個 flex 相關屬性</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Direction">5.2&nbsp;&nbsp;Direction</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#alignContent">5.3&nbsp;&nbsp;alignContent</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Position">6&nbsp;&nbsp;<b>Position</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#載入-Font">7&nbsp;&nbsp;<b>載入 Font</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#FOIT-跟-FOUT-是什麼？">7.1&nbsp;&nbsp;FOIT 跟 FOUT 是什麼？</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#第一種做法（hook）">7.2&nbsp;&nbsp;第一種做法（hook）</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#第二種做法（Font-loadAsync）">7.3&nbsp;&nbsp;第二種做法（Font.loadAsync）</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#設定-Icon">8&nbsp;&nbsp;<b>設定 Icon</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            React Native 中的 style 和 layout
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>5月 27 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/React-Native/">React Native</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>好久不見的 style。</p>
+<span id="more"></span>
+
+
+<h2 id="自我檢測"><a href="#自我檢測" class="headerlink" title="自我檢測"></a>自我檢測</h2><ul>
+<li>我知道怎麼在 APP 中加入 Icon </li>
+<li>我知道怎麼在 APP 中使用客製化 Font</li>
+<li>我知道怎麼利用 module 把 Stylesheet 抽出去變成全域樣式</li>
+<li>我知道什麼是 <code>View</code>、<code>Text</code>、<code>Button</code> 等等基本的 RN 元件</li>
+<li>我知道怎麼用 RN 中的 <code>StyleSheet</code>、<code>Flex</code> 和 <code>Position</code> 來做排版</li>
+<li>我知道 RN 裡面不會寫 px 值，而是要透過 scale factor 來計算結果 </li>
+<li>我知道怎麼透過 <code>AppLoading</code> 來處理第一次載入時的處理</li>
+</ul>
+<h2 id="block-inline"><a href="#block-inline" class="headerlink" title="block / inline"></a>block / inline</h2><p>在 RN 裡面沒有所謂的 block / inline，所以你可以把所有東西都視為 block。</p>
+<p>不過更精確一點來說是只有「Flex」，因為每一個 Component 預設就是 Flex-box，所以你才會看到像這樣的寫法：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{styles.container}</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Text</span>&gt;</span>Flex item<span class="hljs-tag">&lt;/<span class="hljs-name">Text</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> styles = StyleSheet.create({</span><br><span class="line">  <span class="hljs-attr">container</span>: {</span><br><span class="line">    <span class="hljs-attr">flex</span>: <span class="hljs-number">1</span>, <span class="hljs-comment">// 直接用 flex 的屬性</span></span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="Styles"><a href="#Styles" class="headerlink" title="Styles"></a>Styles</h2><p>想要在 RN 做樣式設定的話，可以用 <code>style</code> 這個 props 傳入「物件」來設定樣式：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { StyleSheet, Text, View } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-native'</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{styles.container}</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Text</span>&gt;</span>Some thing else.<span class="hljs-tag">&lt;/<span class="hljs-name">Text</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> styles = StyleSheet.create({</span><br><span class="line">  <span class="hljs-attr">container</span>: {</span><br><span class="line">    <span class="hljs-attr">flex</span>: <span class="hljs-number">1</span>,</span><br><span class="line">    <span class="hljs-attr">backgroundColor</span>: <span class="hljs-string">'#fff'</span>,</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊透過 <code>StyleSheet.create()</code> 的用意是「如果用了不對的 <code>key / value</code> 時」，會直接噴 Error 並停止程式。</p>
+<p>但其實只傳入一般的純物件也是 OK 的，像這樣：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { StyleSheet, Text, View } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-native'</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">flex:</span> <span class="hljs-attr">1</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">backgroundColor:</span> '#<span class="hljs-attr">fff</span>'</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    }}&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Text</span>&gt;</span>Some thing else.<span class="hljs-tag">&lt;/<span class="hljs-name">Text</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣有什麼差嗎？</p>
+<p>有哦！在只傳入物件的情況下，如果我寫了不對的 key / value 是<strong>不會噴錯誤的</strong>。但如果是透過 <code>StyleSheet.create()</code> 來建立的物件，只要我有地方寫錯他就一定<strong>會編譯失敗並顯示錯誤</strong>。</p>
+<p>所以一般會建議用 <code>StyleSheet.create()</code> 的方式來撰寫，但如果你真的很懶的話用純物件的方式也不是不行啦。</p>
+<h3 id="RN-裡沒有繼承的概念"><a href="#RN-裡沒有繼承的概念" class="headerlink" title="RN 裡沒有繼承的概念"></a>RN 裡沒有繼承的概念</h3><p>在經過 CSS 多年的摧殘下，如果我想讓文字粗體，可能會下意識這樣寫：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{styles.container}</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{styles.header}</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Text</span>&gt;</span>Hello React Native<span class="hljs-tag">&lt;/<span class="hljs-name">Text</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Text</span>&gt;</span>Hello React Native<span class="hljs-tag">&lt;/<span class="hljs-name">Text</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Text</span>&gt;</span>Hello React Native<span class="hljs-tag">&lt;/<span class="hljs-name">Text</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> styles = StyleSheet.create({</span><br><span class="line">  <span class="hljs-attr">container</span>: {</span><br><span class="line">    <span class="hljs-attr">flex</span>: <span class="hljs-number">1</span>,</span><br><span class="line">    <span class="hljs-attr">backgroundColor</span>: <span class="hljs-string">'#fff'</span>,</span><br><span class="line">    <span class="hljs-attr">padding</span>: <span class="hljs-number">30</span>,</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">header</span>: {</span><br><span class="line">    <span class="hljs-attr">backgroundColor</span>: <span class="hljs-string">'pink'</span>,</span><br><span class="line">    <span class="hljs-attr">fontWeight</span>: <span class="hljs-string">'bold'</span></span><br><span class="line">  }</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
+
+<p>但這樣是沒用的，我一定要把這個 <code>fontWeight</code> 寫在 <code>&lt;Text&gt;</code> 身上才有用。</p>
+<p>雖然有個例外情形，就是 <code>&lt;Text&gt;</code> 裡面再放一個 <code>&lt;Text&gt;</code>，像這樣：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{styles.container}</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{styles.header}</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Text</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{styles.parentText}</span>&gt;</span>Parent Text And<span class="hljs-tag">&lt;<span class="hljs-name">Text</span>&gt;</span>Child Text<span class="hljs-tag">&lt;/<span class="hljs-name">Text</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">Text</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> styles = StyleSheet.create({</span><br><span class="line">  <span class="hljs-attr">container</span>: {</span><br><span class="line">    <span class="hljs-attr">flex</span>: <span class="hljs-number">1</span>,</span><br><span class="line">    <span class="hljs-attr">backgroundColor</span>: <span class="hljs-string">'#fff'</span>,</span><br><span class="line">    <span class="hljs-attr">padding</span>: <span class="hljs-number">30</span>,</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">header</span>: {</span><br><span class="line">    <span class="hljs-attr">backgroundColor</span>: <span class="hljs-string">'pink'</span>,</span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">parentText</span>: {</span><br><span class="line">    <span class="hljs-attr">fontWeight</span>: <span class="hljs-string">'bold'</span></span><br><span class="line">  }</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這樣的話 <code>Child Text</code> 就也會吃到粗體的效果。</p>
+<p>但這只是例外情形，你要知道大多數情形下還是不會有「繼承」的觀念的。</p>
+<p>現在 <code>&lt;View&gt;</code> 就等於 flex-box，<code>&lt;Text&gt;</code> 就等於 flex-item，總之要知道這個在 RN 裡面最基本的運作模式。</p>
+<h2 id="關於尺寸的單位"><a href="#關於尺寸的單位" class="headerlink" title="關於尺寸的單位"></a>關於尺寸的單位</h2><p>因為要考慮「Scale Factor」的關係，所以實際的寬可能跟你想得不一樣。</p>
+<p>參考這張圖：</p>
+<p><img src="scale-factor.png" alt="scale-factor"></p>
+<p>一個 iPhone4 的像素是 <code>320 x 480</code>，但 Scale Factor 是「2x」，所以實際的<strong>解析度是 640 x 960（乘以二）</strong>。</p>
+<p>所以我如果把藍色方塊的寬度設為 <code>150</code>，實際在手機上就會是 <code>300px</code>。</p>
+<p>總之這邊是要讓你搞清楚妳設定的「值」代表什麼？</p>
+<ul>
+<li>如果 Scale factor 為 2，則每個單位就代表 2px</li>
+<li>如果 Scale factor 為 3，則每個單位就代表 3px</li>
+</ul>
+<p>知道這些就好了，不用特別去背這些規格。如果真的碰到單位的問題，可以試著用 <code>%</code> 的方式來設值。</p>
+<h2 id="Flex"><a href="#Flex" class="headerlink" title="Flex"></a>Flex</h2><p>在 RN 裡面主要會用 Flex 的方式來排版（也是預設的排版方式），主要概念都跟 CSS 裡的 Flex box 差不多，所以這邊只會把我覺得幾個<strong>比較特別</strong>或<strong>需要瞭解</strong>的觀念給記錄下來。</p>
+<h3 id="複習幾個-flex-相關屬性"><a href="#複習幾個-flex-相關屬性" class="headerlink" title="複習幾個 flex 相關屬性"></a>複習幾個 flex 相關屬性</h3><ul>
+<li><code>flexBasis</code> 設定相對於「主軸」的寬度，會覆蓋掉 width 的設定</li>
+<li><code>flexGrou</code> 根據「主軸」的剩餘空間來分配 ??? 到這個 item</li>
+<li><code>flexShrink</code> 根據「主軸」的溢出空間來壓縮 ??? 到這個 item</li>
+<li><code>justifyContent</code> 設定 item 的對齊方式（根據主軸）</li>
+<li><code>alignItems</code> 設定 item 的對齊方式（根據次軸）</li>
+<li><code>flex: 1</code> 這個其實是在說<code>flexGrow: 1</code> 的意思，只是個簡寫</li>
+</ul>
+<p>附註一下 RN 跟 CSS 不同的幾個地方：</p>
+<ul>
+<li><code>flexDirection</code> 的預設值是 <code>column</code></li>
+<li><code>flexShrink</code> 的預設值是 0</li>
+</ul>
+<h3 id="Direction"><a href="#Direction" class="headerlink" title="Direction"></a>Direction</h3><p>在 React Native 中，如果這樣設定：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">flex:</span> <span class="hljs-attr">1</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">backgroundColor:</span> '#<span class="hljs-attr">fff</span>'</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    }}&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">width:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">height:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">backgroundColor:</span> '<span class="hljs-attr">dodgerblue</span>'</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      }} /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">width:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">height:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">backgroundColor:</span> '<span class="hljs-attr">gold</span>'</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      }} /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">width:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">height:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">backgroundColor:</span> '<span class="hljs-attr">tomato</span>'</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      }} /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>最後出來的東西會是三個「直向排列」的 item，跟你在寫 CSS 的時候還蠻不一樣的對吧？如果是 CSS 的話預設會是「橫向排列」。</p>
+<p>簡單來說，這是因為在 RN 裡面 Flex 預設的方向是 <code>column</code> 而不是 <code>row</code> 的關係。</p>
+<p>仔細想想的話也蠻合理的，畢竟我們在用手機的時後大多是以「直向」為主，所以把 Flex 預設成直向好像也挺直覺的！</p>
+<h3 id="alignContent"><a href="#alignContent" class="headerlink" title="alignContent"></a>alignContent</h3><p>這個只會在有 <code>flewWrap: wrap</code> 的時候才有作用，記得這個就好了，舉例來說：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">flex:</span> <span class="hljs-attr">1</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">flexDirection:</span> '<span class="hljs-attr">row</span>',</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">justifyContent:</span> '<span class="hljs-attr">center</span>',</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">flexWrap:</span> '<span class="hljs-attr">wrap</span>', // 換行</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">alignContent:</span> '<span class="hljs-attr">center</span>',</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">backgroundColor:</span> '#<span class="hljs-attr">fff</span>'</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    }}&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">width:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">height:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">backgroundColor:</span> '<span class="hljs-attr">dodgerblue</span>'</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      }} /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">width:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">height:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">backgroundColor:</span> '<span class="hljs-attr">gold</span>'</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      }} /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">width:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">height:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">backgroundColor:</span> '<span class="hljs-attr">tomato</span>'</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      }} /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">width:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">height:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">backgroundColor:</span> '<span class="hljs-attr">dodgerblue</span>'</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      }} /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">width:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">height:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">backgroundColor:</span> '<span class="hljs-attr">pink</span>'</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      }} /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">width:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">height:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">backgroundColor:</span> '<span class="hljs-attr">black</span>'</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      }} /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這時候的結果是長這樣：</p>
+<p><img src="align-content-01.png" alt="align-content-01"></p>
+<p>但如果把 <code>alignContent</code> 拿掉的話就會變這樣：</p>
+<p><img src="align-content-02.png" alt="align-content-02"></p>
+<p>簡單來說，如果你的 flex-box 有啟用「換行」，然後你又想「把裡面的 flex-item 全部放到正中央」，那就會需要 <code>alignContent</code> 而不是 <code>alignItems</code>。</p>
+<p><code>alignItems</code> 是用來處理「沒有換行」的時候才會用的屬性。</p>
+<h2 id="Position"><a href="#Position" class="headerlink" title="Position"></a>Position</h2><p>在 RN 裡面 Position 的預設值是 <code>relative</code>，所以我可以直接這樣寫：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">flex:</span> <span class="hljs-attr">1</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">flexDirection:</span> '<span class="hljs-attr">row</span>',</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">justifyContent:</span> '<span class="hljs-attr">center</span>',</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">alignItems:</span> '<span class="hljs-attr">center</span>',</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      <span class="hljs-attr">backgroundColor:</span> '#<span class="hljs-attr">fff</span>'</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">    }}&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">width:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">height:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">backgroundColor:</span> '<span class="hljs-attr">dodgerblue</span>'</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      }} /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">top:</span> <span class="hljs-attr">20</span>, // 直接用 <span class="hljs-attr">top</span> 來偏移</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">width:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">height:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">backgroundColor:</span> '<span class="hljs-attr">gold</span>'</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      }} /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">width:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">height:</span> <span class="hljs-attr">100</span>,</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">backgroundColor:</span> '<span class="hljs-attr">tomato</span>'</span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">      }} /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>輸出結果：</p>
+<p><img src="position.png" alt="position"></p>
+<p>用法其實都跟 CSS 一樣，所以就不特別介紹怎麼用了。這邊只是想特別提一下預設值是 <code>relative</code> 這一點。</p>
+<p>至於 <code>absolute</code> 的話也跟 CSS 一樣，記得加上 <code>position: 'absolute'</code> 來打開，然後判斷好「父層的參考點」就好了。</p>
+<p>順道一提，<strong>在 RN 裡面 position 就只有這兩種而已</strong>，不會有什麼 <code>fixed</code> 或 <code>sticky</code> 跟 <code>static</code> 這種東西。</p>
+<h2 id="載入-Font"><a href="#載入-Font" class="headerlink" title="載入 Font"></a>載入 Font</h2><h3 id="FOIT-跟-FOUT-是什麼？"><a href="#FOIT-跟-FOUT-是什麼？" class="headerlink" title="FOIT 跟 FOUT 是什麼？"></a>FOIT 跟 FOUT 是什麼？</h3><p>附註：如果你想看範例的話可以到 <a target="_blank" rel="noopener" href="https://www.w3cplus.com/performance/optimizing-web-fonts-part2.html">這邊</a></p>
+<p>這邊科普一下兩個載入字體的使用手法：</p>
+<ul>
+<li>FOIT 先隱藏所有文字內容，等載入完成後才顯示（但其他的東西一開始會被顯示）</li>
+<li>FOUT 先顯示預設字型，等載入後再更新成新的字型</li>
+</ul>
+<p>簡單來說就是不同的設計哲學而已，還蠻有趣的。</p>
+<h3 id="第一種做法（hook）"><a href="#第一種做法（hook）" class="headerlink" title="第一種做法（hook）"></a>第一種做法（hook）</h3><p>這種作法是透過 hook 來做的，簡單來說就是：</p>
+<ol>
+<li>先下載字型的 package，<code>@expo-google-fonts/{googleFont}</code></li>
+<li>接著用下面的方式來使用即可</li>
+</ol>
+<p>附註：假設 <code>&lt;Home /&gt;</code> 裡面有用到我們指定的字型。</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> AppLoading <span class="hljs-keyword">from</span> <span class="hljs-string">'expo-app-loading'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> Home <span class="hljs-keyword">from</span> <span class="hljs-string">'./screens/Home'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> { useFonts, Nunito_400Regular, Nunito_700Bold } <span class="hljs-keyword">from</span> <span class="hljs-string">"@expo-google-fonts/nunito"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">let</span> [fontsLoaded] = useFonts({</span><br><span class="line">    Nunito_400Regular,</span><br><span class="line">    Nunito_700Bold</span><br><span class="line">  }) </span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">if</span> (!fontsLoaded) {</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">AppLoading</span> /&gt;</span></span></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Home</span> /&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>useFonts</code> 會回傳一個陣列，陣列的第一個值是 boolean，代表這字型載入完了沒？</p>
+<p>接著下面寫了一個 <code>if</code> 判斷，意思就是如果還在載入就顯示 <code>&lt;AppLoading /&gt;</code>，等到載入完以後才顯示 <code>&lt;Home /&gt;</code>。</p>
+<p>雖然還蠻好奇他是怎麼更新 <code>fontsLoaded</code> 這個 state 然後觸發 re-render 的，不過這確實是可行的！也是最簡潔的做法。</p>
+<h3 id="第二種做法（Font-loadAsync）"><a href="#第二種做法（Font-loadAsync）" class="headerlink" title="第二種做法（Font.loadAsync）"></a>第二種做法（Font.loadAsync）</h3><p>這應該算是比較舊的做法，不過也是能參考一下：</p>
+<p>附註：<code>Font.loadAsync</code> 也可以載入外部資源，只要把 <code>require</code> 改成對應的 URI 就行了</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> AppLoading <span class="hljs-keyword">from</span> <span class="hljs-string">'expo-app-loading'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> Home <span class="hljs-keyword">from</span> <span class="hljs-string">'./screens/Home'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> { useState } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> Font <span class="hljs-keyword">from</span> <span class="hljs-string">"expo-font"</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">const</span> [fontsLoaded, setFontsLoaded] = useState&lt;boolean&gt;(<span class="hljs-literal">false</span>);</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">const</span> getFonts = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">    <span class="hljs-keyword">return</span> Font.loadAsync({</span><br><span class="line">      <span class="hljs-string">'Nunito_400Regular'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./assets/fonts/Nunito-Regular.ttf'</span>),</span><br><span class="line">      <span class="hljs-string">'Nunito_700Bold'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./assets/fonts/Nunito-Bold.ttf'</span>),</span><br><span class="line">    });</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">if</span> (!fontsLoaded) {</span><br><span class="line">    <span class="hljs-keyword">return</span> (</span><br><span class="line">      <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">AppLoading</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">startAsync</span>=<span class="hljs-string">{getFonts}</span></span></span></span><br><span class="line"><span class="hljs-tag"><span class="hljs-xml">        <span class="hljs-attr">onFinish</span>=<span class="hljs-string">{()</span> =&gt;</span> setFontsLoaded(true)}</span></span><br><span class="line"><span class="hljs-xml">        onError={(error) =&gt; console.log('error', error)}</span></span><br><span class="line"><span class="hljs-xml">      /&gt;</span></span><br><span class="line">    )</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Home</span> /&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>跟第一種作法差不多，只是 state 跟 call function 的部分得自己來：</p>
+<ul>
+<li><code>getFonts</code> 用來載入字型的 function</li>
+<li><code>&lt;AppLoading startAsync={getFonts}&gt;</code> 去 call 載入字型的 function</li>
+<li><code>&lt;AppLoading onFinish={() =&gt; setFontsLoaded(true)}&gt;</code> 載入完成後更新 state</li>
+</ul>
+<h2 id="設定-Icon"><a href="#設定-Icon" class="headerlink" title="設定 Icon"></a>設定 Icon</h2><p>附註：<a target="_blank" rel="noopener" href="https://docs.expo.dev/guides/icons/#expovector-icons">官方文件（可查詢 icon 名稱）</a></p>
+<p>關於 Icon 的部分，在我們用 <code>expo init</code> 專案的時候其實就會順便載入相關的套件了，所以我們只要直接 import 進來用就可以了，像這樣：</p>
+<figure class="highlight jsx hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { MaterialIcons } <span class="hljs-keyword">from</span> <span class="hljs-string">'@expo/vector-icons'</span>;</span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">TodoList</span>(<span class="hljs-params">{ todos, removeTodo }</span>) </span>{</span><br><span class="line">  </span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">MaterialIcons</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"delete"</span> <span class="hljs-attr">size</span>=<span class="hljs-string">{24}</span> <span class="hljs-attr">color</span>=<span class="hljs-string">"#333"</span> /&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/05/28/react-native-navigation-stack/">React Navigation－Navigation Stack</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/05/26/react-native-components-and-api/">React Native 中的 Component 與 API</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

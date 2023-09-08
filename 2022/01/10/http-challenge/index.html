@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>HTTP Challenge 攻略與心得 - PeaNu&#39;s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="這裡專門蒐集有用的前端開發知識，也是一個給自己做筆記的空間。如果你也熱衷於軟體開發，不訪來這裡逛逛吧！">
+
+
+
+<meta name="keywords" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+
+
+
+    <meta name="description" content="來自 Lidemy 上的小遊戲：Lidemy HTTP Challenge，寫一篇簡短的攻略文與心得。 這份遊戲其實能學到蠻多東西的，很推薦沒玩過的人可以去玩玩看。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP Challenge 攻略與心得">
+<meta property="og:url" content="https://jubeatt.github.io/2022/01/10/http-challenge/index.html">
+<meta property="og:site_name" content="PeaNu&#39;s Paradise">
+<meta property="og:description" content="來自 Lidemy 上的小遊戲：Lidemy HTTP Challenge，寫一篇簡短的攻略文與心得。 這份遊戲其實能學到蠻多東西的，很推薦沒玩過的人可以去玩玩看。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/10/http-challenge/redirect-01.jpg">
+<meta property="og:image" content="https://jubeatt.github.io/2022/01/10/http-challenge/redirect-02.jpg">
+<meta property="article:published_time" content="2022-01-10T09:18:35.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:52.507Z">
+<meta property="article:author" content="PeaNu">
+<meta property="article:tag" content="前端,網頁開發,前端開發,網頁,軟體開發,JavaScript,HTML,CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jubeatt.github.io/2022/01/10/http-challenge/redirect-01.jpg">
+
+
+
+
+
+<link rel="icon" href="/img/base/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/agate.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    PeaNu
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/categories">分類</a>
+            
+            <a class="navbar-item "
+               href="/recommend">推薦閱讀</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目錄">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#第一關">1&nbsp;&nbsp;<b>第一關</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#1-開場">1.1&nbsp;&nbsp;1. 開場</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-自我介紹">1.2&nbsp;&nbsp;2. 自我介紹</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#第二關">2&nbsp;&nbsp;<b>第二關</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#1-開場-1">2.1&nbsp;&nbsp;1. 開場</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-輸入正確的-id">2.2&nbsp;&nbsp;2. 輸入正確的 id</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#第三關">3&nbsp;&nbsp;<b>第三關</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#1-開場-2">3.1&nbsp;&nbsp;1. 開場</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-新增書籍">3.2&nbsp;&nbsp;2. 新增書籍</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#第四關">4&nbsp;&nbsp;<b>第四關</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#1-開場-3">4.1&nbsp;&nbsp;1. 開場</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-找出書本的-id">4.2&nbsp;&nbsp;2. 找出書本的 id</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#第五關">5&nbsp;&nbsp;<b>第五關</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#1-開場-4">5.1&nbsp;&nbsp;1. 開場</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-刪除書本">5.2&nbsp;&nbsp;2. 刪除書本</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#第六關">6&nbsp;&nbsp;<b>第六關</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#1-開場-5">6.1&nbsp;&nbsp;1. 開場</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-取得使用者資訊">6.2&nbsp;&nbsp;2. 取得使用者資訊</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#第七關">7&nbsp;&nbsp;<b>第七關</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#1-開場-6">7.1&nbsp;&nbsp;1. 開場</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-刪除書本-1">7.2&nbsp;&nbsp;2. 刪除書本</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#第八關">8&nbsp;&nbsp;<b>第八關</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#1-開場-7">8.1&nbsp;&nbsp;1. 開場</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-找出填錯資訊的書本">8.2&nbsp;&nbsp;2. 找出填錯資訊的書本</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#3-修正書本資訊">8.3&nbsp;&nbsp;3. 修正書本資訊</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#第九關">9&nbsp;&nbsp;<b>第九關</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#1-開場-8">9.1&nbsp;&nbsp;1. 開場</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-取得系統資訊">9.2&nbsp;&nbsp;2. 取得系統資訊</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#第十關">10&nbsp;&nbsp;<b>第十關</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#1-開場-9">10.1&nbsp;&nbsp;1. 開場</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-猜出正確的數字">10.2&nbsp;&nbsp;2. 猜出正確的數字</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#第十一關">11&nbsp;&nbsp;<b>第十一關</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#1-開場-10">11.1&nbsp;&nbsp;1. 開場</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-打招呼">11.2&nbsp;&nbsp;2. 打招呼</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#第十二關">12&nbsp;&nbsp;<b>第十二關</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#1-開場-11">12.1&nbsp;&nbsp;1. 開場</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-取得運送-Token">12.2&nbsp;&nbsp;2. 取得運送 Token</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#第十三關">13&nbsp;&nbsp;<b>第十三關</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#1-開場-12">13.1&nbsp;&nbsp;1. 開場</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-查看系統日誌">13.2&nbsp;&nbsp;2. 查看系統日誌</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#第十四關">14&nbsp;&nbsp;<b>第十四關</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#1-開場-13">14.1&nbsp;&nbsp;1. 開場</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#2-檢查首頁內容">14.2&nbsp;&nbsp;2. 檢查首頁內容</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#第十五關">15&nbsp;&nbsp;<b>第十五關</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#心得">16&nbsp;&nbsp;<b>心得</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            HTTP Challenge 攻略與心得
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>1月 10 2022</span>
+            
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/Example/">Example</a>
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>來自 Lidemy 上的小遊戲：<a target="_blank" rel="noopener" href="https://lidemy-http-challenge.herokuapp.com/start">Lidemy HTTP Challenge</a>，寫一篇簡短的攻略文與心得。</p>
+<p>這份遊戲其實能學到蠻多東西的，很推薦沒玩過的人可以去玩玩看。</p>
+<span id="more"></span>
+
+<h2 id="第一關"><a href="#第一關" class="headerlink" title="第一關"></a>第一關</h2><h4 id="1-開場"><a href="#1-開場" class="headerlink" title="1. 開場"></a>1. 開場</h4><p>一開始的 token 為 <code>{GOGOGO}</code>，發一個 GET 請求就 OK 了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv1?token={GOGOGO}'</span>,</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> { </span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body) </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">啊...好久沒有看到年輕人到我這個圖書館了，我叫做 lib，是這個圖書館的管理員</span><br><span class="line">很開心看到有年輕人願意來幫忙，最近圖書館剛換了資訊系統，我都搞不清楚怎麼用了...</span><br><span class="line">這是他們提供給我的文件，我一個字都看不懂，但對你可能會有幫助：https://gist.githu</span><br><span class="line">b.com/aszx87410/3873b3d9cbb28cb6fcbb85bf493b63ba</span><br><span class="line"></span><br><span class="line">先把這文件放一旁吧，這個待會才會用到</span><br><span class="line">你叫做什麼名字呢？用 GET 方法跟我說你的 name 叫做什麼吧！</span><br><span class="line">除了 token 以外順便把 name 一起帶上來就可以了</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-自我介紹"><a href="#2-自我介紹" class="headerlink" title="2. 自我介紹"></a>2. 自我介紹</h4><p>記得把剛剛的 <a target="_blank" rel="noopener" href="https://gist.github.com/aszx87410/3873b3d9cbb28cb6fcbb85bf493b63ba">API</a> 網址給記下來，之後會用到。</p>
+<p>接著就依照題目說的，帶上 <code>&amp;name=xxx</code> 就可以了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv1?token={GOGOGO}&amp;name=PeaNu'</span>,</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">啊...原來你叫 PeaNu 啊！下一關的 token 是 {HellOWOrld}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>第一關就到這邊結束，進到下一關囉。</p>
+<h2 id="第二關"><a href="#第二關" class="headerlink" title="第二關"></a>第二關</h2><h4 id="1-開場-1"><a href="#1-開場-1" class="headerlink" title="1. 開場"></a>1. 開場</h4><p>利用第一關給的 token：<code>{HellOWOrld}</code>，發一個 GET 請求就 OK 了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv2?token={HellOWOrld}'</span>,</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">我前陣子在整理書籍的時候看到了一本我很喜歡的書，可是現在卻怎麼想都想不起來是哪一</span><br><span class="line">本...</span><br><span class="line">我只記得那本書的 id 是兩位數，介於 54~58 之間，你可以幫幫我嗎？</span><br><span class="line">找到是哪一本之後把書的 id 用 GET 傳給我就行了。</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-輸入正確的-id"><a href="#2-輸入正確的-id" class="headerlink" title="2. 輸入正確的 id"></a>2. 輸入正確的 id</h4><p>接下來要用 <code>&amp;id=54~58</code> 發出 GET 請求，其中會有一個是正確的 id，也就是 <code>56</code>：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv2?token={HellOWOrld}&amp;id=56'</span>,</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">啊！就是這本書，太謝謝你了。下一關的 token 為：{5566NO1}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>一樣順利拿到 token，進到下一關！</p>
+<p>備註：試著用第一關給的 API，去查詢 <a target="_blank" rel="noopener" href="https://lidemy-http-challenge.herokuapp.com/api/books/56">id=56</a> 的書，會發現管理員在找的書為「5566 - 認真」，正好對應了 <code>{5566NO1}</code>。</p>
+<h2 id="第三關"><a href="#第三關" class="headerlink" title="第三關"></a>第三關</h2><h4 id="1-開場-2"><a href="#1-開場-2" class="headerlink" title="1. 開場"></a>1. 開場</h4><p>利用第二關給的 token：<code>{5566NO1}</code>，發一個 GET 請求就 OK 了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv3?token={5566NO1}'</span>,</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">真是太感謝你幫我找到這本書了！</span><br><span class="line"></span><br><span class="line">剛剛在你找書的時候有一批新的書籍送來了，是這次圖書館根據讀者的推薦買的新書，其中</span><br><span class="line">有一本我特別喜歡，想要優先上架。</span><br><span class="line">書名是《大腦喜歡這樣學》，ISBN 為 9789863594475。</span><br><span class="line"></span><br><span class="line">就拜託你了。</span><br><span class="line">新增完之後幫我把書籍的 id 用 GET 告訴我。</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-新增書籍"><a href="#2-新增書籍" class="headerlink" title="2. 新增書籍"></a>2. 新增書籍</h4><p>這時候就要用到剛剛的 <a target="_blank" rel="noopener" href="https://gist.github.com/aszx87410/3873b3d9cbb28cb6fcbb85bf493b63ba">API</a> 了，請閱讀裡面的說明，然後用 POST 把書新增到圖書系統裡：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT_V1 = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api'</span></span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">method</span>: <span class="hljs-string">'POST'</span>,</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT_V1}</span>/books`</span>,</span><br><span class="line">  <span class="hljs-attr">headers</span>: {</span><br><span class="line">    <span class="hljs-string">'Content-type'</span>: <span class="hljs-string">'application/x-www-form-urlencoded'</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">form</span>: {</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'《大腦喜歡這樣學》'</span>,</span><br><span class="line">    <span class="hljs-attr">ISBN</span>: <span class="hljs-number">9789863594475</span></span><br><span class="line">  }</span><br><span class="line">},</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>我們要用「form 表單」的格式來傳送，所以在 header 加上 <code>'Content-type': 'application/x-www-form-urlencoded'</code> </p>
+<p>response：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{<span class="hljs-string">"message"</span>:<span class="hljs-string">"新增成功"</span>,<span class="hljs-string">"id"</span>:<span class="hljs-string">"1989"</span>}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>接著把取得的 id 加上去就可以了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv3?token={5566NO1}&amp;id=1989'</span>,</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">這樣子讀者就能趕快看到這本新書了，謝謝！下一關的 token 為 {LEarnHOWtoLeArn}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="第四關"><a href="#第四關" class="headerlink" title="第四關"></a>第四關</h2><h4 id="1-開場-3"><a href="#1-開場-3" class="headerlink" title="1. 開場"></a>1. 開場</h4><p>利用第三關給的 token：<code>{LEarnHOWtoLeArn}</code>，發一個 GET 請求就 OK 了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv4?token={LEarnHOWtoLeArn}'</span>,</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">我翻了一下你之前幫我找的那本書，發現我記錯了...這不是我朝思暮想的那一本。</span><br><span class="line">我之前跟你講的線索好像都是錯的，我記到別本書去了，真是抱歉啊。</span><br><span class="line">我記得我想找的那本書，書名有：「世界」兩字，而且是村上春樹寫的，可以幫我找到書的</span><br><span class="line"> id 並傳給我嗎？</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-找出書本的-id"><a href="#2-找出書本的-id" class="headerlink" title="2. 找出書本的 id"></a>2. 找出書本的 id</h4><p>這邊有兩種方法，一種是在 API 上加上參數，一種是把整筆抓下來後自己找。先示範第一種：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">  把 API 加上 quest string</span></span><br><span class="line"><span class="hljs-comment">  這邊要自己把「世界」做 url encode，不然會失敗。 </span></span><br><span class="line"><span class="hljs-comment">*/</span></span><br><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT_V1 = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api'</span></span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">method</span>: <span class="hljs-string">'GET'</span>,</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT_V1}</span>/books?q=%E4%B8%96%E7%95%8C`</span>,</span><br><span class="line">},</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.parse(body))</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+<p>response：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  { <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'當我想你時，全世界都救不了我'</span>, <span class="hljs-attr">author</span>: <span class="hljs-string">'肆一'</span>, <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'5549173495'</span> },</span><br><span class="line">  { <span class="hljs-attr">id</span>: <span class="hljs-number">27</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'從你的全世界路過'</span>, <span class="hljs-attr">author</span>: <span class="hljs-string">'張嘉佳'</span>, <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'8426216529'</span> },</span><br><span class="line">  { <span class="hljs-attr">id</span>: <span class="hljs-number">79</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'世界末日與冷酷異境'</span>, <span class="hljs-attr">author</span>: <span class="hljs-string">'村上春樹'</span>, <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'9571313408'</span> },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">id</span>: <span class="hljs-number">90</span>,</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'文學的40堂公開課：從神話到當代暢銷書，文學如何影響我們、帶領我們理解這個世界'</span>,</span><br><span class="line">    <span class="hljs-attr">author</span>: <span class="hljs-string">'約翰．薩德蘭'</span>,</span><br><span class="line">    <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'7978376866'</span></span><br><span class="line">  }</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>第二種，整筆抓下來再搜尋：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT_V1 = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api'</span></span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">method</span>: <span class="hljs-string">'GET'</span>,</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT_V1}</span>/books`</span>,</span><br><span class="line">},</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> books = <span class="hljs-built_in">JSON</span>.parse(body)</span><br><span class="line">  <span class="hljs-comment">// 搜尋書名為「世界」與作者為「村上春樹」的書</span></span><br><span class="line">  target = books.filter(<span class="hljs-function"><span class="hljs-params">elem</span> =&gt;</span> elem.author === <span class="hljs-string">'村上春樹'</span> &amp;&amp; elem.name.includes(<span class="hljs-string">'世界'</span>) )</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(target)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ { <span class="hljs-attr">id</span>: <span class="hljs-number">79</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'世界末日與冷酷異境'</span>, <span class="hljs-attr">author</span>: <span class="hljs-string">'村上春樹'</span>, <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'9571313408'</span> } ]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>所以最後拿 <code>id=79</code> 去發請求就行囉：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv4?token={LEarnHOWtoLeArn}&amp;id=79'</span>,</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">沒錯！這次我很確定了，就是這本！下一關的 token 為 {HarukiMurakami}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>第四關結束，進入下一關。</p>
+<p>備註：token：<code>{HarukiMurakami}</code> 就是村上春樹的名字。</p>
+<h2 id="第五關"><a href="#第五關" class="headerlink" title="第五關"></a>第五關</h2><h4 id="1-開場-4"><a href="#1-開場-4" class="headerlink" title="1. 開場"></a>1. 開場</h4><p>利用第四關給的 token：<code>{HarukiMurakami}</code>，發一個 GET 請求就 OK 了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv5?token={HarukiMurakami}'</span>,</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">昨天有個人匆匆忙忙跑過來說他不小心捐錯書了，想要來問可不可以把書拿回去。</span><br><span class="line">跟他溝通過後，我就把他捐過來的書還他了，所以現在要把這本書從系統裡面刪掉才行。</span><br><span class="line"></span><br><span class="line">那本書的 id 是 23，你可以幫我刪掉嗎？</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-刪除書本"><a href="#2-刪除書本" class="headerlink" title="2. 刪除書本"></a>2. 刪除書本</h4><p>按照題目說的，用 <code>DELETE</code> 請求去把 id 是 23 的書給刪除：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT_V1 = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api'</span></span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">method</span>: <span class="hljs-string">'DELETE'</span>,</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT_V1}</span>/books/23`</span>,</span><br><span class="line">},</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{<span class="hljs-string">"message"</span>:<span class="hljs-string">"\n咦...是刪掉了沒錯，但總覺得哪裡怪怪的，算了，先這樣吧！下一關的 token 為 {CHICKENCUTLET}\n"</span>}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>第五關結束，進入下一關。</p>
+<p>備註：<a target="_blank" rel="noopener" href="https://lidemy-http-challenge.herokuapp.com/api/books/23">被刪除的書</a> 其實是雞排妹的寫真集，所以 token 才叫做 <code>{CHICKENCUTLET}</code>（雞排）。</p>
+<h2 id="第六關"><a href="#第六關" class="headerlink" title="第六關"></a>第六關</h2><h4 id="1-開場-5"><a href="#1-開場-5" class="headerlink" title="1. 開場"></a>1. 開場</h4><p>利用第五關給的 token：<code>{CHICKENCUTLET}</code>，發一個 GET 請求就 OK 了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv6?token={CHICKENCUTLET}'</span>,</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">我終於知道上次哪裡怪怪的了！</span><br><span class="line"></span><br><span class="line">照理來說要進入系統應該要先登入才對，怎麼沒有登入就可以新增刪除...</span><br><span class="line">這太奇怪了，我已經回報給那邊的工程師了，他們給了我一份新的文件：https://gist.github.com/aszx87410/1e5e510</span><br><span class="line">5c1c35197f55c485a88b0328a。</span><br><span class="line"></span><br><span class="line">這邊是帳號密碼，你先登入試試看吧，可以呼叫一個 /me 的 endpoint，裡面會給你一個 email。</span><br><span class="line">把 email 放在 query string 上面帶過來，我看看是不是對的。</span><br><span class="line"></span><br><span class="line">帳號：admin</span><br><span class="line">密碼：admin123</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-取得使用者資訊"><a href="#2-取得使用者資訊" class="headerlink" title="2. 取得使用者資訊"></a>2. 取得使用者資訊</h4><p>這邊先參考新的 <a target="_blank" rel="noopener" href="https://gist.github.com/aszx87410/1e5e5105c1c35197f55c485a88b0328a">API</a> 文件說明，裡面提到的驗證其實就是 HTTP 中的「Basic Authentication」，詳細可以參考 <a target="_blank" rel="noopener" href="https://carsonwah.github.io/http-authentication.html">這篇文章</a>。</p>
+<p>所以這邊得依照格式把 <code>admin:admin123</code> 做 「base64」編碼，再帶上 <code>Authorization</code> 的 header：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT_V2 = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api/v2'</span></span><br><span class="line"><span class="hljs-comment">// 以 base64 編碼</span></span><br><span class="line"><span class="hljs-keyword">const</span> encode = Buffer.from(<span class="hljs-string">'admin:admin123'</span>).toString(<span class="hljs-string">'base64'</span>)</span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT_V2}</span>/me`</span>,</span><br><span class="line">  <span class="hljs-comment">// 帶上驗證 header</span></span><br><span class="line">  <span class="hljs-attr">headers</span>: {</span><br><span class="line">    <span class="hljs-string">'Authorization'</span>: <span class="hljs-string">`Basic <span class="hljs-subst">${encode}</span>`</span> </span><br><span class="line">  }</span><br><span class="line">}, <span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(body))</span><br></pre></td></tr></tbody></table></figure>
+
+<p>備註：關於 Buffer 的用法可以參考 <a href="https://jubeatt.github.io/2022/01/10/node-buffer-module/">Node 中的 buffer 模組 </a></p>
+<p>response：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{<span class="hljs-string">"username"</span>:<span class="hljs-string">"admin"</span>,<span class="hljs-string">"email"</span>:<span class="hljs-string">"lib@lidemy.com"</span>}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>最後把 <code>email</code> 帶到參數裡這關就 pass 了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv6?token={CHICKENCUTLET}&amp;email=lib@lidemy.com'</span>,</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">對對對，就是這個，這樣才對嘛！下一關的 token 為 {SECurityIsImPORTant}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>備註：<code>{SECurityIsImPORTant}</code> = 安全性很重要。</p>
+<h2 id="第七關"><a href="#第七關" class="headerlink" title="第七關"></a>第七關</h2><h4 id="1-開場-6"><a href="#1-開場-6" class="headerlink" title="1. 開場"></a>1. 開場</h4><p>利用第六關給的 token：<code>{SECurityIsImPORTant}</code>，發一個 GET 請求就 OK 了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv7?token={SECurityIsImPORTant}'</span>,</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">那邊的工程師說系統整個修復完成了，剛好昨天我們發現有一本書被偷走了...</span><br><span class="line">這本書我們已經買第五次了，每次都被偷走，看來這本書很熱門啊。</span><br><span class="line">我們要把這本書從系統裡面刪掉，就拜託你了。</span><br><span class="line"></span><br><span class="line">對了！記得要用新的系統喔，舊的已經完全廢棄不用了。</span><br><span class="line"></span><br><span class="line">書的 id 是 89</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-刪除書本-1"><a href="#2-刪除書本-1" class="headerlink" title="2. 刪除書本"></a>2. 刪除書本</h4><p>就是用 <code>DELETE</code> 去把書本刪掉而已：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT_V2 = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api/v2'</span></span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">method</span>: <span class="hljs-string">'DELETE'</span>,</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT_V2}</span>/books/89`</span>,</span><br><span class="line">  <span class="hljs-attr">headers</span>: {</span><br><span class="line">    <span class="hljs-string">'Authorization'</span>: <span class="hljs-string">'Basic YWRtaW46YWRtaW4xMjM='</span> </span><br><span class="line">  }</span><br><span class="line">}, <span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(body))</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{<span class="hljs-string">"message"</span>:<span class="hljs-string">"\n希望下一次進這本書的時候不會再被偷走了。下一關的 token 為 {HsifnAerok}\n"</span>}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>順利進到下一關。</p>
+<p>備註：這本被偷走的書其實是「跟著月亮走：韓國瑜的夜襲精神與奮進人生」，所以把 <code>{HsifnAerok}</code> 倒過來就會發現是 <code>{koreAnfisH}</code>（韓國魚）</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{<span class="hljs-string">"id"</span>:<span class="hljs-number">89</span>,<span class="hljs-string">"name"</span>:<span class="hljs-string">"跟著月亮走：韓國瑜的夜襲精神與奮進人生"</span>,<span class="hljs-string">"author"</span>:<span class="hljs-string">"韓國瑜"</span>,<span class="hljs-string">"ISBN"</span>:<span class="hljs-string">"9789571376882"</span>}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="第八關"><a href="#第八關" class="headerlink" title="第八關"></a>第八關</h2><h4 id="1-開場-7"><a href="#1-開場-7" class="headerlink" title="1. 開場"></a>1. 開場</h4><p>利用第七關給的 token：<code>{HsifnAerok}</code>，發一個 GET 請求就 OK 了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv8?token={HsifnAerok}'</span>,</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">我昨天在整理書籍的時候發現有一本書的 ISBN 編號跟系統內的對不上，仔細看了一下發現我當時輸入系統時 key 錯了</span><br><span class="line">。</span><br><span class="line">哎呀，人老了就是這樣，老是會看錯。</span><br><span class="line"></span><br><span class="line">那本書的名字裡面有個「我」，作者的名字是四個字，key 錯的 ISBN 最後一碼為 7，只要把最後一碼改成 3 就行了。</span><br><span class="line">對了！記得要用新的系統喔，舊的已經完全廢棄不用了。</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-找出填錯資訊的書本"><a href="#2-找出填錯資訊的書本" class="headerlink" title="2. 找出填錯資訊的書本"></a>2. 找出填錯資訊的書本</h4><p>這邊一樣可以用 API 參數來找，或者是整筆抓下來再搜尋。先示範第一種：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT_V2 = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api/v2'</span></span><br><span class="line"><span class="hljs-keyword">const</span> encode = Buffer.from(<span class="hljs-string">'admin:admin123'</span>).toString(<span class="hljs-string">'base64'</span>)</span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-comment">// 搜尋「我」，記得一樣要做 url encode </span></span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT_V2}</span>/books?q=%E6%88%91`</span>,</span><br><span class="line">  <span class="hljs-attr">headers</span>: {</span><br><span class="line">    <span class="hljs-string">'Authorization'</span>: <span class="hljs-string">`Basic <span class="hljs-subst">${encode}</span>`</span></span><br><span class="line">  }</span><br><span class="line">}, <span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.parse(body)))</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  { <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'當我想你時，全世界都救不了我'</span>, <span class="hljs-attr">author</span>: <span class="hljs-string">'肆一'</span>, <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'5549173495'</span> },</span><br><span class="line">  { <span class="hljs-attr">id</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'我殺的人與殺我的人'</span>, <span class="hljs-attr">author</span>: <span class="hljs-string">'東山彰良'</span>, <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'9262228645'</span> },</span><br><span class="line">  { <span class="hljs-attr">id</span>: <span class="hljs-number">7</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'你已走遠，我還在練習道別'</span>, <span class="hljs-attr">author</span>: <span class="hljs-string">'渺渺'</span>, <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'3722233689'</span> },</span><br><span class="line">  { <span class="hljs-attr">id</span>: <span class="hljs-number">9</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'你是我最熟悉的陌生人'</span>, <span class="hljs-attr">author</span>: <span class="hljs-string">'Middle'</span>, <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'9765734253'</span> },</span><br><span class="line">  { <span class="hljs-attr">id</span>: <span class="hljs-number">22</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'我輩中人：寫給中年人的情書'</span>, <span class="hljs-attr">author</span>: <span class="hljs-string">'張曼娟'</span>, <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'7241428897'</span> },</span><br><span class="line">  { <span class="hljs-attr">id</span>: <span class="hljs-number">38</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'我和我追逐的垃圾車'</span>, <span class="hljs-attr">author</span>: <span class="hljs-string">'謝子凡'</span>, <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'7797349452'</span> },</span><br><span class="line">  { <span class="hljs-attr">id</span>: <span class="hljs-number">57</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'我的櫻花戀人'</span>, <span class="hljs-attr">author</span>: <span class="hljs-string">'宇山佳佑'</span>, <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'2947749939'</span> },</span><br><span class="line">  { <span class="hljs-attr">id</span>: <span class="hljs-number">60</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'你走慢了我的時間'</span>, <span class="hljs-attr">author</span>: <span class="hljs-string">'張西'</span>, <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'8811544334'</span> },</span><br><span class="line">  { <span class="hljs-attr">id</span>: <span class="hljs-number">66</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'我是許涼涼'</span>, <span class="hljs-attr">author</span>: <span class="hljs-string">'李維菁'</span>, <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'8389193464'</span> },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">id</span>: <span class="hljs-number">72</span>,</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'日日好日：茶道教我的幸福15味【電影書腰版】'</span>,</span><br><span class="line">    <span class="hljs-attr">author</span>: <span class="hljs-string">'森下典子'</span>,</span><br><span class="line">    <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'9981835427'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">id</span>: <span class="hljs-number">90</span>,</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'文學的40堂公開課：從神話到當代暢銷書，文學如何影響我們、帶領我們理解這個世界'</span>,</span><br><span class="line">    <span class="hljs-attr">author</span>: <span class="hljs-string">'約翰．薩德蘭'</span>,</span><br><span class="line">    <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'7978376866'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">id</span>: <span class="hljs-number">95</span>,</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'我想吃掉你的胰臟【電影珍藏版】'</span>,</span><br><span class="line">    <span class="hljs-attr">author</span>: <span class="hljs-string">'住野夜'</span>,</span><br><span class="line">    <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'2615985356'</span></span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">id</span>: <span class="hljs-number">100</span>,</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'慢情書：我們會在更好的地方相遇嗎？'</span>,</span><br><span class="line">    <span class="hljs-attr">author</span>: <span class="hljs-string">'林達陽'</span>,</span><br><span class="line">    <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'7418527246'</span></span><br><span class="line">  }</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>（有蠻多筆符合的，所以抓下來後還是要再搜尋一下比較清楚）</p>
+<p>第二種，整筆抓下來搜尋：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT_V2 = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api/v2'</span></span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">method</span>: <span class="hljs-string">'GET'</span>,</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT_V2}</span>/books`</span>,</span><br><span class="line">  <span class="hljs-attr">headers</span>: {</span><br><span class="line">    <span class="hljs-string">'Authorization'</span>: <span class="hljs-string">'Basic YWRtaW46YWRtaW4xMjM='</span> </span><br><span class="line">  }</span><br><span class="line">}, <span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// 所有書籍</span></span><br><span class="line">  <span class="hljs-keyword">const</span> books = <span class="hljs-built_in">JSON</span>.parse(body)</span><br><span class="line">  <span class="hljs-comment">// 找出包含「我」跟「四個字的作者」跟「以 7 結尾的 ISBN 碼」</span></span><br><span class="line">  <span class="hljs-keyword">const</span> target = </span><br><span class="line">    books.filter(<span class="hljs-function"><span class="hljs-params">elem</span> =&gt;</span> </span><br><span class="line">      elem.name.includes(<span class="hljs-string">'我'</span>) &amp;&amp; </span><br><span class="line">      elem.author.length === <span class="hljs-number">4</span> &amp;&amp; </span><br><span class="line">      elem.ISBN.endsWith(<span class="hljs-string">'7'</span>))</span><br><span class="line">  <span class="hljs-comment">// 結果</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(target)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  {</span><br><span class="line">    <span class="hljs-attr">id</span>: <span class="hljs-number">72</span>,</span><br><span class="line">    <span class="hljs-attr">name</span>: <span class="hljs-string">'日日好日：茶道教我的幸福15味【電影書腰版】'</span>,</span><br><span class="line">    <span class="hljs-attr">author</span>: <span class="hljs-string">'森下典子'</span>,</span><br><span class="line">    <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'9981835427'</span></span><br><span class="line">  }</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="3-修正書本資訊"><a href="#3-修正書本資訊" class="headerlink" title="3. 修正書本資訊"></a>3. 修正書本資訊</h4><p>知道是哪一本書之後，用 <code>PATCH</code> 去修改 ISBN 的值就好囉：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT_V2 = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api/v2'</span></span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">method</span>: <span class="hljs-string">'PATCH'</span>,</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT_V2}</span>/books/72`</span>,</span><br><span class="line">  <span class="hljs-attr">headers</span>: {</span><br><span class="line">    <span class="hljs-string">'Authorization'</span>: <span class="hljs-string">'Basic YWRtaW46YWRtaW4xMjM='</span>,</span><br><span class="line">    <span class="hljs-string">'Content-type'</span>: <span class="hljs-string">'application/x-www-form-urlencoded'</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">form</span>: {</span><br><span class="line">    <span class="hljs-comment">// 把 7 改成 3</span></span><br><span class="line">    <span class="hljs-attr">ISBN</span>: <span class="hljs-string">'9981835423'</span></span><br><span class="line">  }</span><br><span class="line">}, <span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{<span class="hljs-string">"message"</span>:<span class="hljs-string">"\n希望之後他們能引進語音輸入系統，我就只要講講話就好。下一關的 token 為 {NeuN}\n"</span>}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>第八關結束，進到下一關。</p>
+<p>備註：<code>{NeuN}</code> 是德文的 <code>9</code>。</p>
+<h2 id="第九關"><a href="#第九關" class="headerlink" title="第九關"></a>第九關</h2><h4 id="1-開場-8"><a href="#1-開場-8" class="headerlink" title="1. 開場"></a>1. 開場</h4><p>利用第八關給的 token：<code>{NeuN}</code>，發一個 GET 請求就 OK 了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv9?token={NeuN}'</span>,</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">API 文件裡面有個獲取系統資訊的 endpoint 你記得嗎？</span><br><span class="line">工程師跟我說這個網址不太一樣，用一般的方法是沒辦法成功拿到回傳值的。</span><br><span class="line"></span><br><span class="line">想要存取的話要符合兩個條件：</span><br><span class="line">1. 帶上一個 X-Library-Number 的 header，我們圖書館的編號是 20</span><br><span class="line">2. 伺服器會用 user agent 檢查是否是從 IE6 送出的 Request，不是的話會擋掉</span><br><span class="line"></span><br><span class="line">順利拿到系統資訊之後應該會有個叫做 version 的欄位，把裡面的值放在 query string 給我吧。</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-取得系統資訊"><a href="#2-取得系統資訊" class="headerlink" title="2. 取得系統資訊"></a>2. 取得系統資訊</h4><p>這邊要多帶上兩個 header，分別是 <code>X-Library-Number</code> 跟 <code>User-Agent</code>。</p>
+<p><code>X-Library-Number</code> 這種以 <code>X</code> 為前綴的代表是自定義的 header，不在 HTTP 規範中，不加也沒關係，但這裡的伺服器需要識別，所以得加上這個欄位。</p>
+<p>而 <code>User-Agent</code> 是用來紀錄用戶端的「瀏覽器資訊」跟「作業系統」等等的資訊，所以這邊要把它改成是 IE6 的內容。直接上網查就可以找到了：<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/14806765/changing-user-agent-to-ie6-or-lower-for-curl-call#:~:text=Try%20changing%20that%20line%20to%20this%3A">Changing User Agent to IE6 or lower for curl call</a></p>
+<p>原始碼：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT_V2 = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api/v2'</span></span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">method</span>: <span class="hljs-string">'GET'</span>,</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT_V2}</span>/sys_info`</span>,</span><br><span class="line">  <span class="hljs-attr">headers</span>: {</span><br><span class="line">    <span class="hljs-string">'Authorization'</span>: <span class="hljs-string">'Basic YWRtaW46YWRtaW4xMjM='</span>,</span><br><span class="line">    <span class="hljs-string">'X-Library-Number'</span>: <span class="hljs-string">'20'</span>,</span><br><span class="line">    <span class="hljs-string">'User-Agent'</span>: <span class="hljs-string">'Mozilla/5.0 (compatible; MSIE 6.0; Windows NT 5.1)'</span></span><br><span class="line">  }</span><br><span class="line">}, <span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+<p>response：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{<span class="hljs-string">"message"</span>:<span class="hljs-string">"success"</span>,<span class="hljs-string">"version"</span>:<span class="hljs-string">"1A4938Jl7"</span>,<span class="hljs-string">"owner"</span>:<span class="hljs-string">"lib"</span>,<span class="hljs-string">"createdAt"</span>:<span class="hljs-string">"121290329301"</span>}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這裡補充一下，「改 User-Agent 的內容」是在不使用「瀏覽器」的前提下才可以做到的事情。如果你是透過瀏覽器來發 request 的話是沒辦法改的，詳細可以參考 <a href="https://jubeatt.github.io/2022/01/10/learn-cors-and-browser-limitations-from-game/">從遊戲來認識 CORS 與瀏覽器的限制</a>。</p>
+<p>接著把 <code>1A4938Jl7</code> 帶到參數裡就解決第九關了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv9?token={NeuN}&amp;version=1A4938Jl7'</span>,</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">限制這麼多都被你突破了，真有你的。要不要考慮以後來我們圖書館當工程師啊？下一關的 token 為 {duZDsG3tvoA}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>備註：<code>{duZDsG3tvoA}</code> 是 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=duZDsG3tvoA">半島鐵盒</a> 的 youtube 編號。</p>
+<h2 id="第十關"><a href="#第十關" class="headerlink" title="第十關"></a>第十關</h2><h4 id="1-開場-9"><a href="#1-開場-9" class="headerlink" title="1. 開場"></a>1. 開場</h4><p>利用第九關給的 token：<code>{duZDsG3tvoA}</code>，發一個 GET 請求就 OK 了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv10?token={duZDsG3tvoA}'</span>,</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">時間過得真快啊，今天是你在這邊幫忙的最後一天了。</span><br><span class="line"></span><br><span class="line">我們來玩個遊戲吧？你有玩過猜數字嗎？</span><br><span class="line"></span><br><span class="line">出題者會出一個四位數不重複的數字，例如說 9487。</span><br><span class="line">你如果猜 9876，我會跟你說 1A2B，1A 代表 9 位置對數字也對，2B 代表 8 跟 7 你猜對了但位置錯了。</span><br><span class="line"></span><br><span class="line">開始吧，把你要猜的數字放在 query string 用 num 當作 key 傳給我。</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-猜出正確的數字"><a href="#2-猜出正確的數字" class="headerlink" title="2. 猜出正確的數字"></a>2. 猜出正確的數字</h4><p>就是根據題目的敘述來猜就行了，正確的數字為 <code>9613</code>：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv10?token={duZDsG3tvoA}&amp;num=9613'</span>, </span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">很開心在這裡的時光能有你一起陪伴，讓我的生活不再那麼一成不變，很開心認識你，下次有機會再一起玩吧！</span><br><span class="line"></span><br><span class="line">The End，恭喜破關！</span><br><span class="line"></span><br><span class="line">author: huli@lidemy.com</span><br><span class="line">https://www.facebook.com/lidemytw/</span><br><span class="line"></span><br><span class="line">附註：</span><br><span class="line">原本遊戲只規劃到這邊，第十關就是最後一關。</span><br><span class="line">後來我有加了一些新關卡但難度較高，如果你還想挑戰看看，下一關的 token 為 {IhateCORS}</span><br></pre></td></tr></tbody></table></figure>
+
+
+<h2 id="第十一關"><a href="#第十一關" class="headerlink" title="第十一關"></a>第十一關</h2><h4 id="1-開場-10"><a href="#1-開場-10" class="headerlink" title="1. 開場"></a>1. 開場</h4><p>利用第十關給的 token：<code>{IhateCORS}</code>，發一個 GET 請求就 OK 了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> request = <span class="hljs-built_in">require</span>(<span class="hljs-string">'request'</span>)</span><br><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv11?token={IhateCORS}'</span>, </span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">嘿！很開心看到你願意回來繼續幫忙，這次我們接到一個新的任務，要跟在菲律賓的一個中</span><br><span class="line">文圖書館資訊系統做串連</span><br><span class="line">這邊是他們的 API 文件，你之後一定會用到：https://gist.github.com/aszx87410/0b0d3</span><br><span class="line">cabf32c4e44084fadf5180d0cf4。</span><br><span class="line"></span><br><span class="line">現在就讓我們先跟他們打個招呼吧，只是我記得他們的 API 好像會限制一些東西就是了...</span><br></pre></td></tr></tbody></table></figure>
+
+<p>記得把 <a target="_blank" rel="noopener" href="https://gist.github.com/aszx87410/0b0d3cabf32c4e44084fadf5180d0cf4">API</a> 網址存起來。</p>
+<h4 id="2-打招呼"><a href="#2-打招呼" class="headerlink" title="2. 打招呼"></a>2. 打招呼</h4><p>接著就按照 API 文件的說明，發一個「打招呼」的 request：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api/v3'</span></span><br><span class="line">request(<span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT}</span>/hello`</span>, </span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">您的 origin 不被允許存取此資源，請確認您是從 lidemy.com 送出 request。</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這時候會跟你說你的位置不允許，所以我們又得再加一些設定了。還記得 <a target="_blank" rel="noopener" href="http://localhost:4000/2022/01/10/http-challenge/#2-%E5%8F%96%E5%BE%97%E7%B3%BB%E7%B5%B1%E8%B3%87%E8%A8%8A">第九關</a> 的套路嗎？</p>
+<p>這裡用一樣的做法就可以了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api/v3'</span></span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT}</span>/hello`</span>,</span><br><span class="line">  <span class="hljs-attr">headers</span>: {</span><br><span class="line">    <span class="hljs-string">'Origin'</span>: <span class="hljs-string">'https://lidemy.com'</span></span><br><span class="line">  }</span><br><span class="line">},</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(res.request.headers)</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello! 下一關的 token 為 {r3d1r3c7}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>備註：再次提醒，「改 Origin 的」和「改 User-Agent」一樣都是建立在不使用「瀏覽器」的前提下才能做到的事。</p>
+<h2 id="第十二關"><a href="#第十二關" class="headerlink" title="第十二關"></a>第十二關</h2><h4 id="1-開場-11"><a href="#1-開場-11" class="headerlink" title="1. 開場"></a>1. 開場</h4><p>利用第十一關給的 token：<code>{r3d1r3c7}</code>，發一個 GET 請求就 OK 了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> request = <span class="hljs-built_in">require</span>(<span class="hljs-string">'request'</span>)</span><br><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv12?token={r3d1r3c7}'</span>, </span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">打完招呼之後我們要開始送一些書過去了，不過其實運送沒有你想像中的簡單，不是單純的 A 到 B 而</span><br><span class="line">已</span><br><span class="line">而是像轉機那樣，A 到 C，C 才到 B，中間會經過一些轉運點才會到達目的地...算了，我跟你說那麼</span><br><span class="line">多幹嘛</span><br><span class="line"></span><br><span class="line">現在請你幫我把運送要用的 token 給拿回來吧，要有這個 token 我們才能繼續往下一步走</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-取得運送-Token"><a href="#2-取得運送-Token" class="headerlink" title="2. 取得運送 Token"></a>2. 取得運送 Token</h4><p>這時候一樣按照 API 文件來發出「獲取運送 token」的 request：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api/v3'</span></span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT}</span>/deliver_token`</span>,</span><br><span class="line">},</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">我已經把運送要用的 token 給你囉，請你仔細找找</span><br></pre></td></tr></tbody></table></figure>
+
+<p>當時我的內心充滿了問號，還以為是在玩什麼反白梗之類的，但很遺憾：不要瞎掰好嗎。</p>
+<p>所以就來調查一下吧，我們先試著從 <code>headers</code> 來看能不能找出一點蛛絲軌跡：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api/v3'</span></span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT}</span>/deliver_token`</span>,</span><br><span class="line">},</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// 檢查 response headers</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(res.headers)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="hljs-attr">server</span>: <span class="hljs-string">'Cowboy'</span>,</span><br><span class="line">  <span class="hljs-attr">connection</span>: <span class="hljs-string">'close'</span>,</span><br><span class="line">  <span class="hljs-string">'x-powered-by'</span>: <span class="hljs-string">'Express'</span>,</span><br><span class="line">  <span class="hljs-string">'content-type'</span>: <span class="hljs-string">'text/plain; charset=utf-8'</span>,</span><br><span class="line">  <span class="hljs-attr">date</span>: <span class="hljs-string">'Sat, 15 Jan 2022 07:05:12 GMT'</span>,</span><br><span class="line">  <span class="hljs-string">'content-length'</span>: <span class="hljs-string">'66'</span>,</span><br><span class="line">  <span class="hljs-attr">via</span>: <span class="hljs-string">'1.1 vegur'</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>嗯…沒有什麼有用的資訊，所以接著改看請求的 <code>headers</code> 吧：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api/v3'</span></span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT}</span>/deliver_token`</span>,</span><br><span class="line">},</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// 檢查 request headers</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(res.request.headers)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+<p>response：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="hljs-attr">referer</span>: <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api/v3/stopover'</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>哦哦！原來是被「轉址」了阿，難怪一開始會說：</p>
+<blockquote>
+<p>像轉機那樣，A 到 C，C 才到 B，中間會經過一些轉運點才會到達目的地…</p>
+</blockquote>
+<p>這表示我們想要的資訊說不定就放在被轉址「之前的位置」，只要能夠找到原本的位置就行了。</p>
+<p>這邊有兩種作法，我先講比較簡單的：<strong>利用瀏覽器</strong></p>
+<ol>
+<li>在網址輸入 API 的網址： <a target="_blank" rel="noopener" href="https://lidemy-http-challenge.herokuapp.com/api/v3/deliver_token">https://lidemy-http-challenge.herokuapp.com/api/v3/deliver_token</a></li>
+</ol>
+<p><img src="redirect-01.jpg" alt="redirect-01"></p>
+<p>這時候會看到直接被重新導向到 <code>/deliver_token_result</code> 的位置</p>
+<ol start="2">
+<li>接下來請打開 F12，並切換到「Network」的欄位，重新輸入正確的 API 網址送出。最後應該就能看到以下資訊：</li>
+</ol>
+<p><img src="redirect-02.jpg" alt="redirect-02"></p>
+<p>備註：狀態碼的意思可以參考我寫的 <a href="https://jubeatt.github.io/2022/01/05/http-introduction/#%E5%B8%B8%E8%A6%8B%E7%9A%84-Status-code">HTTP 懶人包</a></p>
+<p>所以我們一共經過了三個地方：<code>deliver_token</code> =&gt; <code>stopover</code> =&gt; <code>deliver_token_result</code></p>
+<p>而 token 確實就放在 <code>deliver_token</code> 的 response headers 中，只是因為剛剛被重新導向到 <code>deliver_token_result</code> 所以才看不到。</p>
+<p>有興趣的人可以自己把每個 request 的內容打開來看，這邊我就不貼圖片了，因為我懶。順道一提「stopover」是「中途停留」的意思。</p>
+<p>接下來說明第二種作法：<strong>在 Node.js 中阻止重新導向</strong></p>
+<p>因為我是用 <a target="_blank" rel="noopener" href="https://github.com/request/request">request</a> 來發送請求的，所以要參考它的<a target="_blank" rel="noopener" href="https://github.com/request/request#:~:text=for%20other%20options.-,followRedirect,-%2D%20follow%20HTTP%203xx">官方文件說明</a>：</p>
+<blockquote>
+<p>followRedirect - follow HTTP 3xx responses as redirects (default: true). This property can also be implemented as function which gets response object as a single argument and should return true if redirects should continue or false otherwise.</p>
+</blockquote>
+<p>簡單來說就是你可以設定一個 <code>followRedirect</code> 的「option」，只要讓這個 function 回傳 <code>false</code> 就不會被自動轉址了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api/v3'</span></span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT}</span>/deliver_token`</span>,</span><br><span class="line">  <span class="hljs-comment">// 阻止重新導向</span></span><br><span class="line">  <span class="hljs-attr">followRedirect</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span></span><br><span class="line">  }</span><br><span class="line">},</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// 順便檢查一下狀態碼</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(res.statusCode)</span><br><span class="line">  <span class="hljs-comment">// response headers</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(res.headers)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">302</span></span><br><span class="line">{</span><br><span class="line">  <span class="hljs-attr">server</span>: <span class="hljs-string">'Cowboy'</span>,</span><br><span class="line">  <span class="hljs-attr">connection</span>: <span class="hljs-string">'close'</span>,</span><br><span class="line">  <span class="hljs-string">'x-powered-by'</span>: <span class="hljs-string">'Express'</span>,</span><br><span class="line">  <span class="hljs-string">'content-type'</span>: <span class="hljs-string">'text/plain; charset=utf-8'</span>,</span><br><span class="line">  <span class="hljs-string">'x-lv13-token'</span>: <span class="hljs-string">'{qspyz}'</span>,</span><br><span class="line">  <span class="hljs-attr">location</span>: <span class="hljs-string">'/api/v3/stopover'</span>,</span><br><span class="line">  <span class="hljs-attr">vary</span>: <span class="hljs-string">'Accept'</span>,</span><br><span class="line">  <span class="hljs-string">'content-length'</span>: <span class="hljs-string">'38'</span>,</span><br><span class="line">  <span class="hljs-attr">date</span>: <span class="hljs-string">'Sat, 15 Jan 2022 07:41:04 GMT'</span>,</span><br><span class="line">  <span class="hljs-attr">via</span>: <span class="hljs-string">'1.1 vegur'</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>就跟剛剛在瀏覽器看到的一樣，得到 <code>302</code> 重新導向的狀態碼，導向的位置也是 <code>stopover</code>。</p>
+<p>總而言之，看你喜歡哪種方法就用哪種，最後就順利拿到 token 囉！</p>
+<h2 id="第十三關"><a href="#第十三關" class="headerlink" title="第十三關"></a>第十三關</h2><h4 id="1-開場-12"><a href="#1-開場-12" class="headerlink" title="1. 開場"></a>1. 開場</h4><p>利用第十二關給的 token：<code>{qspyz}</code>，發一個 GET 請求就 OK 了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv13?token={qspyz}'</span>, </span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">太好了！自從你上次把運送用的 token 拿回來以後，我們就密切地與菲律賓在交換書籍</span><br><span class="line">可是最近碰到了一些小問題，不知道為什麼有時候會傳送失敗</span><br><span class="line">我跟他們反映過後，他們叫我們自己去拿 log 來看，你可以幫我去看看嗎？</span><br><span class="line">從系統日誌裡面應該可以找到一些端倪</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-查看系統日誌"><a href="#2-查看系統日誌" class="headerlink" title="2. 查看系統日誌"></a>2. 查看系統日誌</h4><p>一樣先按照 API 文件來發一個「獲取系統日誌」的請求：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api/v3'</span></span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT}</span>/logs`</span>,</span><br><span class="line">},</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">此 request 不是來自菲律賓，禁止存取系統資訊。</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這代表 server 會檢查使用者的 IP 地址，所以我們可以透過「proxy（代理伺服器）」來發送請求。</p>
+<p>所以只要找到一個菲律賓的 <a target="_blank" rel="noopener" href="http://free-proxy.cz/en/proxylist/country/PH/all/ping/all">proxy</a> 來做設定就可以了。不過這邊我弄了老半天就是不行，每當我設定好 proxy 的時候網路就會掛掉，我也不確定問題出在哪。如果有人知道原因的話請務跟告訴我一下QQ。</p>
+<p>因此這裡改用另外一種解法：設定 <code>X-Forwarded-For</code></p>
+<p>簡單來說 server 可以透過這個 header 來判斷使用者的 IP 地址，因此只要把 IP 地址設成菲律賓的位置就行了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> API_ENDPOINT = <span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/api/v3'</span></span><br><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT}</span>/logs`</span>,</span><br><span class="line">  <span class="hljs-attr">headers</span>: {</span><br><span class="line">    <span class="hljs-string">'X-Forwarded-For'</span>: <span class="hljs-string">'49.145.251.55'</span></span><br><span class="line">  }</span><br><span class="line">},</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line"> { <span class="hljs-attr">logType</span>: <span class="hljs-string">'token'</span>, <span class="hljs-attr">value</span>: <span class="hljs-string">'{SEOisHard}'</span> }</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>千辛萬苦地進到下一關（汗</p>
+<h2 id="第十四關"><a href="#第十四關" class="headerlink" title="第十四關"></a>第十四關</h2><h4 id="1-開場-13"><a href="#1-開場-13" class="headerlink" title="1. 開場"></a>1. 開場</h4><p>利用第十三關給的 token：<code>{SEOisHard}</code>，發一個 GET 請求就 OK 了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv14?token={SEOisHard}'</span>, </span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">跟那邊的溝通差不多都搞定了，真是太謝謝你了，關於這方面沒什麼問題了！</span><br><span class="line">不過我老大昨天給了我一個任務，他希望我去研究那邊的首頁內容到底是怎麼做的</span><br><span class="line">為什麼用 Google 一搜尋關鍵字就可以排在第一頁，真是太不合理了</span><br><span class="line"></span><br><span class="line">他們的網站明明就什麼都沒有，怎麼會排在那麼前面？</span><br><span class="line">難道說他們偷偷動了一些手腳？讓 Google 搜尋引擎看到的內容跟我們看到的不一樣？</span><br><span class="line"></span><br><span class="line">算了，還是不要瞎猜好了，你幫我們研究一下吧！</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-檢查首頁內容"><a href="#2-檢查首頁內容" class="headerlink" title="2. 檢查首頁內容"></a>2. 檢查首頁內容</h4><p>這裡顯然要檢查一下首頁的部分，所以一樣先按照 API 文件來發一個「獲取首頁內容」的請求：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT}</span>/index`</span>,</span><br><span class="line">},</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Library<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Hello, here is the website for lidemy library<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>果然看不出個所以然。回想一下剛剛的敘述「難道說他們偷偷動了一些手腳？讓 <strong>Google 搜尋引擎</strong> 看到的內容跟我們看到的不一樣？」</p>
+<p>所以換句話說要讓 server「以為」我們是 Google 搜尋引擎，但該怎麼做呢？想想之前的套路，既然都有辦法讓 server 以為是 IE6 了，那搜尋引擎應該也是同樣的道理。</p>
+<p>所以試著搜尋：「search engine user agent list」</p>
+<p>你就能找到這個 <a target="_blank" rel="noopener" href="https://perishablepress.com/list-all-user-agents-top-search-engines/#google">網站</a></p>
+<p>備註：如果想知道更多細節，<a target="_blank" rel="noopener" href="https://xyz.cinc.biz/2018/08/php-detect-web-crawler-spider.html">這個網站</a> 寫的還蠻簡單易懂的。</p>
+<p>接下來應該就知道該怎麼做了吧？</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">request({</span><br><span class="line">  <span class="hljs-attr">url</span>: <span class="hljs-string">`<span class="hljs-subst">${API_ENDPOINT}</span>/index`</span>,</span><br><span class="line">  <span class="hljs-attr">headers</span>: {</span><br><span class="line">    <span class="hljs-string">'User-Agent'</span>: <span class="hljs-string">'Googlebot/2.1 (+http://www.googlebot.com/bot.html)'</span></span><br><span class="line">  }</span><br><span class="line">},</span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight html hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>I Love Google<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Google please rank our website higher, PLEASE!<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!-- token for lv15：{ILOVELIdemy!!!}  --&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>接下來終於來到最後一關囉…</p>
+<h2 id="第十五關"><a href="#第十五關" class="headerlink" title="第十五關"></a>第十五關</h2><p>利用第十四關給的 token：<code>{ILOVELIdemy!!!}</code>，發一個 GET 請求就 OK 了：</p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="hljs-string">'https://lidemy-http-challenge.herokuapp.com/lv15?token={ILOVELIdemy!!!}'</span>, </span><br><span class="line"><span class="hljs-function">(<span class="hljs-params">err, res, body</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(body)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>response：</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">還真的是我猜的那樣...不過還是要謝謝你幫我們完成這麼多任務！</span><br><span class="line">今天是我在這職位的最後一天啦，之後我要升官了，應該就不用處理這麼多小事情了</span><br><span class="line">這段期間感謝你的幫忙，我們以後有緣再相見啦！</span><br><span class="line"></span><br><span class="line">The End，恭喜破關！</span><br><span class="line">這次是真的破關了，這是最後一關，感謝你願意參與這個遊戲</span><br><span class="line">也希望這遊戲是有趣的，希望你在玩的時候有學到東西</span><br><span class="line">也歡迎把這個遊戲分享給親朋好友們</span><br><span class="line">感謝！</span><br><span class="line"></span><br><span class="line">我開了一個 gist，大家可以在這邊隨意留言，或是講一下破關感言</span><br><span class="line">https://gist.github.com/aszx87410/1dbde92876ba253a45654988ca829ebb</span><br><span class="line"></span><br><span class="line">最後，感謝所有幫我測試的朋友們</span><br><span class="line"></span><br><span class="line">Author: huli@lidemy.com</span><br><span class="line">https://www.facebook.com/lidemytw/</span><br></pre></td></tr></tbody></table></figure>
+
+<p>完結撒花啦～</p>
+<h2 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h2><p>好不容易破關啦！第十五關後的難度真的明顯提升，尤其是第十三關真的讓卡了很久，明明就按照網路上的教學去設定 proxy 了，但就是沒有辦法，最後只好不甘心的上網找正確解答，才發現了 <code>X-Forwarded-For</code> 的解法。</p>
+<p>在這個遊戲裡讓我感觸最深的地方還是「執行環境」這件事吧，例如說改「Origin」和「User-Agent」真的讓我大開眼界，這跟我熟悉的「瀏覽器」完全是兩個世界，原來脫離了瀏覽器可以做到的事這麼多，這是我覺得很有趣的地方。</p>
+<p>另外還有一點是原來 server 還能從 User-Agent 來判斷是不是爬蟲，甚至還有專屬爬蟲的 User-Agent，原本單純的我完全不知道有這樣神奇的事情存在，很慶幸我能從這個遊戲裡學到這些。</p>
+<p>最後很謝謝 Huli 為大家做了這個遊戲，這是一個很有意思也能學到很多東西的遊戲，這個遊戲除了讓我更了解網路世界外，也更了解在前後端這兩個角色在自己的世界裡實際上都做了些什麼。</p>
+</body></html>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2022/01/10/learn-cors-and-browser-limitations-from-game/">從遊戲來認識 CORS 與瀏覽器的限制</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/01/10/node-buffer-module/">Node 中的 buffer 模組</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2023 PeaNu&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/jubeatt">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-TW");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>
